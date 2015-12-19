@@ -1,0 +1,199 @@
+{% extends "user/base.html" %}
+
+
+{% block body %}
+<div class="col-lg-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5><i class="fa fa-newspaper-o"></i>&nbsp;Top Headlines for your Stocks</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="close-link">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-10">
+
+                    <div id="yahoo-headline-section" class="col-lg-12 row text-left headline-section">
+                        <small class="">From Yahoo Finance</small>
+                        <div class="row headline">
+                            <b>YHOO</b> <span class="market">(NASDAQ)</span> -
+                            <a href="#">Yahoo, Google Back Together in Search Deal</a>
+                        </div>
+                        <div class="row headline">
+                            <b>GOOGL</b> <span class="market">(NASDAQ)</span> -
+                            <a href="#">Alphabet’s Google to Try Again With Low-Cost Smartphone for India</a>
+                        </div>
+                        <div class="row headline">
+                            <b>BABA</b> <span class="market">(NYSE)</span> -
+                            <a class="text-align-right" href="#">Alibaba Said to Be Discussing $80 Million Investment in Boxed</a>
+                        </div>
+                        <div class="row headline">
+                            <b>AAPL</b> <span class="market">(NASDAQ)</span> -
+                            <a href="#">Dropbox tries to reinvent cloud-storage market</a>
+                        </div>
+                        <div class="row headline">
+                            <b>M</b> <span class="market">(NYSE)</span> -
+                            <a href="#">Marbles: The Brain Store Joins Macy’s Holiday Arcade This Season</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <a href="http://finance.yahoo.com" target="_blank">
+                        <button class="btn btn-primary dim pull-right" type="button" ><i class="fa fa-money"></i></button>
+                    </a>
+                    <a href="http://news.yahoo.com" target="_blank">
+                        <button class="btn btn-info dim pull-right" type="button" target="_blank"><i class="fa fa-hacker-news"></i></button>
+                    </a>
+                    <a href="#" target="_blank">
+                        <button class="btn btn-success dim pull-right" type="button" target="_blank"><i class="fa fa-download"></i></button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="input-group chart-filter">
+          <span class="input-group-addon"><i class="fa fa-search"></i></span>
+          <input type="text" class="form-control" placeholder="Filter Charts...">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>YHOO</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-cogs"></i><span>   Settings</span></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-download"></i><span>   Export</span></a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="flot-chart">
+                    <div class="flot-chart-content" id="flot-line-chart-multi"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>GOOGL</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-cogs"></i><span>   Settings</span></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-download"></i><span>   Export</span></a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="flot-chart">
+                    <div class="flot-chart-content" id="flot-line-chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>BABA</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-cogs"></i><span>   Settings</span></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-download"></i><span>   Export</span></a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="flot-chart">
+                    <div class="flot-chart-content" id="flot-line-chart-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>AAPL</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-cogs"></i><span>   Settings</span></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-download"></i><span>   Export</span></a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="flot-chart">
+                    <div class="flot-chart-content" id="flot-line-chart-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/plugins/flot/jquery.flot.js"></script>
+<script src="/static/js/plugins/flot/jquery.flot.time.js"></script>
+<script src="/static/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+<script src="/static/js/plugins/flot/jquery.flot.resize.js"></script>
+<script src="/static/js/plugins/flot/jquery.flot.pie.js"></script>
+
+<script src="/static/js/fsai/chartData.js"></script>
+{% endblock %}

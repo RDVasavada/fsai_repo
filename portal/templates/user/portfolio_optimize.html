@@ -1,0 +1,115 @@
+{% extends "user/base.html" %}
+
+{% block head %}
+<link href="/static/css/morris.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="ibox-content">
+            <h2>Stock Optimization Results</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>Company Name</th>
+                    <th>Ticker Symbol</th>
+                    <th>Amount of Shares to purchase</th>
+                    <th>Buy Date</th>
+                    <th>Sell Date</th>
+                    <th>Expected Return</th>
+                    <th>Risk Level</th>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Google</p>
+                        <a href="/user/portfolio" class="btn btn-default">
+                            <i class="fa fa-line-chart"></i>
+                        </a>
+                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=GOOG"><i class="fa fa-hacker-news"></i></a>
+
+                    </td>
+                    <td>GOGL</td>
+                    <td>1,200</td>
+                    <td>12/14/15</td>
+                    <td>12/16/15</td>
+                    <td><b>+3400$</b></td>
+                    <td><span class="label label-warning-light">Medium</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Yahoo!</p>
+
+                        <a href="/user/portfolio" class="btn btn-default">
+                            <i class="fa fa-line-chart"></i>
+                        </a>
+                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=YHOO"><i class="fa fa-hacker-news"></i></a>
+                    </td>
+                    <td>YHOO</td>
+                    <td>850</td>
+                    <td>11/10/15</td>
+                    <td>12/01/15</td>
+                    <td><b>+1400$</b></td>
+                    <td><span class="label label-danger">High</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Apple</p>
+                        <a href="/user/portfolio" class="btn btn-default">
+                            <i class="fa fa-line-chart"></i>
+                        </a>
+                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=GOOG"><i class="fa fa-hacker-news"></i></a>
+                    </td>
+                    <td>AAPL</td>
+                    <td>3,400</td>
+                    <td>11/04/15</td>
+                    <td>12/31/15</td>
+                    <td><b>+12500$</b></td>
+                    <td><span class="label label-primary">Low</span></td>
+                </tr>
+            </table>
+        </div>
+        <br>
+
+        <div class="col-lg-3">
+            <a href="/user/portfolio_settings" class="btn btn-block btn-default">Back</a>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="ibox-content">
+            <div id="morris-donut-chart" style="height:400px"></div>
+            <br>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3><b>Total Expected Return</b></h3>
+                    <h2>17,300$</h2>
+                </div>
+                <div class="col-lg-6 text-right">
+                    <h3><b>Total Risk</b></h3>
+                    <span class="label label-primary">Low</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/morris.js"></script>
+<script src="/static/js/raphael.js"></script>
+
+<script type="text/javascript">
+$(function() {
+   Morris.Donut({
+        element: 'morris-donut-chart',
+        data: [{ label: "Google", value: 1200 },
+            { label: "Yahoo", value: 850 },
+            { label: "Apple", value: 3400 } ],
+        resize: true,
+        colors: ['#87d6c6', '#54cdb4','#1ab394'],
+    });
+});
+
+</script>
+{% endblock %}

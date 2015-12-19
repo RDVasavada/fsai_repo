@@ -1,0 +1,36 @@
+{% extends "public/base.html" %}
+
+{% block body %}
+<div>
+    <div class="single-pane">
+        <div>
+            <span class="logo-name center-logo">FSAI</span>
+        </div>
+        <h3>Welcome to FSAI</h3>
+    </div>
+    {% if errors %}
+        <div class="form-errors">
+            {% for error in errors %}
+                <div class="alert alert-danger">
+                    {{error}}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form class="m-t" role="form" method="POST" action="/login">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Username" required="" name="username" >
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" required="" name="password" >
+        </div>
+        <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+
+        <a href="/recover_password"><small>Forgot password?</small></a>
+        <p class="text-muted text-center"><small>Do not have an account?</small></p>
+        <a class="btn btn-sm btn-white btn-block" style="color:black" href="/register">Create an account</a>
+    </form>
+</div>
+{% endblock %}
