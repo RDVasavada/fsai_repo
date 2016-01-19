@@ -7,65 +7,38 @@
 {% block body %}
 <div class="row">
     <div class="col-lg-8">
-        <div class="ibox-content">
+        <div class="ibox-content" ng-app="myApp" ng-controller="customersCtrl">
             <h2>Stock Optimization Results</h2>
             <table class="table table-striped">
-                <tr>
-                    <th>Company Name</th>
-                    <th>Ticker Symbol</th>
-                    <th>Amount of Shares to purchase</th>
-                    <th>Buy Date</th>
-                    <th>Sell Date</th>
-                    <th>Expected Return</th>
-                    <th>Risk Level</th>
-                </tr>
-                <tr>
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Ticker Symbol</th>
+                        <th>Amount of Shares to purchase</th>
+                        <th>Buy Date</th>
+                        <th>Sell Date</th>
+                        <th>Expected Return</th>
+                        <th>Risk Level</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="x in names">
+                    <tr>
                     <td>
-                        <p>Google</p>
+                        <p>{{ x.Name }}</p>
                         <a href="/user/portfolio" class="btn btn-default">
                             <i class="fa fa-line-chart"></i>
                         </a>
                         <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=GOOG"><i class="fa fa-hacker-news"></i></a>
 
                     </td>
-                    <td>GOGL</td>
-                    <td>1,200</td>
+                    <td>{{ x.Name }}</td>
+                    <td>{{ x.Country }}</td>
                     <td>12/14/15</td>
                     <td>12/16/15</td>
                     <td><b>+3400$</b></td>
                     <td><span class="label label-warning-light">Medium</span></td>
                 </tr>
-                <tr>
-                    <td>
-                        <p>Yahoo!</p>
-
-                        <a href="/user/portfolio" class="btn btn-default">
-                            <i class="fa fa-line-chart"></i>
-                        </a>
-                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=YHOO"><i class="fa fa-hacker-news"></i></a>
-                    </td>
-                    <td>YHOO</td>
-                    <td>850</td>
-                    <td>11/10/15</td>
-                    <td>12/01/15</td>
-                    <td><b>+1400$</b></td>
-                    <td><span class="label label-danger">High</span></td>
-                </tr>
-                <tr>
-                    <td>
-                        <p>Apple</p>
-                        <a href="/user/portfolio" class="btn btn-default">
-                            <i class="fa fa-line-chart"></i>
-                        </a>
-                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=GOOG"><i class="fa fa-hacker-news"></i></a>
-                    </td>
-                    <td>AAPL</td>
-                    <td>3,400</td>
-                    <td>11/04/15</td>
-                    <td>12/31/15</td>
-                    <td><b>+12500$</b></td>
-                    <td><span class="label label-primary">Low</span></td>
-                </tr>
+                </tbody>
             </table>
         </div>
         <br>
@@ -109,6 +82,12 @@ $(function() {
         resize: true,
         colors: ['#87d6c6', '#54cdb4','#1ab394'],
     });
+});
+
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+    $http.get("http://www.w3schools.com/angular/customers.php")
+    .then(function (response) {$scope.names = response.data.records;});
 });
 
 </script>
