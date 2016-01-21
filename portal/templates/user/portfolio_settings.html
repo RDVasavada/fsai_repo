@@ -12,9 +12,9 @@
             <div class="ibox-title">
                 <h1>Portfolio - Settings</h1>
             </div>
-            <div class="ibox-content">  
-                <form class="form-horizontal">
-
+            <div class="ibox-content">
+                    <form class="form-horizontal" action="/user/portfolio_optimize" method="post">
+                    {% csrf_token %}
                     <!-- Details -->
                     <h3>Details</h3>
                     <div class="form-group">
@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <label class="col-sm-1 control-label">Term (Months):</label>
                         <div class="col-sm-5">
-                            <select class="form-control m-b" name="Months">
+                            <select class="form-control m-b" name="Months" id="Months">
                                 <option value="1">1</option>
                                 <option value="3">3</option>
                                 <option value="6">6</option>
@@ -74,7 +74,7 @@
                     <h3>Control Market</h3>
                     <div class="form-group">
                         <div class="col-sm-8 col-sm-offset-1">
-                            <select class="form-control m-b" name="Months">
+                            <select class="form-control m-b" name="Market" id="Market">
                                 <option value="1">S&amp;P 500</option>
                                 <option value="2">NASDAQ</option>
                                 <option value="3">Dow Jones</option>
@@ -90,7 +90,7 @@
                         <div class="col-sm-offset-1 col-sm-2">
                             <div class="input-group m-b">
                                 <span class="input-group-addon">$</span>
-                                <input type="number" placeholder="1,000" class="form-control">
+                                <input type="number" placeholder="1,000" id="investing_amount" name="investing_amount" class="form-control">
                             </div>                        
                         </div>
                     </div>
@@ -103,14 +103,14 @@
                             <p class="font-bold">Number of Stocks</p>
                             <div class="input-group m-b">
                                 <span class="input-group-addon"></span>
-                                <input id="stocks_number" type="number" placeholder="3" min="3" max="10" class="form-control" onchange="stockChecker()">
+                                <input id="stocks_number" name="stocks_number" type="number" placeholder="3" min="3" max="10" class="form-control" onchange="stockChecker()">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-10">
                             <a href="/" class="btn btn-white" type="submit">Cancel</a>
-                            <a href="/user/portfolio_optimize" class="btn btn-primary" type="submit">Optimize</a>
+                            <!--<a href="#" class="btn btn-primary" type="submit" >--><input class="btn btn-primary" type="submit" value="Optimize"/>
                         </div>
                     </div>                
                 </form><!-- End of Form -->

@@ -7,7 +7,7 @@
 {% block body %}
 <div class="row">
     <div class="col-lg-8">
-        <div class="ibox-content" ng-app="myApp" ng-controller="customersCtrl">
+        <div class="ibox-content">
             <h2>Stock Optimization Results</h2>
             <table class="table table-striped">
                 <thead>
@@ -21,23 +21,24 @@
                         <th>Risk Level</th>
                     </tr>
                 </thead>
-                <tbody ng-repeat="x in names">
+                <tbody>
+                    {% for result in optimizeSearchResults %}
                     <tr>
-                    <td>
-                        <p>{{ x.Name }}</p>
-                        <a href="/user/portfolio" class="btn btn-default">
-                            <i class="fa fa-line-chart"></i>
-                        </a>
-                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=GOOG"><i class="fa fa-hacker-news"></i></a>
-
-                    </td>
-                    <td>{{ x.Name }}</td>
-                    <td>{{ x.Country }}</td>
-                    <td>12/14/15</td>
-                    <td>12/16/15</td>
-                    <td><b>+3400$</b></td>
-                    <td><span class="label label-warning-light">Medium</span></td>
-                </tr>
+                        <td>
+                            <p>{{ result.companyName }}</p>
+                            <a href="/user/portfolio" class="btn btn-default">
+                                <i class="fa fa-line-chart"></i>
+                            </a>
+                            <a class="btn btn-primary" href="http://finance.yahoo.com/q?s={{ result.tickerSymbol }}"><i class="fa fa-hacker-news"></i></a>
+                        </td>
+                        <td>{{ result.tickerSymbol }}</td>
+                        <td>{{ result.expectedReturn }}</td>
+                        <td>{{ result.buyDate }}</td>
+                        <td>{{ result.sellDate }}</td>
+                        <td><b>{{ result.expectedRisk }}</b></td>
+                        <td><span class="label label-warning-light">{{ result.riskLevel }}</span></td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -71,7 +72,7 @@
 {% block scripts %}
 <script src="/static/js/morris.js"></script>
 <script src="/static/js/raphael.js"></script>
-<script src="/static/js/angular.min.js"></script>
+
 <script type="text/javascript">
 $(function() {
    Morris.Donut({
@@ -83,12 +84,5 @@ $(function() {
         colors: ['#87d6c6', '#54cdb4','#1ab394'],
     });
 });
-
-var app = angular.module('myApp', []);
-app.controller('customersCtrl', function($scope, $http) {
-    $http.get("http://www.w3schools.com/angular/customers.php")
-    .then(function (response) {$scope.names = response.data.records;});
-});
-
 </script>
 {% endblock %}
