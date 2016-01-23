@@ -30,8 +30,32 @@
                         <textarea cols="40" rows="5" class="form-control">This is my profile for handling certain investments.</textarea>
                         </div>
                     </div>
-                    
+
+                    <div class="hr-line-dashed"></div>
+                    <h3>Expected Return</h3>
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-2">
+                            <p class="font-bold">Return</p>
+                            <div class="input-group m-b">
+                                <span class="input-group-addon"></span>
+                                <input id="expReturn" name="expReturn" type="number" placeholder="1" min="1" max="50" class="form-control" onchange="stockChecker()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <h3>Expected Risk</h3>
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-2">
+                            <p class="font-bold">Risk</p>
+                            <div class="input-group m-b">
+                                <span class="input-group-addon"></span>
+                                <input id="expRisk" name="expRisk" type="number" placeholder="1" min="1" max="20" class="form-control" onchange="stockChecker()">
+                            </div>
+                        </div>
+                    </div>
                     <!-- Risk & Return -->
+                    <!--
                     <div class="hr-line-dashed"></div>
                     <h3>Risk &amp; Return</h3>
                     <div class="form-group">
@@ -48,7 +72,7 @@
 
                             </div>
                         </div>
-                    </div>    
+                    </div> -->
                     
                     <!-- Time Frame -->
                     <div class="hr-line-dashed"></div>
@@ -90,7 +114,7 @@
                         <div class="col-sm-offset-1 col-sm-2">
                             <div class="input-group m-b">
                                 <span class="input-group-addon">$</span>
-                                <input type="number" placeholder="1,000" id="investing_amount" name="investing_amount" class="form-control">
+                                <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control">
                             </div>                        
                         </div>
                     </div>
@@ -103,7 +127,7 @@
                             <p class="font-bold">Number of Stocks</p>
                             <div class="input-group m-b">
                                 <span class="input-group-addon"></span>
-                                <input id="stocks_number" name="stocks_number" type="number" placeholder="3" min="3" max="10" class="form-control" onchange="stockChecker()">
+                                <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" max="10" class="form-control" onchange="stockChecker()">
                             </div>
                         </div>
                     </div>

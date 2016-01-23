@@ -16,8 +16,8 @@ def portfolio_optimize(request):
     print("Market :" + request.POST['Market'])
     print("InvesingAmount :" + request.POST['investing_amount'])
     print("stocksNumber :" + request.POST['stocks_number'])
-    response = requests.get("http://52.77.239.179:8080/api-auth/portfolioOptimizer?format=json" + "&expRisk=30" +
-                            "&timeFrame=" + request.POST['Months'] + "&expRet=30&investingAmount=" +
+    response = requests.get("http://52.77.239.179:8080/api-auth/portfolioOptimizer?format=json" + "&expRisk=" + str(request.POST['expRisk']) +
+                            "&timeFrame=" + request.POST['Months'] + "&expRet=" + str(request.POST['expReturn']) + "&investingAmount=" +
                             str(request.POST['investing_amount']) + "&noOfStocks=" + str(request.POST['stocks_number']),
         headers= {
             'FSAIAUTHENTICATION': 'Basic ZnNhaV91c2VyOmZzYWlAMTIz'
