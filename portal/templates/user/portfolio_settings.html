@@ -37,8 +37,8 @@
                         <div class="col-sm-offset-1 col-sm-2">
                             <p class="font-bold">Return</p>
                             <div class="input-group m-b">
-                                <span class="input-group-addon"></span>
-                                <input id="expReturn" name="expReturn" type="number" placeholder="1" min="1" max="50" class="form-control" onchange="stockChecker()">
+                                <span class="input-group-addon">%</span>
+                                <input id="expReturn" name="expReturn" type="number" value="5" placeholder="1" min="1" max="50" class="form-control" onchange="returnChecker()">
                             </div>
                         </div>
                     </div>
@@ -49,8 +49,8 @@
                         <div class="col-sm-offset-1 col-sm-2">
                             <p class="font-bold">Risk</p>
                             <div class="input-group m-b">
-                                <span class="input-group-addon"></span>
-                                <input id="expRisk" name="expRisk" type="number" placeholder="1" min="1" max="20" class="form-control" onchange="stockChecker()">
+                                <span class="input-group-addon">%</span>
+                                <input id="expRisk" name="expRisk" type="number" value="10" placeholder="1" min="1" max="20" class="form-control" onchange="riskChecker()">
                             </div>
                         </div>
                     </div>
@@ -176,5 +176,16 @@
         var stocksNumberElement = document.getElementById('stocks_number');
         if (stocksNumberElement.value > 10) { stocksNumberElement.value = 10} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
     }
+
+    function returnChecker() {
+        var expReturnElement = document.getElementById('expReturn');
+        if (expReturnElement.value > 50) { expReturnElement.value = 50} else if (expReturnElement.value < 1) { expReturnElement.value = 1}
+    }
+
+    function riskChecker() {
+        var expRiskElement = document.getElementById('expRisk');
+        if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
+    }
+
 </script>
 {% endblock %}
