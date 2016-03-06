@@ -18,15 +18,12 @@ def portfolio_optimize(request):
     print("stocksNumber :" + request.POST['stocks_number'])
     print(request.POST['expRisk'])
     print(request.POST['expReturn'])
-    try:
-        response = requests.get("http://52.77.239.179:8080/api-auth/portfolioOptimizer?format=json" + "&expRisk=20" +
+    response = requests.get("http://52.77.239.179:8080/api-auth/portfolioOptimizer?format=json" + "&expRisk=20" +
                                 "&timeFrame=" + request.POST['Months'] + "&expRet=30&investingAmount=" +
                                 str(request.POST['investing_amount']) + "&noOfStocks=" + str(request.POST['stocks_number']),
             headers= {
                 'FSAIAUTHENTICATION': 'Basic ZnNhaV91c2VyOmZzYWlAMTIz'
-        })
-    except requests.exceptions.ConnectionError:
-        response.status_code = "Connection refused"
+    })
 
     if(response.status_code != 200):
          raise Exception('GET /api-auth/portfolioOptimizer {}'.format(response.status_code))
