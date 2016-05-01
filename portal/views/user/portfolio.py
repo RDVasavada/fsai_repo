@@ -3,6 +3,7 @@ from django.shortcuts import render
 import requests
 from django.template import RequestContext, Context, Template, loader
 from django.contrib.auth.decorators import login_required
+import socket
 
 @login_required
 def portfolio(request):
@@ -18,6 +19,9 @@ def portfolio_optimize(request):
     print("stocksNumber :" + request.POST['stocks_number'])
     print(request.POST['expRisk'])
     print(request.POST['expReturn'])
+    # 52.77.239.179:8080 - THE AWS instance of Ramana
+    # 52.28.177.9:8888 - The AWS instance og prashant
+    # socket.create_connection(('52.28.177.9', '8888'), timeout=2)
     response = requests.get("http://52.77.239.179:8080/api-auth/portfolioOptimizer?format=json" + "&expRisk=20" +
                                 "&timeFrame=" + request.POST['Months'] + "&expRet=30&investingAmount=" +
                                 str(request.POST['investing_amount']) + "&noOfStocks=" + str(request.POST['stocks_number']),
