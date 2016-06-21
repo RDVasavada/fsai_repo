@@ -2,11 +2,11 @@
 
 {% block head %}
 <!--<link href="/static/css/nouislider.min.css" rel="stylesheet">-->
-<link href="css/stylesheets.css" rel="stylesheet" type="text/css" /> 
+<link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css" /> 
 {% endblock %}
 
 {% block body %}
-<div class="row">
+<div class="row" style="color:#a3a3c2;">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
 
@@ -19,15 +19,15 @@
                     <!-- Details -->
                     <h3>Details</h3>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">Name:</label>
-                        <div class="col-sm-5">
+                        <label class="col-sm-1 control-label" style="width:80px;">Name:</label>
+                       <div class="col-sm-5">
                             <input type="text" class="form-control" value="High Risk Portfolio">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">Description:</label>
-                        <div class="col-sm-5">
+                        <label class="col-sm-1 control-label" style="width:80px;">Description:</label>
+                       <div class="col-sm-5">
                         <textarea cols="40" rows="5" class="form-control">This is my profile for handling certain investments.</textarea>
                         </div>
                     </div>
@@ -135,7 +135,10 @@
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-10">
                             <a href="/" class="btn btn-white" type="submit">Cancel</a>
-                            <!--<a href="#" class="btn btn-primary" type="submit" >--><input class="btn btn-primary" type="submit" value="Optimize"/>
+                            <!--<a href="#" class="btn btn-primary" type="submit" >-->
+                        </div>
+                        <div class="col-sm-4 col-sm-offset-10">
+                            <input class="btn btn-primary" style ="width:65px;text-align:center;" type="submit" value="Optimize"/>
                         </div>
                     </div>                
                 </form><!-- End of Form -->
