@@ -1,36 +1,74 @@
-{% extends "public/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>        
+    <title>Vise</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <link rel="icon" type="image/ico" href="favicon.ico"/>
+    
+    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css" />        
+    
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>   
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
+    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins.js'></script>    
+    <script type='text/javascript' src='/static/js/actions.js'></script>    
+    <script type='text/javascript' src='/static/js/settings.js'></script>
+</head>
+<body class="bg-img-num1"> 
+    
+    <div class="container">        
 
-{% block body %}
-<div>
-    <div class="single-pane">
-        <div>
-            <span class="logo-name center-logo">FSAI</span>
-        </div>
-        <h3>Welcome to FSAI</h3>
-    </div>
-    {% if errors %}
-        <div class="form-errors">
-            {% for error in errors %}
-                <div class="alert alert-danger">
-                    {{error}}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    <form class="m-t" role="form" method="POST" action="/login">
-        {% csrf_token %}
+        <div class="login-block">
+            <div class="block block-transparent">
+                <div class="content controls npt">
+                    <div class="single-pane">
+                        <h3 style="letter-spacing:1px;text-align:center;color:#ADEAEA;font-size:100px;font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue";"><i>V</i>ise</h3>
+                    </div>
+                    {% if errors %}
+                        <div class="form-errors">
+                            {% for error in errors %}
+                                <div class="alert alert-danger">
+                                    {{error}}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+        <form class="m-t" role="form" method="POST" action="/login">
+            {% csrf_token %}
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Username" required="" name="username" >
         </div>
         <div class="form-group">
             <input type="password" class="form-control" placeholder="Password" required="" name="password" >
         </div>
-        <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+        <div class="col-md-6">
+        <button type="submit" class="btn btn-default btn-block btn-clean">Login</button>
+        </div>
+        <div class="col-md-6">
+         <a href="/register" class="btn btn-default btn-block btn-clean">Register</a>  
+        </div>
+        </form> </br></br>
+                    <div class="row-form">          
+                        <div class="col-md-12">
+                           <p class="text-muted text-center" style="font-size:12px;font-weight:bold;">Forgot your password?</p>
+                        </div>
+                   </div>  
+                       <div class="row-form">          
+                        <div class="col-md-12">
+                           <a href="/recover_password" class="btn btn-default btn-block btn-clean">Forgot</a>
+                        </div>
+                   </div>                                
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <a href="/recover_password"><small>Forgot password?</small></a>
-        <p class="text-muted text-center"><small>Do not have an account?</small></p>
-        <a class="btn btn-sm btn-white btn-block" style="color:black" href="/register">Create an account</a>
-    </form>
-</div>
-{% endblock %}
+</body>
+</html>
