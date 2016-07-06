@@ -81,3 +81,37 @@
 @media only screen and (max-width: 1279px) {
     
 }
+
+/*.icon-question-sign p{	*//* The tooltip *//*
+	display: none;
+	text-align: left;
+	background-color: #1E2021;
+	padding: 20px;
+	width: 300px;
+	position: absolute;
+	border-radius: 3px;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+	right: -4px;
+	color: #FFF;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+.icon-question-sign:hover p{
+	display:block;
+	transform-origin: 100% 0%;
+	-webkit-animation: fadeIn 0.3s ease-in-out;
+	animation: fadeIn 0.3s ease-in-out;
+
+}*/
+
+.tooltip {
+	display:none;
+	position:absolute;
+	border:1px solid #333;
+	background-color:#161616;
+	border-radius:5px;
+	padding:10px;
+	color:#fff;
+	font-size:12px Arial;
+}

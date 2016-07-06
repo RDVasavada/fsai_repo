@@ -86,7 +86,9 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="hr-line-dashed"></div>
-                    <h3>Details</h3>
+                    <h3>Details
+                        &nbsp;<span class="icon-question-sign"><p
+                                style="display:none;">Details</p></span></h3>
                         <div class="form-group">
                             <label class="col-sm-1 control-label" style="width:140px;">Name</label>
                            <div class="col-sm-5">
@@ -104,7 +106,11 @@
                     </div>
 
                     <div class="hr-line-dashed"></div>
-                    <h3>Expected Return</h3>
+                    <h3>Expected
+                        Return&nbsp;<span
+                                class="icon-question-sign"><p
+                                style="display:none;">Expected Return</p></span>
+</h3>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" style="width:140px;">Return</label>
                         <div class="input-group m-b">
@@ -116,7 +122,11 @@
                     </div>
 
                     <div class="hr-line-dashed"></div>
-                    <h3>Expected Risk</h3>
+                    <h3>Expected Risk&nbsp;<span
+                            class="icon-question-sign"><p
+                            style="display:none;">Expected Risk
+                    </p></span>
+                    </h3>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" style="width:140px;">Risk</label>
                         <div class="input-group m-b">
@@ -128,7 +138,9 @@
                     </div>                    
                     <!-- Time Frame -->
                     <div class="hr-line-dashed"></div>
-                    <h3>Time Frame</h3>
+                    <h3>Time
+                        Frame&nbsp;<span class="icon-question-sign"><p style="display:none;"
+                        >Timeframe</p></span></h3>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" style="width:140px;">Term (Months)</label>
                         <div class="input-group m-b">
@@ -147,7 +159,10 @@
 
                     <!-- Control Market -->
                     <div class="hr-line-dashed"></div>
-                    <h3>Control Market</h3>
+                    <h3>Control Market&nbsp;<span
+                            class="icon-question-sign"><p
+                            style="display:none;">Timeframe</p></span>
+                    </h3>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" style="width:140px;"></label>
                             <div class="input-group m-b">
@@ -162,7 +177,9 @@
 
                     <!-- Investment  -->
                     <div class="hr-line-dashed"></div>
-                    <h3>Investment</h3>
+                    <h3>Investment
+                        &nbsp;<span class="icon-question-sign"><p
+                                style="display:none;">Iinvestment</p></span></h3>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" style="width:140px;"></label>
                              <div class="input-group m-b">
@@ -175,7 +192,9 @@
 
                     <!-- Number of Stocks  -->
                     <div class="hr-line-dashed"></div>
-                    <h3>Stocks</h3>
+                    <h3>Stocks&nbsp;<span class="icon-question-sign"><p
+                            style="display:none;"
+                    >Stocks</p></span></h3>
                     <div class="form-group">
                            <label class="col-sm-1 control-label" style="width:140px;">Number of stocks</label>
                              <div class="input-group m-b">
@@ -207,6 +226,28 @@
 <script src="/static/js/nouislider.min.js"></script>
 
 <script type="text/javascript">
+    console.log("interpreting the javascript code");
+    $(document).ready(function() {
+        console.log("Inside ready function");
+        // Tooltip only Text
+        $('span.icon-question-sign').hover(function(){
+                // Hover over code
+                console.log("Hover icon-question-sign class method");
+                var tooltip = $(this).children('p').text();
+                //$(this).data('tipText', title).removeAttr('title');
+                $('<p class="tooltip"></p>')
+                .text(tooltip)
+                .show()
+                .appendTo('body')
+                .fadeIn('slow');
+        }).mousemove(function(e) {
+                var mousex = e.pageX + 20; //Get X coordinates
+                var mousey = e.pageY + 10; //Get Y coordinates
+                $('.tooltip')
+                .css({ top: mousey, left: mousex })
+        });
+    });
+
     var rangeSlider = document.getElementById('basic_slider');
     
     noUiSlider.create(rangeSlider, {
@@ -216,6 +257,7 @@
             'max': [ 100 ]
         }
     });
+    console.log("after creating the nouslider");
 
     var rangeSliderValueElement = document.getElementById('basic_slider_value');
     var riskSliderRiskElement = document.getElementById('risk_slider_risk');
@@ -245,6 +287,7 @@
         var expRiskElement = document.getElementById('expRisk');
         if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
     }
+    // console.log("after interpreting all the methods");
 
 </script>
 {% endblock %}

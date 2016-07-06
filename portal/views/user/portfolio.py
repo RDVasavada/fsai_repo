@@ -3,11 +3,13 @@ from django.shortcuts import render
 import requests
 from django.template import RequestContext, Context, Template, loader
 from django.contrib.auth.decorators import login_required
-import socket
+from portal.models.data.portfolio import Portfolio
 
 @login_required
 def portfolio(request):
-	return render(request, 'user/portfolio_view.html')
+    # write code to get portfolio information from database
+    portfolio_Objects = Portfolio.objects.all()
+    return render(request, 'user/portfolio_view.html')
 
 def portfolio_settings(request):
     return render(request, 'user/portfolio_settings.html', RequestContext(request))
@@ -67,3 +69,30 @@ def portfolio_optimize(request):
     #print(response)
 
     return HttpResponse(html)
+
+def save_portfolio(request):
+    print("inside save portfolio method")
+    name = request.POST['name']
+    description = request.POST['description']
+    risk = int(request.POST['risk'])
+    timeframe = request.POST['timeframe']
+    control_market = chr(request.POST['control_market'])
+    investment = float(request.POST['investment'])
+    user_id = request.POST['user']
+
+    new_portfolio = Portfolio(name, description, risk, timeframe,
+                              control_market, investment, user_id)
+    try:
+        new_portfolio.save()
+    except Exception as e:
+        # This user must already exist
+        print e
+
+    print("inside save portfolio method")
+    '''
+    portfolio_Objects = Portfolio.objects.all()
+    t = loader.get_template('user/portfolio_view.html')
+    c = Context(portfolio_Objects)
+    html = t.render(c)
+    '''
+    return render(request, 'user/portfolio_view.html')

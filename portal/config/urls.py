@@ -19,9 +19,8 @@ urlpatterns = patterns('',
     (r'^user/dashboard/?$', views.dashboard),
     (r'^user/portfolio/?$', views.portfolio),
     (r'^user/portfolio_settings/?$', views.portfolio_settings),
-    (r'^user/portfolio_optimize/?$', views.portfolio_optimize)
-
-
+    (r'^user/portfolio_optimize/?$', views.portfolio_optimize),
+    (r'^user/save_portfolio/?$', views.save_portfolio)
 )
 
 # lets us serve our media
