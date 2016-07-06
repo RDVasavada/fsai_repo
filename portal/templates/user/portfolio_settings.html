@@ -87,8 +87,8 @@
                         <div class="col-lg-12">
                             <div class="hr-line-dashed"></div>
                     <h3>Details
-                        &nbsp;<span class="icon-question-sign"><p
-                                style="display:none;">Details</p></span></h3>
+                        &nbsp;<span class="icon-question-sign"><span>Details</span>
+                        </span></h3>
                         <div class="form-group">
                             <label class="col-sm-1 control-label" style="width:140px;">Name</label>
                            <div class="col-sm-5">
@@ -108,9 +108,8 @@
                     <div class="hr-line-dashed"></div>
                     <h3>Expected
                         Return&nbsp;<span
-                                class="icon-question-sign"><p
-                                style="display:none;">Expected Return</p></span>
-</h3>
+                                class="icon-question-sign"><span>Expected Return</span></span>
+                    </h3>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" style="width:140px;">Return</label>
                         <div class="input-group m-b">
@@ -123,9 +122,7 @@
 
                     <div class="hr-line-dashed"></div>
                     <h3>Expected Risk&nbsp;<span
-                            class="icon-question-sign"><p
-                            style="display:none;">Expected Risk
-                    </p></span>
+                            class="icon-question-sign"><span>Expected Risk</span></span>
                     </h3>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" style="width:140px;">Risk</label>
@@ -139,8 +136,7 @@
                     <!-- Time Frame -->
                     <div class="hr-line-dashed"></div>
                     <h3>Time
-                        Frame&nbsp;<span class="icon-question-sign"><p style="display:none;"
-                        >Timeframe</p></span></h3>
+                        Frame&nbsp;<span class="icon-question-sign"><span>Timeframe</span></span></h3>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" style="width:140px;">Term (Months)</label>
                         <div class="input-group m-b">
@@ -160,8 +156,7 @@
                     <!-- Control Market -->
                     <div class="hr-line-dashed"></div>
                     <h3>Control Market&nbsp;<span
-                            class="icon-question-sign"><p
-                            style="display:none;">Timeframe</p></span>
+                            class="icon-question-sign"><span>Control Market</span></span>
                     </h3>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" style="width:140px;"></label>
@@ -178,8 +173,7 @@
                     <!-- Investment  -->
                     <div class="hr-line-dashed"></div>
                     <h3>Investment
-                        &nbsp;<span class="icon-question-sign"><p
-                                style="display:none;">Iinvestment</p></span></h3>
+                        &nbsp;<span class="icon-question-sign"><span>Investment</span></span></h3>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" style="width:140px;"></label>
                              <div class="input-group m-b">
@@ -192,9 +186,7 @@
 
                     <!-- Number of Stocks  -->
                     <div class="hr-line-dashed"></div>
-                    <h3>Stocks&nbsp;<span class="icon-question-sign"><p
-                            style="display:none;"
-                    >Stocks</p></span></h3>
+                    <h3>Stocks&nbsp;<span class="icon-question-sign"><span></span>Stocks</span></span></h3>
                     <div class="form-group">
                            <label class="col-sm-1 control-label" style="width:140px;">Number of stocks</label>
                              <div class="input-group m-b">
@@ -226,8 +218,8 @@
 <script src="/static/js/nouislider.min.js"></script>
 
 <script type="text/javascript">
-    console.log("interpreting the javascript code");
-    $(document).ready(function() {
+    //console.log("interpreting the javascript code");
+    /*$(document).ready(function() {
         console.log("Inside ready function");
         // Tooltip only Text
         $('span.icon-question-sign').hover(function(){
@@ -246,7 +238,7 @@
                 $('.tooltip')
                 .css({ top: mousey, left: mousex })
         });
-    });
+    });*/
 
     var rangeSlider = document.getElementById('basic_slider');
     
@@ -257,7 +249,7 @@
             'max': [ 100 ]
         }
     });
-    console.log("after creating the nouslider");
+    //console.log("after creating the nouslider");
 
     var rangeSliderValueElement = document.getElementById('basic_slider_value');
     var riskSliderRiskElement = document.getElementById('risk_slider_risk');
