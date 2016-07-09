@@ -1,9 +1,12 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 import requests
 from django.template import RequestContext, Context, Template, loader
 from django.contrib.auth.decorators import login_required
 from portal.models.data.portfolio import Portfolio
+from portal.models.user.portal_user import PortalUser
+import traceback
 
 @login_required
 def portfolio(request):
@@ -67,32 +70,80 @@ def portfolio_optimize(request):
     html = t.render(c)
     #print("response from REST API")
     #print(response)
-
     return HttpResponse(html)
 
+@login_required
+def my_portfolios(request):
+    print("inside portfolios of user")
+    username = None
+    if request.user.is_authenticated():
+        username = request.user.username
+        print("Authenticated User is :" + username)
+        # Get User information from username
+        # get the portfolios of the user
+
+        user_portfolios = Portfolio.objects.filter(user=username)
+        print("user_portfolios" + user_portfolios)
+    else:
+        print("authentication is not successful")
+
+    return render(request, 'user/my_portfolios.html', RequestContext(request))
+
+'''
+This method will save the portfolio object into database
+'''
+@csrf_exempt
 def save_portfolio(request):
     print("inside save portfolio method")
+    print("Request Method :" + request.method)
+    #print(request.POST)
     name = request.POST['name']
     description = request.POST['description']
     risk = int(request.POST['risk'])
     timeframe = request.POST['timeframe']
-    control_market = chr(request.POST['control_market'])
+    control_market = request.POST['control_market']
     investment = float(request.POST['investment'])
+
     user_id = request.POST['user']
 
-    new_portfolio = Portfolio(name, description, risk, timeframe,
-                              control_market, investment, user_id)
-    try:
-        new_portfolio.save()
-    except Exception as e:
-        # This user must already exist
-        print e
+    print("portfolio input in the request")
+    print(name + "|" +
+          description + "|" +
+          str(risk) + "|" +
+          timeframe + "|" +
+          control_market + "|" +
+          str(investment) + "|" +
+          user_id)
+    portalUser = PortalUser.objects.get(id=user_id);
 
-    print("inside save portfolio method")
+    print("Portal User :")
+    print(portalUser)
+
+    new_portfolio = Portfolio(name, description, risk, timeframe,
+                              control_market, investment, portalUser)
+
+    #print("-------------------------------------")
+    #print("after creating the new portfolio user")
+
+    try:
+        print("before object save method")
+        print(new_portfolio)
+        new_portfolio.save()
+        print("after saving portfolio object")
+    except Exception as e:
+        print(e)
+
+    #print("inside save portfolio method")
+
     '''
     portfolio_Objects = Portfolio.objects.all()
     t = loader.get_template('user/portfolio_view.html')
     c = Context(portfolio_Objects)
     html = t.render(c)
     '''
-    return render(request, 'user/portfolio_view.html')
+
+    t = loader.get_template('user/portfolio_view.html')
+    c = Context()
+    html = t.render(c)
+    return HttpResponse(html)
+    #return render(request, 'user/portfolio_view.html')

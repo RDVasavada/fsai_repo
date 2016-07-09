@@ -15,8 +15,10 @@ class Portfolio(BaseModel):
 
     user = models.ForeignKey('portal.PortalUser')
 
-    def __init__(self, name, description, risk, timeframe, control_market,
-                 investment, user):
+    def __init__(self, name=name, description=description, risk=risk, timeframe=timeframe, control_market=control_market,
+                 investment=investment, user=user):
+        super(Portfolio, self).__init__(name=name, description=description, risk=risk, timeframe=timeframe, control_market=control_market,
+                 investment=investment, user=user)
         self.name = name
         self.description = description
         self.risk = risk

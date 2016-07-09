@@ -225,3 +225,12 @@ EMAIL_PORT = 587
 # 250MB - 214958080
 # 500MB - 429916160
 FILE_UPLOAD_MAX_MEMORY_SIZE = "429916160"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+   'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+}
