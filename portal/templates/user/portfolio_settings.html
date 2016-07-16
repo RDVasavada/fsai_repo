@@ -32,216 +32,233 @@
 
 </head>
 <body class="bg-img-num1" data-settings="open">   
-    <div class="container">        
-        <div class="row">                   
-            <div class="col-md-12">        
-                 <nav class="navbar brb" role="navigation">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-reorder"></span>                            
-                        </button>                                                
-                        <a class="navbar-brand" href="/static/img"><img src="/static/img/logo.png"/></a>                                                                                     
-                    </div>
-                    <div class="collapse navbar-collapse navbar-ex1-collapse">                                     
-                        <ul class="nav navbar-nav">
-                            <li class="active">
-                                <a href="/user/dashboard">
-                                    <span class="icon-home"></span> dashboard
-                                </a>
-                            </li>                            
-                        </ul>
-                    </div>
-                </nav>                
-
-            </div>            
-        </div>
-
-         <div class="row">       
-            <div class="col-md-2">
-                <div class="block block-drop-shadow">
-                    <div class="user bg-default bg-light-rtl">
-                        <div class="info">                                                                                
-                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Hello {{user.username}} !</strong>
-                         </span> </span> 
-                        </div>
-                    </div>
-                    <div class="content list-group list-group-icons">
-                        <a href="component_messages.html" class="list-group-item"><span class="icon-envelope"></span>Messages<i class="icon-angle-right pull-right"></i></a>
-                        <a href="component_charts.html" class="list-group-item"><span class="icon-bar-chart"></span>Statistic<i class="icon-angle-right pull-right"></i></a>
-                        <a href="/user/portfolio_settings" class="list-group-item"><span class="icon-cogs"></span>Settings<i class="icon-angle-right pull-right"></i></a>
-                        <a href="/user/portfolio_settings" class="list-group-item"><span class="icon-globe"></span>News<i class="icon-angle-right pull-right"></i></a>
-                        <a href="/logout" class="list-group-item"><span class="icon-off"></span>Logout<i class="icon-angle-right pull-right"></i></a>
-                    </div>
-                </div> 
+    <div class="container" style="font-family:'Helvetica Neue Ultra light'">        
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb" style="margin-top:33px">
+                    <li><a href="#">Home</a></li>                    
+                    <li><a href="dashboard">Dashboard</a></li>             
+                    <li class="active">Create a New Portfolio</li>
+                </ol>
             </div>
-     <div class="col-md-10">
-        <div class="block block-drop-shadow">
-            <div class="head bg-dot30">  
-                <h2>My Portfolios</h2>
-            <div class="ibox-content" style="display: block;">
-                    <form class="form-horizontal" action="/user/portfolio_optimize" method="post">
-                    {% csrf_token %}
-                    <!-- Details -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="hr-line-dashed"></div>
-                    <h3>Details
-                        &nbsp;<span class="icon-question-sign"><span>Details</span>
-                        </span></h3>
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label" style="width:140px;">Name</label>
-                           <div class="col-sm-5">
-                                <input type="text" class="form-control" value="High Risk Portfolio">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label" style="width:140px;">Description</label>
-                           <div class="col-sm-5">
-                            <textarea cols="40" rows="5" class="form-control">This is my profile for handling certain investments.</textarea>
-                            </div>
-                        </div>
-                         </div>
-                    </div>
-
-                    <div class="hr-line-dashed"></div>
-                    <h3>Expected
-                        Return&nbsp;<span
-                                class="icon-question-sign"><span>Expected Return</span></span>
-                    </h3>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label" style="width:140px;">Return</label>
-                        <div class="input-group m-b">
-                            <div class="input-group m-b">
-                                <span class="input-group-addon">%</span>
-                                <input id="expReturn" name="expReturn" type="number" value="5" placeholder="1" min="1" max="50" class="form-control" onchange="returnChecker()">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="hr-line-dashed"></div>
-                    <h3>Expected Risk&nbsp;<span
-                            class="icon-question-sign"><span>Expected Risk</span></span>
-                    </h3>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label" style="width:140px;">Risk</label>
-                        <div class="input-group m-b">
-                             <div class="input-group m-b">
-                                <span class="input-group-addon">%</span>
-                                <input id="expRisk" name="expRisk" type="number" value="10" placeholder="1" min="1" max="20" class="form-control" onchange="riskChecker()">
-                            </div>
-                        </div>
-                    </div>                    
-                    <!-- Time Frame -->
-                    <div class="hr-line-dashed"></div>
-                    <h3>Time
-                        Frame&nbsp;<span class="icon-question-sign"><span>Timeframe</span></span></h3>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label" style="width:140px;">Term (Months)</label>
-                        <div class="input-group m-b">
-                            <select class="form-control m-b" name="Months" id="Months">
-                                <option value="1">1</option>
-                                <option value="3">3</option>
-                                <option value="6">6</option>
-                                <option value="12">12</option>
-                                <option value="24">24</option>
-                                <option value="36">36</option>
-                                <option value="48">48</option>
-                                <option value="60">60</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Control Market -->
-                    <div class="hr-line-dashed"></div>
-                    <h3>Control Market&nbsp;<span
-                            class="icon-question-sign"><span>Control Market</span></span>
-                    </h3>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label" style="width:140px;"></label>
-                            <div class="input-group m-b">
-                            <select class="form-control m-b" name="Market" id="Market">
-                                <option value="1">S&amp;P 500</option>
-                                <option value="2">NASDAQ</option>
-                                <option value="3">Dow Jones</option>
-                                <option value="4">US Markets</option>
-                            </select>
-                            </div>
-                    </div>
-
-                    <!-- Investment  -->
-                    <div class="hr-line-dashed"></div>
-                    <h3>Investment
-                        &nbsp;<span class="icon-question-sign"><span>Investment</span></span></h3>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label" style="width:140px;"></label>
-                             <div class="input-group m-b">
-                            <div class="input-group m-b">
-                                <span class="input-group-addon">$</span>
-                                <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control">
-                            </div>  
-                            </div>                      
-                        </div>
-
-                    <!-- Number of Stocks  -->
-                    <div class="hr-line-dashed"></div>
-                    <h3>Stocks&nbsp;<span class="icon-question-sign"><span></span>Stocks</span></span></h3>
-                    <div class="form-group">
-                           <label class="col-sm-1 control-label" style="width:140px;">Number of stocks</label>
-                             <div class="input-group m-b">
-                                <div class="input-group m-b">
-                                    <span class="input-group-addon"></span>
-                                    <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" max="10" class="form-control" onchange="stockChecker()">
-                                </div>
-                             </div>
-                    </div>
-
-                        <div class="col-md-6">
-                            <a href="/" class="btn btn-default btn-block btn-clean" type="submit">Cancel</a>
-                            <!--<a href="#" class="btn btn-primary" type="submit" >-->
-                        </div>
-                        <div class="col-md-6">
-                            <input class="btn btn-default btn-block btn-clean" type="submit" value="Optimize"/>
-                        </div>              
-                </form><!-- End of Form -->
-            </div><!-- End of Content -->
         </div>
-    </div>
+        <div class="row">
+<!-- Left Hand Navi Menu -->
+            <div class="col-md-2" style="margin-top:50px">
+                <div class="page-sidebar">
+                    <div class="page-navigation-panel">
+                        <div class="name">Howdy, {{user.username}}</div>
+                        <div class="control"><a href="#" class="psn-control"><span class="icon-reorder"></span></a></div>
+                    </div>            
+                    <div class="page-navigation-panel search">                                
+                        <div class="input-group">                        
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <div class="input-group-addon"><span class="icon-search"></span></div>
+                        </div>                
+                    </div>
+                    <ul class="page-navigation">
+                        <li>
+                            <a href="/user/dashboard">
+                                <span class="icon-home"></span> Dashboard
+                            </a>
+                        </li>                            
+                        <li>
+                            <a href="#"><span class="icon-comments"></span> Messages</a>
+                            <ul>                                    
+                                <li><a href="form_elements.html">Inbox</a></li>
+                                <li><a href="form_editors.html">Sent</a></li>
+                                <li><a href="form_files.html">Deleted</a></li>
+                                <li><a href="form_validation.html">Starred</a></li>
+                            </ul>                                
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon-folder-open-alt"></span> My Portfolios</a>
+                            <ul>
+                                <li><a href="component_blocks.html">Portfolio A </a></li>
+                                <li><a href="component_buttons.html">Portfolio B </a></li>
+                                <li><a href="component_modals.html">Portfolio C</a></li> 
+                            </ul>
+                        </li>  
+                        <li>
+                            <a href="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon-cogs"></span> Help & Suggestions</a>
+                        </li>
+                        <li>
+                            <a href="/logout"><span class="icon-share-alt"></span> Log Out</a>
+                        </li>                                                                   
+                    </ul>
+                </div>
+            </div>
+         <div class="col-md-10" style="padding-right:50px">
+            <div class="block block-drop-shadow" style="font-family:'Helvetica Neue Ultra light'">
+                <div class="head bg-dot30">  
+                <div class="ibox-content" style="display: block;">
+                        <form id="myForm" class="form-horizontal" action="/user/portfolio_optimize" method="post">
+                        {% csrf_token %}
+                        <!-- Details -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="hr-line-dashed"></div>
+                        <h3>Details</h3>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:140px;">Name</label>
+                                <a href="login.html" onclick="return popitup('/login')"
+                                 >?</a>
+                               <div class="col-sm-5">
+                                    <input type="text" class="form-control" value="High Risk Portfolio">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:140px;">Description</label>
+                                 <a href="login.html" onclick="return popitup('/login')"
+                                 >?</a>
+                               <div class="col-sm-5">
+                                <textarea cols="40" rows="5" class="form-control">This is my profile for handling certain investments.</textarea>
+                                </div>
+                            </div>
+                             </div>
+                        </div>
+                        <div class="toolbar" style="height:auto;margin:auto;width:100">
+                            <div class="hr-line-dashed"></div>
+                            <h3>Expected Return</h3>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:140px;">Return</label>
+                                <div class="input-group m-b">
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon">%</span>
+                                        <input id="expReturn" name="expReturn" type="number" value="5" placeholder="1" min="1" max="50" class="form-control" onchange="returnChecker()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <h3>Expected Risk</h3>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:140px;">Risk</label>
+                                <div class="input-group m-b">
+                                     <div class="input-group m-b">
+                                        <span class="input-group-addon">%</span>
+                                        <input id="expRisk" name="expRisk" type="number" value="10" placeholder="1" min="1" max="20" class="form-control" onchange="riskChecker()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Time Frame -->
+                        <div class="toolbar" style="height:auto;margin:auto:width:100%">
+                        <div class="hr-line-dashed"></div>
+                        <h3>Time Frame</h3>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label" style="width:140px;">Term (Months)</label>
+                            <div class="input-group m-b">
+                                <select class="form-control m-b" name="Months" id="Months">
+                                    <option value="1">1</option>
+                                    <option value="3">3</option>
+                                    <option value="6">6</option>
+                                    <option value="12">12</option>
+                                    <option value="24">24</option>
+                                    <option value="36">36</option>
+                                    <option value="48">48</option>
+                                    <option value="60">60</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <!-- Control Market -->
+                        <div class="hr-line-dashed"></div>
+                        <h3>Control Market</h3>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label" style="width:140px;"></label>
+                                <div class="input-group m-b">
+                                <select class="form-control m-b" name="Market" id="Market">
+                                    <option value="1">S&amp;P 500</option>
+                                    <option value="2">NASDAQ</option>
+                                    <option value="3">Dow Jones</option>
+                                    <option value="4">US Markets</option>
+                                </select>
+                                </div>
+                        </div>
+                        </div>
+                        <div class="toolbar" style="height:auto;margin:auto:width:100%">
+                        <!-- Investment  -->
+                        <div class="hr-line-dashed"></div>
+                        <h3>Investment</h3>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label" style="width:140px;"></label>
+                                 <div class="input-group m-b">
+                                <div class="input-group m-b">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control">
+                                </div>
+                                </div>
+                            </div>
+
+                        <!-- Number of Stocks  -->
+                        <div class="hr-line-dashed"></div>
+                        <h3>Stocks</h3>
+                        <div class="form-group">
+                               <label class="col-sm-1 control-label" style="width:140px;">Number of stocks</label>
+                                 <div class="input-group m-b">
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon"></span>
+                                        <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" max="10" class="form-control" onchange="stockChecker()">
+                                    </div>
+                                 </div>
+                        </div>
+                        </div>
+                            <div class="col-md-6" style="margin-top:15px">
+                                <a href="/" class="btn btn-default btn-block btn-clean" type="submit">Cancel</a>
+                                <!--<a href="#" class="btn btn-primary" type="submit" >-->
+                            </div>
+
+                            <div class="col-md-6" style="margin-top:15px">
+<!--                                 <input class="btn btn-default btn-block btn-clean" type="submit" value="Optimize"/>
+ -->                                <a href="#modal_default_1" onclick="loadDummyData()" data-toggle="modal" class="btn btn-default btn-block btn-clean">Optimize</a>
+                            </div>
+                    </form><!-- End of Form -->
+                </div><!-- End of Content -->
+            </div>
+        </div>
+
+
 </div>
 </div>
+</div>
+
+<div class="modal" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" style="margin-top:25%">
+            <div class="modal-content">
+
+                    <div class="statusbar" id="statusbar_2" style="display: block;margin:0px;padding:10px;height:50px;">
+                        <div class="statusbar-icon"><img src="/static/img/loader.gif"></div>
+                        <div class="statusbar-text">Loading...</div>
+                    </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
 </div>
 </body>
-
+<script>
+function loadDummyData() {
+    setTimeout(function(){ document.forms["myForm"].submit(); }, 3000);
+}
+</script>
 
 {% block scripts %}
 <script src="/static/js/nouislider.min.js"></script>
 
 <script type="text/javascript">
-    //console.log("interpreting the javascript code");
-    /*$(document).ready(function() {
-        console.log("Inside ready function");
-        // Tooltip only Text
-        $('span.icon-question-sign').hover(function(){
-                // Hover over code
-                console.log("Hover icon-question-sign class method");
-                var tooltip = $(this).children('p').text();
-                //$(this).data('tipText', title).removeAttr('title');
-                $('<p class="tooltip"></p>')
-                .text(tooltip)
-                .show()
-                .appendTo('body')
-                .fadeIn('slow');
-        }).mousemove(function(e) {
-                var mousex = e.pageX + 20; //Get X coordinates
-                var mousey = e.pageY + 10; //Get Y coordinates
-                $('.tooltip')
-                .css({ top: mousey, left: mousex })
-        });
-    });*/
-
     var rangeSlider = document.getElementById('basic_slider');
-    
+
     noUiSlider.create(rangeSlider, {
         start: [30],
         range: {
@@ -249,7 +266,6 @@
             'max': [ 100 ]
         }
     });
-    //console.log("after creating the nouslider");
 
     var rangeSliderValueElement = document.getElementById('basic_slider_value');
     var riskSliderRiskElement = document.getElementById('risk_slider_risk');
@@ -279,7 +295,11 @@
         var expRiskElement = document.getElementById('expRisk');
         if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
     }
-    // console.log("after interpreting all the methods");
 
+function popitup(url) {
+    newwindow=window.open(url,'name','height=400,width=400');
+    if (window.focus) {newwindow.focus()}
+    return false;
+}
 </script>
 {% endblock %}

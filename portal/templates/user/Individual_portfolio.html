@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>        
+    <title>FSAI</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="/static/js1/morris.js"></script>
+    <script type="text/javascript" src="/static/js1/raphael.js"></script>
+    <link rel="icon" type="image/ico" href="favicon.ico"/>
+    
+    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
+    
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
+    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins/knob/jquery.knob.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/sparkline/jquery.sparkline.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.js'></script>     
+    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.resize.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins.js'></script>    
+    <script type='text/javascript' src='/static/js/actions.js'></script>    
+    <script type='text/javascript' src='/static/js/charts.js'></script>
+    <script type='text/javascript' src='/static/js/settings.js'></script> 
+
+</head>
+<body class="bg-img-num1" data-settings="open">   
+<div class="container">            
+<!-- Begin -->
+<!-- Top Nav Bar -->
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb" style="margin-top:33px">
+                    <li><a href="#">Home</a></li>                    
+                    <li><a href="dashboard">Dashboard</a></li>
+                    <li class="active">My Portfolios</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+<!-- Left Hand Navi Menu -->
+            <div class="col-md-2" style="margin-top:50px">
+                <div class="page-sidebar">
+                    <div class="page-navigation-panel">
+                        <div class="name">Howdy, {{user.username}}</div>
+                        <div class="control"><a href="#" class="psn-control"><span class="icon-reorder"></span></a></div>
+                    </div>            
+                    <div class="page-navigation-panel search">                                
+                        <div class="input-group">                        
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <div class="input-group-addon"><span class="icon-search"></span></div>
+                        </div>                
+                    </div>
+                    <ul class="page-navigation">
+                        <li>
+                            <a href="/user/dashboard">
+                                <span class="icon-home"></span> Dashboard
+                            </a>
+                        </li>                            
+                        <li>
+                            <a href="#"><span class="icon-comments"></span> Messages</a>
+                            <ul>                                    
+                                <li><a href="form_elements.html">Inbox</a></li>
+                                <li><a href="form_editors.html">Sent</a></li>
+                                <li><a href="form_files.html">Deleted</a></li>
+                                <li><a href="form_validation.html">Starred</a></li>
+                            </ul>                                
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon-folder-open-alt"></span> My Portfolios</a>
+                             <ul>
+                                <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
+                                <li><a href="/user/Individual_portfolio">High Risk Portfolio</a></li>
+                                <li><a href="/user/Individual_portfolio">Portfolio B </a></li>
+                                <li><a href="/user/Individual_portfolio">Portfolio C</a></li> 
+                            </ul> 
+                        </li>  
+                        <li>
+                            <a href="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="/user/news_portfolio"><span class="icon-flag-alt"></span> News & Sentiment</a>
+                            <ul>
+                                <li><a href="component_blocks.html">Portfolio A </a></li>
+                                <li><a href="component_buttons.html">Portfolio B </a></li>
+                                <li><a href="component_modals.html">Portfolio C</a></li> 
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon-cogs"></span> Help & Suggestions</a>
+                            <ul>
+                                <li><a href="component_blocks.html">Portfolio A </a></li>
+                                <li><a href="component_buttons.html">Portfolio B </a></li>
+                                <li><a href="component_modals.html">Portfolio C</a></li> 
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon-share-alt"></span> Log Out</a>
+                        </li>                                                                   
+                    </ul>
+                </div>
+            </div>
+<!-- Right Hand Content Goes Here                 -->
+     <!--Content-->
+     <div class="col-md-8" style="padding-left:60px;">
+        <h2 style="text-align:center;">High Risk Portfolio</h2>
+        <!--first portfolio -->
+        <div class="block block-drop-shadow">
+            <div class="head bg-dot30">  
+            <div class="side pull-right"> 
+                     </div>
+                        <table class="table table-hover margin bottom">
+                        <thead>
+                        <tr>
+                            <th>Market Ticker</th>
+                            <th class="text-center">Company Name</th>
+                            <th class="text-center">Buy Date</th>
+                            <th class="text-center">Recommended Sell Date</th>
+                            <th class="text-center">Market Sentiment</th>
+                            <th class="text-center">Risk</th>
+                            <th class="text-center">Percent sales today</th>
+                            <th class="text-center">Percent gains</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>AAPL</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">01/11/2017</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">Low</td>
+                            <td class="text-center">10%</td>
+                            <td class="text-center">12%</td>
+                        </tr>
+                        <tr>
+                            <td>GOOG</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">09/01/2016</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">Medium</td>
+                            <td class="text-center">10%</td>
+                            <td class="text-center">12%</td>
+                        </tr>
+                        <tr>
+                            <td>TSLA</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">02/17/2016</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">Low</td>
+                            <td class="text-center">4%</td>
+                            <td class="text-center">9%</td>
+                        </tr>  
+                        <tr>
+                            <td>TXS</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">04/29/2017</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">High</td>
+                            <td class="text-center">1%</td>
+                            <td class="text-center">7%</td>
+                        </tr>
+                        <tr>
+                            <td>HP</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">07/21/2017</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">Medium</td>
+                            <td class="text-center">15%</td>
+                            <td class="text-center">2%</td>
+                        </tr>
+                        <tr>
+                            <td>MSFT</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">06/23/2017</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">Low</td>
+                            <td class="text-center">4%</td>
+                            <td class="text-center">12%</td>
+                        </tr>
+                        <tr>
+                            <td>TXN</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">11/01/2017</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">Low</td>
+                            <td class="text-center">10%</td>
+                            <td class="text-center">8%</td>
+                        </tr>
+                        <tr>
+                            <td>KO</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">01/27/2016</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">High</td>
+                            <td class="text-center">10%</td>
+                            <td class="text-center">12%</td>
+                        </tr>
+                        <tr>
+                            <td>WMT</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">05/23/2017</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">High</td>
+                            <td class="text-center">11%</td>
+                            <td class="text-center">3%</td>
+                        </tr>
+                        <tr>
+                            <td>TGT</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">10/18/2016</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">Medium</td>
+                            <td class="text-center">13%</td>
+                            <td class="text-center">7%</td>
+                        </tr>   
+                        <tr>
+                            <td>HOG</td>
+                            <td class="text-center small">John Smith Inc</td>
+                            <td class="text-center">12/11/2009</td>
+                            <td class="text-center">12/11/2017</td>
+                            <td class="text-center">1-100</td>
+                            <td class="text-center">Low</td>
+                            <td class="text-center">15%</td>
+                            <td class="text-center">3%</td>
+                        </tr>                                                    
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    
+                
+       </div>
+    </div>
+<!-- End -->
+</div>
+</body>
+
+
+{% block scripts %}
+<script src="/static/js/nouislider.min.js"></script>
+
+<script type="text/javascript">
+    var rangeSlider = document.getElementById('basic_slider');
+    
+    noUiSlider.create(rangeSlider, {
+        start: [30],
+        range: {
+            'min': [ 0 ],
+            'max': [ 100 ]
+        }
+    });
+
+    var rangeSliderValueElement = document.getElementById('basic_slider_value');
+    var riskSliderRiskElement = document.getElementById('risk_slider_risk');
+
+    rangeSlider.noUiSlider.on('update', function( values, handle ) {
+        rangeSliderValueElement.innerHTML = values[handle] + "%";
+        if(values[handle] < 30) {
+            riskSliderRiskElement.innerHTML = "<p style='color:green;'>Low Risk</p>"
+        } else if(values[handle] > 30 && values[handle] < 60) {
+            riskSliderRiskElement.innerHTML = "<p style='color:orange;'>Medium Risk</p>"
+        } else if (values[handle] > 60) {
+            riskSliderRiskElement.innerHTML = "<p style='color:red;'>High Risk</p>"
+        }
+    });
+
+    function stockChecker() {
+        var stocksNumberElement = document.getElementById('stocks_number');
+        if (stocksNumberElement.value > 10) { stocksNumberElement.value = 10} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
+    }
+
+    function returnChecker() {
+        var expReturnElement = document.getElementById('expReturn');
+        if (expReturnElement.value > 50) { expReturnElement.value = 50} else if (expReturnElement.value < 1) { expReturnElement.value = 1}
+    }
+
+    function riskChecker() {
+        var expRiskElement = document.getElementById('expRisk');
+        if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
+    }
+
+function popitup(url) {
+    newwindow=window.open(url,'name','height=400,width=400');
+    if (window.focus) {newwindow.focus()}
+    return false;
+}
+</script>
+{% endblock %}
