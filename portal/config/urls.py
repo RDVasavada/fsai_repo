@@ -20,7 +20,8 @@ urlpatterns = patterns('',
     (r'^user/portfolio/?$', views.portfolio),
     (r'^user/portfolio_settings/?$', views.portfolio_settings),
     (r'^user/portfolio_optimize/?$', views.portfolio_optimize),
-    (r'^user/save_portfolio/?$', views.save_portfolio)
+    (r'^user/save_portfolio/?$', views.save_portfolio),
+    (r'^user/my_portfolios/?$', views.my_portfolios)
 )
 
 # lets us serve our media
