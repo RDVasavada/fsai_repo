@@ -112,26 +112,28 @@
      <div class="col-md-8" style="padding-left:60px;">
         <h2 style="text-align:center;">My Portfolios</h2>
         <!--first portfolio -->
+         {% for portfolio in portfolios %}
         <div class="block block-drop-shadow">
             <div class="head bg-dot30">  
             <div class="side pull-right"> 
-                             <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/portfolio_settings">View</a></div>
+                <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/portfolio_settings">View</a></div>
                      </div>
-                                <table class="table table-hover margin bottom">
+                                    <table class="table table-hover margin bottom">
                                         <thead>
                                         <tr>
-                                            <th>High Risk Portfolio</th>
-                                            <th class="text-center">15.91 %</th>
+                                            <th>{{ portfolio.name }}</th>
+                                            <th class="text-center">{{ portfolio.risk }} %</th>
                                             <th class="text-center">54 stocks in 10 markets</th>
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        {% for stock in portfolio.stocks %}
                                         <tr>
-                                            <td>AAPL</td>
+                                            <td>{{ stock.ticker }}</td>
                                             <td class="text-center small">1604$ <span style="color:#00ff00">(+2.81%)</span></td>
                                             <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
                                         </tr>
-                                        <tr>
+                                        <!--<tr>
                                             <td>GOOG</td>
                                             <td class="text-center small">38627$ <span style="color:#ff4d4d">(-1.3%)</span></td>
                                             <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
@@ -140,13 +142,15 @@
                                             <td>TSLA</td>
                                             <td class="text-center small">9745$ <span style="color:#00ff00">(+15.4%)</span></td>
                                             <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
-                                        </tr>                                  
+                                        </tr>-->
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
         </div>
+         {% endfor %}
         <!--second portfolio-->
-                <div class="block block-drop-shadow">
+         <!--<div class="block block-drop-shadow">
             <div class="head bg-dot30">  
             <div class="side pull-right"> 
                              <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/portfolio_settings">View</a></div>
@@ -178,9 +182,9 @@
                                         </tbody>
                                     </table>
                                 </div>
-        </div>
+        </div>-->
                 <!--third portfolio-->
-                <div class="block block-drop-shadow">
+         <!--<div class="block block-drop-shadow">
             <div class="head bg-dot30">  
             <div class="side pull-right"> 
                              <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/portfolio_settings">View</a></div>
@@ -217,7 +221,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-        </div>
+        </div>-->
        </div>
     </div>
 <!-- End -->

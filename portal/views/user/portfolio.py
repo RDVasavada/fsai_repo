@@ -2,11 +2,10 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 import requests
-from django.template import RequestContext, Context, Template, loader
+from django.template import RequestContext, Context, loader
 from django.contrib.auth.decorators import login_required
 from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
-import traceback
 
 @login_required
 def portfolio(request):
@@ -146,18 +145,51 @@ def my_portfolios(request):
         portalUser = PortalUser.objects.get(username=username)
         # Get User information from username
         # get the portfolios of the user
-        print("portal User object :" + str(portalUser))
-        user_portfolios = Portfolio.objects.filter(user_id=portalUser.id)
-        print("user_portfolios: " + str(user_portfolios.length))
-        for uportfolio in user_portfolios:
-            print(uportfolio)
-            for stock in uportfolio.entry_set.all():
-                print(stock)
+        print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
+
+        print("getting all the portfolios")
+        try:
+            all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
+            #print(all_portfolios)
+
+            #all_portfolios = Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id])
+            #print(all_portfolios)
+            for port in all_portfolios:
+                print(str(port.id) + "|" + port.name)
+                port.stocks = port.stock_set.all()
+                print(port.stock_set.all())
+                #for stock in port.stock_set:
+                    #print(str(stock.id) + " | " + stock.ticker)
+
+
+            #for p in Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id]):
+                #print(p)
+
+            #user_portfolios = Portfolio.objects.filter(user_id=portalUser.id)
+            #length = len(user_portfolios)
+            #print(length)
+        except Exception as e:
+            print(e)
+            all_portfolios = None
+
+        #print(str(user_portfolios))
+        #print("user_portfolios: " + str(len(user_portfolios)))
+        #for uportfolio in user_portfolios:
+            #print(uportfolio)
+            #for stock in uportfolio.entry_set.all():
+                #print(stock)
         #print(user_portfolios)
     else:
         print("authentication is not successful")
 
-    return render(request, 'user/my_portfolios.html', RequestContext(request))
+    context_dict = {}
+    context_dict["portfolios"] = all_portfolios
+
+    t = loader.get_template('user/my_portfolios.html')
+    c = Context(context_dict)
+    html = t.render(c)
+    print(html)
+    return HttpResponse(html)
 
 '''
 This method will save the portfolio object into database
