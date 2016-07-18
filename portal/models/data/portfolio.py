@@ -15,6 +15,10 @@ class Portfolio(BaseModel):
 
     user = models.ForeignKey('portal.PortalUser')
 
+    #def __init__(self):
+        #super(self)
+
+    '''
     def __init__(self, name=name, description=description, risk=risk, timeframe=timeframe, control_market=control_market,
                  investment=investment, user=user):
         super(Portfolio, self).__init__(name=name, description=description, risk=risk, timeframe=timeframe, control_market=control_market,
@@ -26,6 +30,7 @@ class Portfolio(BaseModel):
         self.control_market = control_market
         self.investment = investment
         self.user = user
+    '''
 
     class Meta:
         app_label = 'portal'
