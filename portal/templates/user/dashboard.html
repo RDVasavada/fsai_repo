@@ -1,110 +1,13 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>        
-    <title>FSAI</title>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="/static/js1/morris.js"></script>
-    <script type="text/javascript" src="/static/js1/raphael.js"></script>
-    <link rel="icon" type="image/ico" href="favicon.ico"/>
-    
-    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
-    
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
-    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins/knob/jquery.knob.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/sparkline/jquery.sparkline.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.js'></script>     
-    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.resize.js'></script>
-    
+{% extends "base.html" %}
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script type='text/javascript' src='/static/js/plugins.js'></script>    
     <script type='text/javascript' src='/static/js/actions.js'></script>    
     <script type='text/javascript' src='/static/js/charts.js'></script>
     <script type='text/javascript' src='/static/js/settings.js'></script> 
-
-</head>
-<body class="bg-img-num1" data-settings="open">   
-<div class="container">            
-<!-- Begin -->
-<!-- Top Nav Bar -->
-        <div class="row">
-            <div class="col-md-12">
-                <ol class="breadcrumb" style="margin-top:33px">
-                    <li><a href="#">Home</a></li>                    
-                    <li><a href="dashboard">Dashboard</a></li>
-                    <li class="active">My Portfolios</li>
-                </ol>
-            </div>
-        </div>
-        <div class="row">
-<!-- Left Hand Navi Menu -->
-            <div class="col-md-2" style="margin-top:50px">
-                <div class="page-sidebar">
-                    <div class="page-navigation-panel">
-                        <div class="name">Howdy, {{user.username}}</div>
-                        <div class="control"><a href="#" class="psn-control"><span class="icon-reorder"></span></a></div>
-                    </div>            
-                    <div class="page-navigation-panel search">                                
-                        <div class="input-group">                        
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <div class="input-group-addon"><span class="icon-search"></span></div>
-                        </div>                
-                    </div>
-                    <ul class="page-navigation">
-                        <li>
-                            <a href="/user/dashboard">
-                                <span class="icon-home"></span> Dashboard
-                            </a>
-                        </li>                            
-                        <li>
-                            <a href="#"><span class="icon-comments"></span> Messages</a>
-                            <ul>                                    
-                                <li><a href="form_elements.html">Inbox</a></li>
-                                <li><a href="form_editors.html">Sent</a></li>
-                                <li><a href="form_files.html">Deleted</a></li>
-                                <li><a href="form_validation.html">Starred</a></li>
-                            </ul>                                
-                        </li>
-                        <li>
-                            <a> <span class="icon-folder-open-alt"></span>My Portfolios</a>
-                          <ul>
-                                <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
-                                <li><a href="/user/Individual_portfolio">High Risk Portfolio</a></li>
-                                <li><a href="/user/Individual_portfolio">Portfolio B </a></li>
-                                <li><a href="/user/Individual_portfolio">Portfolio C</a></li> 
-                            </ul> 
-                        </li>  
-                        <li>
-                            <a href="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
-                        </li>
-                        <li>
-                            <a href="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-cogs"></span> Help & Suggestions</a>
-                            <ul>
-                                <li><a href="component_blocks.html">Portfolio A </a></li>
-                                <li><a href="component_buttons.html">Portfolio B </a></li>
-                                <li><a href="component_modals.html">Portfolio C</a></li> 
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-share-alt"></span> Log Out</a>
-                        </li>                                                                   
-                    </ul>
-                </div>
-            </div>
-
-    <div class="col-md-5" style="padding-left:60px;">
+    <script src="//js.pusher.com/2.2/pusher.min.js"></script>
+{% block content %}
+    <div class="col-md-5">
         <div class="block block-drop-shadow">
             <div class="head bg-dot20">   
                 <h2>My Portfolios</h2>
@@ -165,13 +68,13 @@
        <div class="block block-drop-shadow">
           <div class="head bg-dot30">
                         <h2>Market Charts</h2>
-                        <div class="side pull-right">                            
+                        <div class="side pull-right">
                             <ul class="buttons">                                
                                 <li><a href="#"><span class="icon-refresh"></span></a></li>
                                 <li><a href="#"><span class="icon-cogs"></span></a></li>
                             </ul>
                         </div>                        
-                        <div class="ibox-content" style="display: block;">
+                        <div class="ibox-content" style="display: block;background-color: rgba(0,0,0,0);border:0px">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div id="morris-line-chart" style="position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);height:200px;"></div>
@@ -191,85 +94,79 @@
     </div>   
                <!--end of left side elements-->
                <!--beginning of right side elements-->
-      <div class="col-md-5" >  
-      <div class="block block-drop-shadow">     
-            <div class="head bg-dot30">
-                <h2>Portfolio Returns</h2>
-                    <div class="side pull-right">                            
-                        <ul class="buttons">                                
-                            <li><a href="#"><span class="icon-refresh"></span></a></li>
-                            <li><a href="#"><span class="icon-cogs"></span></a></li>
-                        </ul>
-                    </div>                        
-                    <div class="head-panel nm tac">
-                            <div class="sparkline">                            
-                                <span sparkType="pie" sparkWidth="100" sparkHeight="100">5079,3768,7537</span>
-                            </div>                                                         
-                    </div> 
-                    <div class="head-panel nm">
-                            <div class="hp-info hp-simple pull-left hp-inline">
-                                <span class="hp-main"><span class="icon-circle"></span> US Portfolio Markets 5079  [ 31% ]</span>                                
-                            </div>                 
-                            <div class="hp-info hp-simple pull-left hp-inline">                                
-                                <span class="hp-main"><span class="icon-circle text-info"></span> High Rish European Portfolio 3768  [ 23% ]</span>
-                            </div>                            
-                            <div class="hp-info hp-simple pull-left hp-inline">                                
-                                <span class="hp-main"><span class="icon-circle text-primary"></span> Low Rish Long Term Portfolio 7537  [ 46% ]</span>
-                            </div>                                                
-                    </div>                      
-            </div>                                                                                                             
-        </div>
-        <div class="block block-drop-shadow">  
-                    <div class="header">
-                        <h2>Messaging</h2>
+    <div class="col-md-5" style="padding-right:50px">  
+        <div class="block block-drop-shadow">     
+                <div class="head bg-dot30">
+                    <h2>Portfolio Returns</h2>
                         <div class="side pull-right">                            
                             <ul class="buttons">                                
-                                <li><a href="#"><span class="icon-user"></span></a></li>
+                                <li><a href="#"><span class="icon-refresh"></span></a></li>
                                 <li><a href="#"><span class="icon-cogs"></span></a></li>
                             </ul>
-                        </div>                                                
-                    </div>
-                    <div class="content messages npr npb">                         
-                        <div class="scroll oh" style="height: 250px;">
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
-                                <div class="messages-item-text">Dmitry has joined this session!</div>
-                                <div class="messages-item-date">14:32 30.08.2013</div>
-                            </div>                                                                                                            
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
-                                <div class="messages-item-text">Connected with Dmitry. Your reference number for this chat session is 2508333.</div>
-                                <div class="messages-item-date">14:20 30.08.2013</div>
-                            </div>                        
-                            <div class="messages-item inbox">
-                                <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail"/>
-                                <div class="messages-item-text">Hello Dmitry</div>
-                                <div class="messages-item-date">14:19 30.08.2013</div>
-                            </div>
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
-                                <div class="messages-item-text">How may I help you?</div>
-                                <div class="messages-item-date">14:15 30.08.2013</div>
-                            </div>                          
-                        </div>
-                    </div>
-                    <div class="footer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="icon-comment"></i></span>
-                            <input type="text" class="form-control" placeholder="message..">
-                            <span class="input-group-btn">
-                                <button class="btn"><span class="icon-chevron-up"></span></button>
-                            </span>
                         </div>                        
-                    </div>
+                        <div class="head-panel nm tac">
+                                <div class="sparkline">                            
+                                    <span sparkType="pie" sparkWidth="100" sparkHeight="100">5079,3768,7537</span>
+                                </div>                                                         
+                        </div> 
+                        <div class="head-panel nm">
+                                <div class="hp-info hp-simple pull-left hp-inline">
+                                    <span class="hp-main"><span class="icon-circle"></span> US Portfolio Markets 5079  [ 31% ]</span>                                
+                                </div>                 
+                                <div class="hp-info hp-simple pull-left hp-inline">                                
+                                    <span class="hp-main"><span class="icon-circle text-info"></span> High Rish European Portfolio 3768  [ 23% ]</span>
+                                </div>                            
+                                <div class="hp-info hp-simple pull-left hp-inline">                                
+                                    <span class="hp-main"><span class="icon-circle text-primary"></span> Low Rish Long Term Portfolio 7537  [ 46% ]</span>
+                                </div>                                                
+                        </div>                      
+                </div>                                                                                                             
+        </div>
+        <div class="block block-drop-shadow">  
+                        <div class="header">
+                            <h2>Messaging</h2>
+                            <div class="side pull-right">                            
+                                <ul class="buttons">                                
+                                    <li><a href="#"><span class="icon-user"></span></a></li>
+                                    <li><a href="#"><span class="icon-cogs"></span></a></li>
+                                </ul>
+                            </div>                                                
+                        </div>
+                        <div class="content messages npr npb">                         
+                            <div class="scroll oh" style="height: 250px;">
+                                <div class="messages-item">
+                                    <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
+                                    <div class="messages-item-text">Dmitry has joined this session!</div>
+                                    <div class="messages-item-date">14:32 30.08.2013</div>
+                                </div>                                                                                                            
+                                <div class="messages-item">
+                                    <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
+                                    <div class="messages-item-text">Connected with Dmitry. Your reference number for this chat session is 2508333.</div>
+                                    <div class="messages-item-date">14:20 30.08.2013</div>
+                                </div>                        
+                                <div class="messages-item inbox">
+                                    <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail"/>
+                                    <div class="messages-item-text">Hello Dmitry</div>
+                                    <div class="messages-item-date">14:19 30.08.2013</div>
+                                </div>
+                                  
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon-comment"></i></span>
+                                <input type="text" class="form-control" placeholder="message..">
+                                <span class="input-group-btn">
+                                    <button class="btn"><span class="icon-chevron-up"></span></button>
+                                </span>
+                            </div>                        
+                        </div>
         </div>  
-   </div>
-</div>
-</div>
-</body>
+    </div>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>    
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
-
-<script type="text/javascript">
+<script>
 $(function() {
     Morris.Line({
         element: 'morris-line-chart',
@@ -287,4 +184,41 @@ $(function() {
     });
 });
 </script>
+  <script>
 
+    Pusher.logToConsole = true;
+    var pusher = new Pusher('494655f2d7fa16cf1fd7');
+    var notificationsChannel = pusher.subscribe('live_notification');
+    notificationsChannel.bind('new_notification', function(notification) {
+        var message = notification.message;
+        toastr.success(message)
+    })
+    console.log(notificationsChannel)
+  </script>
+      <script>
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+                if (xhr.readyState==4 && xhr.status==200)
+                {
+                    var data = JSON.parse(xhr.responseText).items;
+                    console.log(data)
+                }
+            };
+        xhr.open('GET','http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo',true);
+        xhr.send();   
+    </script>                    
+{% block body %}
+
+{% endblock %}
+
+        </div>
+        <div class="footer" style="background-color:rgba(255,255,255,0);border:0px">
+            <a href="#" class="pull-right">Contact Us&nbsp;</a>
+            <div>
+                <strong>Copyright</strong> FSAI &copy; 2015
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

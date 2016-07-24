@@ -1,9 +1,98 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>        
+    <title>FSAI - News Portal</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <link rel="icon" type="image/ico" href="favicon.ico"/>
+           
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/fsai.css" rel="stylesheet">
+    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css">
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>   
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
+    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>    
+    <script type='text/javascript' src='/static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
+    
     <script type='text/javascript' src='/static/js/plugins.js'></script>    
-    <script type='text/javascript' src='/static/js/actions.js'></script>    
-    <script type='text/javascript' src='/static/js/charts.js'></script>
-    <script type='text/javascript' src='/static/js/settings.js'></script> 
-{% block content %}
+    <script type='text/javascript' src='/static/js/actions.js'></script>
+
+</head>
+<body class="bg-img-num1"> 
+    <div class="container" style="font-family:'Helvetica Neue Ultra light'">   
+
+<!-- Top Nav Bar -->
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb" style="margin-top:33px">
+                    <li><a href="#">Home</a></li>                    
+                    <li><a href="dashboard">Dashboard</a></li>                                        
+                    <li class="active">News Portal</li>
+                </ol>
+            </div>
+        </div>
+
+<!-- Main Content      -->
+        <div class="row">
+<!-- Left Hand Navi Menu -->
+            <div class="col-md-2" style="margin-top:50px">
+                <div class="page-sidebar">
+                    <div class="page-navigation-panel">
+                        <div class="name">Howdy, {{user.username}}</div>
+                        <div class="control"><a href="#" class="psn-control"><span class="icon-reorder"></span></a></div>
+                    </div>            
+                    <div class="page-navigation-panel search">                                
+                        <div class="input-group">                        
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <div class="input-group-addon"><span class="icon-search"></span></div>
+                        </div>                
+                    </div>
+                    <ul class="page-navigation">
+                        <li>
+                            <a href="/user/dashboard">
+                                <span class="icon-home"></span> Dashboard
+                            </a>
+                        </li>                            
+                        <li>
+                            <a href="#"><span class="icon-comments"></span> Messages</a>
+                            <ul>                                    
+                                <li><a href="form_elements.html">Inbox</a></li>
+                                <li><a href="form_editors.html">Sent</a></li>
+                                <li><a href="form_files.html">Deleted</a></li>
+                                <li><a href="form_validation.html">Starred</a></li>
+                            </ul>                                
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon-folder-open-alt"></span> My Portfolios</a>
+                            <ul>
+                                <li><a href="component_blocks.html">Portfolio A </a></li>
+                                <li><a href="component_buttons.html">Portfolio B </a></li>
+                                <li><a href="component_modals.html">Portfolio C</a></li> 
+                            </ul>
+                        </li>  
+                        <li>
+                            <a href="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon-cogs"></span> Help & Suggestions</a>
+                        </li>
+                        <li>
+                            <a href="/logout"><span class="icon-share-alt"></span> Log Out</a>
+                        </li>                                                                   
+                    </ul>
+                </div>
+            </div>
             <div class="col-md-10" style="padding-right:50px">
                 <div class="row">
                 <center><h1>News Portal</h1></center>
@@ -89,6 +178,9 @@
                     </div>                      
                 </div>
             </div>
+        </div>
+</body>
+<!-- RSS Feed Script -->
     <script>
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(){
@@ -151,19 +243,7 @@
         xhr.open('GET','http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo',true);
         xhr.send();   
     </script>
-
-{% block body %}
-
-{% endblock %}
-
-        </div>
-        <div class="footer" style="background-color:rgba(255,255,255,0);border:0px">
-            <a href="#" class="pull-right">Contact Us&nbsp;</a>
-            <div>
-                <strong>Copyright</strong> FSAI &copy; 2015
-            </div>
-        </div>
-
-    </div>
 </div>
-{% endblock %}
+</html>
+
+

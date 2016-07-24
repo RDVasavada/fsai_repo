@@ -1,18 +1,109 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>        
+    <title>FSAI</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="/static/js1/morris.js"></script>
+    <script type="text/javascript" src="/static/js1/raphael.js"></script>
+    <link rel="icon" type="image/ico" href="favicon.ico"/>
+    
+    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
+    
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
+    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins/knob/jquery.knob.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/sparkline/jquery.sparkline.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.js'></script>     
+    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.resize.js'></script>
+    
     <script type='text/javascript' src='/static/js/plugins.js'></script>    
     <script type='text/javascript' src='/static/js/actions.js'></script>    
     <script type='text/javascript' src='/static/js/charts.js'></script>
     <script type='text/javascript' src='/static/js/settings.js'></script> 
-{% block content %}
+
+</head>
+<body class="bg-img-num1" data-settings="open">   
+    <div class="container" style="font-family:'Helvetica Neue Ultra light'">        
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb" style="margin-top:33px">
+                    <li><a href="#">Home</a></li>                    
+                    <li><a href="dashboard">Dashboard</a></li>             
+                    <li class="active">Create a New Portfolio</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+<!-- Left Hand Navi Menu -->
+            <div class="col-md-2" style="margin-top:50px">
+                <div class="page-sidebar">
+                    <div class="page-navigation-panel">
+                        <div class="name">Howdy, {{user.username}}</div>
+                        <div class="control"><a href="#" class="psn-control"><span class="icon-reorder"></span></a></div>
+                    </div>            
+                    <div class="page-navigation-panel search">                                
+                        <div class="input-group">                        
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <div class="input-group-addon"><span class="icon-search"></span></div>
+                        </div>                
+                    </div>
+                    <ul class="page-navigation">
+                        <li>
+                            <a href="/user/dashboard">
+                                <span class="icon-home"></span> Dashboard
+                            </a>
+                        </li>                            
+                        <li>
+                            <a href="#"><span class="icon-comments"></span> Messages</a>
+                            <ul>                                    
+                                <li><a href="form_elements.html">Inbox</a></li>
+                                <li><a href="form_editors.html">Sent</a></li>
+                                <li><a href="form_files.html">Deleted</a></li>
+                                <li><a href="form_validation.html">Starred</a></li>
+                            </ul>                                
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon-folder-open-alt"></span> My Portfolios</a>
+                            <ul>
+                                <li><a href="component_blocks.html">Portfolio A </a></li>
+                                <li><a href="component_buttons.html">Portfolio B </a></li>
+                                <li><a href="component_modals.html">Portfolio C</a></li> 
+                            </ul>
+                        </li>  
+                        <li>
+                            <a href="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon-cogs"></span> Help & Suggestions</a>
+                        </li>
+                        <li>
+                            <a href="/logout"><span class="icon-share-alt"></span> Log Out</a>
+                        </li>                                                                   
+                    </ul>
+                </div>
+            </div>
          <div class="col-md-10" style="padding-right:50px">
             <div class="block block-drop-shadow" style="font-family:'Helvetica Neue Ultra light'">
                 <div class="head bg-dot30">  
-                <div class="ibox-content" style="display: block;background-color: rgba(0,0,0,0);color:white;border:0px">
+                <div class="ibox-content" style="display: block;">
                         <form id="myForm" class="form-horizontal" action="/user/portfolio_optimize" method="post">
                         {% csrf_token %}
                         <!-- Details -->
                         <div class="row">
                             <div class="col-lg-12">
+                                <div class="hr-line-dashed"></div>
                         <h3>Details</h3>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">Name</label>
@@ -34,7 +125,7 @@
                              </div>
                         </div>
                         <div class="toolbar" style="height:auto;margin:auto;width:100">
-                            
+                            <div class="hr-line-dashed"></div>
                             <h3>Expected Return</h3>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">Return</label>
@@ -45,7 +136,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <div class="hr-line-dashed"></div>
                             <h3>Expected Risk</h3>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">Risk</label>
@@ -59,7 +150,7 @@
                         </div>
                         <!-- Time Frame -->
                         <div class="toolbar" style="height:auto;margin:auto:width:100%">
-                        
+                        <div class="hr-line-dashed"></div>
                         <h3>Time Frame</h3>
                         <div class="form-group">
                             <label class="col-sm-1 control-label" style="width:140px;">Term (Months)</label>
@@ -79,7 +170,7 @@
                         </div>
 
                         <!-- Control Market -->
-                        
+                        <div class="hr-line-dashed"></div>
                         <h3>Control Market</h3>
                         <div class="form-group">
                             <label class="col-sm-1 control-label" style="width:140px;"></label>
@@ -95,7 +186,7 @@
                         </div>
                         <div class="toolbar" style="height:auto;margin:auto:width:100%">
                         <!-- Investment  -->
-                        
+                        <div class="hr-line-dashed"></div>
                         <h3>Investment</h3>
                         <div class="form-group">
                             <label class="col-sm-1 control-label" style="width:140px;"></label>
@@ -108,7 +199,7 @@
                             </div>
 
                         <!-- Number of Stocks  -->
-                        
+                        <div class="hr-line-dashed"></div>
                         <h3>Stocks</h3>
                         <div class="form-group">
                                <label class="col-sm-1 control-label" style="width:140px;">Number of stocks</label>
@@ -155,13 +246,14 @@
             </div>
         </div>
 </div>
+</body>
 <script>
 function loadDummyData() {
     setTimeout(function(){ document.forms["myForm"].submit(); }, 3000);
 }
 </script>
 
-
+{% block scripts %}
 <script src="/static/js/nouislider.min.js"></script>
 
 <script type="text/javascript">
@@ -210,14 +302,4 @@ function popitup(url) {
     return false;
 }
 </script>
-
-{% block body %}
-
-{% endblock %}
-
-        </div>
-
-
-    </div>
-</div>
 {% endblock %}
