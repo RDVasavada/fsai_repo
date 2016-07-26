@@ -18,6 +18,9 @@ def my_portfolios(request):
 def Individual_portfolio(request):
     return render(request, 'user/Individual_portfolio.html', RequestContext(request))
 
+def individual_stock(request):
+    return render(request, 'user/individual_stock.html', RequestContext(request))
+
 def portfolio_optimize(request):
     print("Months: " + request.POST['Months'])
     print("Market :" + request.POST['Market'])

@@ -1,14 +1,41 @@
-{% extends "user/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>        
+    <title>FSAI</title>
 
-{% block head %}
-<!--<link href="/static/css/morris.css" rel="stylesheet">-->
-<link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css" />  
-{% endblock %}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="/static/js1/morris.js"></script>
+    <script type="text/javascript" src="/static/js1/raphael.js"></script>
+    <link rel="icon" type="image/ico" href="favicon.ico"/>
+    
+    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
+    
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
+    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins/knob/jquery.knob.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/sparkline/jquery.sparkline.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.js'></script>     
+    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.resize.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins.js'></script>    
+    <script type='text/javascript' src='/static/js/actions.js'></script>    
+    <script type='text/javascript' src='/static/js/charts.js'></script>
+    <script type='text/javascript' src='/static/js/settings.js'></script> 
 
-{% block body %}
-<div style="color:#a3a3c2;">
-    <div class="col-lg-8">
-        <div class="ibox-content">
+</head>
+<body class="bg-img-num1" data-settings="open">   
+    <div class="container">        
+        <div class="row"> 
+          <div class="col-lg-8">
+            <div class="ibox-content">
             <h2>Portfolio Optimization Results</h2>
             <table class="table table-striped">
                 <thead>
@@ -22,6 +49,7 @@
                         <th>Risk Level</th>
                     </tr>
                 </thead>
+               
                 <tbody>
                     {% for result in optimizeSearchResults %}
                     <tr>
@@ -40,7 +68,7 @@
                         <td><span class="label label-warning-light">{{ result.riskLevel }}</span></td>
                     </tr>
                     {% endfor %}
-                </tbody>
+                </tbody> 
             </table>
         </div>
         <br>
@@ -67,8 +95,9 @@
         </div>
     </div>-->
 </div>
-
-{% endblock %}
+</div>
+</body>
+</html>
 
 {% block scripts %}
 <script src="/static/js/morris.js"></script>
