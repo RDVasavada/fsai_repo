@@ -94,7 +94,8 @@ function generateRandomShares() {
           };
         }
       };
-    });    
+    });
+    generateData(shares)    
 };
 function generateData(arr){
     arr.forEach(function(x,i) {
@@ -102,25 +103,25 @@ function generateData(arr){
         // var dataHtml = "<td>TELSA</td><td>TSLA</td><td>"+x+"</td><td>"+new Date().toJSON().slice(0,10)+"</td><td>"+utc+"</td><td>"+expectedRisk+"%</td><td>"+expectedReturn+"%</td>";
             var clone = $("#incoming").clone()
             clone[0].innerHTML = "";
-            var xName = $("#companyName").clone();
+            var xName = $("#companyName").clone().removeAttr('id');
             xName[0].children[0].innerText = "Daily Journal";
             xName.appendTo(clone);
-            var xCompanyName = $("#months").clone();
+            var xCompanyName = $("#months").clone().removeAttr('id');
             xCompanyName[0].innerText = "DJCO";
             xCompanyName.appendTo(clone);
-            var xNumStocks = $("#numStocks").clone();
+            var xNumStocks = $("#numStocks").clone().removeAttr('id');
             xNumStocks[0].innerText = x;
             xNumStocks.appendTo(clone);
-            var xMonths = $("#months").clone();
+            var xMonths = $("#months").clone().removeAttr('id');
             xMonths[0].innerText = new Date().toJSON().slice(0,10);
             xMonths.appendTo(clone);
-            var sellDate = $("#months").clone();
+            var sellDate = $("#months").clone().removeAttr('id');
             sellDate[0].innerText = utc;
             sellDate.appendTo(clone);
-            var xExpectedReturn = $("#expectedReturn").clone();
+            var xExpectedReturn = $("#expectedReturn").clone().removeAttr('id');
             xExpectedReturn[0].innerText = expectedReturn +"%";
             xExpectedReturn.appendTo(clone);
-            var xExpectedRisk = $("#expectedRisk").clone();
+            var xExpectedRisk = $("#expectedRisk").clone().removeAttr('id');
             xExpectedRisk.appendTo(clone)
             // $("#companyName")[0].children[0].appendTo(clone)
             clone.appendTo(pin);
@@ -138,6 +139,8 @@ function generateData(arr){
         // };
         // console.log(dataObj)
     })
+
+            $("#incoming").css('display','none')
 }
 
 </script>
