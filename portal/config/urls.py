@@ -23,6 +23,10 @@ urlpatterns = patterns('',
     (r'^user/my_portfolios/?$', views.my_portfolios),
     (r'^user/Individual_portfolio/?$', views.Individual_portfolio),
     (r'^user/news_portal/?$', views.news_portal),
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 7fe12ebeefab88a96bbb047be6b2b9923d8b1b9e
 
 
 )
