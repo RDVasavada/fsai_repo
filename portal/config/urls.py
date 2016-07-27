@@ -21,7 +21,9 @@ urlpatterns = patterns('',
     (r'^user/portfolio_settings/?$', views.portfolio_settings),
     (r'^user/portfolio_optimize/?$', views.portfolio_optimize),
     (r'^user/my_portfolios/?$', views.my_portfolios),
-    (r'^user/Individual_portfolio/?$', views.Individual_portfolio)
+    (r'^user/Individual_portfolio/?$', views.Individual_portfolio),
+    (r'^user/news_portal/?$', views.news_portal),
+    (r'^user/notification/?$', views.dashboard),
 
 
 )
