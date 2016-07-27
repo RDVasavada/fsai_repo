@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     (r'^logout/?$', views.logoutview),
     (r'^register/?$', views.register),
     (r'^recover_password/?$', views.recover_password),
-    (r'^new_password/(?P<token>\w+)/?$', views.new_password),
+    (r'^new_password/(?P<token>w+)/?$', views.new_password),
     (r'^email_sent/?$', views.email_sent),
 
 
@@ -23,7 +23,6 @@ urlpatterns = patterns('',
     (r'^user/my_portfolios/?$', views.my_portfolios),
     (r'^user/Individual_portfolio/?$', views.Individual_portfolio),
     (r'^user/news_portal/?$', views.news_portal),
-    (r'^user/notification/?$', views.dashboard),
 
 
 )

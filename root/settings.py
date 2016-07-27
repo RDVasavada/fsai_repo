@@ -46,7 +46,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '1234',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '8080',
         'OPTIONS'  : {
         #'init_command' : 'SET storage_engine=MyISAM',
          },
