@@ -8075,3 +8075,126 @@ Traceback (most recent call last):
   File "/home/ubuntu/fsai_repo/portal/views/user/dashboard.py", line 4, in <module>
     import pusher
 ImportError: No module named pusher
+Unhandled exception in thread started by <function wrapper at 0x7f380fb1aed8>
+Performing system checks...
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/autoreload.py", line 226, in wrapper
+    fn(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/management/commands/runserver.py", line 116, in inner_run
+    self.check(display_num_errors=True)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/management/base.py", line 426, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/usr/local/lib/python2.7/dist-packages/django/core/checks/registry.py", line 75, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/checks/urls.py", line 10, in check_url_config
+    return check_resolver(resolver)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/checks/urls.py", line 19, in check_resolver
+    for pattern in resolver.url_patterns:
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 33, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 417, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 33, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 410, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/ubuntu/fsai_repo/root/urls.py", line 9, in <module>
+    url(r'^', include('portal.config.urls')),
+  File "/usr/local/lib/python2.7/dist-packages/django/conf/urls/__init__.py", line 52, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/ubuntu/fsai_repo/portal/config/urls.py", line 1, in <module>
+    from portal import views
+  File "/home/ubuntu/fsai_repo/portal/views/__init__.py", line 3, in <module>
+    from user import *
+  File "/home/ubuntu/fsai_repo/portal/views/user/__init__.py", line 1, in <module>
+    from dashboard import *
+  File "/home/ubuntu/fsai_repo/portal/views/user/dashboard.py", line 4, in <module>
+    import pusher
+ImportError: No module named pusher
+Unhandled exception in thread started by <function wrapper at 0x7fd6fe6dced8>
+Performing system checks...
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/autoreload.py", line 226, in wrapper
+    fn(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/management/commands/runserver.py", line 116, in inner_run
+    self.check(display_num_errors=True)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/management/base.py", line 426, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/usr/local/lib/python2.7/dist-packages/django/core/checks/registry.py", line 75, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/checks/urls.py", line 10, in check_url_config
+    return check_resolver(resolver)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/checks/urls.py", line 19, in check_resolver
+    for pattern in resolver.url_patterns:
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 33, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 417, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 33, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 410, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/ubuntu/fsai_repo/root/urls.py", line 9, in <module>
+    url(r'^', include('portal.config.urls')),
+  File "/usr/local/lib/python2.7/dist-packages/django/conf/urls/__init__.py", line 52, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/ubuntu/fsai_repo/portal/config/urls.py", line 1, in <module>
+    from portal import views
+  File "/home/ubuntu/fsai_repo/portal/views/__init__.py", line 3, in <module>
+    from user import *
+  File "/home/ubuntu/fsai_repo/portal/views/user/__init__.py", line 1, in <module>
+    from dashboard import *
+  File "/home/ubuntu/fsai_repo/portal/views/user/dashboard.py", line 4, in <module>
+    import pusher
+ImportError: No module named pusher
+Unhandled exception in thread started by <function wrapper at 0x7f7a1a039ed8>
+Performing system checks...
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/autoreload.py", line 226, in wrapper
+    fn(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/management/commands/runserver.py", line 116, in inner_run
+    self.check(display_num_errors=True)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/management/base.py", line 426, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/usr/local/lib/python2.7/dist-packages/django/core/checks/registry.py", line 75, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/checks/urls.py", line 10, in check_url_config
+    return check_resolver(resolver)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/checks/urls.py", line 19, in check_resolver
+    for pattern in resolver.url_patterns:
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 33, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 417, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/usr/local/lib/python2.7/dist-packages/django/utils/functional.py", line 33, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 410, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/ubuntu/fsai_repo/root/urls.py", line 9, in <module>
+    url(r'^', include('portal.config.urls')),
+  File "/usr/local/lib/python2.7/dist-packages/django/conf/urls/__init__.py", line 52, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/ubuntu/fsai_repo/portal/config/urls.py", line 1, in <module>
+    from portal import views
+  File "/home/ubuntu/fsai_repo/portal/views/__init__.py", line 3, in <module>
+    from user import *
+  File "/home/ubuntu/fsai_repo/portal/views/user/__init__.py", line 1, in <module>
+    from dashboard import *
+  File "/home/ubuntu/fsai_repo/portal/views/user/dashboard.py", line 4, in <module>
+    import pusher
+ImportError: No module named pusher
