@@ -121,16 +121,16 @@
                                     <table class="table table-hover margin bottom">
                                         <thead>
                                         <tr>
-                                            <th>{{ portfolio.name }}</th>
-                                            <th class="text-center">{{ portfolio.risk }} %</th>
-                                            <th class="text-center">54 stocks in 10 markets</th>
+                                            <th class="text-center" style="width: 33%;">{{ portfolio.name }}</th>
+                                            <th class="text-center" style="width: 33%;">{{ portfolio.risk }} %</th>
+                                            <th class="text-center" style="width: 33%;">54 stocks in 10 markets</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% if not portfolio.stocks %}
+                                        {% if portfolio.stocks %}
                                             {% for stock in portfolio.stocks %}
                                             <tr>
-                                                <td>{{ stock.ticker }}</td>
+                                                <td class="text-center">{{ stock.ticker }}</td>
                                                 <td class="text-center small">1604$ <span style="color:#00ff00">(+2.81%)</span></td>
                                                 <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
                                             </tr>
@@ -145,6 +145,8 @@
                                                 <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
                                             </tr>-->
                                             {% endfor %}
+                                        {% else %}
+                                            <tr><td colspan="3" style="text-align:center;">You have not created any stocks in this portfolio.</td></tr>
                                         {% endif %}
                                         </tbody>
                                     </table>
