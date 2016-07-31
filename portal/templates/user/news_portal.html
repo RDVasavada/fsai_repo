@@ -73,9 +73,10 @@
                         <li>
                             <a href="#"><span class="icon-folder-open-alt"></span> My Portfolios</a>
                             <ul>
-                                <li><a href="component_blocks.html">Portfolio A </a></li>
-                                <li><a href="component_buttons.html">Portfolio B </a></li>
-                                <li><a href="component_modals.html">Portfolio C</a></li> 
+                                <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
+                                {% for portfolio in portfolios %}
+                                    <li><a href="user/individual_portfolio/{{ portfolio.id }}">{{ portfolio.name }}</a></li>
+                                {% endfor %}
                             </ul>
                         </li>  
                         <li>

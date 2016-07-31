@@ -76,11 +76,11 @@
                         </li>
                         <li>
                             <a> <span class="icon-folder-open-alt"></span>My Portfolios</a>
-                          <ul>
+                            <ul>
                                 <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
-                                <li><a href="/user/Individual_portfolio">High Risk Portfolio</a></li>
-                                <li><a href="/user/Individual_portfolio">Portfolio B </a></li>
-                                <li><a href="/user/Individual_portfolio">Portfolio C</a></li> 
+                                {% for portfolio in portfolios %}
+                                    <li><a href="userr/individual_portfolio/{{ portfolio.id }}">{{ portfolio.name }}</a></li>
+                                {% endfor %}
                             </ul> 
                         </li>  
                         <li>

@@ -77,9 +77,9 @@
                             <a href="#"><span class="icon-folder-open-alt"></span> My Portfolios</a>
                             <ul>
                                 <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
-                                <li><a href="/user/Individual_portfolio">High Risk Portfolio</a></li>
-                                <li><a href="/user/Individual_portfolio">Portfolio B </a></li>
-                                <li><a href="/user/Individual_portfolio">Portfolio C</a></li> 
+                                {% for portfolio in portfolios %}
+                                    <li><a href="user/individual_portfolio/{{ portfolio.id }}">{{ portfolio.name }}</a></li>
+                                {% endfor %}
                             </ul> 
                         </li>  
                         <li>
@@ -127,23 +127,25 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for stock in portfolio.stocks %}
-                                        <tr>
-                                            <td>{{ stock.ticker }}</td>
-                                            <td class="text-center small">1604$ <span style="color:#00ff00">(+2.81%)</span></td>
-                                            <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
-                                        </tr>
-                                        <!--<tr>
-                                            <td>GOOG</td>
-                                            <td class="text-center small">38627$ <span style="color:#ff4d4d">(-1.3%)</span></td>
-                                            <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
-                                        </tr>
-                                        <tr>
-                                            <td>TSLA</td>
-                                            <td class="text-center small">9745$ <span style="color:#00ff00">(+15.4%)</span></td>
-                                            <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
-                                        </tr>-->
-                                        {% endfor %}
+                                        {% if not portfolio.stocks %}
+                                            {% for stock in portfolio.stocks %}
+                                            <tr>
+                                                <td>{{ stock.ticker }}</td>
+                                                <td class="text-center small">1604$ <span style="color:#00ff00">(+2.81%)</span></td>
+                                                <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
+                                            </tr>
+                                            <!--<tr>
+                                                <td>GOOG</td>
+                                                <td class="text-center small">38627$ <span style="color:#ff4d4d">(-1.3%)</span></td>
+                                                <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
+                                            </tr>
+                                            <tr>
+                                                <td>TSLA</td>
+                                                <td class="text-center small">9745$ <span style="color:#00ff00">(+15.4%)</span></td>
+                                                <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
+                                            </tr>-->
+                                            {% endfor %}
+                                        {% endif %}
                                         </tbody>
                                     </table>
                                 </div>

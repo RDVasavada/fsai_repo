@@ -6,18 +6,25 @@ from django.template import RequestContext, Context, loader
 from django.contrib.auth.decorators import login_required
 from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
+from django.db import connection
+from portal.models.data.stock import Stock
 
 @login_required
 def portfolio(request):
     # write code to get portfolio information from database
-    portfolio_Objects = Portfolio.objects.all()
-    return render(request, 'user/portfolio_view.html')
+    # portfolio_Objects = Portfolio.objects.all()
+
+    html = get_top_portfolios(request, 'user/portfolio_view.html')
+    return HttpResponse(html)
 
 def portfolio_settings(request):
-    return render(request, 'user/portfolio_settings.html', RequestContext(request))
+    html = get_top_portfolios(request, 'user/portfolio_settings.html')
+    return HttpResponse(html)
 
+@login_required
 def Individual_portfolio(request):
-    return render(request, 'user/Individual_portfolio.html', RequestContext(request))
+    html = get_top_portfolios(request, 'user/Individual_portfolio.html')
+    return HttpResponse(html)
 
 def portfolio_optimize(request):
     try:
@@ -128,6 +135,8 @@ def portfolio_optimize(request):
     #         eachStockresult = {}
     context_dict = {}
     context_dict["optimizeSearchResults"] = optimizeSearchResults
+    portfolios = top_portfolios()
+    context_dict["portfolios"] = portfolios
     t = loader.get_template('user/portfolio_optimize.html')
     c = Context(context_dict)
     html = t.render(c)
@@ -135,6 +144,34 @@ def portfolio_optimize(request):
     #print("response from REST API")
     #print(response)
     return HttpResponse(html)
+
+#@login_required
+def top_portfolios(user_id):
+    #if request.user.is_authenticated():
+    #username = request.user.username
+    #print("Authenticated User is :" + username)
+    #portalUser = PortalUser.objects.get(username=username)
+    #print("getting top portfolios")
+    all_portfolios = {}
+    try:
+        #all_portfolios = Portfolio.objects.raw("select p.id as id,risk,"
+        #                                       "timeframe,investment,control_market,name,sum(investment) as value "
+        #                                       "from portal_portfolio p, portal_stock s "
+        #                                       "where p.id=s.show_id and p.user_id=1 group by p.id order by investment desc limit 3")
+        #print(user_id)
+        cursor = connection.cursor()
+        cursor.execute("select p.id as id,name,sum(investment) as value from "
+                       "portal_portfolio p, portal_stock s where p.id=s.show_id "
+                       "and p.user_id=" + str(user_id) + " group by p.id order by investment desc limit 3")
+        all_portfolios = dictfetchall(cursor)
+        #print(all_portfolios)
+    except Exception as e:
+        print(e)
+    #Stock.objects.filter(show__user_id=1)
+    #cursor = connection.cursor()
+    #cursor.execute("UPDATE bar SET foo = 1 WHERE baz = %s", 67)
+    #cursor.execute("SELECT foo FROM bar WHERE baz = %s", 12)
+    return all_portfolios
 
 @login_required
 def my_portfolios(request):
@@ -188,7 +225,7 @@ def my_portfolios(request):
     t = loader.get_template('user/my_portfolios.html')
     c = Context(context_dict)
     html = t.render(c)
-    print(html)
+    #print(html)
     return HttpResponse(html)
 
 '''
@@ -239,8 +276,11 @@ def save_portfolio(request):
     html = t.render(c)
     '''
 
+    context_dict = {}
+    context_dict["portfolios"] = top_portfolios(user_id)
     t = loader.get_template('user/portfolio_view.html')
-    c = Context()
+    c = Context(context_dict)
+
     html = t.render(c)
     return HttpResponse(html)
     #return render(request, 'user/portfolio_view.html')
@@ -255,3 +295,25 @@ def search_portfolio(request):
     print("Portfolio Results ")
     print(portfolio_results)
     return HttpResponse("this returns the search results")
+
+def dictfetchall(cursor):
+    "Returns all rows from a cursor as a dict"
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]
+
+def get_top_portfolios(request, html_template):
+    if request.user.is_authenticated():
+        username = request.user.username
+        portalUser = PortalUser.objects.get(username=username)
+
+    portfolios = top_portfolios(portalUser.id)
+
+    context_dict = {}
+    context_dict["portfolios"] = portfolios
+    t = loader.get_template(html_template)
+    c = Context(context_dict)
+    html = t.render(c)
+    return html
