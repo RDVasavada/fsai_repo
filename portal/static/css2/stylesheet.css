@@ -485,7 +485,7 @@ dd{padding: 5px 0px;}
 /* eof breadcrumb */
 
 /* buttons */
-.btn{border-color: transparent; font-weight: bold; background: rgba(0,0,0,0.2); border-radius: 5px; color: #FFF;}
+.btn{border-color: transparent; font-weight: 100; background: rgba(0,0,0,0.2); border-radius: 5px; color: #FFF;}
 .btn:focus{color: #FFF; outline: none;}
 .btn:hover,.btn-default.btn-clean:hover,.btn-primary.btn-clean:hover,.btn-success.btn-clean:hover,
 .btn-info.btn-clean:hover,.btn-warning.btn-clean:hover, .btn-danger.btn-clean:hover, .btn-clean:hover,
@@ -916,7 +916,7 @@ dd{padding: 5px 0px;}
 /* error block */ 
 .block-error{width: 300px; margin: 100px auto 0px;}
     .block-error .error-logo{margin-bottom: 20px; float: left; width: 100%; text-align: center;}
-        .block-error .error-code,.block-error .error-text{font-size: 24px; color: #FFF; text-align: center; text-shadow: 3px 3px 3px rgba(0,0,0,0.4); 
+        .block-error .error-code,.block-error .error-text{font-size: 24px; font-weight: 100; color: #FFF; text-align: center; text-shadow: 3px 3px 3px rgba(0,0,0,0.4); 
                                                           width: 100%; float: left; margin-bottom: 10px;}
         .block-error .error-text{font-size: 14px;margin-bottom: 20px;}
 /* eof error block */
