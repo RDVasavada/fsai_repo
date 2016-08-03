@@ -7,7 +7,7 @@ import socket
 
 @login_required
 def portfolio(request):
-	return render(request, 'user/portfolio_view.html')
+    return render(request, 'user/portfolio_view.html')
 
 def portfolio_settings(request):
     return render(request, 'user/portfolio_settings.html', RequestContext(request))
@@ -17,6 +17,9 @@ def my_portfolios(request):
 
 def Individual_portfolio(request):
     return render(request, 'user/Individual_portfolio.html', RequestContext(request))
+
+def Individual_stock(request):
+    return render(request, 'user/Individual_stock.html', RequestContext(request))
 
 def portfolio_optimize(request):
     #begin Adam's mock data script -->    

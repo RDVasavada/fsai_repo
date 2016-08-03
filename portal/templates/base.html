@@ -14,6 +14,7 @@
     <link href="/static/css/style.css" rel="stylesheet">
     <link href="/static/css/fsai.css" rel="stylesheet">
     <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
+    <link href="/static/css2/stylesheet.css" rel="stylesheet" type="text/css"/>   
     {% endblock %}
     {% block head %}
 
@@ -47,14 +48,15 @@
             <div class="col-md-12">
                 <ol class="breadcrumb" style="margin-top:33px">
                     <li><a href="#">Home</a></li>                    
-                    <li><a href="dashboard">Dashboard</a></li>
-                    <li class="active">My Portfolios</li>
+                    <li><a href="dashboard">Dashboard</a>
+                    </li>
+
                 </ol>
             </div>
         </div>
         <div class="row" style="padding-left:20px">
 <!-- Left Hand Navi Menu -->
-            <div class="col-md-2" style="margin-top:50px">
+            <div class="col-lg-2" style="margin-top:50px">
                 <div class="page-sidebar">
                     <div class="page-navigation-panel">
                         <div class="name">Howdy, {{user.username}}</div>
@@ -85,9 +87,9 @@
                             <a id="myPortfolios"> <span class="icon-folder-open-alt"></span>My Portfolios</a>
                           <ul>
                                 <li><a href="#statusbar_2" class="stbar" id="/user/my_portfolios">Portfolio Summary </a></li>
-                                <li><a href="#statusbar_2" class="stbar" id="/user/my_portfolios">High Risk Portfolio</a></li>
-                                <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">Portfolio B </a></li>
-                                <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">Portfolio C</a></li> 
+                                <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">High Risk Portfolio</a></li>
+                                <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">European Portfolio</a></li>
+                                <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">Tech Portfolio</a></li> 
                             </ul> 
                         </li>  
                         <li>
@@ -111,6 +113,12 @@
                 <div class="statusbar-text">Loading...</div>
                 <div class="statusbar-close icon-remove"></div>
             </div>
+        <div id="footer" class="footer" style="position:fixed;background-color:rgba(255,255,255,0);bottom:0px;border:0px">
+            <a href="#" class="pull-right">Contact Us&nbsp;</a>
+            <div style>
+                <strong>Copyright</strong> VISE &copy; 2015
+            </div>
+        </div>            
             <script type="text/javascript">
             $(".page-navigation li a").click(function(){       
                 var ul = $(this).parent('li').children('ul');
@@ -151,7 +159,12 @@
 <!-- Custom and plugin javascript -->
 <script src="/static/js/inspinia.js"></script>
 <script src="/static/js/plugins/pace/pace.min.js"></script>
-
+        <div id="footer" class="footer" style="position:fixed;background-color:rgba(255,255,255,0);bottom:0px;border:0px">
+            <a href="#" class="pull-right">Contact Us&nbsp;</a>
+            <div style>
+                <strong>Copyright</strong> VISE &copy; 2015
+            </div>
+        </div> 
 
 
 <!-- FSAI scripts -->

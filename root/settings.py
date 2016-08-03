@@ -44,8 +44,8 @@ DATABASES = {
         'NAME': 'fsai',
         # The following settings are not used with sqlite3:
         'USER': 'root',
-        'PASSWORD': '1234',
-	'HOST': 'localhost',
+        'PASSWORD': '',
+	    'HOST': 'localhost',
         'PORT': '',
         'OPTIONS'  : {
         #'init_command' : 'SET storage_engine=MyISAM',

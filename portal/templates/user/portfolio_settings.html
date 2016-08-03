@@ -4,8 +4,8 @@
     <script type='text/javascript' src='/static/js/charts.js'></script>
     <script type='text/javascript' src='/static/js/settings.js'></script> 
 {% block content %}
-         <div class="col-md-10" style="padding-right:50px">
-            <div class="block block-drop-shadow" style="font-family:'Helvetica Neue Ultra light'">
+         <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">
+            <div class="block block-drop-shadow" style="font-family:''Helvetica Neue Ultra Light', 'Helvetica', Arial, sans-serif'">
                 <div class="head bg-dot30">  
                 <div class="ibox-content" style="display: block;background-color: rgba(0,0,0,0);color:white;border:0px">
                         <form id="myForm" class="form-horizontal" action="/user/portfolio_optimize" method="post">
@@ -16,6 +16,8 @@
                         <h3>Details</h3>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">Name</label>
+                                <a href="login.html" onclick="return popitup('/login')"
+                                 >?</a>
                                <div class="col-sm-5">
                                     <input type="text" class="form-control" value="High Risk Portfolio">
                                 </div>
@@ -23,6 +25,8 @@
 
                             <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">Description</label>
+                                 <a href="login.html" onclick="return popitup('/login')"
+                                 >?</a>
                                <div class="col-sm-5">
                                 <textarea cols="40" rows="5" class="form-control">This is my profile for handling certain investments.</textarea>
                                 </div>
@@ -114,6 +118,48 @@
                                         <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" max="10" class="form-control" onchange="stockChecker()">
                                     </div>
                                  </div>
+                        </div>
+                    </div>
+                        <div class="toolbar" style="height:auto;margin:auto:width:100%">
+                           <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:140px;">
+                                    <h5>Company Market Cap</h5>
+                                </label>
+                               <div class="col-sm-3" style="padding-top:15px">
+                                    <input type="text" class="form-control" value="0">
+                                </div>
+                                <label class="col-sm-1 control-label" style="width:140px;">
+                                    <h5>Company P\E Ratio</h5>
+                                </label>
+                               <div class="col-sm-3" style="padding-top:15px">
+                                    <input type="text" class="form-control" value="0">
+                                </div>                                
+                            </div>
+                            <br>
+                           <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:140px;">
+                                    <h5>Dividend Yield (%)</h5>
+                                </label>
+                               <div class="col-sm-3" style="padding-top:15px">
+                                    <input type="text" class="form-control" value="0">
+                                </div>
+                                <label class="col-sm-1 control-label" style="width:140px;">
+                                    <h5>52 Week Price Change</h5>
+                                </label>
+                               <div class="col-sm-3" style="padding-top:15px">
+                                    <input type="text" class="form-control" value="0">
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="toolbar" style="height:auto;margin:auto:width:100%">
+                           <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:140px;">
+                                    <h5>Price Earnings Ratio</h5>
+                                </label>
+                               <div class="col-sm-3" style="padding-top:15px">
+                                    <input type="text" class="form-control" value="0">
+                                </div>
+                            </div>
                         </div>
                         </div>
                             <div class="col-md-6" style="margin-top:15px">
