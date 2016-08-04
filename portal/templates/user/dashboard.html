@@ -1,115 +1,15 @@
+{% extends "base.html" %}
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/toastr/2.1.3/toastr.min.css">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>        
-    <title>FSAI</title>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="/static/js1/morris.js"></script>
-    <script type="text/javascript" src="/static/js1/raphael.js"></script>
-    <link rel="icon" type="image/ico" href="favicon.ico"/>
-    
-    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
-    
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
-    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins/knob/jquery.knob.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/sparkline/jquery.sparkline.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.js'></script>     
-    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.resize.js'></script>
-    
+    <script src="https://cdn.jsdelivr.net/toastr/2.1.3/toastr.min.js"></script>    
     <script type='text/javascript' src='/static/js/plugins.js'></script>    
     <script type='text/javascript' src='/static/js/actions.js'></script>    
     <script type='text/javascript' src='/static/js/charts.js'></script>
     <script type='text/javascript' src='/static/js/settings.js'></script> 
 
-</head>
-<body class="bg-img-num1" data-settings="open">   
-<div class="container">            
-<!-- Begin -->
-<!-- Top Nav Bar -->
-        <div class="row">
-            <div class="col-md-12">
-                <ol class="breadcrumb" style="margin-top:33px">
-                    <li><a href="#">Home</a></li>                    
-                    <li><a href="dashboard">Dashboard</a></li>
-                    <li class="active">My Portfolios</li>
-                </ol>
-            </div>
-        </div>
-        <div class="row">
-<!-- Left Hand Navi Menu -->
-            <div class="col-md-2" style="margin-top:50px">
-                <div class="page-sidebar">
-                    <div class="page-navigation-panel">
-                        <div class="name">Howdy, {{user.username}}</div>
-                        <div class="control"><a href="#" class="psn-control"><span class="icon-reorder"></span></a></div>
-                    </div>            
-                    <div class="page-navigation-panel search">                                
-                        <div class="input-group">                        
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <div class="input-group-addon"><span class="icon-search"></span></div>
-                        </div>                
-                    </div>
-                    <ul class="page-navigation">
-                        <li>
-                            <a href="/user/dashboard">
-                                <span class="icon-home"></span> Dashboard
-                            </a>
-                        </li>                            
-                        <li>
-                            <a href="#"><span class="icon-comments"></span> Messages</a>
-                            <ul>                                    
-                                <li><a href="form_elements.html">Inbox</a></li>
-                                <li><a href="form_editors.html">Sent</a></li>
-                                <li><a href="form_files.html">Deleted</a></li>
-                                <li><a href="form_validation.html">Starred</a></li>
-                            </ul>                                
-                        </li>
-                        <li>
-                            <a> <span class="icon-folder-open-alt"></span>My Portfolios</a>
-                          <ul>
-                                <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
-                                <li><a href="/user/Individual_portfolio">High Risk Portfolio</a></li>
-                                <li><a href="/user/Individual_portfolio">Portfolio B </a></li>
-                                <li><a href="/user/Individual_portfolio">Portfolio C</a></li> 
-                            </ul> 
-                        </li>  
-                        <li>
-                            <a href="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
-                        </li>
-                        <li>
-                            <a href="/user/news_portfolio"><span class="icon-flag-alt"></span> News & Sentiment</a>
-                            <ul>
-                                <li><a href="component_blocks.html">Portfolio A </a></li>
-                                <li><a href="component_buttons.html">Portfolio B </a></li>
-                                <li><a href="component_modals.html">Portfolio C</a></li> 
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-cogs"></span> Help & Suggestions</a>
-                            <ul>
-                                <li><a href="component_blocks.html">Portfolio A </a></li>
-                                <li><a href="component_buttons.html">Portfolio B </a></li>
-                                <li><a href="component_modals.html">Portfolio C</a></li> 
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-share-alt"></span> Log Out</a>
-                        </li>                                                                   
-                    </ul>
-                </div>
-            </div>
-
-    <div class="col-md-5" style="padding-left:60px;">
+    {% block content %}
+    <div class="col-md-4 sm-4" style="padding-left:50px">
         <div class="block block-drop-shadow">
             <div class="head bg-dot20">   
                 <h2>My Portfolios</h2>
@@ -170,14 +70,15 @@
        <div class="block block-drop-shadow">
           <div class="head bg-dot30">
                         <h2>Market Charts</h2>
-                        <div class="side pull-right">                            
+                        <div class="side pull-right">
                             <ul class="buttons">                                
                                 <li><a href="#"><span class="icon-refresh"></span></a></li>
                                 <li><a href="#"><span class="icon-cogs"></span></a></li>
                             </ul>
                         </div>                        
-                        <div class="ibox-content" style="display: block;">
-                            <div class="row">
+                        <div class="ibox-content" style="display: block;background-color: rgba(0,0,0,0);border:0px;background-image:url('/static/img/loader.gif');background-repeat:no-repeat;background-position:center" id="myBar">
+                            <div class="row" style="overflow:hidden">
+                                <center class="loading-line-chart" style="margin-top:50px"> Loading ... </center>
                                 <div class="col-lg-12">
                                     <div id="morris-line-chart" style="position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);height:200px;"></div>
                                 </div>
@@ -185,111 +86,158 @@
                         </div> 
                         <div class="head-panel nm">
                             <div class="hp-info hp-simple pull-left hp-inline">
-                                <span class="hp-main"><span class="icon-circle"></span> Series A</span>                                
+                                <span class="hp-main"><span class="icon-circle"></span> NASDAQ</span>                                
                             </div>                 
                             <div class="hp-info hp-simple pull-left hp-inline">                                
-                                <span class="hp-main"><span class="icon-circle text-info"></span> Series B</span>
+                                <span class="hp-main"><span class="icon-circle text-info"></span> S&P</span>
+                            </div>                           <div class="hp-info hp-simple pull-left hp-inline">                                
+                                <span class="hp-main"><span class="icon-circle text-info" style="color:black"></span> Dow Jones</span>
                             </div>                                                                          
                        </div>                       
          </div>   
         </div>
-    </div>   
-               <!--end of left side elements-->
-               <!--beginning of right side elements-->
-      <div class="col-md-5" >  
-      <div class="block block-drop-shadow">     
-            <div class="head bg-dot30">
-                <h2>Portfolio Returns</h2>
-                    <div class="side pull-right">                            
-                        <ul class="buttons">                                
-                            <li><a href="#"><span class="icon-refresh"></span></a></li>
-                            <li><a href="#"><span class="icon-cogs"></span></a></li>
-                        </ul>
-                    </div>                        
-                    <div class="head-panel nm tac">
-                            <div class="sparkline">                            
-                                <span sparkType="pie" sparkWidth="100" sparkHeight="100">5079,3768,7537</span>
-                            </div>                                                         
-                    </div> 
-                    <div class="head-panel nm">
-                            <div class="hp-info hp-simple pull-left hp-inline">
-                                <span class="hp-main"><span class="icon-circle"></span> US Portfolio Markets 5079  [ 31% ]</span>                                
-                            </div>                 
-                            <div class="hp-info hp-simple pull-left hp-inline">                                
-                                <span class="hp-main"><span class="icon-circle text-info"></span> High Rish European Portfolio 3768  [ 23% ]</span>
-                            </div>                            
-                            <div class="hp-info hp-simple pull-left hp-inline">                                
-                                <span class="hp-main"><span class="icon-circle text-primary"></span> Low Rish Long Term Portfolio 7537  [ 46% ]</span>
-                            </div>                                                
-                    </div>                      
-            </div>                                                                                                             
-        </div>
-        <div class="block block-drop-shadow">  
-                    <div class="header">
-                        <h2>Messaging</h2>
+    </div>
+    <div class="col-md-4 col-sm-3" style="padding-right:50px">  
+        <div class="block block-drop-shadow">     
+                <div class="head bg-dot30">
+                    <h2>Portfolio Returns</h2>
                         <div class="side pull-right">                            
                             <ul class="buttons">                                
-                                <li><a href="#"><span class="icon-user"></span></a></li>
+                                <li><a href="#"><span class="icon-refresh"></span></a></li>
                                 <li><a href="#"><span class="icon-cogs"></span></a></li>
                             </ul>
-                        </div>                                                
-                    </div>
-                    <div class="content messages npr npb">                         
-                        <div class="scroll oh" style="height: 250px;">
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
-                                <div class="messages-item-text">Dmitry has joined this session!</div>
-                                <div class="messages-item-date">14:32 30.08.2013</div>
-                            </div>                                                                                                            
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
-                                <div class="messages-item-text">Connected with Dmitry. Your reference number for this chat session is 2508333.</div>
-                                <div class="messages-item-date">14:20 30.08.2013</div>
-                            </div>                        
-                            <div class="messages-item inbox">
-                                <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail"/>
-                                <div class="messages-item-text">Hello Dmitry</div>
-                                <div class="messages-item-date">14:19 30.08.2013</div>
-                            </div>
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
-                                <div class="messages-item-text">How may I help you?</div>
-                                <div class="messages-item-date">14:15 30.08.2013</div>
-                            </div>                          
-                        </div>
-                    </div>
-                    <div class="footer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="icon-comment"></i></span>
-                            <input type="text" class="form-control" placeholder="message..">
-                            <span class="input-group-btn">
-                                <button class="btn"><span class="icon-chevron-up"></span></button>
-                            </span>
                         </div>                        
-                    </div>
+                        <div class="head-panel nm tac">
+                                <div class="sparkline">                            
+                                    <span sparkType="pie" sparkWidth="100" sparkHeight="100">5079,3768,7537</span>
+                                </div>                                                         
+                        </div> 
+                        <div class="head-panel nm">
+                                <div class="hp-info hp-simple pull-left hp-inline">
+                                    <span class="hp-main"><span class="icon-circle"></span> US Portfolio Markets 5079  [ 31% ]</span>                                
+                                </div>                 
+                                <div class="hp-info hp-simple pull-left hp-inline">                                
+                                    <span class="hp-main"><span class="icon-circle text-info"></span> High Risk European Portfolio 3768  [ 23% ]</span>
+                                </div>                            
+                                <div class="hp-info hp-simple pull-left hp-inline">                                
+                                    <span class="hp-main"><span class="icon-circle text-primary"></span> Low Risk Long Term Portfolio 7537  [ 46% ]</span>
+                                </div>                                                
+                        </div>                      
+                </div>                                                                                                             
+        </div>
+        <div class="block block-drop-shadow">  
+                        <div class="header">
+                            <h2>Messaging</h2>
+                            <div class="side pull-right">                            
+                                <ul class="buttons">                                
+                                    <li><a href="#"><span class="icon-user"></span></a></li>
+                                    <li><a href="#"><span class="icon-cogs"></span></a></li>
+                                </ul>
+                            </div>                                                
+                        </div>
+                        <div class="content messages npr npb">                         
+                            <div class="scroll oh" style="height: 250px;">
+                                <div class="messages-item">
+                                    <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
+                                    <div class="messages-item-text">Dmitry has joined this session!</div>
+                                    <div class="messages-item-date">14:32 30.08.2013</div>
+                                </div>                                                                                                            
+                                <div class="messages-item">
+                                    <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
+                                    <div class="messages-item-text">Connected with Dmitry. Your reference number for this chat session is 2508333.</div>
+                                    <div class="messages-item-date">14:20 30.08.2013</div>
+                                </div>                        
+                                <div class="messages-item inbox">
+                                    <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail"/>
+                                    <div class="messages-item-text">Hello Dmitry</div>
+                                    <div class="messages-item-date">14:19 30.08.2013</div>
+                                </div>
+                                  
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon-comment"></i></span>
+                                <input type="text" class="form-control" placeholder="message..">
+                                <span class="input-group-btn">
+                                    <button class="btn"><span class="icon-chevron-up"></span></button>
+                                </span>
+                            </div>                        
+                        </div>
         </div>  
-   </div>
-</div>
-</div>
-</body>
+    </div>           
+<script>
+var GP, NAS, DJ;
+var x = 0;
+$(".loading-line-chart")[0].innerText = " Loading S&P Indices ." 
+var ahr = new XMLHttpRequest();
+ahr.onreadystatechange = function(){
+    if (ahr.readyState==4 && ahr.status==200)
+    {
+        var aata = JSON.parse(ahr.responseText)
+        GP = [aata.data[0][3],aata.data[15][3],aata.data[30][3],aata.data[45][3],aata.data[60][3],aata.data[75][3],aata.data[90][3]]
+        console.log(GP)
+        $(".loading-line-chart")[0].innerText = " Loading NASDAQ Indices .. "
+                var bhr = new XMLHttpRequest();
+        bhr.onreadystatechange = function(){ 
+            if (bhr.readyState==4 && bhr.status==200)
+            {
+                var bata = JSON.parse(bhr.responseText)
+                NAS = [bata.data[0][3],bata.data[15][3],bata.data[30][3],bata.data[45][3],bata.data[60][3],bata.data[75][3],bata.data[90][3]]
+                console.log(NAS)
+                $(".loading-line-chart")[0].innerText = " Loading Dow Jones Indices ... "
+                var chr = new XMLHttpRequest();
+                chr.onreadystatechange = function(){
+                    if (chr.readyState==4 && bhr.status==200)
+                        {
+                            var cata = JSON.parse(chr.responseText)
+                            DJ = [cata.data[0][1],cata.data[15][1],cata.data[30][1],cata.data[45][1],cata.data[60][1]   ,cata.data[75][1]   ,cata.data[90][1]   ];
+                            if (x == 0) {
+                                x = 1
+                                morrisLine(NAS, GP, DJ)
+                            }
+                            return 
+                        }
+                }
+                chr.open('GET','https://www.quandl.com/api/v1/datasets/BCB/UDJIAD1.json?api_key=5ejCzVkQNi3Xjd3Nwy6t',true);
+                chr.send();                                  
+            }
+        };
+        bhr.open('GET','https://www.quandl.com/api/v1/datasets/NASDAQOMX/NDX.json?api_key=5ejCzVkQNi3Xjd3Nwy6t',true);
+        bhr.send();
+    }
+};
+ahr.open('GET','http://www.quandl.com/api/v1/datasets/YAHOO/INDEX_GSPC.json?api_key=5ejCzVkQNi3Xjd3Nwy6t',true);
+ahr.send();                   
+function morrisLine(NAS, GP, DJ) {
+        console.log("inside morris")
+        $(".loading-line-chart").css('display','none')
+        $(".ibox-content").css('background-image','')                  
+        window.m = Morris.Line({
+            element: 'morris-line-chart',
+            data: [{ y: '2016-07-01', a: NAS[0], b: GP[0], c:DJ[0] },
+                    { y: '2016-07-02', a: NAS[1], b: GP[1], c:DJ[1] },
+                    { y: '2016-07-03', a: NAS[2], b: GP[2], c:DJ[2] },
+                    { y: '2016-07-04', a: NAS[3], b: GP[3], c:DJ[3] },
+                    { y: '2016-07-05', a: NAS[4], b: GP[4], c:DJ[4] },
+                    { y: '2016-07-06', a: NAS[5], b: GP[5], c:DJ[5] },
+                    { y: '2016-07-07', a: NAS[6], b: GP[6], c:DJ[6] } ],
+            xkey: 'y',
+            ykeys: ['a','b', 'c'],
+            resize: true,
+            redraw: true,
+            lineColors: ['#FFFFFF','#157DEC', 'black'],
+            dateFormat: function (ts) {
+                var d = new Date(ts);
+                return d.getYear() + '/' + (d.getMonth() + 1) + '/' + d.getDay();
+                }
+        }); 
+    }
 
-
-<script type="text/javascript">
-$(function() {
-    Morris.Line({
-        element: 'morris-line-chart',
-        data: [{ y: '2006', a: 100, b: 90 },
-            { y: '2007', a: 75, b: 65 },
-            { y: '2008', a: 50, b: 40 },
-            { y: '2009', a: 75, b: 65 },
-            { y: '2010', a: 50, b: 40 },
-            { y: '2011', a: 75, b: 65 },
-            { y: '2012', a: 100, b: 90 } ],
-        xkey: 'y',
-        ykeys: ['a', 'b'],
-        resize: false,
-        lineColors: ['#FFFFFF','#157DEC'],
-    });
-});
 </script>
+        </div>
+    
 
+    </div>
+</div>                    
+{% endblock %}

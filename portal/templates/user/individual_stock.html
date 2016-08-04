@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>        
-    <title>FSAI</title>
+    <title>VISE</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -77,29 +77,20 @@
                             <a href="#"><span class="icon-folder-open-alt"></span> My Portfolios</a>
                              <ul>
                                 <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
-                                <li><a href="/user/Individual_portfolio">High Risk Portfolio</a></li>
-                                <li><a href="/user/Individual_portfolio">Portfolio B </a></li>
-                                <li><a href="/user/Individual_portfolio">Portfolio C</a></li> 
+                                <li><a href="/user/individual_stock">High Risk Portfolio</a></li>
+                                <li><a href="/user/individual_stock">European Portfolio </a></li>
+                                <li><a href="/user/individual_stock">Tech Portfolio</a></li> 
                             </ul> 
                         </li>  
                         <li>
                             <a href="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
                         </li>
                         <li>
-                            <a href="/user/news_portfolio"><span class="icon-flag-alt"></span> News & Sentiment</a>
-                            <ul>
-                                <li><a href="component_blocks.html">Portfolio A </a></li>
-                                <li><a href="component_buttons.html">Portfolio B </a></li>
-                                <li><a href="component_modals.html">Portfolio C</a></li> 
-                            </ul>
+                            <a href="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
+
                         </li>
                         <li>
                             <a href="#"><span class="icon-cogs"></span> Help & Suggestions</a>
-                            <ul>
-                                <li><a href="component_blocks.html">Portfolio A </a></li>
-                                <li><a href="component_buttons.html">Portfolio B </a></li>
-                                <li><a href="component_modals.html">Portfolio C</a></li> 
-                            </ul>
                         </li>
                         <li>
                             <a href="#"><span class="icon-share-alt"></span> Log Out</a>
@@ -109,15 +100,15 @@
             </div>
 <!-- Right Hand Content Goes Here                 -->
      <!--Content-->
-     <div class="col-md-10" style="padding-left:60px;">
+     <div class="col-md-8" style="padding-left:50px;padding-left:50px">
         <h2 style="text-align:center;">AAPL: APPLE</h2>
         <!--first portfolio -->
-        <div class="col-md-5">
+        <div class="col-md-6 col-sm-6">
             <div class="block block-drop-shadow">
                  <div class="head bg-dot20">   
                      <h2>Overview of Company</h2>
                  </div>
-                 <div class="ibox-content" style="display: block;padding:4px">
+                 <div class="ibox-content" style="display: block;padding:50px;padding-top:100px">
                      Apple, Inc. engages in the design, manufacture, and marketing of mobile communication, media devices, personal computers, and portable digital music players. The firm offers products and services under the iPhone, iPad, Mac, iPod, Apple Watch, and Apple TV brands; consumer and professional software applications under the iOS, OS, X, and watchOS brands; and operating systems under the iCloud and Apple Pay brands. It operates through the following segments: Americas, Europe, Greater China, Japan, and Rest of Asia Pacific. The company was founded by Steven Paul Jobs, Ronald Gerald Wayne, and Stephen G. Wozniak on April 1, 1976 and is headquartered in Cupertino, CA.
                  </div>
             </div>
@@ -125,7 +116,7 @@
                  <div class="head bg-dot20">   
                      <h2>Future of Stock</h2>
                  </div>
-                 <div class="ibox-content" style="display: block;padding:4px;">
+                 <div class="ibox-content" style="display: block;padding:50px;padding-top:100px">
                     The analysts offering 12-month price forecasts for Apple have a median target of 120.00, with a high estimate of 185.00 and a low estimate of 65.00. The median estimate represents a +23.70% increase from the last price of 97.01.
                  </div>
             </div>
@@ -139,7 +130,7 @@
             </div>
         </div> 
         <!--right side-->
-        <div class="col-md-5">
+        <div class="col-md-6 col-sm-6">
             <div class="block block-drop-shadow">
           <div class="head bg-dot20">
                         <h2>Market Forecast</h2>                        
@@ -156,7 +147,7 @@
                  <div class="head bg-dot20">   
                      <h2>Market Sentiment</h2>
                  </div>
-                 <div class="ibox-content" style="display: block;padding:4px;">
+                 <div class="ibox-content" style="display: block;padding:50px;padding-top:100px">
                     The analysts offering 12-month price forecasts for Apple have a median target of 120.00, with a high estimate of 185.00 and a low estimate of 65.00. The median estimate represents a +23.70% increase from the last price of 97.01.
                  </div>
             </div>
@@ -182,10 +173,8 @@
             'max': [ 100 ]
         }
     });
-
     var rangeSliderValueElement = document.getElementById('basic_slider_value');
     var riskSliderRiskElement = document.getElementById('risk_slider_risk');
-
     rangeSlider.noUiSlider.on('update', function( values, handle ) {
         rangeSliderValueElement.innerHTML = values[handle] + "%";
         if(values[handle] < 30) {
@@ -196,22 +185,18 @@
             riskSliderRiskElement.innerHTML = "<p style='color:red;'>High Risk</p>"
         }
     });
-
     function stockChecker() {
         var stocksNumberElement = document.getElementById('stocks_number');
         if (stocksNumberElement.value > 10) { stocksNumberElement.value = 10} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
     }
-
     function returnChecker() {
         var expReturnElement = document.getElementById('expReturn');
         if (expReturnElement.value > 50) { expReturnElement.value = 50} else if (expReturnElement.value < 1) { expReturnElement.value = 1}
     }
-
     function riskChecker() {
         var expRiskElement = document.getElementById('expRisk');
         if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
     }
-
 function popitup(url) {
     newwindow=window.open(url,'name','height=400,width=400');
     if (window.focus) {newwindow.focus()}

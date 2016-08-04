@@ -1,118 +1,157 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>        
-    <title>FSAI</title>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="/static/js1/morris.js"></script>
-    <script type="text/javascript" src="/static/js1/raphael.js"></script>
-    <link rel="icon" type="image/ico" href="favicon.ico"/>
-    
-    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
-    
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
-    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins/knob/jquery.knob.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/sparkline/jquery.sparkline.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.js'></script>     
-    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.resize.js'></script>
-    
+{% extends "base.html" %}
     <script type='text/javascript' src='/static/js/plugins.js'></script>    
     <script type='text/javascript' src='/static/js/actions.js'></script>    
     <script type='text/javascript' src='/static/js/charts.js'></script>
     <script type='text/javascript' src='/static/js/settings.js'></script> 
-
-</head>
-<body class="bg-img-num1" data-settings="open">   
-    <div class="container">        
-        <div class="row"> 
-          <div class="col-lg-8">
-            <div class="ibox-content">
-            <h2>Portfolio Optimization Results</h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Company Name</th>
-                        <th>Ticker Symbol</th>
-                        <th>Amount of Shares to purchase</th>
-                        <th>Buy Date</th>
-                        <th>Sell Date</th>
-                        <th>Expected Return</th>
-                        <th>Risk Level</th>
-                    </tr>
-                </thead>
-               
-                <tbody>
-                    {% for result in optimizeSearchResults %}
-                    <tr>
-                        <td>
-                            <p>{{ result.companyName }}</p>
-                            <a href="/user/portfolio" class="btn btn-default">
-                                <i class="fa fa-line-chart"></i>
-                            </a>
-                            <a class="btn btn-primary" href="http://finance.yahoo.com/q?s={{ result.tickerSymbol }}"><i class="fa fa-hacker-news"></i></a>
-                        </td>
-                        <td>{{ result.tickerSymbol }}</td>
-                        <td>{{ result.expectedReturn }}</td>
-                        <td>{{ result.buyDate }}</td>
-                        <td>{{ result.sellDate }}</td>
-                        <td><b>{{ result.expectedRisk }}</b></td>
-                        <td><span class="label label-warning-light">{{ result.riskLevel }}</span></td>
-                    </tr>
-                    {% endfor %}
-                </tbody> 
-            </table>
-        </div>
-        <br>
-
-        <div class="col-lg-3">
-            <a href="/user/portfolio_settings" class="btn btn-block btn-default">Back</a>
-        </div>
-    </div>
-
-    <!--<div class="col-lg-4">
-        <div class="ibox-content">
-            <div id="morris-donut-chart" style="height:400px"></div>
-            <br>
-            <div class="row">
-                <div class="col-lg-6">
-                    <h3><b>Total Expected Return</b></h3>
-                    <h2>17,300$</h2>
-                </div>
-                <div class="col-lg-6 text-right">
-                    <h3><b>Total Risk</b></h3>
-                    <span class="label label-primary">Low</span>
+{% block content %}
+             <div class="col-md-8 col-sm-8" style="height:80vh;padding-right:50px;padding-left:50px">
+                <div class="head bg-dot20">   
+                    <div class="ibox-content" style="height:800px;background-color:inherit;border-style:none">
+                        <h2>Portfolio Optimization Results</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Ticker Symbol</th>
+                                    <th>Amount of Shares to purchase</th>
+                                    <th>Buy Date</th>
+                                    <th>Sell Date</th>
+                                    <th>Expected Return</th>
+                                    <th>Risk Level</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pin">
+                                {% for result in optimizeSearchResults %}
+                                <tr id="incoming">
+                                    <td id="companyName">
+                                        <p>TELSA</p>
+                                        <a href="/user/individual_stock.html" class="btn btn-default">
+                                            <i class="fa fa-line-chart"></i>
+                                        </a>
+                                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s={{ result.tickerSymbol }}"><i class="fa fa-hacker-news"></i></a>
+                                    </td>
+                                    <td id="months">{{ result.months }}</td>
+                                    <td id="market">{{ result.market }}</td>
+                                    <td id="investingAmount">{{ result.investingAmount }}</td>
+                                    <td id="numStocks">{{ result.numStocks }}</td>
+                                    <td id="expectedReturn"><b>{{ result.expectedReturn }}</b></td>
+                                    <td id="expectedRisk"><span class="label label-warning-light" >{{ result.expectedRisk }}</span></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="col-lg-3" style="position:bottom:0px">
+                            <a href="/user/portfolio_settings" class="btn btn-default btn-block btn-clean">Back</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
-    </div>-->
-</div>
-</div>
-</body>
-</html>
-
-{% block scripts %}
-<script src="/static/js/morris.js"></script>
-<script src="/static/js/raphael.js"></script>
-
 <script type="text/javascript">
-$(function() {
-   Morris.Donut({
-        element: 'morris-donut-chart',
-        data: [{ label: "Google", value: 1200 },
-            { label: "Yahoo", value: 850 },
-            { label: "Apple", value: 3400 } ],
-        resize: true,
-        colors: ['#87d6c6', '#54cdb4','#1ab394'],
+var months = $("#months")[0].innerText
+var market = parseInt($("#market")[0].innerText);
+var investingAmount = $("#investingAmount")[0].innerText;
+var numStocks = $("#numStocks")[0].innerText;
+var expectedRisk = $("#expectedRisk")[0].innerText;
+var expectedReturn = $("#expectedReturn")[0].innerText;
+var utc = new Date().toJSON().slice(0,10);
+var xMonths = parseInt(utc[5] + utc[6]) + parseInt(months);
+var shares = [];
+
+if (xMonths > 12) {
+        xYear = (parseInt(utc[0]+utc[1]+utc[2]+utc[3]))+1;
+        utc = utc[0]+utc[1]+utc[2]+utc[3]+"-"+xMonths+utc[7]+utc[8];
+    } else {
+        xYear = parseInt(utc[0]+utc[1]+utc[2]+utc[3]);
+        utc = xYear + "-" + xMonths + "-" + utc[8]+utc[9]
+    };
+
+var markets = ["S&P 500","NASDAQ","Dow Jones","US Markets"];
+var market = markets[market-1];
+var companyNames = ["NSA","TSLA","AIL","ABC","UTY"];
+generateRandomShares();
+function generateRandomShares() {
+    for (var i=0;i<numStocks;i++) {
+      shares.push(1);
+    };
+    shares.forEach(function(x,i) {
+      if (i === shares.length-1 ) {
+        console.log("last one");
+        console.log(shares)
+        generateData(shares)
+      } else {
+        var y = (Math.floor(Math.random() * (shares.length) + 1));
+        if (y !== 1) {
+          shares[i]=y;
+          for (var f=1;f<=y;f++) {
+            if (i === shares.length-1 ) {
+                console.log("last one")
+                console.log(shares)
+                generateData(shares)
+            }
+            shares.pop();
+          };
+        }
+      };
     });
-});
+    generateData(shares)    
+};
+function generateData(arr){
+    arr.forEach(function(x,i) {
+
+        // var dataHtml = "<td>TELSA</td><td>TSLA</td><td>"+x+"</td><td>"+new Date().toJSON().slice(0,10)+"</td><td>"+utc+"</td><td>"+expectedRisk+"%</td><td>"+expectedReturn+"%</td>";
+            var clone = $("#incoming").clone()
+            clone[0].innerHTML = "";
+            var xName = $("#companyName").clone().removeAttr('id');
+            xName[0].children[0].innerText = "Daily Journal";
+            xName.appendTo(clone);
+            var xCompanyName = $("#months").clone().removeAttr('id');
+            xCompanyName[0].innerText = "DJCO";
+            xCompanyName.appendTo(clone);
+            var xNumStocks = $("#numStocks").clone().removeAttr('id');
+            xNumStocks[0].innerText = x;
+            xNumStocks.appendTo(clone);
+            var xMonths = $("#months").clone().removeAttr('id');
+            xMonths[0].innerText = new Date().toJSON().slice(0,10);
+            xMonths.appendTo(clone);
+            var sellDate = $("#months").clone().removeAttr('id');
+            sellDate[0].innerText = utc;
+            sellDate.appendTo(clone);
+            var xExpectedReturn = $("#expectedReturn").clone().removeAttr('id');
+            xExpectedReturn[0].innerText = expectedReturn +"%";
+            xExpectedReturn.appendTo(clone);
+            var xExpectedRisk = $("#expectedRisk").clone().removeAttr('id');
+            xExpectedRisk.appendTo(clone)
+            // $("#companyName")[0].children[0].appendTo(clone)
+            clone.appendTo(pin);
+
+// $("#incoming").css('display','initial')
+        // console.log($("#incoming")[0])
+        // var dataObj = {
+        //     name: "TESLA",
+        //     symbol: "TSLA",
+        //     amount: x,
+        //     buyDate: new Date().toJSON().slice(0,10),
+        //     sellDate: utc,
+        //     expectedRisk: expectedRisk + "%",
+        //     expectedReturn: expectedReturn+  "%"
+        // };
+        // console.log(dataObj)
+    })
+
+            $("#incoming").css('display','none')
+}
+
 </script>
+
+{% block body %}
+
+{% endblock %}
+
+        </div>
+
+
+    </div>
+</div>
 {% endblock %}
