@@ -2,13 +2,13 @@ $(document).ready(function(){
     
     if($("#dash_chart_1").length > 0){
         
-        var data  = [ [1, 25], [2, 28], [3, 22], [4, 18], [5, 30], [6, 18], [7,14] ];        
+        var data  = [ [1, 10], [2, 28], [3, 22], [4, 18], [5, 30], [6, 18], [7,14] ];        
         
         var dash_chart_1 = $.plot($("#dash_chart_1"), [{ data: data, label: "Sales"}],{ 
                                   series: {lines: { show: true }, points: { show: true }},
-                                  grid: { hoverable: true, clickable: true, margin: {left: 110}},
-                                  xaxis: {ticks: [[1,'Mon'],[2,'Tue'],[3,'Wed'],[4,'Thu'],[5,'Fri'],[6,'Sat'],[7,'Sun']]},
-                                  legend: {show: false}});          
+                                  grid: { hoverable: true, clickable: true, 
+                                  xaxis: {ticks: [[1,'Jan'],[2,'Feb'],[3,'Mar'],[4,'Apr'],[5,'May'],[6,'Jun'],[7,'Jul']]},
+                                  );          
         
     }
     

@@ -6,18 +6,18 @@ $(document).ready(function(){
         
         var dash_chart_1 = $.plot($("#dash_chart_1"), [{ data: data, label: "Sales"}],{ 
                                   series: {lines: { show: true }, points: { show: true }},
-                                  grid: { hoverable: true, clickable: true, margin: {left: 110}},
-                                  xaxis: {ticks: [[1,'Mon'],[2,'Tue'],[3,'Wed'],[4,'Thu'],[5,'Fri'],[6,'Sat'],[7,'Sun']]},
-                                  legend: {show: false}});          
+                                  grid: { hoverable: true, clickable: true, 
+                                  xaxis: {ticks: [[1,'Jan'],[2,'Feb'],[3,'Mar'],[4,'Apr'],[5,'May'],[6,'Jun'],[7,'Jul']]},
+                                  );         
         
     }
     
     if($("#dash_chart_2").length > 0){
         
         var data1  = [ [1, 1023], [2, 1244], [3, 1506], [4, 1330], [5, 1065], [6, 890], [7,650] ];
-        var data2  = [ [1, 868], [2, 1485], [3, 1355], [4, 1002], [5, 1200], [6, 755], [7,800] ];
+        /*var data2  = [ [1, 868], [2, 1485], [3, 1355], [4, 1002], [5, 1200], [6, 755], [7,800] ];*/
         
-        var dash_chart_2 = $.plot($("#dash_chart_2"), [{ data: data1, label: "Search Traffic"},{data: data2, label: "Referal Traffic"}],{ 
+        var dash_chart_2 = $.plot($("#dash_chart_2"), [{ data: data1, label: "Market"},{ 
                                   series: {lines: { show: true }, points: { show: true }},
                                   grid: { hoverable: true, clickable: true},
                                   xaxis: {max: 7,ticks: [[1,'Mon'],[2,'Tue'],[3,'Wed'],[4,'Thu'],[5,'Fri'],[6,'Sat'],[7,'Sun']]}
