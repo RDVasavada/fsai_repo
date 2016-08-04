@@ -131,8 +131,12 @@
                                             {% for stock in portfolio.stocks %}
                                             <tr>
                                                 <td class="text-center">{{ stock.ticker }}</td>
-                                                <td class="text-center small">1604$ <span style="color:#00ff00">(+2.81%)</span></td>
-                                                <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
+                                                <td class="text-center small">{{stock.current_price}} <span style="color:#00ff00">(+2.81%)</span></td>
+                                                <td class="text-center small">{{stock.buy_date}}</td>
+                                                <td class="text-center small">{{stock.sell_date}}</td>
+                                                <td class="text-center small">{{stock.number_of_shares}}</td>
+                                                <td class="text-center">{{stock.initial_price}}</td>
+                                                <!--<td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>-->
                                             </tr>
                                             <!--<tr>
                                                 <td>GOOG</td>
