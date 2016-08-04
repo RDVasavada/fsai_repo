@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     (r'^user/save_portfolio/?$', views.save_portfolio),
     (r'^user/my_portfolios/?$', views.my_portfolios),
     (r'^user/individual_portfolio/?$', views.Individual_portfolio),
+    (r'^user/individual_stock/?$', views.Individual_stock),
     (r'^user/news_portal/?$', views.news_portal),
     (r'^user/top_portfolios/?$', views.top_portfolios),
 

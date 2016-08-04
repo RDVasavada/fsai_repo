@@ -7,7 +7,7 @@
 .bpl{background-position: left top;} .bpr{background-position: right top;} .bpc{background-position: center top;}
 
 html{height: 100%; min-height: 100%;}
-body{background: url('../img/background/bg_num1.jpg') left top repeat-x #082648; font-family: 'Helvetica Neue', 'Helvetica', Arial, sans-serif; color: #FFF; height: 100%; min-height: 100%; font-size: 12px;}
+body{background: url('../img/background/bg_num1.jpg') left top repeat-x #082648; font-family: 'Helvetica Neue Ultra Light', 'Helvetica', Arial, sans-serif; color: #FFF; height: 100%; min-height: 100%; font-size: 12px;}
 form{margin: 0px;}
 
 a{color: #FFF; outline: 0 !important;}
@@ -109,7 +109,7 @@ a:hover,a:focus,a:active{color: #FFF; text-decoration: none;}
             .page-navigation ul{list-style: none; display: block; float: left; padding: 0px; display: none;}
                 .page-navigation li{float: left; width: 100%; font-size: 12px; color: #FFF;}                    
                     .page-navigation li a{padding: 10px 20px 10px 15px; float: left; display: block; width: 100%; position: relative; line-height: 15px;}
-                    .page-navigation > li > a{padding-left: 35px; background: rgba(0,0,0,0.2); margin-bottom: 1px;}
+                    .page-navigation > li > a{font-weight:100;padding-left: 35px; background: rgba(0,0,0,0.2); margin-bottom: 1px;}
                         .page-navigation li a span[class^='icon-']{position: absolute; left: 10px; top: 9px; font-size: 16px;}
                         .page-navigation li a i[class^='icon-']{position: absolute; right: 10px; top: 10px; font-size: 12px;}            
                     .page-navigation li a:hover{background: rgba(0,0,0,0.1);}
@@ -485,7 +485,7 @@ dd{padding: 5px 0px;}
 /* eof breadcrumb */
 
 /* buttons */
-.btn{border-color: transparent; font-weight: bold; background: rgba(0,0,0,0.2); border-radius: 5px; color: #FFF;}
+.btn{border-color: transparent; font-weight: 100; background: rgba(0,0,0,0.2); border-radius: 5px; color: #FFF;}
 .btn:focus{color: #FFF; outline: none;}
 .btn:hover,.btn-default.btn-clean:hover,.btn-primary.btn-clean:hover,.btn-success.btn-clean:hover,
 .btn-info.btn-clean:hover,.btn-warning.btn-clean:hover, .btn-danger.btn-clean:hover, .btn-clean:hover,
@@ -916,7 +916,7 @@ dd{padding: 5px 0px;}
 /* error block */ 
 .block-error{width: 300px; margin: 100px auto 0px;}
     .block-error .error-logo{margin-bottom: 20px; float: left; width: 100%; text-align: center;}
-        .block-error .error-code,.block-error .error-text{font-size: 24px; color: #FFF; text-align: center; text-shadow: 3px 3px 3px rgba(0,0,0,0.4); 
+        .block-error .error-code,.block-error .error-text{font-size: 24px; font-weight: 100; color: #FFF; text-align: center; text-shadow: 3px 3px 3px rgba(0,0,0,0.4); 
                                                           width: 100%; float: left; margin-bottom: 10px;}
         .block-error .error-text{font-size: 14px;margin-bottom: 20px;}
 /* eof error block */

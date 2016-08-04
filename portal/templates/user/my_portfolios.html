@@ -1,243 +1,143 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>        
-    <title>FSAI</title>
+{% extends "base.html" %}
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/toastr/2.1.3/toastr.min.css">
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="/static/js1/morris.js"></script>
-    <script type="text/javascript" src="/static/js1/raphael.js"></script>
-    <link rel="icon" type="image/ico" href="favicon.ico"/>
-    
-    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
-    
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
-    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins/knob/jquery.knob.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/sparkline/jquery.sparkline.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.js'></script>     
-    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.resize.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins.js'></script>    
-    <script type='text/javascript' src='/static/js/actions.js'></script>    
-    <script type='text/javascript' src='/static/js/charts.js'></script>
-    <script type='text/javascript' src='/static/js/settings.js'></script> 
+<script src="https://cdn.jsdelivr.net/toastr/2.1.3/toastr.min.js"></script>
+<script type='text/javascript' src='/static/js/plugins.js'></script>
+<script type='text/javascript' src='/static/js/actions.js'></script>
+<script type='text/javascript' src='/static/js/charts.js'></script>
+<script type='text/javascript' src='/static/js/settings.js'></script>
+{% block content %}
 
-</head>
-<body class="bg-img-num1" data-settings="open">   
-<div class="container">            
-<!-- Begin -->
-<!-- Top Nav Bar -->
-        <div class="row">
-            <div class="col-md-12">
-                <ol class="breadcrumb" style="margin-top:33px">
-                    <li><a href="#">Home</a></li>                    
-                    <li><a href="dashboard">Dashboard</a></li>
-                    <li class="active">My Portfolios</li>
-                </ol>
-            </div>
+    <div class="col-md-8" style="padding-left:60px;">
+    <h2 style="text-align:center;">My Portfolios</h2>
+    <!--first portfolio -->
+    {% for portfolio in all_portfolios %}
+    <div class="block block-drop-shadow">
+        <div class="head bg-dot30">
+        <div class="side pull-right">
+            <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/individual_portfolio">View</a></div>
+                 </div>
+            <table class="table table-hover margin bottom">
+                <thead>
+                <tr>
+                    <th class="text-center" style="width: 33%;">{{ portfolio.name }}</th>
+                    <th class="text-center" style="width: 33%;">{{ portfolio.risk }} %</th>
+                    <th class="text-center" style="width: 33%;">54 stocks in 10 markets</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if portfolio.stocks %}
+                    {% for stock in portfolio.stocks %}
+                    <tr>
+                        <td class="text-center">{{ stock.ticker }}</td>
+                        <td class="text-center small">{{stock.current_price}} <span style="color:#00ff00">(+2.81%)</span></td>
+                        <td class="text-center small">{{stock.buy_date}}</td>
+                        <td class="text-center small">{{stock.sell_date}}</td>
+                        <td class="text-center small">{{stock.number_of_shares}}</td>
+                        <td class="text-center">{{stock.initial_price}}</td>
+                        <!--<td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>-->
+                    </tr>
+                    <!--<tr>
+                        <td>GOOG</td>
+                        <td class="text-center small">38627$ <span style="color:#ff4d4d">(-1.3%)</span></td>
+                        <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
+                    </tr>
+                    <tr>
+                        <td>TSLA</td>
+                        <td class="text-center small">9745$ <span style="color:#00ff00">(+15.4%)</span></td>
+                        <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
+                    </tr>-->
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3" style="text-align:center;">You have not created any stocks in this portfolio.</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
         </div>
-        <div class="row">
-<!-- Left Hand Navi Menu -->
-            <div class="col-md-2" style="margin-top:50px">
-                <div class="page-sidebar">
-                    <div class="page-navigation-panel">
-                        <div class="name">Howdy, {{user.username}}</div>
-                        <div class="control"><a href="#" class="psn-control"><span class="icon-reorder"></span></a></div>
-                    </div>            
-                    <div class="page-navigation-panel search">                                
-                        <div class="input-group">                        
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <div class="input-group-addon"><span class="icon-search"></span></div>
-                        </div>                
-                    </div>
-                    <ul class="page-navigation">
-                        <li>
-                            <a href="/user/dashboard">
-                                <span class="icon-home"></span> Dashboard
-                            </a>
-                        </li>                            
-                        <li>
-                            <a href="#"><span class="icon-comments"></span> Messages</a>
-                            <ul>                                    
-                                <li><a href="form_elements.html">Inbox</a></li>
-                                <li><a href="form_editors.html">Sent</a></li>
-                                <li><a href="form_files.html">Deleted</a></li>
-                                <li><a href="form_validation.html">Starred</a></li>
-                            </ul>                                
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-folder-open-alt"></span> My Portfolios</a>
-                            <ul>
-                                <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
-                                {% for portfolio in portfolios %}
-                                    <li><a href="user/individual_portfolio/{{ portfolio.id }}">{{ portfolio.name }}</a></li>
-                                {% endfor %}
-                            </ul> 
-                        </li>  
-                        <li>
-                            <a href="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
-                        </li>
-                        <li>
-                            <a href="/user/news_portfolio"><span class="icon-flag-alt"></span> News & Sentiment</a>
-                            <ul>
-                                <li><a href="component_blocks.html">Portfolio A </a></li>
-                                <li><a href="component_buttons.html">Portfolio B </a></li>
-                                <li><a href="component_modals.html">Portfolio C</a></li> 
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-cogs"></span> Help & Suggestions</a>
-                            <ul>
-                                <li><a href="component_blocks.html">Portfolio A </a></li>
-                                <li><a href="component_buttons.html">Portfolio B </a></li>
-                                <li><a href="component_modals.html">Portfolio C</a></li> 
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-share-alt"></span> Log Out</a>
-                        </li>                                                                   
-                    </ul>
-                </div>
-            </div>
-<!-- Right Hand Content Goes Here                 -->
-     <!--Content-->
-     <div class="col-md-8" style="padding-left:60px;">
-        <h2 style="text-align:center;">My Portfolios</h2>
-        <!--first portfolio -->
-         {% for portfolio in portfolios %}
-        <div class="block block-drop-shadow">
-            <div class="head bg-dot30">  
-            <div class="side pull-right"> 
-                <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/portfolio_settings">View</a></div>
-                     </div>
-                                    <table class="table table-hover margin bottom">
-                                        <thead>
-                                        <tr>
-                                            <th class="text-center" style="width: 33%;">{{ portfolio.name }}</th>
-                                            <th class="text-center" style="width: 33%;">{{ portfolio.risk }} %</th>
-                                            <th class="text-center" style="width: 33%;">54 stocks in 10 markets</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% if portfolio.stocks %}
-                                            {% for stock in portfolio.stocks %}
-                                            <tr>
-                                                <td class="text-center">{{ stock.ticker }}</td>
-                                                <td class="text-center small">{{stock.current_price}} <span style="color:#00ff00">(+2.81%)</span></td>
-                                                <td class="text-center small">{{stock.buy_date}}</td>
-                                                <td class="text-center small">{{stock.sell_date}}</td>
-                                                <td class="text-center small">{{stock.number_of_shares}}</td>
-                                                <td class="text-center">{{stock.initial_price}}</td>
-                                                <!--<td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>-->
-                                            </tr>
-                                            <!--<tr>
-                                                <td>GOOG</td>
-                                                <td class="text-center small">38627$ <span style="color:#ff4d4d">(-1.3%)</span></td>
-                                                <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TSLA</td>
-                                                <td class="text-center small">9745$ <span style="color:#00ff00">(+15.4%)</span></td>
-                                                <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
-                                            </tr>-->
-                                            {% endfor %}
-                                        {% else %}
-                                            <tr><td colspan="3" style="text-align:center;">You have not created any stocks in this portfolio.</td></tr>
-                                        {% endif %}
-                                        </tbody>
-                                    </table>
-                                </div>
-        </div>
-         {% endfor %}
-        <!--second portfolio-->
-         <!--<div class="block block-drop-shadow">
-            <div class="head bg-dot30">  
-            <div class="side pull-right"> 
-                             <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/portfolio_settings">View</a></div>
-                     </div>
-                                <table class="table table-hover margin bottom">
-                                        <thead>
-                                        <tr>
-                                            <th>Tech Portfolio</th>
-                                            <th class="text-center">5.67 %</th>
-                                            <th class="text-center">54 stocks in 10 markets</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>HP</td>
-                                            <td class="text-center small">1604$ <span style="color:#00ff00">(+9.81%)</span></td>
-                                            <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
-                                        </tr>
-                                        <tr>
-                                            <td>MSFT</td>
-                                            <td class="text-center small">38627$ <span style="color:#ff4d4d">(-7.3%)</span></td>
-                                            <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
-                                        </tr>
-                                        <tr>
-                                            <td>TXN</td>
-                                            <td class="text-center small">9745$ <span style="color:#00ff00">(+3.4%)</span></td>
-                                            <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
-                                        </tr>                                  
-                                        </tbody>
-                                    </table>
-                                </div>
-        </div>-->
-                <!--third portfolio-->
-         <!--<div class="block block-drop-shadow">
-            <div class="head bg-dot30">  
-            <div class="side pull-right"> 
-                             <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/portfolio_settings">View</a></div>
-                     </div>
-                                <table class="table table-hover margin bottom">
-                                        <thead>
-                                        <tr>
-                                            <th>European Portfolio</th>
-                                            <th class="text-center">37.31 %</th>
-                                            <th class="text-center">56 stocks in 11 markets</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>KO</td>
-                                            <td class="text-center small">1604$ <span style="color:#00ff00">(+8.81%)</span></td>
-                                            <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
-                                        </tr>
-                                        <tr>
-                                            <td>WMT</td>
-                                            <td class="text-center small">38627$ <span style="color:#ff4d4d">(-5.3%)</span></td>
-                                            <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
-                                        </tr>
-                                        <tr>
-                                            <td>TGT</td>
-                                            <td class="text-center small">9745$ <span style="color:#00ff00">(+15.4%)</span></td>
-                                            <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
-                                        </tr>   
-                                        <tr>
-                                            <td>HOG</td>
-                                            <td class="text-center small">9745$ <span style="color:#00ff00">(+18.4%)</span></td>
-                                            <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
-                                        </tr>                                
-                                        </tbody>
-                                    </table>
-                                </div>
-        </div>-->
-       </div>
     </div>
+     {% endfor %}
+    <!--second portfolio-->
+     <!--<div class="block block-drop-shadow">
+        <div class="head bg-dot30">
+        <div class="side pull-right">
+                         <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/individual_portfolio">View</a></div>
+                 </div>
+                            <table class="table table-hover margin bottom">
+                                    <thead>
+                                    <tr>
+                                        <th>Tech Portfolio</th>
+                                        <th class="text-center">5.67 %</th>
+                                        <th class="text-center">54 stocks in 10 markets</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>HP</td>
+                                        <td class="text-center small">1604$ <span style="color:#00ff00">(+9.81%)</span></td>
+                                        <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MSFT</td>
+                                        <td class="text-center small">38627$ <span style="color:#ff4d4d">(-7.3%)</span></td>
+                                        <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
+                                    </tr>
+                                    <tr>
+                                        <td>TXN</td>
+                                        <td class="text-center small">9745$ <span style="color:#00ff00">(+3.4%)</span></td>
+                                        <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+    </div>-->
+            <!--third portfolio-->
+     <!--<div class="block block-drop-shadow">
+        <div class="head bg-dot30">
+        <div class="side pull-right">
+                         <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/individual_portfolio">View</a></div>
+                 </div>
+                            <table class="table table-hover margin bottom">
+                                    <thead>
+                                    <tr>
+                                        <th>European Portfolio</th>
+                                        <th class="text-center">37.31 %</th>
+                                        <th class="text-center">56 stocks in 11 markets</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>KO</td>
+                                        <td class="text-center small">1604$ <span style="color:#00ff00">(+8.81%)</span></td>
+                                        <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
+                                    </tr>
+                                    <tr>
+                                        <td>WMT</td>
+                                        <td class="text-center small">38627$ <span style="color:#ff4d4d">(-5.3%)</span></td>
+                                        <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
+                                    </tr>
+                                    <tr>
+                                        <td>TGT</td>
+                                        <td class="text-center small">9745$ <span style="color:#00ff00">(+15.4%)</span></td>
+                                        <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
+                                    </tr>
+                                    <tr>
+                                        <td>HOG</td>
+                                        <td class="text-center small">9745$ <span style="color:#00ff00">(+18.4%)</span></td>
+                                        <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+    </div>-->
+   </div>
+</div>
 <!-- End -->
 </div>
 </body>
 
 
-{% block scripts %}
+
 <script src="/static/js/nouislider.min.js"></script>
 
 <script type="text/javascript">
@@ -285,5 +185,19 @@ function popitup(url) {
     if (window.focus) {newwindow.focus()}
     return false;
 }
-</script>
+</script>               
+    {% block body %}
+
+{% endblock %}
+
+        </div>
+        <div class="footer" style="background-color:rgba(255,255,255,0);border:0px">
+            <a href="#" class="pull-right">Contact Us&nbsp;</a>
+            <div>
+                <strong>Copyright</strong> FSAI &copy; 2015
+            </div>
+        </div>
+
+    </div>
+</div>
 {% endblock %}

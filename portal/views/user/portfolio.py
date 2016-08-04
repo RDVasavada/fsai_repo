@@ -13,7 +13,6 @@ from portal.models.data.stock import Stock
 def portfolio(request):
     # write code to get portfolio information from database
     # portfolio_Objects = Portfolio.objects.all()
-
     html = get_top_portfolios(request, 'user/portfolio_view.html')
     return HttpResponse(html)
 
@@ -25,6 +24,9 @@ def portfolio_settings(request):
 def Individual_portfolio(request):
     html = get_top_portfolios(request, 'user/Individual_portfolio.html')
     return HttpResponse(html)
+
+def Individual_stock(request):
+    return render(request, 'user/Individual_stock.html', RequestContext(request))
 
 def portfolio_optimize(request):
     try:
@@ -192,9 +194,9 @@ def my_portfolios(request):
             #all_portfolios = Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id])
             #print(all_portfolios)
             for port in all_portfolios:
-                print(str(port.id) + "|" + port.name)
+                #print(str(port.id) + "|" + port.name)
                 port.stocks = port.stock_set.all()
-                print(port.stock_set.all())
+                #print(port.stock_set.all())
                 #for stock in port.stock_set:
                     #print(str(stock.id) + " | " + stock.ticker)
 
@@ -220,7 +222,10 @@ def my_portfolios(request):
         print("authentication is not successful")
 
     context_dict = {}
-    context_dict["portfolios"] = all_portfolios
+    context_dict["all_portfolios"] = all_portfolios
+
+    t_portfolios = top_portfolios(portalUser.id)
+    context_dict["portfolios"] = t_portfolios
 
     t = loader.get_template('user/my_portfolios.html')
     c = Context(context_dict)
