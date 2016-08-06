@@ -26,6 +26,7 @@ urlpatterns = patterns('',
     (r'^user/individual_stock/?$', views.Individual_stock),
     (r'^user/news_portal/?$', views.news_portal),
     (r'^user/top_portfolios/?$', views.top_portfolios),
+    (r'^user/search_portfolio/?$', views.search_portfolio),
 
 
 )
