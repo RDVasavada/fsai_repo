@@ -66,7 +66,7 @@
                             </a>
                         </li>                            
                         <li>
-                            <a id="myPortfolios" href="#"><span class="icon-comments"></span> Messages</a>
+                            <a id="myPortfolios" href="#statusbar_2"><span class="icon-comments"></span> Messages</a>
                             <ul>                                    
                                 <li><a href="form_elements.html">Inbox</a></li>
                                 <li><a href="form_editors.html">Sent</a></li>
@@ -165,13 +165,13 @@
 $(".page-navigation li a").click(function(e){       
     var ul = $(this).parent('li').children('ul');
     
-    if(ul.length == 1){            
-        if(ul.is(':visible'))
-            ul.slideUp('fast');                
-        else
-            ul.slideDown('fast');
-        return false;
-    }
+    // if(ul.length == 1){            
+    //     if(ul.is(':visible'))
+    //         ul.slideUp('fast');                
+    //     else
+    //         ul.slideDown('fast');
+    //     return false;
+    // }
     if (e.currentTarget.id !== 'myPortfolios') {
         $(".statusbar").show()
         setTimeout(function(){ 
