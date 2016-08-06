@@ -1,155 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>        
-    <title>VISE</title>
+{% extends "base.html" %}
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="/static/js1/morris.js"></script>
-    <script type="text/javascript" src="/static/js1/raphael.js"></script>
-    <link rel="icon" type="image/ico" href="favicon.ico"/>
-    
-    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
-    
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
-    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins/knob/jquery.knob.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/sparkline/jquery.sparkline.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.js'></script>     
-    <script type='text/javascript' src='/static/js/plugins/flot/jquery.flot.resize.js'></script>
-    
-    <script type='text/javascript' src='/static/js/plugins.js'></script>    
-    <script type='text/javascript' src='/static/js/actions.js'></script>    
-    <script type='text/javascript' src='/static/js/charts.js'></script>
-    <script type='text/javascript' src='/static/js/settings.js'></script> 
-
-</head>
-<body class="bg-img-num1" data-settings="open">   
-<div class="container">            
-<!-- Begin -->
-<!-- Top Nav Bar -->
-        <div class="row">
-            <div class="col-md-12">
-                <ol class="breadcrumb" style="margin-top:33px">
-                    <li><a href="#">Home</a></li>                    
-                    <li><a href="dashboard">Dashboard</a></li>
-                    <li class="active">My Portfolios</li>
-                </ol>
-            </div>
-        </div>
-        <div class="row">
-<!-- Left Hand Navi Menu -->
-            <div class="col-md-2" style="margin-top:50px">
-                <div class="page-sidebar">
-                    <div class="page-navigation-panel">
-                        <div class="name">Howdy, {{user.username}}</div>
-                        <div class="control"><a href="#" class="psn-control"><span class="icon-reorder"></span></a></div>
-                    </div>            
-                    <div class="page-navigation-panel search">                                
-                        <div class="input-group">                        
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <div class="input-group-addon"><span class="icon-search"></span></div>
-                        </div>                
-                    </div>
-                    <ul class="page-navigation">
-                        <li>
-                            <a href="/user/dashboard">
-                                <span class="icon-home"></span> Dashboard
-                            </a>
-                        </li>                            
-                        <li>
-                            <a href="#"><span class="icon-comments"></span> Messages</a>
-                            <ul>                                    
-                                <li><a href="form_elements.html">Inbox</a></li>
-                                <li><a href="form_editors.html">Sent</a></li>
-                                <li><a href="form_files.html">Deleted</a></li>
-                                <li><a href="form_validation.html">Starred</a></li>
-                            </ul>                                
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-folder-open-alt"></span> My Portfolios</a>
-                             <ul>
-                                <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
-                                <li><a href="/user/individual_stock">High Risk Portfolio</a></li>
-                                <li><a href="/user/individual_stock">European Portfolio </a></li>
-                                <li><a href="/user/individual_stock">Tech Portfolio</a></li> 
-                            </ul> 
-                        </li>  
-                        <li>
-                            <a href="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
-                        </li>
-                        <li>
-                            <a href="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
-
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-cogs"></span> Help & Suggestions</a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-share-alt"></span> Log Out</a>
-                        </li>                                                                   
-                    </ul>
-                </div>
-            </div>
-<!-- Right Hand Content Goes Here                 -->
-     <!--Content-->
+{% block content %}
      <div class="col-md-8" style="padding-left:50px;padding-left:50px">
-        <h2 style="text-align:center;">AAPL: APPLE</h2>
+        {% for result in companyStats %}
+        <h2 style="text-align:center;">{{ result.company_name }} </h2>
         <!--first portfolio -->
         <div class="col-md-6 col-sm-6">
             <div class="block block-drop-shadow">
                  <div class="head bg-dot20">   
-                     <h2>Overview of Company</h2>
+                     <h2>Work Culture</h2>
                  </div>
-                 <div class="ibox-content" style="display: block;padding:50px;padding-top:100px">
-                     Apple, Inc. engages in the design, manufacture, and marketing of mobile communication, media devices, personal computers, and portable digital music players. The firm offers products and services under the iPhone, iPad, Mac, iPod, Apple Watch, and Apple TV brands; consumer and professional software applications under the iOS, OS, X, and watchOS brands; and operating systems under the iCloud and Apple Pay brands. It operates through the following segments: Americas, Europe, Greater China, Japan, and Rest of Asia Pacific. The company was founded by Steven Paul Jobs, Ronald Gerald Wayne, and Stephen G. Wozniak on April 1, 1976 and is headquartered in Cupertino, CA.
-                 </div>
-            </div>
-            <div class="block block-drop-shadow">
-                 <div class="head bg-dot20">   
-                     <h2>Future of Stock</h2>
-                 </div>
-                 <div class="ibox-content" style="display: block;padding:50px;padding-top:100px">
-                    The analysts offering 12-month price forecasts for Apple have a median target of 120.00, with a high estimate of 185.00 and a low estimate of 65.00. The median estimate represents a +23.70% increase from the last price of 97.01.
-                 </div>
-            </div>
+<!--                  <div class="ibox-content" style="display: block;padding:50px">
+                    CEO : {{ result.ceo_name }} <br>
+                    Approval Rating : {{ result.ceo_rating }} <br><br>
+                    Work Happiness Rating : {{ result.happiness_rating}}
+                 </div> -->
+                 <div class="ibox-content" style="display: block;padding:50px">
+                    <span><h5>CEO {{ result.ceo_name}}<br></h5> {{result.ceo_rating}}% Approval Rating</span><br><br>
+                    <span><h5>Work Happiness Rating </h5>{{ result.happiness_rating}} </span> <br><br>
+                    <span><h5>Pros</h5>{{ result.culture_pros }} </span><br><br><br>
+                    <span><h5>Cons</h5>{{ result.culture_cons }} </span> <br><br>
+                 </div>                 
+            </div>            
         </div> 
         <!--right side-->
         <div class="col-md-6 col-sm-6">
-            <div class="block block-drop-shadow">
+<!--             <div class="block block-drop-shadow">
                  <div class="head bg-dot20">   
                      <h2>Forecast Graph</h2>
                  </div>                        
                   <div style="align:left" class="head-panel nm tac">
                         <div class="chart" id="dash_chart_1" style="height: 150px;"></div>
                  </div>
-            </div>
+            </div> -->
             <div class="block block-drop-shadow">
+                 <div class="head bg-dot20">   
+                     <h2>Overview of Company</h2>
+                 </div>
+                 <div class="ibox-content" style="display: block;padding:50px">
+                     Apple, Inc. engages in the design, manufacture, and marketing of mobile communication, media devices, personal computers, and portable digital music players. The firm offers products and services under the iPhone, iPad, Mac, iPod, Apple Watch, and Apple TV brands; consumer and professional software applications under the iOS, OS, X, and watchOS brands; and operating systems under the iCloud and Apple Pay brands. It operates through the following segments: Americas, Europe, Greater China, Japan, and Rest of Asia Pacific. The company was founded by Steven Paul Jobs, Ronald Gerald Wayne, and Stephen G. Wozniak on April 1, 1976 and is headquartered in Cupertino, CA.
+                 </div>
+            </div>
+
+            <div class="block block-drop-shadow">
+                <div class="block block-drop-shadow">
+                     <div class="head bg-dot20">   
+                         <h2>Future of Stock</h2>
+                     </div>
+                     <div class="ibox-content" style="display: block;padding:50px">
+                        The analysts offering 12-month price forecasts for Apple have a median target of 120.00, with a high estimate of 185.00 and a low estimate of 65.00. The median estimate represents a +23.70% increase from the last price of 97.01.
+                     </div>
+                </div>
                  <div class="head bg-dot20">   
                      <h2>Market Sentiment</h2>
                  </div>
-                 <div class="ibox-content" style="display: block;padding:50px;padding-top:100px">
+                 <div class="ibox-content" style="display: block;padding:50px">
                     The analysts offering 12-month price forecasts for Apple have a median target of 120.00, with a high estimate of 185.00 and a low estimate of 65.00. The median estimate represents a +23.70% increase from the last price of 97.01.
                  </div>
-            </div>
+            </div>         
         </div>
+        {% endfor %}
         </div>               
        </div>
     </div>
 <!-- End -->
 </div>
 </body>
-
+{% endblock %}
 
 {% block scripts %}
-<script src="/static/js/nouislider.min.js"></script>
+
+
+<script src="/static/js/nouislider.min.js"> </script>
 
 <script type="text/javascript">
     var rangeSlider = document.getElementById('basic_slider');
