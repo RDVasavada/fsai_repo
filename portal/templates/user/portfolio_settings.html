@@ -1,8 +1,5 @@
 {% extends "base.html" %}
-    <script type='text/javascript' src='/static/js/plugins.js'></script>    
-    <script type='text/javascript' src='/static/js/actions.js'></script>    
-    <script type='text/javascript' src='/static/js/charts.js'></script>
-    <script type='text/javascript' src='/static/js/settings.js'></script> 
+    
 {% block content %}
          <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">
             <div class="block block-drop-shadow" style="font-family:''Helvetica Neue Ultra Light', 'Helvetica', Arial, sans-serif'">
@@ -196,7 +193,33 @@
                 </div>
             </div>
         </div>
-</div>
+</div><!-- FSAI scripts -->
+{% block scripts %}
+            <script type="text/javascript">
+            $(".page-navigation li a").click(function(e){    
+                console.log(e.currentTarget.id)
+                var ul = $(this).parent('li').children('ul');
+                if (e.currentTarget.id == 'myPortfolios') {
+                        if(ul.is(':visible')) {
+                            ul.slideDown('fast');
+                        } else {
+                            ul.slideUp('fast');                
+                        }
+                }
+                if (e.currentTarget.id !== 'myPortfolios') {
+                    $(".statusbar").show()
+                    setTimeout(function(){ 
+                        var url = e.currentTarget.id
+                            console.log(url)
+                            if (url) {
+                            location.assign(url)
+                        }
+                    }, 2000);
+             
+                };
+            })
+            </script>
+{% endblock %}
 <script>
 function loadDummyData() {
     setTimeout(function(){ document.forms["myForm"].submit(); }, 3000);
@@ -257,9 +280,4 @@ function popitup(url) {
 
 {% endblock %}
 
-        </div>form
-
-
-    </div>
-</div>
 {% endblock %}

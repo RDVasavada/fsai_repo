@@ -114,31 +114,6 @@
                 <strong>Copyright</strong> VISE &copy; 2015
             </div>
         </div>            
-            <script type="text/javascript">
-            $(".page-navigation li a").click(function(e){       
-                var ul = $(this).parent('li').children('ul');
-                
-                if(ul.length == 1){            
-                    if(ul.is(':visible'))
-                        ul.slideUp('fast');                
-                    else
-                        ul.slideDown('fast');
-                    return false;
-                }
-                if (e.currentTarget.id !== 'myPortfolios') {
-                    $(".statusbar").show()
-                    setTimeout(function(){ 
-                        var url = e.currentTarget.id
-                            console.log(url)
-                            if (url) {
-                            location.assign(url)
-                        }
-                    }, 2000);
-                } else {
-                    console.log("asdf")
-                }
-            });
-            </script>
 
 {% block content %}
 
@@ -153,16 +128,36 @@
 <!-- Custom and plugin javascript -->
 <!-- <script src="/static/js/inspinia.js"></script> -->
 <!-- <script src="/static/js/plugins/pace/pace.min.js"></script> -->
-        <div id="footer" class="footer" style="position:fixed;background-color:rgba(255,255,255,0);bottom:0px;border:0px">
-            <a href="#" class="pull-right">Contact Us&nbsp;</a>
-            <div style>
-                <strong>Copyright</strong> VISE &copy; 2015
-            </div>
-        </div> 
+
 
 
 <!-- FSAI scripts -->
 {% block scripts %}
+            <script type="text/javascript">
+            $(".page-navigation li a").click(function(e){    
+                console.log(e.currentTarget.id)
+                if (e.currentTarget.id == 'myPortfolios') {
+                    var ul = $(this).parent('li').children('ul');
+                        if(ul.is(':visible')) {
+                            ul.slideUp('fast');                
+                        } else {
+                            ul.slideDown('fast');                
+
+                        }
+                }
+                if (e.currentTarget.id !== 'myPortfolios') {
+                    $(".statusbar").show()
+                    setTimeout(function(){ 
+                        var url = e.currentTarget.id
+                            console.log(url)
+                            if (url) {
+                            location.assign(url)
+                        }
+                    }, 2000);
+             
+                };
+            })
+            </script>
 {% endblock %}
 
 </body>
