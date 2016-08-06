@@ -161,7 +161,31 @@
 <input type="text" class="form-control" id="culture_cons" value="culture_cons" name="culture_cons">    
 </form>    
 <script src="/static/js/nouislider.min.js"></script>
-
+<script type="text/javascript">
+$(".page-navigation li a").click(function(e){       
+    var ul = $(this).parent('li').children('ul');
+    
+    if(ul.length == 1){            
+        if(ul.is(':visible'))
+            ul.slideUp('fast');                
+        else
+            ul.slideDown('fast');
+        return false;
+    }
+    if (e.currentTarget.id !== 'myPortfolios') {
+        $(".statusbar").show()
+        setTimeout(function(){ 
+            var url = e.currentTarget.id
+                console.log(url)
+                if (url) {
+                location.assign(url)
+            }
+        }, 2000);
+    } else {
+        console.log("asdf")
+    }
+});
+</script>
 
 <script type="text/javascript">
     $("a#stockLink").click(function(e){
