@@ -138,7 +138,7 @@
                 {% for stock in portfolio.stocks %}   
                     <tr class="even">
                         <td class=" sorting_1"><a href="#" id="stockLink"> {{ stock.ticker }} </a> </td>
-                        <td class=" ">{{ stock.current_price }}</td>
+                        <td class=" ">{{ stock.current_price }}<span id="priceChange"></span> </td>
                         <td class=" ">{{ stock.buy_date }} - {{ stock.sell_date }}</td>
                         <td class=" ">{{ stock.number_of_shares }}</td>
                         <td class=" ">{{ stock.initial_price }}</td>                                    
@@ -165,13 +165,6 @@
 $(".page-navigation li a").click(function(e){       
     var ul = $(this).parent('li').children('ul');
     
-    // if(ul.length == 1){            
-    //     if(ul.is(':visible'))
-    //         ul.slideUp('fast');                
-    //     else
-    //         ul.slideDown('fast');
-    //     return false;
-    // }
     if (e.currentTarget.id !== 'myPortfolios') {
         $(".statusbar").show()
         setTimeout(function(){ 
@@ -188,6 +181,19 @@ $(".page-navigation li a").click(function(e){
 </script>
 
 <script type="text/javascript">
+    var priceChanges = $("span#priceChange") 
+    for (var key in priceChanges) {
+        var obj = priceChanges[key]
+        if (typeof(obj) == 'object' && obj.nodeName == 'SPAN') {
+            console.log(obj)
+            var percentage = (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2)
+            if (percentage > 0) {
+                obj.innerHTML = "<span style='color:green'>" + (" + " + (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2) + "%") + "</span>"
+            } else {
+                obj.innerHTML = "<span style='color:red'>" + (" - "+(((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*-100).toFixed(2) + "%") + "</span>"
+            }
+        }
+    }
     $("a#stockLink").click(function(e){
         $(".statusbar")[0].innerText = "Loading " + e.currentTarget.innerText + "'s Stock Information ..."
         $(".statusbar").show()

@@ -192,6 +192,7 @@ def top_portfolios(user_id):
                        "portal_portfolio p, portal_stock s where p.id=s.show_id "
                        "and p.user_id=" + str(user_id) + " group by p.id order by investment desc limit 3")
         all_portfolios = dictfetchall(cursor)
+        print "this is all portfolios"
         print(all_portfolios)
     except Exception as e:
         print(e)
@@ -342,6 +343,7 @@ def get_top_portfolios(request, html_template):
         portalUser = PortalUser.objects.get(username=username)
 
     portfolios = top_portfolios(1)
+    print portfolios
     # portfolios = top_portfolios(portalUser.id)
 
     context_dict = {}
