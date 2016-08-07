@@ -79,7 +79,7 @@
                           <ul>
                                 <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
                             {% for portfolio in portfolios %}
-                                <li><a class="stbar" href="user/individual_portfolio/{{ portfolio.id }}">{{ portfolio.name }}</a></li>
+                                <li><a class="stbar" href="/user/individual_portfolio">{{ portfolio.name }}</a></li>
                             {% endfor %}
                                 <!--<li><a href="#statusbar_2" class="stbar" id="/user/my_portfolios">Portfolio Summary </a></li>
                                 <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">High Risk Portfolio</a></li>
@@ -134,14 +134,18 @@
 <!-- FSAI scripts -->
 {% block scripts %}
             <script type="text/javascript">
-            $(".page-navigation li a").click(function(e){    
-                console.log(e.currentTarget.id)
+            $(".page-navigation li a").click(function(e){  
+            console.log("asdf")  
                 if (e.currentTarget.id == 'myPortfolios') {
                     var ul = $(this).parent('li').children('ul');
                         if(ul.is(':visible')) {
-                            ul.slideUp('fast');                
+                            setTimeout(function(){ 
+                                ul.slideUp('fast');                
+                            }, 100);
                         } else {
-                            ul.slideDown('fast');                
+                            setTimeout(function(){ 
+                                ul.slideDown('fast');                
+                            }, 100);
 
                         }
                 }
@@ -153,8 +157,7 @@
                             if (url) {
                             location.assign(url)
                         }
-                    }, 2000);
-             
+                    }, 1000);
                 };
             })
             </script>

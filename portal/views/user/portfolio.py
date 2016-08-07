@@ -25,6 +25,7 @@ def individual_portfolio(request):
     html = get_top_portfolios(request, 'user/individual_portfolio.html')
     return HttpResponse(html)
 
+@login_required
 @csrf_exempt
 def individual_stock(request):
     print ("Ceo Name : " + request.POST['ceo_name'] )
@@ -42,9 +43,15 @@ def individual_stock(request):
     eachStat['culture_pros'] = request.POST['culture_pros']
     eachStat['culture_cons'] = request.POST['culture_cons']
     companyStats.append(eachStat)
-
+    if request.user.is_authenticated():
+        username = request.user.username    
+    user = {}
+    user["username"] = username
+    portfolios = top_portfolios(27)
     context_dict = {}
     context_dict["companyStats"] = companyStats
+    context_dict["user"] = user
+    context_dict["portfolios"] = portfolios
     t = loader.get_template('user/individual_stock.html')
     c = Context(context_dict)
     html = t.render(c)
@@ -191,7 +198,11 @@ def top_portfolios(user_id):
         cursor = connection.cursor()
         cursor.execute("select p.id as id,name,sum(investment) as value from "
                        "portal_portfolio p, portal_stock s where p.id=s.show_id "
+<<<<<<< HEAD
                        "and p.user_id=" + str(27) + " group by p.id order by investment desc limit 3")
+=======
+                       "and p.user_id=" + str(27) + " group by p.id order by investment desc limit 10")
+>>>>>>> adam_branch
         all_portfolios = dictfetchall(cursor)
         print "this is all portfolios"
         print(all_portfolios)
@@ -249,11 +260,15 @@ def my_portfolios(request):
         #print(user_portfolios)
     else:
         print("authentication is not successful")
-
+    # print "adam's ports"
+    # for port in all_portfolios:
+    #     print len(port.stocks)
     context_dict = {}
     context_dict["all_portfolios"] = all_portfolios
-
-    t_portfolios = top_portfolios(portalUser.id)
+    user={}
+    user['username'] = username
+    context_dict["user"] = user
+    t_portfolios = top_portfolios(27)
     context_dict["portfolios"] = t_portfolios
 
     t = loader.get_template('user/my_portfolios.html')
@@ -344,11 +359,17 @@ def get_top_portfolios(request, html_template):
         portalUser = PortalUser.objects.get(username=username)
 
     portfolios = top_portfolios(27)
+<<<<<<< HEAD
     print portfolios
+=======
+    user={}
+    user['username'] = username
+>>>>>>> adam_branch
     # portfolios = top_portfolios(portalUser.id)
 
     context_dict = {}
     context_dict["portfolios"] = portfolios
+    context_dict["user"] = user
     t = loader.get_template(html_template)
     c = Context(context_dict)
     html = t.render(context_dict)

@@ -10,11 +10,6 @@
                  <div class="head bg-dot20">   
                      <h2>Work Culture</h2>
                  </div>
-<!--                  <div class="ibox-content" style="display: block;padding:50px">
-                    CEO : {{ result.ceo_name }} <br>
-                    Approval Rating : {{ result.ceo_rating }} <br><br>
-                    Work Happiness Rating : {{ result.happiness_rating}}
-                 </div> -->
                  <div class="ibox-content" style="display: block;padding:50px">
                     <span><h5>CEO {{ result.ceo_name}}<br></h5> {{result.ceo_rating}}% Approval Rating</span><br><br>
                     <span><h5>Work Happiness Rating </h5>{{ result.happiness_rating}} </span> <br><br>
@@ -70,47 +65,32 @@
 
 {% block scripts %}
 
+            <script type="text/javascript">
+            $(".page-navigation li a").click(function(e){  
+            console.log("asdf")  
+                if (e.currentTarget.id == 'myPortfolios') {
+                    var ul = $(this).parent('li').children('ul');
+                        if(ul.is(':visible')) {
+                            setTimeout(function(){ 
+                                ul.slideUp('fast');                
+                            }, 100);
+                        } else {
+                            setTimeout(function(){ 
+                                ul.slideDown('fast');                
+                            }, 100);
 
-<script src="/static/js/nouislider.min.js"> </script>
-
-<script type="text/javascript">
-    var rangeSlider = document.getElementById('basic_slider');
-    
-    noUiSlider.create(rangeSlider, {
-        start: [30],
-        range: {
-            'min': [ 0 ],
-            'max': [ 100 ]
-        }
-    });
-    var rangeSliderValueElement = document.getElementById('basic_slider_value');
-    var riskSliderRiskElement = document.getElementById('risk_slider_risk');
-    rangeSlider.noUiSlider.on('update', function( values, handle ) {
-        rangeSliderValueElement.innerHTML = values[handle] + "%";
-        if(values[handle] < 30) {
-            riskSliderRiskElement.innerHTML = "<p style='color:green;'>Low Risk</p>"
-        } else if(values[handle] > 30 && values[handle] < 60) {
-            riskSliderRiskElement.innerHTML = "<p style='color:orange;'>Medium Risk</p>"
-        } else if (values[handle] > 60) {
-            riskSliderRiskElement.innerHTML = "<p style='color:red;'>High Risk</p>"
-        }
-    });
-    function stockChecker() {
-        var stocksNumberElement = document.getElementById('stocks_number');
-        if (stocksNumberElement.value > 10) { stocksNumberElement.value = 10} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
-    }
-    function returnChecker() {
-        var expReturnElement = document.getElementById('expReturn');
-        if (expReturnElement.value > 50) { expReturnElement.value = 50} else if (expReturnElement.value < 1) { expReturnElement.value = 1}
-    }
-    function riskChecker() {
-        var expRiskElement = document.getElementById('expRisk');
-        if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
-    }
-function popitup(url) {
-    newwindow=window.open(url,'name','height=400,width=400');
-    if (window.focus) {newwindow.focus()}
-    return false;
-}
-</script>
+                        }
+                }
+                if (e.currentTarget.id !== 'myPortfolios') {
+                    $(".statusbar").show()
+                    setTimeout(function(){ 
+                        var url = e.currentTarget.id
+                            console.log(url)
+                            if (url) {
+                            location.assign(url)
+                        }
+                    }, 1000);
+                };
+            })
+            </script>
 {% endblock %}

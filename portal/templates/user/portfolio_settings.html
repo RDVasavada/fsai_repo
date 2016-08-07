@@ -1,5 +1,8 @@
 {% extends "base.html" %}
-    
+    <script type='text/javascript' src='/static/js/plugins.js'></script>    
+    <script type='text/javascript' src='/static/js/actions.js'></script>    
+    <script type='text/javascript' src='/static/js/charts.js'></script>
+    <script type='text/javascript' src='/static/js/settings.js'></script> 
 {% block content %}
          <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">
             <div class="block block-drop-shadow">
@@ -148,8 +151,8 @@
                                 <div class="input-group m-b">
                                     <span class="input-group-addon">$</span>
                                     <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control">
-                                </div>
-                                </div>
+                                </div>  
+                                </div>                      
                             </div>
                         <hr>
                         <!-- Number of Stocks  -->
@@ -214,7 +217,7 @@
                             <div class="col-md-6" style="margin-top:15px">
 <!--                                 <input class="btn btn-default btn-block btn-clean" type="submit" value="Optimize"/>
  -->                                <a href="#modal_default_1" onclick="loadDummyData()" data-toggle="modal" class="btn btn-default btn-block btn-clean">Optimize</a>
-                            </div>
+                            </div>              
                     </form><!-- End of Form -->
                 </div><!-- End of Content -->
             </div>
@@ -236,37 +239,11 @@
 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Cancel</button>              
                 </div>
             </div>
         </div>
-</div><!-- FSAI scripts -->
-{% block scripts %}
-            <script type="text/javascript">
-            $(".page-navigation li a").click(function(e){    
-                console.log(e.currentTarget.id)
-                var ul = $(this).parent('li').children('ul');
-                if (e.currentTarget.id == 'myPortfolios') {
-                        if(ul.is(':visible')) {
-                            ul.slideDown('fast');
-                        } else {
-                            ul.slideUp('fast');                
-                        }
-                }
-                if (e.currentTarget.id !== 'myPortfolios') {
-                    $(".statusbar").show()
-                    setTimeout(function(){ 
-                        var url = e.currentTarget.id
-                            console.log(url)
-                            if (url) {
-                            location.assign(url)
-                        }
-                    }, 2000);
-             
-                };
-            })
-            </script>
-{% endblock %}
+</div>
 <script>
 function loadDummyData() {
     setTimeout(function(){ document.forms["myForm"].submit(); }, 3000);
@@ -278,7 +255,7 @@ function loadDummyData() {
 
 <script type="text/javascript">
     var rangeSlider = document.getElementById('basic_slider');
-
+    
     noUiSlider.create(rangeSlider, {
         start: [30],
         range: {
@@ -286,10 +263,8 @@ function loadDummyData() {
             'max': [ 100 ]
         }
     });
-
     var rangeSliderValueElement = document.getElementById('basic_slider_value');
     var riskSliderRiskElement = document.getElementById('risk_slider_risk');
-
     rangeSlider.noUiSlider.on('update', function( values, handle ) {
         rangeSliderValueElement.innerHTML = values[handle] + "%";
         if(values[handle] < 30) {
@@ -300,22 +275,18 @@ function loadDummyData() {
             riskSliderRiskElement.innerHTML = "<p style='color:red;'>High Risk</p>"
         }
     });
-
     function stockChecker() {
         var stocksNumberElement = document.getElementById('stocks_number');
         if (stocksNumberElement.value > 10) { stocksNumberElement.value = 10} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
     }
-
     function returnChecker() {
         var expReturnElement = document.getElementById('expReturn');
         if (expReturnElement.value > 50) { expReturnElement.value = 50} else if (expReturnElement.value < 1) { expReturnElement.value = 1}
     }
-
     function riskChecker() {
         var expRiskElement = document.getElementById('expRisk');
         if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
     }
-
 function popitup(url) {
     newwindow=window.open(url,'name','height=400,width=400');
     if (window.focus) {newwindow.focus()}
@@ -327,4 +298,9 @@ function popitup(url) {
 
 {% endblock %}
 
+        </div>
+
+
+    </div>
+</div>
 {% endblock %}
