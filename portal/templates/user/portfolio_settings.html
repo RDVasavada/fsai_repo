@@ -2,8 +2,8 @@
     
 {% block content %}
          <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">
-            <div class="block block-drop-shadow" style="font-family:''Helvetica Neue Ultra Light', 'Helvetica', Arial, sans-serif'">
-                <div class="head bg-dot30">
+            <div class="block block-drop-shadow">
+                <div class="head bg-dot30">  
                 <div class="ibox-content" style="display: block;background-color: rgba(0,0,0,0);color:white;border:0px">
                         <form id="myForm" class="form-horizontal" action="/user/portfolio_optimize" method="post">
                         {% csrf_token %}
@@ -30,51 +30,100 @@
                             </div>
                              </div>
                         </div>
-                        <div class="toolbar" style="height:auto;margin:auto;width:100">
+                        <hr>
                             
                             <h3>Expected Return</h3>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">Return</label>
-                                <div class="input-group m-b">
+                                <div style="width:400px;">
+                                  <button class="btn btn-default btn-clean">Low</button>
+                                  <button class="btn btn-default btn-clean">Medium</button>
+                                  <button class="btn btn-default btn-clean">High</button>
+                                </div>
+                                <div class="input-group m-b" style="padding-top:10px;width:200px;">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">%</span>
                                         <input id="expReturn" name="expReturn" type="number" value="5" placeholder="1" min="1" max="50" class="form-control" onchange="returnChecker()">
                                     </div>
                                 </div>
                             </div>
-                            
+                            <hr>
                             <h3>Expected Risk</h3>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">Risk</label>
-                                <div class="input-group m-b">
+                                <div style="width:400px;">
+                                  <button class="btn btn-default btn-clean">Low</button>
+                                  <button class="btn btn-default btn-clean">Medium</button>
+                                  <button class="btn btn-default btn-clean">High</button>
+                                </div>
+                                <div class="input-group m-b" style="padding-top:10px;width:200px;">
                                      <div class="input-group m-b">
                                         <span class="input-group-addon">%</span>
                                         <input id="expRisk" name="expRisk" type="number" value="10" placeholder="1" min="1" max="20" class="form-control" onchange="riskChecker()">
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                      <hr>
                         <!-- Time Frame -->
-                        <div class="toolbar" style="height:auto;margin:auto:width:100%">
                         
                         <h3>Time Frame</h3>
                         <div class="form-group">
-                            <label class="col-sm-1 control-label" style="width:140px;">Term (Months)</label>
+                             <label class="col-sm-1 control-label" style="width:140px;vertical-align:top;">Years</label>
                             <div class="input-group m-b">
-                                <select class="form-control m-b" name="Months" id="Months">
+                                <select class="form-control m-b" name="Years" id="Years">
                                     <option value="1">1</option>
+                                    <option value="2">2</option>
                                     <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
                                     <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
                                     <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
                                     <option value="24">24</option>
-                                    <option value="36">36</option>
-                                    <option value="48">48</option>
-                                    <option value="60">60</option>
-                                </select>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                               </select>
                             </div>
-
                         </div>
-
+                        <div class="form-group">
+                             <label class="col-sm-1 control-label" style="width:140px;">Months</label>
+                             <div class="input-group m-b">
+                              <select class="form-control m-b" name="Months" id="Months">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                           </div>
+                        </div>
+                        <hr>
                         <!-- Control Market -->
                         
                         <h3>Control Market</h3>
@@ -89,8 +138,7 @@
                                 </select>
                                 </div>
                         </div>
-                        </div>
-                        <div class="toolbar" style="height:auto;margin:auto:width:100%">
+                         <hr>
                         <!-- Investment  -->
                         
                         <h3>Investment</h3>
@@ -103,7 +151,7 @@
                                 </div>
                                 </div>
                             </div>
-
+                        <hr>
                         <!-- Number of Stocks  -->
                         
                         <h3>Stocks</h3>
@@ -116,8 +164,7 @@
                                     </div>
                                  </div>
                         </div>
-                    </div>
-                        <div class="toolbar" style="height:auto;margin:auto:width:100%">
+                         <hr>
                            <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">
                                     <h5>Company Market Cap</h5>
@@ -147,8 +194,8 @@
                                     <input type="text" class="form-control" value="0">
                                 </div>                                
                             </div>
-                        </div>
-                        <div class="toolbar" style="height:auto;margin:auto:width:100%">
+                       
+                        
                            <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">
                                     <h5>Price Earnings Ratio</h5>
@@ -157,7 +204,7 @@
                                     <input type="text" class="form-control" value="0">
                                 </div>
                             </div>
-                        </div>
+                       
                         </div>
                             <div class="col-md-6" style="margin-top:15px">
                                 <a href="/" class="btn btn-default btn-block btn-clean" type="submit">Cancel</a>
