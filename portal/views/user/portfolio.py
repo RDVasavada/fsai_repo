@@ -359,12 +359,9 @@ def get_top_portfolios(request, html_template):
         portalUser = PortalUser.objects.get(username=username)
 
     portfolios = top_portfolios(27)
-<<<<<<< HEAD
     print portfolios
-=======
     user={}
     user['username'] = username
->>>>>>> adam_branch
     # portfolios = top_portfolios(portalUser.id)
 
     context_dict = {}
