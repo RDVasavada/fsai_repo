@@ -1,120 +1,6 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>{% block title %}Vise{% endblock %}</title>    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block page_css %}
-        <link rel="icon" type="image/ico" href="favicon.ico"/>
-        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet">
-        <link href="/static/css/animate.css" rel="stylesheet">
-        <link href="/static/css/style.css" rel="stylesheet">
-        <link href="/static/css/fsai.css" rel="stylesheet">
-        <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
-        <link href="/static/css2/stylesheet.css" rel="stylesheet" type="text/css"/>   
-    {% endblock %}
-    {% block head %}
-        <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
-        <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>   
-        <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
-        <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
-        <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
-        <script type='text/javascript' src='/static/js/plugins/datatables/jquery.dataTables.min.js'></script>
-        <script type='text/javascript' src='/static/js/plugins.js'></script>    
-        <script type='text/javascript' src='/static/js/actions.js'></script>
-        <script type='text/javascript' src='/static/js/settings.js'></script>
-        
-        <script type="text/javascript" src="/static/js1/morris.js"></script>
-        <script type="text/javascript" src="/static/js1/raphael.js"></script>
-        <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
-
-    {% endblock %}
-</head>
-
-<body>
-<!-- Top Nav Bar -->
-        <div class="row" style="padding-left:20px">
-            <div class="col-md-12">
-                <ol class="breadcrumb" style="margin-top:33px">
-                    <li><a href="#">Home</a></li>                    
-                    <li><a href="dashboard">Dashboard</a>
-                    </li>
-
-                </ol>
-            </div>
-        </div>
-        <div class="row" style="padding-left:20px">
-<!-- Left Hand Navi Menu -->
-            <div class="col-lg-2" style="margin-top:50px">
-                <div class="page-sidebar">
-                    <div class="page-navigation-panel">
-                        <div class="name">Howdy, {{user.username}}</div>
-                        <div class="control"><a href="#" class="psn-control"><span class="icon-reorder"></span></a></div>
-                    </div>            
-                    <div class="page-navigation-panel search">                                
-                        <div class="input-group">                        
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <div class="input-group-addon"><span class="icon-search"></span></div>
-                        </div>                
-                    </div>
-                    <ul class="page-navigation">
-                        <li>
-                            <a href="#statusbar_2" class="stbar" id="/user/dashboard">
-                                <span class="icon-home"></span> Dashboard
-                            </a>
-                        </li>                            
-                        <li>
-                            <a id="myPortfolios" href="#statusbar_2"><span class="icon-comments"></span> Messages</a>
-                            <ul>                                    
-                                <li><a href="form_elements.html">Inbox</a></li>
-                                <li><a href="form_editors.html">Sent</a></li>
-                                <li><a href="form_files.html">Deleted</a></li>
-                                <li><a href="form_validation.html">Starred</a></li>
-                            </ul>                                
-                        </li>
-                        <li>
-                            <a id="myPortfolios"> <span class="icon-folder-open-alt"></span>My Portfolios</a>
-                          <ul>
-                                <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
-                            {% for portfolio in all_portfolios %}
-                                <li><a class="stbar" href="user/individual_portfolio/{{ portfolio.id }}">{{ portfolio.name }}</a></li>
-                            {% endfor %}
-                                <!--<li><a href="#statusbar_2" class="stbar" id="/user/my_portfolios">Portfolio Summary </a></li>
-                                <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">High Risk Portfolio</a></li>
-                                <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">European Portfolio</a></li>
-                                <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">Tech Portfolio</a></li>-->
-                            </ul> 
-                        </li>  
-                        <li>
-                            <a href="#statusbar_2" class="stbar" id="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
-                        </li>
-                        <li>
-                            <a href="/user/news_portal" class="stbar" id="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="icon-cogs"></span> Help & Suggestions</a>
-
-                        </li>
-                        <li>
-                            <a href="/logout"><span class="icon-share-alt"></span> Log Out</a>
-                        </li>                                                                   
-                    </ul>
-                </div>
-            </div>
-            <div class="statusbar" id="statusbar_2" style="display: block;z-index:999;display:none;width:110vw">
-                <div class="statusbar-icon"><img src="/static/img/loader.gif"></div>
-                <div class="statusbar-text">Loading...</div>
-                <div class="statusbar-close icon-remove"></div>
-            </div>
-        <div id="footer" class="footer" style="position:fixed;background-color:rgba(255,255,255,0);bottom:0px;border:0px">
-            <a href="#" class="pull-right">Contact Us&nbsp;</a>
-            <div style>
-                <strong>Copyright</strong> VISE &copy; 2015
-            </div>
-        </div>    
-
+{% extends "base.html" %}
+    
+{% block content %}
 <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">        
     <div class="block">
         <div class="input-group">
@@ -146,8 +32,13 @@
     {% for portfolio in all_portfolios %}
     <div class="block">
         <div class="header">
+            <div class="side pull-right">              
+                <ul class="buttons">       
+                    <li><a href="#" class="iport" id="/user/individual_portfolio"><span class="icon-plus"></span> Expand </a></li>                
+                </ul>
+            </div>
             <h2 id="portfolioName">{{ portfolio.name }}</h2>
-            <span style="color:rgba(255,0,0,.6);float:right">{{ portfolio.risk}}% Risk </span>
+            <span style="color:rgba(255,0,0,1);float:right">{{ portfolio.risk}}% Risk </span>
         </div>
         <div class="content">
             <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper" role="grid">
@@ -172,8 +63,9 @@
                     </tr>
                 {% endfor %}
             {% endif %}                       
-                </tbody></table>
-                </div>                                        
+                </tbody>
+                </table>
+            </div>                                        
         </div>
     </div>
     {% endfor %}
@@ -188,8 +80,8 @@
 <input type="text" class="form-control" id="culture_cons" value="culture_cons" name="culture_cons">    
 </form>    
 <script src="/static/js/nouislider.min.js"></script>
-
-
+{% endblock %}
+{% block scripts %}
 <script type="text/javascript">
 //portfolio search functions
 let availableTags, portDict, stockDict
@@ -264,7 +156,7 @@ let availableTags, portDict, stockDict
                             $(".stocked").css('border','5px solid blue')
                             // tbody[key-1].style.border = "3px solid blue"
                             // tbody[key].setAttribute("id","bordered")
-                            var qName = stockDict[str][0].children[0].children[0].outerText
+                            var qName = stockDict[str][0].children[0].children[1].outerText
                             sortIt('query',qName,'')
                         }
                     }
@@ -286,9 +178,9 @@ let availableTags, portDict, stockDict
         if (typeof(obj) == 'object' && obj.nodeName == 'SPAN') {
             var percentage = (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2)
             if (percentage > 0) {
-                obj.innerHTML = "<span style='color:green'>" + (" + " + (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2) + "%") + "</span>"
+                obj.innerHTML = "<span style='color:rgba(0,255,0,1)'>" + (" + " + (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2) + "%") + "</span>"
             } else {
-                obj.innerHTML = "<span style='color:red'>" + (" - "+(((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*-100).toFixed(2) + "%") + "</span>"
+                obj.innerHTML = "<span style='color:rgba(255,0,0,1)'>" + (" - "+(((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*-100).toFixed(2) + "%") + "</span>"
             }
         }
     }
@@ -346,9 +238,14 @@ let availableTags, portDict, stockDict
         xhr.send();                  
     };
 //navbar bug fix
-$(".page-navigation li a").click(function(e){       
+$(".page-navigation li a").click(function(e){
+    renav(e)       
+});
+$(".iport").click(function(e) {
+    renav(e)
+})
+function renav(e) {
     var ul = $(this).parent('li').children('ul');
-    
     if (e.currentTarget.id !== 'myPortfolios') {
         $(".statusbar").show()
         setTimeout(function(){ 
@@ -357,14 +254,14 @@ $(".page-navigation li a").click(function(e){
                 if (url) {
                 location.assign(url)
             }
-        }, 2000);
+        }, 500);
     } else {
         console.log("asdf")
     }
-});
+};
 
 </script>               
 
-
+{% endblock %}
 
 

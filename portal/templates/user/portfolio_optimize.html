@@ -4,8 +4,8 @@
     <script type='text/javascript' src='/static/js/charts.js'></script>
     <script type='text/javascript' src='/static/js/settings.js'></script>
 {% block content %}
-             <div class="col-md-8 col-sm-8" style="height:80vh;padding-right:50px;padding-left:50px">
-                <div class="head bg-dot20">
+             <div class="col-md-8 col-sm-8" style="height:80vh;padding-right:50px;padding-left:50px;">
+                <div class="head bg-dot20">   
                     <div class="ibox-content" style="height:800px;background-color:inherit;border-style:none">
                         <h2>Portfolio Optimization Results</h2>
                         <table class="table">
@@ -25,10 +25,9 @@
                                 <tr id="incoming">
                                     <td id="companyName">
                                         <p>TELSA</p>
-                                        <a href="/user/individual_stock.html" class="btn btn-default">
-                                            <i class="fa fa-line-chart"></i>
-                                        </a>
-                                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s={{ result.tickerSymbol }}"><i class="fa fa-hacker-news"></i></a>
+                                        <a href="/user/individual_stock" class="btn btn-default">
+                                        <i class="fa fa-line-chart"></i>
+                                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=DJCO" target="_blank"><i class="fa fa-hacker-news"></i></a>
                                     </td>
                                     <td id="months">{{ result.months }}</td>
                                     <td id="market">{{ result.market }}</td>
