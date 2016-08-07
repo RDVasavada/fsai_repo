@@ -55,7 +55,7 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">Risk</label>
                                 <div style="width:400px;">
-                                  <button id="lowrisk" class="btn btn-default btn-clean">Low</button>
+                                  <button id="lowrisk" class="btn btn-default btn-clean" onclick="lowrisk()">Low</button>
                                   <button class="btn btn-default btn-clean">Medium</button>
                                   <button class="btn btn-default btn-clean">High</button>
                                 </div>
@@ -163,7 +163,7 @@
                                  <div class="input-group m-b">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon"></span>
-                                        <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" max="10" class="form-control" onchange="stockChecker()">
+                                        <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" class="form-control" onchange="stockChecker()">
                                     </div>
                                  </div>
                         </div>
@@ -277,7 +277,7 @@ function loadDummyData() {
     });
     function stockChecker() {
         var stocksNumberElement = document.getElementById('stocks_number');
-        if (stocksNumberElement.value > 10) { stocksNumberElement.value = 10} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
+        if (stocksNumberElement.value > 30) { stocksNumberElement.value = 30} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
     }
     function returnChecker() {
         var expReturnElement = document.getElementById('expReturn');
@@ -292,11 +292,13 @@ function popitup(url) {
     if (window.focus) {newwindow.focus()}
     return false;
 }
-   $(document).ready(function() {
-    $("#lowrisk").click(function(){
-        alert("The paragraph was clicked.");
-    });
-   });
+   function lowrisk(){
+    /*
+    document.getElementById("expRisk").innerHTML = 25;*/
+     newwindow=window.open(url,'name','height=400,width=400');
+    if (window.focus) {newwindow.focus()}
+    return false;
+    }
    
 </script>
 
