@@ -135,13 +135,16 @@
 {% block scripts %}
             <script type="text/javascript">
             $(".page-navigation li a").click(function(e){    
-                console.log(e.currentTarget.id)
                 if (e.currentTarget.id == 'myPortfolios') {
                     var ul = $(this).parent('li').children('ul');
                         if(ul.is(':visible')) {
-                            ul.slideUp('fast');                
+                            setTimeout(function(){ 
+                                ul.slideUp('fast');                
+                            }, 100);
                         } else {
-                            ul.slideDown('fast');                
+                            setTimeout(function(){ 
+                                ul.slideDown('fast');                
+                            }, 100);
 
                         }
                 }
@@ -153,8 +156,7 @@
                             if (url) {
                             location.assign(url)
                         }
-                    }, 2000);
-             
+                    }, 1000);
                 };
             })
             </script>

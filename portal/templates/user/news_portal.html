@@ -147,11 +147,7 @@
                 }
             };
         xhr.open('GET','http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo',true);
-        xhr.send();   
-        var bar = "";
-        $(window).on('resize',function(){
-            console.log('le resizing')
-        })        
+        xhr.send();    
     </script>
 
 {% block body %}

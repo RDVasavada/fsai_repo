@@ -150,23 +150,7 @@
     </div>           
 <script>
 
-$(".page-navigation li a").click(function(e){       
-    var ul = $(this).parent('li').children('ul');
-    
-    if (e.currentTarget.id !== 'myPortfolios') {
-        $(".statusbar").show()
-        setTimeout(function(){ 
-            var url = e.currentTarget.id
-                console.log(url)
-                if (url) {
-                location.assign(url)
-            }
-        }, 2000);
-    }
-    if (e.currentTarget.id == 'myPortfolios') {
-        
-    }
-});
+// });
 
 if (localStorage['marketData']) {
     fetchMarketData()
