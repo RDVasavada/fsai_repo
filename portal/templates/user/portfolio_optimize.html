@@ -25,10 +25,9 @@
                                 <tr id="incoming">
                                     <td id="companyName">
                                         <p>TELSA</p>
-                                        <a href="/user/individual_stock.html" class="btn btn-default">
-                                            <i class="fa fa-line-chart"></i>
-                                        </a>
-                                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s={{ result.tickerSymbol }}"><i class="fa fa-hacker-news"></i></a>
+                                        <a id="stockLink" href="/user/individual_stock" class="btn btn-default">
+                                        <i class="fa fa-line-chart"></i>
+                                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=DJCO" target="_blank"><i class="fa fa-hacker-news"></i></a>
                                     </td>
                                     <td id="months">{{ result.months }}</td>
                                     <td id="market">{{ result.market }}</td>

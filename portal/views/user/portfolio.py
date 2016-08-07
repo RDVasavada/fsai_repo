@@ -51,9 +51,10 @@ def individual_stock(request):
     return HttpResponse(html)    
 
 @login_required
+@csrf_exempt
 def portfolio_optimize(request):
-    html = get_top_portfolios(request, 'user/portfolio_optimize.html')
-    return HttpResponse(html)
+    # html = get_top_portfolios(request, 'user/portfolio_optimize.html')
+    # return HttpResponse(html)
 
     # try:
     #     print("Months: " + request.POST['Months'])
@@ -110,16 +111,16 @@ def portfolio_optimize(request):
     #     print(e)
     #     html = "<h2>Something went wrong with the server</h2>"
     #begin Adam's mock data script -->
-    # optimizeSearchResults = []
-    # eachStockresult = {}
-    # eachStockresult['months'] = (request.POST['Months'])
-    # eachStockresult['market'] = (request.POST['Market'])
-    # eachStockresult['investingAmount'] = (request.POST['investing_amount'])
-    # eachStockresult['numStocks'] = (request.POST['stocks_number'])
-    # eachStockresult['expectedRisk'] = (request.POST['expRisk'])
-    # eachStockresult['expectedReturn'] = (request.POST['expReturn'])
-    # optimizeSearchResults.append(eachStockresult)
-    # print(request.POST)
+    optimizeSearchResults = []
+    eachStockresult = {}
+    eachStockresult['months'] = (request.POST['Months'])
+    eachStockresult['market'] = (request.POST['Market'])
+    eachStockresult['investingAmount'] = (request.POST['investing_amount'])
+    eachStockresult['numStocks'] = (request.POST['stocks_number'])
+    eachStockresult['expectedRisk'] = (request.POST['expRisk'])
+    eachStockresult['expectedReturn'] = (request.POST['expReturn'])
+    optimizeSearchResults.append(eachStockresult)
+    print(request.POST)
     #end Adam's mock data --->
     # return render(request, 'user/portfolio_optimize.html', RequestContext(request))
     # 52.77.239.179:8080 - THE AWS instance of Ramana
@@ -161,17 +162,17 @@ def portfolio_optimize(request):
     #         eachStockresult['expectedRisk'] = "{0:.2f}".format(float(stockInfo[i]['ExpectedRisk']))
     #         optimizeSearchResults.append(eachStockresult)
     #         eachStockresult = {}
-    # context_dict = {}
-    # context_dict["optimizeSearchResults"] = optimizeSearchResults
+    context_dict = {}
+    context_dict["optimizeSearchResults"] = optimizeSearchResults
     # portfolios = top_portfolios()
     # context_dict["portfolios"] = portfolios
-    # t = loader.get_template('user/portfolio_optimize.html')
-    # c = Context(context_dict)
-    # html = t.render(c)
+    t = loader.get_template('user/portfolio_optimize.html')
+    c = Context(context_dict)
+    html = t.render(c)
 
     #print("response from REST API")
     #print(response)
-    # return HttpResponse(html)
+    return HttpResponse(html)
 
 # @login_required
 def top_portfolios(user_id):
@@ -190,7 +191,7 @@ def top_portfolios(user_id):
         cursor = connection.cursor()
         cursor.execute("select p.id as id,name,sum(investment) as value from "
                        "portal_portfolio p, portal_stock s where p.id=s.show_id "
-                       "and p.user_id=" + str(1) + " group by p.id order by investment desc limit 3")
+                       "and p.user_id=" + str(27) + " group by p.id order by investment desc limit 3")
         all_portfolios = dictfetchall(cursor)
         print "this is all portfolios"
         print(all_portfolios)
@@ -216,7 +217,7 @@ def my_portfolios(request):
         print("getting all the portfolios")
         try:
             # all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
-            all_portfolios = Portfolio.objects.filter(user__id=1)
+            all_portfolios = Portfolio.objects.filter(user__id=27)
             #print(all_portfolios)
 
             #all_portfolios = Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id])
@@ -342,7 +343,7 @@ def get_top_portfolios(request, html_template):
         username = request.user.username
         portalUser = PortalUser.objects.get(username=username)
 
-    portfolios = top_portfolios(1)
+    portfolios = top_portfolios(27)
     print portfolios
     # portfolios = top_portfolios(portalUser.id)
 
