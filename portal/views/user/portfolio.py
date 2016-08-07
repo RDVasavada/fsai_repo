@@ -198,11 +198,7 @@ def top_portfolios(user_id):
         cursor = connection.cursor()
         cursor.execute("select p.id as id,name,sum(investment) as value from "
                        "portal_portfolio p, portal_stock s where p.id=s.show_id "
-<<<<<<< HEAD
-                       "and p.user_id=" + str(27) + " group by p.id order by investment desc limit 3")
-=======
                        "and p.user_id=" + str(27) + " group by p.id order by investment desc limit 10")
->>>>>>> adam_branch
         all_portfolios = dictfetchall(cursor)
         print "this is all portfolios"
         print(all_portfolios)
