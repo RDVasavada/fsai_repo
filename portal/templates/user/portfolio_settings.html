@@ -55,7 +55,7 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">Risk</label>
                                 <div style="width:400px;">
-                                  <button class="btn btn-default btn-clean">Low</button>
+                                  <button id="lowrisk" class="btn btn-default btn-clean">Low</button>
                                   <button class="btn btn-default btn-clean">Medium</button>
                                   <button class="btn btn-default btn-clean">High</button>
                                 </div>
@@ -292,6 +292,12 @@ function popitup(url) {
     if (window.focus) {newwindow.focus()}
     return false;
 }
+   $(document).ready(function() {
+    $("#lowrisk").click(function(){
+        alert("The paragraph was clicked.");
+    });
+   });
+   
 </script>
 
 {% block body %}
