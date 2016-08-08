@@ -145,13 +145,16 @@
 
                         {% csrf_token %}
 <form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
+    <input type="text" class="form-control" id="company_symbol" value="company_symbol" name="company_symbol">    
+</form>                        
+<!-- <form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
     <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
     <input type="text" class="form-control" id="ceo_name" value="ceo_name" name="ceo_name">    
     <input type="text" class="form-control" id="ceo_rating" value="ceo_rating" name="ceo_rating">    
     <input type="text" class="form-control" id="happiness_rating" value="happiness_rating" name="happiness_rating">    
     <input type="text" class="form-control" id="culture_pros" value="culture_pros" name="culture_pros">    
     <input type="text" class="form-control" id="culture_cons" value="culture_cons" name="culture_cons">    
-</form>
+</form> -->
 </body>
 
 
@@ -166,94 +169,53 @@
         getStockInfo(e.currentTarget.innerText)
     });
     function getStockInfo(symbol) {
-        var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
-        var ahr = new XMLHttpRequest();
-        ahr.onreadystatechange = function(){
-            if (ahr.readyState==4 && ahr.status==200) 
-            {
-                var companyName = JSON.parse(ahr.responseText)
-                companyName = companyName.ResultSet.Result[0].name
-                var url = "http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=83856&t.k=cbW9p5pFQDw&action=employers&q=" + companyName
-                var bhr = new XMLHttpRequest();
-                bhr.onreadystatechange = function(){
-                    if (ahr.readyState==4 && ahr.status==200) 
-                    {
-                        var data = JSON.parse(bhr.responseText)
-                        $("#company_name")[0].value =  companyName
-                        $("#ceo_name")[0].value =  data.response.employers[0].ceo.name
-                        $("#ceo_rating")[0].value =  data.response.employers[0].ceo.pctApprove
-                        $("#happiness_rating")[0].value =  data.response.employers[0].cultureAndValuesRating
-                        $("#culture_pros")[0].value =  data.response.employers[0].featuredReview.pros
-                        $("#culture_cons")[0].value =  data.response.employers[0].featuredReview.cons
-                        document.forms["myForm"].submit();
-                    }
-                }
-                bhr.open('GET',url,true);
-                bhr.send();                                
-            }
-        }
-        ahr.open('GET',url,true);
-        ahr.send();
-    };
-    function companyNameFromSymbol(symbol) {
-        var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState==4 && xhr.status==200) 
-            {  
-                var companyName = JSON.parse(xhr.responseText)
-                companyName = companyName.ResultSet.Result[0].name
-                console.log(companyName)
-                return companyName
-            }
-        }
-        xhr.open('GET',url,true);
-        xhr.send();                  
-    };
-
-    var rangeSlider = document.getElementById('basic_slider');
-    
-    noUiSlider.create(rangeSlider, {
-        start: [30],
-        range: {
-            'min': [ 0 ],
-            'max': [ 100 ]
-        }
-    });
-
-    var rangeSliderValueElement = document.getElementById('basic_slider_value');
-    var riskSliderRiskElement = document.getElementById('risk_slider_risk');
-
-    rangeSlider.noUiSlider.on('update', function( values, handle ) {
-        rangeSliderValueElement.innerHTML = values[handle] + "%";
-        if(values[handle] < 30) {
-            riskSliderRiskElement.innerHTML = "<p style='color:green;'>Low Risk</p>"
-        } else if(values[handle] > 30 && values[handle] < 60) {
-            riskSliderRiskElement.innerHTML = "<p style='color:orange;'>Medium Risk</p>"
-        } else if (values[handle] > 60) {
-            riskSliderRiskElement.innerHTML = "<p style='color:red;'>High Risk</p>"
-        }
-    });
-
-    function stockChecker() {
-        var stocksNumberElement = document.getElementById('stocks_number');
-        if (stocksNumberElement.value > 10) { stocksNumberElement.value = 10} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
+        $("#company_symbol")[0].value = symbol
+        document.forms["myForm"].submit();
     }
+    //     var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
+    //     var ahr = new XMLHttpRequest();
+    //     ahr.onreadystatechange = function(){
+    //         if (ahr.readyState==4 && ahr.status==200) 
+    //         {
+    //             var companyName = JSON.parse(ahr.responseText)
+    //             companyName = companyName.ResultSet.Result[0].name
+    //             var url = "http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=83856&t.k=cbW9p5pFQDw&action=employers&q=" + companyName
+    //             var bhr = new XMLHttpRequest();
+    //             bhr.onreadystatechange = function(){
+    //                 if (ahr.readyState==4 && ahr.status==200) 
+    //                 {
+    //                     var data = JSON.parse(bhr.responseText)
+    //                     $("#company_name")[0].value =  companyName
+    //                     $("#ceo_name")[0].value =  data.response.employers[0].ceo.name
+    //                     $("#ceo_rating")[0].value =  data.response.employers[0].ceo.pctApprove
+    //                     $("#happiness_rating")[0].value =  data.response.employers[0].cultureAndValuesRating
+    //                     $("#culture_pros")[0].value =  data.response.employers[0].featuredReview.pros
+    //                     $("#culture_cons")[0].value =  data.response.employers[0].featuredReview.cons
+    //                     document.forms["myForm"].submit();
+    //                 }
+    //             }
+    //             bhr.open('GET',url,true);
+    //             bhr.send();                                
+    //         }
+    //     }
+    //     ahr.open('GET',url,true);
+    //     ahr.send();
+    // };
+    // function companyNameFromSymbol(symbol) {
+    //     var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.onreadystatechange = function(){
+    //         if (xhr.readyState==4 && xhr.status==200) 
+    //         {  
+    //             var companyName = JSON.parse(xhr.responseText)
+    //             companyName = companyName.ResultSet.Result[0].name
+    //             console.log(companyName)
+    //             return companyName
+    //         }
+    //     }
+    //     xhr.open('GET',url,true);
+    //     xhr.send();                  
+    // };
 
-    function returnChecker() {
-        var expReturnElement = document.getElementById('expReturn');
-        if (expReturnElement.value > 50) { expReturnElement.value = 50} else if (expReturnElement.value < 1) { expReturnElement.value = 1}
-    }
-
-    function riskChecker() {
-        var expRiskElement = document.getElementById('expRisk');
-        if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
-    }
-
-function popitup(url) {
-    newwindow=window.open(url,'name','height=400,width=400');
-    if (window.focus) {newwindow.focus()}
-    return false;
-}
 </script>
 {% endblock %}
