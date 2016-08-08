@@ -55,7 +55,7 @@
             {% if portfolio.stocks %}
                 {% for stock in portfolio.stocks %}   
                     <tr class="even">
-                        <td class=" sorting_1"><a href="#" id="stockLink"> {{ stock.ticker }} </a> </td>
+                        <td class=" sorting_1"><a href="individual_stock" id="stockLink"> {{ stock.ticker }} </a> </td>
                         <td class=" ">{{ stock.current_price }}<span id="priceChange"></span> </td>
                         <td class=" ">{{ stock.buy_date }} - {{ stock.sell_date }}</td>
                         <td class=" ">{{ stock.number_of_shares }}</td>
