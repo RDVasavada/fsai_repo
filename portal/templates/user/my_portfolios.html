@@ -1,203 +1,267 @@
 {% extends "base.html" %}
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/toastr/2.1.3/toastr.min.css">
-
-<script src="https://cdn.jsdelivr.net/toastr/2.1.3/toastr.min.js"></script>
-<script type='text/javascript' src='/static/js/plugins.js'></script>
-<script type='text/javascript' src='/static/js/actions.js'></script>
-<script type='text/javascript' src='/static/js/charts.js'></script>
-<script type='text/javascript' src='/static/js/settings.js'></script>
 {% block content %}
-
-    <div class="col-md-8" style="padding-left:60px;">
-    <h2 style="text-align:center;">My Portfolios</h2>
-    <!--first portfolio -->
-    {% for portfolio in all_portfolios %}
+<div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">        
+    <div class="block">
+        <div class="input-group">
+            <div class="input-group-addon"><span class="icon-search"></span></div>
+                <div class="ui-widget">
+                    <input type="text" id="tags" class="form-control" value="Search" placeholder="Keyword..." onkeypress="return runScript(event)">                        
+                </div>
+        </div>
+    </div>
     <div class="block block-drop-shadow">
-        <div class="head bg-dot30">
-        <div class="side pull-right">
-            <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/individual_portfolio">View</a></div>
-                 </div>
-            <table class="table table-hover margin bottom">
-                <thead>
-                <tr>
-                    <th class="text-center" style="width: 33%;">{{ portfolio.name }}</th>
-                    <th class="text-center" style="width: 33%;">{{ portfolio.risk }} %</th>
-                    <th class="text-center" style="width: 33%;">54 stocks in 10 markets</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% if portfolio.stocks %}
-                    {% for stock in portfolio.stocks %}
-                    <tr>
-                        <td class="text-center">{{ stock.ticker }}</td>
-                        <td class="text-center small">{{stock.current_price}} <span style="color:#00ff00">(+2.81%)</span></td>
-                        <td class="text-center small">{{stock.buy_date}}</td>
-                        <td class="text-center small">{{stock.sell_date}}</td>
-                        <td class="text-center small">{{stock.number_of_shares}}</td>
-                        <td class="text-center">{{stock.initial_price}}</td>
-                        <!--<td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>-->
-                    </tr>
-                    <!--<tr>
-                        <td>GOOG</td>
-                        <td class="text-center small">38627$ <span style="color:#ff4d4d">(-1.3%)</span></td>
-                        <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
-                    </tr>
-                    <tr>
-                        <td>TSLA</td>
-                        <td class="text-center small">9745$ <span style="color:#00ff00">(+15.4%)</span></td>
-                        <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
-                    </tr>-->
-                    {% endfor %}
-                {% else %}
-                    <tr><td colspan="3" style="text-align:center;">You have not created any stocks in this portfolio.</td></tr>
-                {% endif %}
-                </tbody>
-            </table>
+        <div class="head bg-dot30">                      
+            <div class="head-panel nm">                            
+                <div class="hp-info pull-left">
+                    Sort portfolios : 
+                </div>   
+                <div class="hp-info pull-left">
+                    A-Z
+                </div> 
+                <div class="hp-info pull-left">
+                    Highest Return
+                </div>
+                <div class="hp-info pull-left">
+                    Lowest Return
+                </div>                                                        
+            </div>                        
         </div>
     </div>
-     {% endfor %}
-    <!--second portfolio-->
-     <!--<div class="block block-drop-shadow">
-        <div class="head bg-dot30">
-        <div class="side pull-right">
-                         <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/individual_portfolio">View</a></div>
-                 </div>
-                            <table class="table table-hover margin bottom">
-                                    <thead>
-                                    <tr>
-                                        <th>Tech Portfolio</th>
-                                        <th class="text-center">5.67 %</th>
-                                        <th class="text-center">54 stocks in 10 markets</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>HP</td>
-                                        <td class="text-center small">1604$ <span style="color:#00ff00">(+9.81%)</span></td>
-                                        <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
-                                    </tr>
-                                    <tr>
-                                        <td>MSFT</td>
-                                        <td class="text-center small">38627$ <span style="color:#ff4d4d">(-7.3%)</span></td>
-                                        <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
-                                    </tr>
-                                    <tr>
-                                        <td>TXN</td>
-                                        <td class="text-center small">9745$ <span style="color:#00ff00">(+3.4%)</span></td>
-                                        <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-    </div>-->
-            <!--third portfolio-->
-     <!--<div class="block block-drop-shadow">
-        <div class="head bg-dot30">
-        <div class="side pull-right">
-                         <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/individual_portfolio">View</a></div>
-                 </div>
-                            <table class="table table-hover margin bottom">
-                                    <thead>
-                                    <tr>
-                                        <th>European Portfolio</th>
-                                        <th class="text-center">37.31 %</th>
-                                        <th class="text-center">56 stocks in 11 markets</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>KO</td>
-                                        <td class="text-center small">1604$ <span style="color:#00ff00">(+8.81%)</span></td>
-                                        <td class="text-center"><b>14</b> stocks in <b>4</b> Markets</td>
-                                    </tr>
-                                    <tr>
-                                        <td>WMT</td>
-                                        <td class="text-center small">38627$ <span style="color:#ff4d4d">(-5.3%)</span></td>
-                                        <td class="text-center"><b>38</b> stocks in <b>5</b> Markets</td>
-                                    </tr>
-                                    <tr>
-                                        <td>TGT</td>
-                                        <td class="text-center small">9745$ <span style="color:#00ff00">(+15.4%)</span></td>
-                                        <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
-                                    </tr>
-                                    <tr>
-                                        <td>HOG</td>
-                                        <td class="text-center small">9745$ <span style="color:#00ff00">(+18.4%)</span></td>
-                                        <td class="text-center"><b>2</b> stocks in <b>1</b> Markets</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-    </div>-->
-   </div>
-</div>
-<!-- End -->
-</div>
-</body>
-
-
-
-<script src="/static/js/nouislider.min.js"></script>
-
-<script type="text/javascript">
-    var rangeSlider = document.getElementById('basic_slider');
-    
-    noUiSlider.create(rangeSlider, {
-        start: [30],
-        range: {
-            'min': [ 0 ],
-            'max': [ 100 ]
-        }
-    });
-
-    var rangeSliderValueElement = document.getElementById('basic_slider_value');
-    var riskSliderRiskElement = document.getElementById('risk_slider_risk');
-
-    rangeSlider.noUiSlider.on('update', function( values, handle ) {
-        rangeSliderValueElement.innerHTML = values[handle] + "%";
-        if(values[handle] < 30) {
-            riskSliderRiskElement.innerHTML = "<p style='color:green;'>Low Risk</p>"
-        } else if(values[handle] > 30 && values[handle] < 60) {
-            riskSliderRiskElement.innerHTML = "<p style='color:orange;'>Medium Risk</p>"
-        } else if (values[handle] > 60) {
-            riskSliderRiskElement.innerHTML = "<p style='color:red;'>High Risk</p>"
-        }
-    });
-
-    function stockChecker() {
-        var stocksNumberElement = document.getElementById('stocks_number');
-        if (stocksNumberElement.value > 10) { stocksNumberElement.value = 10} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
-    }
-
-    function returnChecker() {
-        var expReturnElement = document.getElementById('expReturn');
-        if (expReturnElement.value > 50) { expReturnElement.value = 50} else if (expReturnElement.value < 1) { expReturnElement.value = 1}
-    }
-
-    function riskChecker() {
-        var expRiskElement = document.getElementById('expRisk');
-        if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
-    }
-
-function popitup(url) {
-    newwindow=window.open(url,'name','height=400,width=400');
-    if (window.focus) {newwindow.focus()}
-    return false;
-}
-</script>               
-    {% block body %}
-
-{% endblock %}
-
-        </div>
-        <div class="footer" style="background-color:rgba(255,255,255,0);border:0px">
-            <a href="#" class="pull-right">Contact Us&nbsp;</a>
-            <div>
-                <strong>Copyright</strong> FSAI &copy; 2015
+    <div id="pin"></pin>
+    {% for portfolio in all_portfolios %}
+    <div class="block">
+        <div class="header">
+            <div class="side pull-right">              
+                <ul class="buttons">       
+                    <li><a href="#" class="iport" id="/user/individual_portfolio"><span class="icon-plus"></span> Expand </a></li>                
+                </ul>
             </div>
+            <h2 id="portfolioName">{{ portfolio.name }}</h2>
+            <span style="color:rgba(255,0,0,1);float:right">{{ portfolio.risk}}% Risk </span>
         </div>
-
+        <div class="content">
+            <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper" role="grid">
+                <table cellpadding="0" cellspacing="0" width="100%" class="table table-bordered table-striped sortable dataTable" id="DataTables_Table_2" aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+                <thead>
+                    <tr role="row">
+                        <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="" style="width: 18px;background-color:rgba(0,0,0,0)">Symbol</th>
+                        <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="ID: activate to sort column ascending" style="width: 237px;">Current Price</th>
+                        <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 241px;">Buy \ Sell Date</th><th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="E-mail: activate to sort column ascending" style="width: 245px;">Number of Shares</th><th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending" style="width: 242px;">Initital Price</th>
+                    </tr>
+                </thead>
+                
+                <tbody role="alert" aria-live="polite" aria-relevant="all" id="stockPin">
+            {% if portfolio.stocks %}
+                {% for stock in portfolio.stocks %}   
+                    <tr class="even">
+                        <td class=" sorting_1"><a href="#" id="stockLink"> {{ stock.ticker }} </a> </td>
+                        <td class=" ">{{ stock.current_price }}<span id="priceChange"></span> </td>
+                        <td class=" ">{{ stock.buy_date }} - {{ stock.sell_date }}</td>
+                        <td class=" ">{{ stock.number_of_shares }}</td>
+                        <td class=" ">{{ stock.initial_price }}</td>                                    
+                    </tr>
+                {% endfor %}
+            {% endif %}                       
+                </tbody>
+                </table>
+            </div>                                        
+        </div>
     </div>
+    {% endfor %}
 </div>
+{% csrf_token %}
+<form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
+<input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
+<input type="text" class="form-control" id="ceo_name" value="ceo_name" name="ceo_name">    
+<input type="text" class="form-control" id="ceo_rating" value="ceo_rating" name="ceo_rating">    
+<input type="text" class="form-control" id="happiness_rating" value="happiness_rating" name="happiness_rating">    
+<input type="text" class="form-control" id="culture_pros" value="culture_pros" name="culture_pros">    
+<input type="text" class="form-control" id="culture_cons" value="culture_cons" name="culture_cons">    
+</form>    
+<script src="/static/js/nouislider.min.js"></script>
 {% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+//portfolio search functions
+let availableTags, portDict, stockDict
+    compileData()
+    function compileData() {
+        availableTags = []
+        portDict = [];
+        stockDict = {};
+        tagStocks(availableTags, portDict, stockDict);
+        $( "#tags" ).autocomplete({
+          source: availableTags
+        });
+        $("#ui-id-1").click(function(e){
+            // $(".stocked").removecss('border','0px')
+            var last = $(".stocked")
+            last.removeClass( "stocked" ).css('border','0px')
+            search($("#tags")[0].value, portDict, stockDict)
+        });
+        $("#tags").click(function(e){
+            if (e.currentTarget.value == "Search") {
+                e.currentTarget.value = ''
+            }
+        });
+    };
+    function tagStocks(arr, portDict, stockDict) {
+        var stocks = $("a#stockLink")
+        for (var key in stocks){
+            if (parseInt([key])+1) {
+                arr.push(stocks[key].innerText)
+                var stockKey = stocks[key].innerText
+                var parentNode = stocks[key].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+                if (stockDict[stockKey]) {
+                    stockDict[stockKey].push(parentNode);
+                } else {
+                    stockDict[stockKey] = [parentNode]
+                }
+            }
+        }
+        var portfolios = $("h2#portfolioName")
+        for (var key in portfolios) {
+            if (parseInt([key])+1) {
+                arr.push(portfolios[key].outerText)
+                portDict.push(portfolios[key].outerText)
+            }
+        }
+    };
+    function search(str, portDict, stockDict) {
+        if (portDict.indexOf(str) > -1 ) {
+            sortIt('query',str, '')
+        } else {
+            sortIt('stock',str, stockDict)
+        }
+    };
+    function sortIt(param, str, arr) {
+        if (param == 'query') {
+            for (var key in $("h2#portfolioName")) {
+                if (parseInt([key]+1)) {
+                    if (str == $("h2#portfolioName")[key].outerText) {
+                        var thisPort = $("h2#portfolioName")[key].parentNode.parentNode
+                        var pin = $("#pin")
+                        pin.prepend(thisPort)
+                    }
+                }
+            }
+        } else if (param =='stock') {
+            stockDict[str].forEach(function(x,i) {
+                var tbody = x.children[1].children[0].children[0].children[2].children[1].children
+                for (var key in tbody) {
+                    if (typeof(tbody[key]) == 'object') {
+                        if (str == tbody[key].children[0].outerText) {
+                            tbody[0].parentNode.insertBefore(tbody[key], tbody[0].parentNode.firstChild).setAttribute("class","stocked")
+                            $(".stocked").css('border','5px solid blue')
+                            // tbody[key-1].style.border = "3px solid blue"
+                            // tbody[key].setAttribute("id","bordered")
+                            var qName = stockDict[str][0].children[0].children[1].outerText
+                            sortIt('query',qName,'')
+                        }
+                    }
+                }
+            })
+        }
+    };
+    function runScript(e) {
+        if (e.keyCode == 13) {  
+            var last = $(".stocked")
+            last.removeClass( "stocked" ).css('border','0px')
+            search($("#tags")[0].value, portDict, stockDict)            
+        }
+    }    
+//calculate percentages    
+    var priceChanges = $("span#priceChange") 
+    for (var key in priceChanges) {
+        var obj = priceChanges[key]
+        if (typeof(obj) == 'object' && obj.nodeName == 'SPAN') {
+            var percentage = (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2)
+            if (percentage > 0) {
+                obj.innerHTML = "<span style='color:rgba(0,255,0,1)'>" + (" + " + (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2) + "%") + "</span>"
+            } else {
+                obj.innerHTML = "<span style='color:rgba(255,0,0,1)'>" + (" - "+(((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*-100).toFixed(2) + "%") + "</span>"
+            }
+        }
+    }
+
+//changing view to individual_stock functions
+    $("a#stockLink").click(function(e){
+        $(".statusbar")[0].innerText = "Loading " + e.currentTarget.innerText + "'s Stock Information ..."
+        $(".statusbar").show()
+        getStockInfo(e.currentTarget.innerText)
+    });
+
+    function getStockInfo(symbol) {
+        var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
+        var ahr = new XMLHttpRequest();
+        ahr.onreadystatechange = function(){
+            if (ahr.readyState==4 && ahr.status==200) 
+            {
+                var companyName = JSON.parse(ahr.responseText)
+                console.log(companyName)
+                companyName = companyName.ResultSet.Result[0].name
+                var url = "http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=83856&t.k=cbW9p5pFQDw&action=employers&q=" + companyName
+                var bhr = new XMLHttpRequest();
+                bhr.onreadystatechange = function(){
+                    if (ahr.readyState==4 && ahr.status==200) 
+                    {
+                        var data = JSON.parse(bhr.responseText)
+                        $("#company_name")[0].value =  companyName
+                        $("#ceo_name")[0].value =  data.response.employers[0].ceo.name
+                        $("#ceo_rating")[0].value =  data.response.employers[0].ceo.pctApprove
+                        $("#happiness_rating")[0].value =  data.response.employers[0].cultureAndValuesRating
+                        $("#culture_pros")[0].value =  data.response.employers[0].featuredReview.pros
+                        $("#culture_cons")[0].value =  data.response.employers[0].featuredReview.cons
+                        document.forms["myForm"].submit();
+                    }
+                }
+                bhr.open('GET',url,true);
+                bhr.send();                                
+            }
+        }
+        ahr.open('GET',url,true);
+        ahr.send();
+    };
+    function companyNameFromSymbol(symbol) {
+        var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState==4 && xhr.status==200) 
+            {  
+                var companyName = JSON.parse(xhr.responseText)
+                companyName = companyName.ResultSet.Result[0].name
+                return companyName
+            }
+        }
+        xhr.open('GET',url,true);
+        xhr.send();                  
+    };
+//navbar bug fix
+$(".page-navigation li a").click(function(e){
+    renav(e)       
+});
+$(".iport").click(function(e) {
+    renav(e)
+})
+function renav(e) {
+    var ul = $(this).parent('li').children('ul');
+    if (e.currentTarget.id !== 'myPortfolios') {
+        $(".statusbar").show()
+        setTimeout(function(){ 
+            var url = e.currentTarget.id
+                console.log(url)
+                if (url) {
+                location.assign(url)
+            }
+        }, 500);
+    } else {
+        console.log("asdf")
+    }
+};
+
+</script>               
+
+{% endblock %}
+
+

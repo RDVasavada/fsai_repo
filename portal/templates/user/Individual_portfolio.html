@@ -1,13 +1,5 @@
 {% extends "base.html" %}
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/toastr/2.1.3/toastr.min.css">
-
-<script src="https://cdn.jsdelivr.net/toastr/2.1.3/toastr.min.js"></script>
-<script type='text/javascript' src='/static/js/plugins.js'></script>
-<script type='text/javascript' src='/static/js/actions.js'></script>
-<script type='text/javascript' src='/static/js/charts.js'></script>
-<script type='text/javascript' src='/static/js/settings.js'></script>
-
 {% block content %}
  <div class="col-md-8 col-sm-8" style="padding-left:60px;">
     <h2 style="text-align:center;">High Risk Portfolio</h2>
@@ -31,7 +23,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><a href="/user/individual_stock">AAPL</a></td>
+                        <td><a href="#" id="stockLink">AAPL</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">01/11/2017</td>
@@ -41,7 +33,7 @@
                         <td class="text-center">12%</td>
                     </tr>
                     <tr>
-                        <td><a href="/user/individual_stock">GOOG</a></td>
+                        <td><a href="#" id="stockLink">GOOG</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">09/01/2016</td>
@@ -51,7 +43,7 @@
                         <td class="text-center">12%</td>
                     </tr>
                     <tr>
-                        <td><a href="/user/individual_stock">TSLA</a></td>
+                        <td><a href="#" id="stockLink">TSLA</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">02/17/2016</td>
@@ -61,7 +53,7 @@
                         <td class="text-center">9%</td>
                     </tr>
                     <tr>
-                        <td><a href="/user/individual_stock">TXS</a></td>
+                        <td><a href="#" id="stockLink">TXS</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">04/29/2017</td>
@@ -71,7 +63,7 @@
                         <td class="text-center">7%</td>
                     </tr>
                     <tr>
-                        <td><a href="/user/individual_stock">HP</a></td>
+                        <td><a href="#" id="stockLink">HP</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">07/21/2017</td>
@@ -81,7 +73,7 @@
                         <td class="text-center">2%</td>
                     </tr>
                     <tr>
-                        <td><a href="/user/individual_stock">MSFT</a></td>
+                        <td><a href="#" id="stockLink">MSFT</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">06/23/2017</td>
@@ -91,7 +83,7 @@
                         <td class="text-center">12%</td>
                     </tr>
                     <tr>
-                        <td><a href="/user/individual_stock">TXN</a></td>
+                        <td><a href="#" id="stockLink">TXN</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">11/01/2017</td>
@@ -101,7 +93,7 @@
                         <td class="text-center">8%</td>
                     </tr>
                     <tr>
-                        <td><a href="/user/individual_stock">KO</a></td>
+                        <td><a href="#" id="stockLink">KO</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">01/27/2016</td>
@@ -111,7 +103,7 @@
                         <td class="text-center">12%</td>
                     </tr>
                     <tr>
-                        <td><a href="/user/individual_stock">WMT</a></td>
+                        <td><a href="#" id="stockLink">WMT</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">05/23/2017</td>
@@ -121,7 +113,7 @@
                         <td class="text-center">3%</td>
                     </tr>
                     <tr>
-                        <td><a href="/user/individual_stock">TGT</a></td>
+                        <td><a href="#" id="stockLink">TGT</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">10/18/2016</td>
@@ -131,7 +123,7 @@
                         <td class="text-center">7%</td>
                     </tr>
                     <tr>
-                        <td><a href="/user/individual_stock">HOG</a></td>
+                        <td><a href="#" id="stockLink">HOG</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">12/11/2017</td>
@@ -150,13 +142,75 @@
 </div>
 <!-- End -->
 </div>
+
+                        {% csrf_token %}
+<form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
+    <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
+    <input type="text" class="form-control" id="ceo_name" value="ceo_name" name="ceo_name">    
+    <input type="text" class="form-control" id="ceo_rating" value="ceo_rating" name="ceo_rating">    
+    <input type="text" class="form-control" id="happiness_rating" value="happiness_rating" name="happiness_rating">    
+    <input type="text" class="form-control" id="culture_pros" value="culture_pros" name="culture_pros">    
+    <input type="text" class="form-control" id="culture_cons" value="culture_cons" name="culture_cons">    
+</form>
 </body>
 
 
 
 <script src="/static/js/nouislider.min.js"></script>
 
+
 <script type="text/javascript">
+    $("a#stockLink").click(function(e){
+        $(".statusbar")[0].innerText = "Loading " + e.currentTarget.innerText + "'s Stock Information ..."
+        $(".statusbar").show()
+        getStockInfo(e.currentTarget.innerText)
+    });
+    function getStockInfo(symbol) {
+        var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
+        var ahr = new XMLHttpRequest();
+        ahr.onreadystatechange = function(){
+            if (ahr.readyState==4 && ahr.status==200) 
+            {
+                var companyName = JSON.parse(ahr.responseText)
+                companyName = companyName.ResultSet.Result[0].name
+                var url = "http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=83856&t.k=cbW9p5pFQDw&action=employers&q=" + companyName
+                var bhr = new XMLHttpRequest();
+                bhr.onreadystatechange = function(){
+                    if (ahr.readyState==4 && ahr.status==200) 
+                    {
+                        var data = JSON.parse(bhr.responseText)
+                        $("#company_name")[0].value =  companyName
+                        $("#ceo_name")[0].value =  data.response.employers[0].ceo.name
+                        $("#ceo_rating")[0].value =  data.response.employers[0].ceo.pctApprove
+                        $("#happiness_rating")[0].value =  data.response.employers[0].cultureAndValuesRating
+                        $("#culture_pros")[0].value =  data.response.employers[0].featuredReview.pros
+                        $("#culture_cons")[0].value =  data.response.employers[0].featuredReview.cons
+                        document.forms["myForm"].submit();
+                    }
+                }
+                bhr.open('GET',url,true);
+                bhr.send();                                
+            }
+        }
+        ahr.open('GET',url,true);
+        ahr.send();
+    };
+    function companyNameFromSymbol(symbol) {
+        var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState==4 && xhr.status==200) 
+            {  
+                var companyName = JSON.parse(xhr.responseText)
+                companyName = companyName.ResultSet.Result[0].name
+                console.log(companyName)
+                return companyName
+            }
+        }
+        xhr.open('GET',url,true);
+        xhr.send();                  
+    };
+
     var rangeSlider = document.getElementById('basic_slider');
     
     noUiSlider.create(rangeSlider, {

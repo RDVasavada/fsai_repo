@@ -346,12 +346,12 @@ div.radio{margin-left: -20px; position: relative; margin-right: 5px; line-height
 .typhography{text-shadow: 1px 2px 2px rgba(0,0,0,0.2);}
     .typhography p{line-height: 19px;}
    
-h1{font-size: 27px;}
-h2{font-size: 23px;}
-h3{font-size: 21px;}
-h4{font-size: 19px;}
-h5{font-size: 17px;}
-h6{font-size: 15px;}
+h1{font-size: 27px;font-weight:100;}
+h2{font-size: 23px;font-weight:100;}
+h3{font-size: 21px;font-weight:100;}
+h4{font-size: 19px;font-weight:100;}
+h5{font-size: 17px;font-weight:100;}
+h6{font-size: 15px;font-weight:100;}
 
 h1,h2,h3,h4,h5,h6{margin-top: 0px; margin-bottom: 10px;}
 
@@ -377,7 +377,7 @@ dd{padding: 5px 0px;}
 .scPlaceholder{border: 1px dashed #fcfbf4; margin-bottom: 20px; float: left; width: 100%;}
 
 /* tables */
-    .table{margin-bottom: 0px;}
+    .table{font-weight:100;margin-bottom: 0px;}
     .table .checker{display: inherit;}
     .table thead>tr>th,.table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td, .table-bordered,
     .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td
