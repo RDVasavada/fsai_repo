@@ -242,9 +242,7 @@ def my_portfolios(request):
     #     print len(port.stocks)
     context_dict = {}
     context_dict["all_portfolios"] = all_portfolios
-    user={}
-    user['username'] = username
-    context_dict["user"] = user
+    context_dict["username"] = username
     t_portfolios = top_portfolios(27)
     context_dict["portfolios"] = t_portfolios
 
