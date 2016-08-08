@@ -148,7 +148,7 @@ def portfolio_optimize(request):
     if request.user.is_authenticated():
         username = request.user.username
         portalUser = PortalUser.objects.get(username=username)
-    portfolios = top_portfolios(1)
+    portfolios = top_portfolios(27)
     context_dict["portfolios"] = portfolios
     context_dict["username"] = username    
     # portfolios = top_portfolios()

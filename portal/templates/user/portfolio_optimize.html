@@ -23,7 +23,7 @@
                                     <td id="companyName">
                                         <p>TELSA</p>
                                         <a id="stockLink" href="individual_stock">    <i class="fa fa-line-chart"></i> </a>
-                                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=DJCO" target="_blank"><i class="fa fa-hacker-news"></i></a>
+                                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=" target="_blank"><i class="fa fa-hacker-news"></i></a>
                                     </td>
                                     <td id="months">{{ result.months }}</td>
                                     <td id="market">{{ result.market }}</td>
@@ -187,6 +187,7 @@ function generateData(arr){
             var ran = Math.floor((Math.random() * 13) + 0);
             var ranCom = ['ABM','APPL','AWR','T','VVC','CB','CL','CVX','GOOG','KO','AMAZN','FUL','GIS'];
             var ranName = ['ABM Industries','APPLE','AWR Corporation','AT&T','Vectren Corp','Chubb Ltd','Colgate-PalmOlive Company','Chevron','Google','Coca-Cola Co','Amazon Inc','HB Fuller Co','General Mills']
+            xName[0].children[2].href+=String(ranCom[ran])
             xName[0].children[0].innerText = String(ranCom[ran]);
             xName.appendTo(clone);
             xCompanyName[0].innerText = String(ranName[ran]);
