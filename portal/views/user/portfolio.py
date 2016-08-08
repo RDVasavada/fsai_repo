@@ -366,6 +366,3 @@ def get_top_portfolios(request, html_template):
     c = Context(context_dict)
     html = t.render(context_dict)
     return html
-
-
-
