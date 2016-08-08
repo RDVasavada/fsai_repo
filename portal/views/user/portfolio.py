@@ -27,35 +27,8 @@ def individual_portfolio(request):
     return HttpResponse(html)
 
 @login_required
-@csrf_exempt
 def individual_stock(request):
-    print ("Ceo Name : " + request.POST['ceo_name'] )
-    print ("Ceo Rating : " + request.POST['ceo_rating'] )
-    print ("Happiness Rating : " + request.POST['happiness_rating'] )
-    print ("Culture pros : " + request.POST['culture_pros'] )
-    print ("Culture cons : " + request.POST['culture_cons'] )
-
-    companyStats = []
-    eachStat = {}        
-    eachStat['company_name'] = request.POST['company_name']
-    eachStat['ceo_name'] = request.POST['ceo_name']
-    eachStat['ceo_rating'] = request.POST['ceo_rating']
-    eachStat['happiness_rating'] = request.POST['happiness_rating']
-    eachStat['culture_pros'] = request.POST['culture_pros']
-    eachStat['culture_cons'] = request.POST['culture_cons']
-    companyStats.append(eachStat)
-    if request.user.is_authenticated():
-        username = request.user.username    
-    user = {}
-    user["username"] = username
-    portfolios = top_portfolios(27)
-    context_dict = {}
-    context_dict["companyStats"] = companyStats
-    context_dict["user"] = user
-    context_dict["portfolios"] = portfolios
-    t = loader.get_template('user/individual_stock.html')
-    c = Context(context_dict)
-    html = t.render(c)
+    html = get_top_portfolios(request, 'user/individual_stock.html')
     return HttpResponse(html)    
 
 @login_required
