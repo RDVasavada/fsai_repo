@@ -2,19 +2,17 @@
 
 {% block content %}
      <div class="col-md-8" style="padding-left:50px;padding-left:50px">
-        {% for result in companyStats %}
-        <h2 style="text-align:center;">{{ result.company_name }} </h2>
-        <!--first portfolio -->
+        <h2 style="text-align:center;"> Apple Incorporate </h2>
         <div class="col-md-6 col-sm-6">
             <div class="block block-drop-shadow">
                  <div class="head bg-dot20">   
                      <h2>Work Culture</h2>
                  </div>
                  <div class="ibox-content" style="display: block;padding:50px">
-                    <span><h5>CEO {{ result.ceo_name}}<br></h5> {{result.ceo_rating}}% Approval Rating</span><br><br>
-                    <span><h5>Work Happiness Rating </h5>{{ result.happiness_rating}} </span> <br><br>
-                    <span><h5>Pros</h5>{{ result.culture_pros }} </span><br><br><br>
-                    <span><h5>Cons</h5>{{ result.culture_cons }} </span> <br><br>
+                    <span><h5>CEO Tim Cook<br></h5> 83% Approval Rating</span><br><br>
+                    <span><h5>Work Happiness Rating </h5> 45% </span> <br><br>
+                    <span><h5>Pros</h5>Working at Apple means that the things you work on get into the hands of hundreds of millions of people, literally. It's a lot of pressure to get things right and drives one to do the best work of their lives. 2+ years later I'm still blown away by the talent and creativity of people I work with. </span><br><br><br>
+                    <span><h5>Cons</h5>It's a lot of work, teams are usually strapped for resources and under pressure to deliver on strict timelines leading to high stress and long hours at certain times during the year. </span> <br><br>
                  </div>                 
             </div>            
         </div> 
@@ -54,7 +52,6 @@
                  </div>
             </div>         
         </div>
-        {% endfor %}
         </div>               
        </div>
     </div>
