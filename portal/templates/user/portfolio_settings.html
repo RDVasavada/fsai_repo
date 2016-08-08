@@ -302,6 +302,16 @@
 function loadDummyData() {
     setTimeout(function(){ document.forms["myForm"].submit(); }, 3000);
 }
+$("button").click(function(e) {
+    var button = e.currentTarget.outerText
+    if (button == 'Low') {
+        e.currentTarget.parentNode.parentNode.children[2].children[0].children[1].value = '25'
+    } else if (button == 'Medium') {
+        e.currentTarget.parentNode.parentNode.children[2].children[0].children[1].value = '50'
+    } else if (button == 'High') {
+        e.currentTarget.parentNode.parentNode.children[2].children[0].children[1].value = '75'
+    }
+})
 </script>
 
 
