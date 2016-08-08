@@ -150,68 +150,72 @@
     </div>           
 <script>
 
-// });
+// // });
 
-if (localStorage['marketData']) {
+// if (localStorage['marketData']) {
+//     fetchMarketData()
+//     var GP = JSON.parse(localStorage['marketData']).GP
+//     var NAS = JSON.parse(localStorage['marketData']).NAS
+//     var DJ = JSON.parse(localStorage['marketData']).DJ
+//     morrisLine(NAS, GP, DJ)
+// } else {
     fetchMarketData()
-    var GP = JSON.parse(localStorage['marketData']).GP
-    var NAS = JSON.parse(localStorage['marketData']).NAS
-    var DJ = JSON.parse(localStorage['marketData']).DJ
-    morrisLine(NAS, GP, DJ)
-} else {
-    fetchMarketData()
-}
+// }
 function updateMarketData() {
     $(".loading-line-chart")[0].css('display','none')   
     $(".ibox-content").css('background-image','')
     fetchMarketData()
 }
 function fetchMarketData() {
-    console.log("fetching market data")
-        var GP, NAS, DJ;
-        var x = 0;
-        $(".loading-line-chart")[0].innerText = " Loading S&P Indices ." 
-        var ahr = new XMLHttpRequest();
-        ahr.onreadystatechange = function(){
-            if (ahr.readyState==4 && ahr.status==200)
-            {
-                var aata = JSON.parse(ahr.responseText)
-                GP = [aata.data[0][3],aata.data[15][3],aata.data[30][3],aata.data[45][3],aata.data[60][3],aata.data[75][3],aata.data[90][3]]
-                console.log(GP)
-                $(".loading-line-chart")[0].innerText = " Loading NASDAQ Indices .. "
-                        var bhr = new XMLHttpRequest();
-                bhr.onreadystatechange = function(){ 
-                    if (bhr.readyState==4 && bhr.status==200)
-                    {
-                        var bata = JSON.parse(bhr.responseText)
-                        NAS = [bata.data[0][3],bata.data[15][3],bata.data[30][3],bata.data[45][3],bata.data[60][3],bata.data[75][3],bata.data[90][3]]
-                        console.log(NAS)
-                        $(".loading-line-chart")[0].innerText = " Loading Dow Jones Indices ... "
-                        var chr = new XMLHttpRequest();
-                        chr.onreadystatechange = function(){
-                            if (chr.readyState==4 && bhr.status==200)
-                                {
-                                    var cata = JSON.parse(chr.responseText)
-                                    DJ = [cata.data[0][1],cata.data[15][1],cata.data[30][1],cata.data[45][1],cata.data[60][1]   ,cata.data[75][1]   ,cata.data[90][1]   ];
-                                    if (x == 0) {
-                                        x = 1
-                                        var data={'NAS':NAS,'GP':GP,'DJ':DJ}
-                                        localStorage.setItem('marketData',JSON.stringify(data))
-                                        morrisLine(NAS, GP, DJ)
-                                    }
-                                    return 
-                                }
-                        }
-                        chr.open('GET','https://www.quandl.com/api/v1/datasets/BCB/UDJIAD1.json?api_key=5ejCzVkQNi3Xjd3Nwy6t',true);
-                        chr.send();                                  
-                    }
-                };
-                bhr.open('GET','https://www.quandl.com/api/v1/datasets/NASDAQOMX/NDX.json?api_key=5ejCzVkQNi3Xjd3Nwy6t',true);
-                bhr.send();
-            }
-        };
-        ahr.open('GET','http://www.quandl.com/api/v1/datasets/YAHOO/INDEX_GSPC.json?api_key=5ejCzVkQNi3Xjd3Nwy6t',true);
-        ahr.send();                   
+    var NAS=[4763.58,4579.83,4420.16,4488.08,4360.73,4523.9,4481.84]
+    var GP=[2168.790039,2155.790039,2092.800049,2088.590088,2064.459961,2096.320068,2058.27002]
+    var DJ=[17897.46,17515.73,16943.9,15914.74,15766.74,17528.27,17847.63]
+    morrisLine(NAS,GP,DJ)
+    // console.log("fetching market data")
+    //     var GP, NAS, DJ;
+    //     var x = 0;
+    //     $(".loading-line-chart")[0].innerText = " Loading S&P Indices ." 
+    //     var ahr = new XMLHttpRequest();
+    //     ahr.onreadystatechange = function(){
+    //         if (ahr.readyState==4 && ahr.status==200)
+    //         {
+    //             var aata = JSON.parse(ahr.responseText)
+    //             GP = [aata.data[0][3],aata.data[15][3],aata.data[30][3],aata.data[45][3],aata.data[60][3],aata.data[75][3],aata.data[90][3]]
+    //             console.log(GP)
+    //             $(".loading-line-chart")[0].innerText = " Loading NASDAQ Indices .. "
+    //                     var bhr = new XMLHttpRequest();
+    //             bhr.onreadystatechange = function(){ 
+    //                 if (bhr.readyState==4 && bhr.status==200)
+    //                 {
+    //                     var bata = JSON.parse(bhr.responseText)
+    //                     NAS = [bata.data[0][3],bata.data[15][3],bata.data[30][3],bata.data[45][3],bata.data[60][3],bata.data[75][3],bata.data[90][3]]
+    //                     console.log(NAS)
+    //                     $(".loading-line-chart")[0].innerText = " Loading Dow Jones Indices ... "
+    //                     var chr = new XMLHttpRequest();
+    //                     chr.onreadystatechange = function(){
+    //                         if (chr.readyState==4 && bhr.status==200)
+    //                             {
+    //                                 var cata = JSON.parse(chr.responseText)
+    //                                 DJ = [cata.data[0][1],cata.data[15][1],cata.data[30][1],cata.data[45][1],cata.data[60][1]   ,cata.data[75][1]   ,cata.data[90][1]   ];
+    //                                 if (x == 0) {
+    //                                     x = 1
+    //                                     var data={'NAS':NAS,'GP':GP,'DJ':DJ}
+    //                                     localStorage.setItem('marketData',JSON.stringify(data))
+    //                                     morrisLine(NAS, GP, DJ)
+    //                                 }
+    //                                 return 
+    //                             }
+    //                     }
+    //                     chr.open('GET','https://www.quandl.com/api/v1/datasets/BCB/UDJIAD1.json?api_key=5ejCzVkQNi3Xjd3Nwy6t',true);
+    //                     chr.send();                                  
+    //                 }
+    //             };
+    //             bhr.open('GET','https://www.quandl.com/api/v1/datasets/NASDAQOMX/NDX.json?api_key=5ejCzVkQNi3Xjd3Nwy6t',true);
+    //             bhr.send();
+    //         }
+    //     };
+    //     ahr.open('GET','http://www.quandl.com/api/v1/datasets/YAHOO/INDEX_GSPC.json?api_key=5ejCzVkQNi3Xjd3Nwy6t',true);
+    //     ahr.send();                   
 }
 function morrisLine(NAS, GP, DJ) {
         console.log("inside morris")
