@@ -172,6 +172,12 @@ def portfolio_optimize(request):
     #         eachStockresult = {}
     context_dict = {}
     context_dict["optimizeSearchResults"] = optimizeSearchResults
+    if request.user.is_authenticated():
+        username = request.user.username
+        portalUser = PortalUser.objects.get(username=username)
+    portfolios = top_portfolios(1)
+    context_dict["portfolios"] = portfolios
+    context_dict["username"] = username    
     # portfolios = top_portfolios()
     # context_dict["portfolios"] = portfolios
     t = loader.get_template('user/portfolio_optimize.html')
