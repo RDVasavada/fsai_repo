@@ -174,13 +174,13 @@
                         </div>
                          <hr>
                            <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:140px;">
+                                <label class="col-sm-1 control-label" style="width:160px;">
                                     <h5>Company Market Cap</h5>
                                 </label>
                                <div class="col-sm-3" style="padding-top:15px">
                                     <input type="text" class="form-control" value="0">
                                 </div>
-                                <label class="col-sm-1 control-label" style="width:140px;">
+                                <label class="col-sm-1 control-label" style="width:160px;">
                                     <h5>Company P\E Ratio</h5>
                                 </label>
                                <div class="col-sm-3" style="padding-top:15px">
@@ -188,13 +188,13 @@
                                 </div>                                
                             </div>
                            <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:140px;">
+                                <label class="col-sm-1 control-label" style="width:160px;">
                                     <h5>Dividend Yield (%)</h5>
                                 </label>
                                <div class="col-sm-3" style="padding-top:15px">
                                     <input type="text" class="form-control" value="0">
                                 </div>
-                                <label class="col-sm-1 control-label" style="width:140px;">
+                                <label class="col-sm-1 control-label" style="width:160px;">
                                     <h5>52 Week Price Change</h5>
                                 </label>
                                <div class="col-sm-3" style="padding-top:15px">
@@ -203,24 +203,31 @@
                             </div>
                             <!--Stock Filters-->
                         <div class="form-group">
-                            <label class="col-sm-1 control-label" style="width:140px;"><h5>Stock Filters</h5></label>
-                            <div class="input-group m-b">
-                              <select class="form-control m-b" name="StockFilters" id="StockFilters" onchange="showfield()">
+                            <label class="col-sm-1 control-label" style="width:160px;"><h5>Stock Filters</h5></label>
+                            <div class="input-group m-b" style="padding-left:10px;">
+                              <select class="form-control m-b" name="StockFilters" id="StockFilters" onchange="showfield()" style="width:165px;padding-left:10px;">
                                     <option selected="selected">Select filter</option>
                                     <option value="Last price">Last price</option>
                                     <option value="EPS">EPS</option>
                                     <option value="Quote Change(%)">Quote Change(%)</option>
+                                    <option value="52w high">52w high</option>
+                                    <option value="52w low">52w low</option>
+                                    <option value="52w price change(%)">52w price change(%)</option>
                                     <option value="Div Recent Quarter">Div Recent Quarter</option>
+                                    <option value="Book value/share">Book value/share</option>
                                     <option value="Cash/Share">Cash/Share</option>
                                     <option value="Current Ratio">Current Ratio</option>
                                     <option value="Interest Coverage">Interest Coverage</option>
+                                     <option value="Return on investment(TTM)(%)">Return on investment(TTM)(%)</option>
                                 </select>
                             </div>
                         </div>  
-                            <div class="form-group">
-                             <label class="col-sm-1 control-label" id="stockoption" style="width:140px;"></label>
-                             <div class="col-sm-3" id="stockoptiontext" style="padding-top:15px;display:none;">
-                                    <input type="text" class="form-control" >
+                            <div class="form-group" id="stockinfo" style="display:none;">
+                             <label class="col-sm-1 control-label" id="stockoption" style="width:160px;">
+                                 <h5 id="stockfillername"></h5>
+                             </label>
+                             <div class="col-sm-3" id="stockoptiontext">
+                                    <input type="text" class="form-control"  style="width:160px;">
                                 </div> 
                             </div>
                             <hr>
@@ -350,11 +357,10 @@ function loadDummyData() {
         var mydropdown = document.getElementById('StockFilters');
         var strselect = mydropdown.options[mydropdown.selectedIndex].text;
         if(strselect=="Select filter")
-            document.getElementById('stockoption').style.display="none";
+            document.getElementById('stockinfo').style.display="none";
         else
-        document.getElementById('stockoption').style.display="block";
-       document.getElementById('stockoption').innerHTML=strselect;
-       document.getElementById('stockoptiontext').style.display="block";
+            document.getElementById('stockinfo').style.display="block";
+            document.getElementById('stockfillername').innerHTML=strselect;
        
     }
    function lowrisk(){
