@@ -189,7 +189,8 @@ def top_portfolios(user_id):
     #     print("Authenticated User is :" + username)
     #     portalUser = PortalUser.objects.get(username=username)
     #     print("getting top portfolios")
-    all_portfolios = {}
+    portfolios = {}
+    print(user_id)
     try:
         #all_portfolios = Portfolio.objects.raw("select p.id as id,risk,"
         #                                       "timeframe,investment,control_market,name,sum(investment) as value "
@@ -197,19 +198,19 @@ def top_portfolios(user_id):
         #                                       "where p.id=s.show_id and p.user_id=1 group by p.id order by investment desc limit 3")
         #print(user_id)
         cursor = connection.cursor()
-        cursor.execute("select p.id as id,name,sum(investment) as value from "
+        cursor.execute("select p.id as id,name,sum(investment) as value, COUNT(DISTINCT(ticker)) as no_of_tickers from "
                        "portal_portfolio p, portal_stock s where p.id=s.show_id "
                        "and p.user_id=" + str(27) + " group by p.id order by investment desc limit 10")
-        all_portfolios = dictfetchall(cursor)
-        print "this is all portfolios"
-        print(all_portfolios)
+        portfolios = dictfetchall(cursor)
+        #print "this is all portfolios"
+        print(portfolios)
     except Exception as e:
         print(e)
     #Stock.objects.filter(show__user_id=1)
     #cursor = connection.cursor()
     #cursor.execute("UPDATE bar SET foo = 1 WHERE baz = %s", 67)
     #cursor.execute("SELECT foo FROM bar WHERE baz = %s", 12)
-    return all_portfolios
+    return portfolios
 
 @login_required
 def my_portfolios(request):
@@ -334,12 +335,29 @@ def save_portfolio(request):
 '''
 search for portfolios by the name
 '''
+@login_required
 def search_portfolio(request):
     print("search for portfolios")
-    portfolio_name = request.GET["query"]
-    portfolio_results = Portfolio.objects.filter(string__icontains=portfolio_name)
-    print("Portfolio Results ")
-    print(portfolio_results)
+    if request.user.is_authenticated():
+        username = request.user.username
+        print("Authenticated User is :" + username)
+        portalUser = PortalUser.objects.get(username=username)
+        portfolio_name = request.GET["query"]
+        portfolio_results = Portfolio.objects.filter(string__icontains=portfolio_name).filter(user__id=portalUser.id)
+        print("Portfolio Results ")
+        print(portfolio_results)
+
+        context_dict = {}
+        context_dict["all_portfolios"] = portfolio_results
+
+        t_portfolios = top_portfolios(portalUser.id)
+        context_dict["portfolios"] = t_portfolios
+
+        t = loader.get_template('user/my_portfolios.html')
+        c = Context(context_dict)
+        html = t.render(c)
+        # print(html)
+        return HttpResponse(html)
     return HttpResponse("this returns the search results")
 
 def dictfetchall(cursor):
@@ -357,13 +375,11 @@ def get_top_portfolios(request, html_template):
 
     portfolios = top_portfolios(27)
     print portfolios
-    user={}
-    user['username'] = username
     # portfolios = top_portfolios(portalUser.id)
 
     context_dict = {}
     context_dict["portfolios"] = portfolios
-    context_dict["user"] = user
+    context_dict["username"] = username
     t = loader.get_template(html_template)
     c = Context(context_dict)
     html = t.render(context_dict)
