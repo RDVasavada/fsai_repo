@@ -200,7 +200,29 @@
                                <div class="col-sm-3" style="padding-top:15px">
                                     <input type="text" class="form-control" value="0">
                                 </div>                                
-                            </div>    
+                            </div>
+                            <!--Stock Filters-->
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label" style="width:140px;"><h5>Stock Filters</h5></label>
+                            <div class="input-group m-b">
+                              <select class="form-control m-b" name="StockFilters" id="StockFilters" onchange="showfield()">
+                                    <option selected="selected">Select filter</option>
+                                    <option value="Last price">Last price</option>
+                                    <option value="EPS">EPS</option>
+                                    <option value="Quote Change(%)">Quote Change(%)</option>
+                                    <option value="Div Recent Quarter">Div Recent Quarter</option>
+                                    <option value="Cash/Share">Cash/Share</option>
+                                    <option value="Current Ratio">Current Ratio</option>
+                                    <option value="Interest Coverage">Interest Coverage</option>
+                                </select>
+                            </div>
+                        </div>  
+                            <div class="form-group">
+                             <label class="col-sm-1 control-label" id="stockoption" style="width:140px;"></label>
+                             <div class="col-sm-3" id="stockoptiontext" style="padding-top:15px;display:none;">
+                                    <input type="text" class="form-control" >
+                                </div> 
+                            </div>
                             <hr>
                             <h3>Add Stocks</h3>
                              <div class="form-group">
@@ -319,11 +341,22 @@ function loadDummyData() {
         var expRiskElement = document.getElementById('expRisk');
         if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
     }
-function popitup(url) {
-    newwindow=window.open(url,'name','height=400,width=400');
-    if (window.focus) {newwindow.focus()}
-    return false;
-}
+    function popitup(url) {
+        newwindow=window.open(url,'name','height=400,width=400');
+        if (window.focus) {newwindow.focus()}
+        return false;
+    }
+    function showfield(){
+        var mydropdown = document.getElementById('StockFilters');
+        var strselect = mydropdown.options[mydropdown.selectedIndex].text;
+        if(strselect=="Select filter")
+            document.getElementById('stockoption').style.display="none";
+        else
+        document.getElementById('stockoption').style.display="block";
+       document.getElementById('stockoption').innerHTML=strselect;
+       document.getElementById('stockoptiontext').style.display="block";
+       
+    }
    function lowrisk(){
     /*
     document.getElementById("expRisk").innerHTML = 25;*/
