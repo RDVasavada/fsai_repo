@@ -1,8 +1,5 @@
 {% extends "base.html" %}
-    <script type='text/javascript' src='/static/js/plugins.js'></script>    
-    <script type='text/javascript' src='/static/js/actions.js'></script>    
-    <script type='text/javascript' src='/static/js/charts.js'></script>
-    <script type='text/javascript' src='/static/js/settings.js'></script> 
+
 {% block content %}
              <div class="col-md-8 col-sm-8" style="height:80vh;padding-right:50px;padding-left:50px;">
                 <div class="head bg-dot20">   
@@ -11,13 +8,13 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Company Name</th>
-                                    <th>Ticker Symbol</th>
-                                    <th>Amount of Shares to purchase</th>
-                                    <th>Buy Date</th>
-                                    <th>Sell Date</th>
-                                    <th>Expected Return</th>
-                                    <th>Risk Level</th>
+                                    <th style="font-weight:100">Company Name</th>
+                                    <th style="font-weight:100">Ticker Symbol</th>
+                                    <th style="font-weight:100">Amount of Shares to purchase</th>
+                                    <th style="font-weight:100">Buy Date</th>
+                                    <th style="font-weight:100">Sell Date</th>
+                                    <th style="font-weight:100">Expected Return</th>
+                                    <th style="font-weight:100">Risk Level</th>
                                 </tr>
                             </thead>
                             <tbody id="pin">
@@ -25,10 +22,8 @@
                                 <tr id="incoming">
                                     <td id="companyName">
                                         <p>TELSA</p>
-                                        <a href="/user/individual_stock.html" class="btn btn-default">
-                                            <i class="fa fa-line-chart"></i>
-                                        </a>
-                                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s={{ result.tickerSymbol }}"><i class="fa fa-hacker-news"></i></a>
+                                        <a id="stockLink" href="individual_stock">    <i class="fa fa-line-chart"></i> </a>
+                                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=" target="_blank"><i class="fa fa-hacker-news"></i></a>
                                     </td>
                                     <td id="months">{{ result.months }}</td>
                                     <td id="market">{{ result.market }}</td>
@@ -48,7 +43,91 @@
             </div>
 
         </div>
+                                {% csrf_token %}
+<form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
+    <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
+    <input type="text" class="form-control" id="ceo_name" value="ceo_name" name="ceo_name">    
+    <input type="text" class="form-control" id="ceo_rating" value="ceo_rating" name="ceo_rating">    
+    <input type="text" class="form-control" id="happiness_rating" value="happiness_rating" name="happiness_rating">    
+    <input type="text" class="form-control" id="culture_pros" value="culture_pros" name="culture_pros">    
+    <input type="text" class="form-control" id="culture_cons" value="culture_cons" name="culture_cons">    
+</form>
+{% block scripts %}
 <script type="text/javascript">
+    // $("a#stockLink").click(function(e){
+    //     var companyName = (e.currentTarget.parentNode.children[0].outerText)
+    //     var url = "http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=83856&t.k=cbW9p5pFQDw&action=employers&q=" + companyName
+    //     var bhr = new XMLHttpRequest();
+    //     bhr.onreadystatechange = function(){
+    //         if (bhr.readyState==4 && bhr.status==200) 
+    //         {
+    //             var data = JSON.parse(bhr.responseText)
+    //             $("#company_name")[0].value =  companyName
+    //             $("#ceo_name")[0].value =  data.response.employers[0].ceo.name
+    //             $("#ceo_rating")[0].value =  data.response.employers[0].ceo.pctApprove
+    //             $("#happiness_rating")[0].value =  data.response.employers[0].cultureAndValuesRating
+    //             $("#culture_pros")[0].value =  data.response.employers[0].featuredReview.pros
+    //             $("#culture_cons")[0].value =  data.response.employers[0].featuredReview.cons
+    //             console.log(data)
+    //             document.forms["myForm"].submit();
+    //         }
+    //     }
+    //     bhr.open('GET',url,true);
+    //     bhr.send()                    
+    //     $(".statusbar")[0].innerText = "Loading " + e.currentTarget.innerText + "'s Stock Information ..."
+    //     $(".statusbar").show()
+    //     getStockInfo(e.currentTarget.innerText)
+    // });
+    $(".page-navigation li a").click(function(e){  
+        if (e.currentTarget.id == 'myPortfolios') {
+            var ul = $(this).parent('li').children('ul');
+                if(ul.is(':visible')) {
+                    setTimeout(function(){ 
+                        ul.slideUp('fast');                
+                    }, 100);
+                } else {
+                    setTimeout(function(){ 
+                        ul.slideDown('fast');                
+                    }, 100);
+
+                }
+        }
+        if (e.currentTarget.id !== 'myPortfolios') {
+            $(".statusbar").show()
+            setTimeout(function(){ 
+                var url = e.currentTarget.id
+                    console.log(url)
+                    if (url) {
+                    location.assign(url)
+                }
+            }, 1000);
+        };
+    })
+    // function getStockInfo(symbol) {
+    //     var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
+    //     var ahr = new XMLHttpRequest();
+    //     ahr.onreadystatechange = function(){
+    //         if (ahr.readyState==4 && ahr.status==200) 
+    //         {
+    //             var companyName = JSON.parse(ahr.responseText)
+    //             companyName = companyName.ResultSet.Result[0].name
+    //             console.log(companyName)
+    //             var url = "http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=83856&t.k=cbW9p5pFQDw&action=employers&q=" + companyName
+    //             var bhr = new XMLHttpRequest();
+    //             bhr.onreadystatechange = function(){
+    //                 if (ahr.readyState==4 && ahr.status==200) 
+    //                 {
+    //                     var data = JSON.parse(bhr.responseText)
+    //                     console.log(data)
+    //                 }
+    //             }
+    //             bhr.open('GET',url,true);
+    //             bhr.send();                                
+    //         }
+    //     }
+    //     ahr.open('GET',url,true);
+    //     ahr.send();
+    // };
 var months = $("#months")[0].innerText
 var market = parseInt($("#market")[0].innerText);
 var investingAmount = $("#investingAmount")[0].innerText;
@@ -104,10 +183,14 @@ function generateData(arr){
             var clone = $("#incoming").clone()
             clone[0].innerHTML = "";
             var xName = $("#companyName").clone().removeAttr('id');
-            xName[0].children[0].innerText = "Daily Journal";
+            var xCompanyName = $("  #months").clone().removeAttr('id');
+            var ran = Math.floor((Math.random() * 13) + 0);
+            var ranCom = ['ABM','APPL','AWR','T','VVC','CB','CL','CVX','GOOG','KO','AMAZN','FUL','GIS'];
+            var ranName = ['ABM Industries','APPLE','AWR Corporation','AT&T','Vectren Corp','Chubb Ltd','Colgate-PalmOlive Company','Chevron','Google','Coca-Cola Co','Amazon Inc','HB Fuller Co','General Mills']
+            xName[0].children[2].href+=String(ranCom[ran])
+            xName[0].children[0].innerText = String(ranCom[ran]);
             xName.appendTo(clone);
-            var xCompanyName = $("#months").clone().removeAttr('id');
-            xCompanyName[0].innerText = "DJCO";
+            xCompanyName[0].innerText = String(ranName[ran]);
             xCompanyName.appendTo(clone);
             var xNumStocks = $("#numStocks").clone().removeAttr('id');
             xNumStocks[0].innerText = x;
@@ -145,13 +228,10 @@ function generateData(arr){
 
 </script>
 
-{% block body %}
-
 {% endblock %}
-
-        </div>
 
 
     </div>
 </div>
+{% endblock %}
 {% endblock %}

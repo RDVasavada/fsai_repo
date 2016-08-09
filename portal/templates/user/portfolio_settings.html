@@ -3,6 +3,11 @@
     <script type='text/javascript' src='/static/js/actions.js'></script>    
     <script type='text/javascript' src='/static/js/charts.js'></script>
     <script type='text/javascript' src='/static/js/settings.js'></script> 
+    <script type="text/javascript" src="/static/js/jquery.calendars.package-2.0.2/jquery.calendars.js"></script> 
+    <script type="text/javascript" src="/static/js/jquery.calendars.package-2.0.2/jquery.calendars.plus.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.calendars.package-2.0.2/jquery.calendars.picker.css"></script> 
+    <script type="text/javascript" src="/static/js/jquery.calendars.package-2.0.2/jquery.plugin.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.calendars.package-2.0.2/jquery.calendars.picker.js"></script> 
 {% block content %}
          <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">
             <div class="block block-drop-shadow">
@@ -163,51 +168,114 @@
                                  <div class="input-group m-b">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon"></span>
-                                        <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" max="10" class="form-control" onchange="stockChecker()">
+                                        <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" class="form-control" onchange="stockChecker()">
                                     </div>
                                  </div>
                         </div>
                          <hr>
                            <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:140px;">
+                                <label class="col-sm-1 control-label" style="width:160px;">
                                     <h5>Company Market Cap</h5>
                                 </label>
                                <div class="col-sm-3" style="padding-top:15px">
                                     <input type="text" class="form-control" value="0">
                                 </div>
-                                <label class="col-sm-1 control-label" style="width:140px;">
+                                <label class="col-sm-1 control-label" style="width:160px;">
                                     <h5>Company P\E Ratio</h5>
                                 </label>
                                <div class="col-sm-3" style="padding-top:15px">
                                     <input type="text" class="form-control" value="0">
                                 </div>                                
                             </div>
-                            <br>
                            <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:140px;">
+                                <label class="col-sm-1 control-label" style="width:160px;">
                                     <h5>Dividend Yield (%)</h5>
                                 </label>
                                <div class="col-sm-3" style="padding-top:15px">
                                     <input type="text" class="form-control" value="0">
                                 </div>
-                                <label class="col-sm-1 control-label" style="width:140px;">
+                                <label class="col-sm-1 control-label" style="width:160px;">
                                     <h5>52 Week Price Change</h5>
                                 </label>
                                <div class="col-sm-3" style="padding-top:15px">
                                     <input type="text" class="form-control" value="0">
                                 </div>                                
                             </div>
+<<<<<<< HEAD
                        
                         
                            <div class="form-group">
                                 <label class="col-sm-1 control-label" style="width:140px;">
                                     <h5>Price Earnings Ratio</h5>
+=======
+                            <!--Stock Filters-->
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label" style="width:160px;"><h5>Stock Filters</h5></label>
+                            <div class="input-group m-b" style="padding-left:10px;">
+                              <select class="form-control m-b" name="StockFilters" id="StockFilters" onchange="showfield()" style="width:165px;padding-left:10px;">
+                                    <option selected="selected">Select filter</option>
+                                    <option value="Last price">Last price</option>
+                                    <option value="EPS">EPS</option>
+                                    <option value="Quote Change(%)">Quote Change(%)</option>
+                                    <option value="52w high">52w high</option>
+                                    <option value="52w low">52w low</option>
+                                    <option value="52w price change(%)">52w price change(%)</option>
+                                    <option value="Div Recent Quarter">Div Recent Quarter</option>
+                                    <option value="Book value/share">Book value/share</option>
+                                    <option value="Cash/Share">Cash/Share</option>
+                                    <option value="Current Ratio">Current Ratio</option>
+                                    <option value="Interest Coverage">Interest Coverage</option>
+                                     <option value="Return on investment(TTM)(%)">Return on investment(TTM)(%)</option>
+                                </select>
+                            </div>
+                        </div>  
+                            <div class="form-group" id="stockinfo" style="display:none;">
+                             <label class="col-sm-1 control-label" id="stockoption" style="width:160px;">
+                                 <h5 id="stockfillername"></h5>
+                             </label>
+                             <div class="col-sm-3" id="stockoptiontext">
+                                    <input type="text" class="form-control"  style="width:160px;">
+                                </div> 
+                            </div>
+                            <hr>
+                            <h3>Add Stocks</h3>
+                             <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:200px;">
+                                    Stock Ticker
                                 </label>
                                <div class="col-sm-3" style="padding-top:15px">
-                                    <input type="text" class="form-control" value="0">
-                                </div>
+                                    <input type="text" class="form-control" value="AAPL" placeholder="AAPL">
+                                </div> 
                             </div>
-                       
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:200px;">
+                                    Date Bought (MM/DD/YYYY)
+                                </label>
+                              <div class="input-group m-b">
+                                <div  style="width:170px;padding-left:10px;" class="input-group m-b">
+                                <span class="input-group-addon">$</span>
+                                  <input type="text" class="form-control" id="datepicker" value="09/12/2016" placeholder="09/12/2016">
+                                </div>                              
+                            </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:200px;">
+                                    Price Paid($)
+                                </label>
+                               <div class="col-sm-3" style="padding-top:15px">
+                                    <input type="text" class="form-control" value="2000" placeholder="2000">
+                                </div> 
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label" style="width:200px;">
+                                    Shares Owned
+                                </label>
+                                <div class="input-group m-b">
+                                <div  style="width:170px;padding-left:10px;" class="input-group m-b">
+                                    <input type="number" placeholder="10" value="10" id="shares_owned" name="shares_owned" min="1" class="form-control">
+                                </div>  
+                                </div> 
+                            </div>               
                         </div>
                             <div class="col-md-6" style="margin-top:15px">
                                 <a href="/" class="btn btn-default btn-block btn-clean" type="submit">Cancel</a>
@@ -248,6 +316,16 @@
 function loadDummyData() {
     setTimeout(function(){ document.forms["myForm"].submit(); }, 3000);
 }
+$("button").click(function(e) {
+    var button = e.currentTarget.outerText
+    if (button == 'Low') {
+        e.currentTarget.parentNode.parentNode.children[2].children[0].children[1].value = '25'
+    } else if (button == 'Medium') {
+        e.currentTarget.parentNode.parentNode.children[2].children[0].children[1].value = '50'
+    } else if (button == 'High') {
+        e.currentTarget.parentNode.parentNode.children[2].children[0].children[1].value = '75'
+    }
+})
 </script>
 
 
@@ -263,10 +341,8 @@ function loadDummyData() {
             'max': [ 100 ]
         }
     });
-
     var rangeSliderValueElement = document.getElementById('basic_slider_value');
     var riskSliderRiskElement = document.getElementById('risk_slider_risk');
-
     rangeSlider.noUiSlider.on('update', function( values, handle ) {
         rangeSliderValueElement.innerHTML = values[handle] + "%";
         if(values[handle] < 30) {
@@ -277,27 +353,45 @@ function loadDummyData() {
             riskSliderRiskElement.innerHTML = "<p style='color:red;'>High Risk</p>"
         }
     });
-
     function stockChecker() {
         var stocksNumberElement = document.getElementById('stocks_number');
-        if (stocksNumberElement.value > 10) { stocksNumberElement.value = 10} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
+        if (stocksNumberElement.value > 30) { stocksNumberElement.value = 30} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
     }
-
     function returnChecker() {
         var expReturnElement = document.getElementById('expReturn');
         if (expReturnElement.value > 50) { expReturnElement.value = 50} else if (expReturnElement.value < 1) { expReturnElement.value = 1}
     }
-
     function riskChecker() {
         var expRiskElement = document.getElementById('expRisk');
         if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
     }
-
-function popitup(url) {
-    newwindow=window.open(url,'name','height=400,width=400');
+    function popitup(url) {
+        newwindow=window.open(url,'name','height=400,width=400');
+        if (window.focus) {newwindow.focus()}
+        return false;
+    }
+    function showfield(){
+        var mydropdown = document.getElementById('StockFilters');
+        var strselect = mydropdown.options[mydropdown.selectedIndex].text;
+        if(strselect=="Select filter")
+            document.getElementById('stockinfo').style.display="none";
+        else
+            document.getElementById('stockinfo').style.display="block";
+            document.getElementById('stockfillername').innerHTML=strselect;
+       
+    }
+   function lowrisk(){
+    /*
+    document.getElementById("expRisk").innerHTML = 25;*/
+     newwindow=window.open(url,'name','height=400,width=400');
     if (window.focus) {newwindow.focus()}
     return false;
-}
+    }
+
+  $( function() {
+    $( "#datepicker" ).calendarsPicker();
+  } );
+   
 </script>
 
 {% block body %}

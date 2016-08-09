@@ -1,6 +1,6 @@
 {% extends "base.html" %}
     <script type='text/javascript' src='/static/js/plugins.js'></script>    
-    <script type='text/javascript' src='/static/js/actions.js'></script>    
+    <script type='text/javascript' src='/static/js/actions.js'></script>
     <script type='text/javascript' src='/static/js/charts.js'></script>
     <script type='text/javascript' src='/static/js/settings.js'></script> 
 {% block content %}
@@ -9,15 +9,16 @@
                 <center><h1>News Portal</h1></center>
             </div>    
                 <div class="row" style="height:80vh;overflow-y:scroll">                
-                    <div class="block">
+                    <div class="block" style="padding:5px">
                         <h3>Urgent News</h3>
                         <div class="header">
                             <table class="table">
                                     <tr>
                                         <th class="col-md-2">Date</th>
-                                        <th class="col-md-3">TKR</th>
-                                        <th class="col-md-3">Portfolio</th>
-                                        <th class="col-md-3">Links</th>
+                                        <th class="col-md-2">TKR</th>
+                                        <th class="col-md-2">Portfolio</th>
+                                        <th class="col-md-2">Sentiment</th>
+                                        <th class="col-md-2">Links</th>
                                     </tr>
                             </table>                       
                         </div>
@@ -30,15 +31,16 @@
                             </table>                       
                         </div>
                     </div>    
-                    <div class="block">
+                    <div class="block" style="padding:5px">
                         <h3>Important News</h3>
                         <div class="header">
                             <table class="table">
                                     <tr>
                                         <th class="col-md-2">Date</th>
-                                        <th class="col-md-3">TKR</th>
-                                        <th class="col-md-3">Portfolio</th>
-                                        <th class="col-md-3">Links</th>
+                                        <th class="col-md-2">TKR</th>
+                                        <th class="col-md-2">Portfolio</th>
+                                        <th class="col-md-2">Sentiment</th>
+                                        <th class="col-md-2">Links</th>
                                     </tr>
                             </table>                       
                         </div>
@@ -51,15 +53,16 @@
                             </table>                       
                         </div>
                     </div>  
-                    <div class="block">
+                    <div class="block" style="padding:5px">
                         <h3>Earnings Corner</h3>
                         <div class="header">
                             <table class="table">
                                     <tr>
                                         <th class="col-md-2">Date</th>
-                                        <th class="col-md-3">TKR</th>
-                                        <th class="col-md-3">Earnings Date</th>
-                                        <th class="col-md-3">Sentiment & Market Projections</th>
+                                        <th class="col-md-2">TKR</th>
+                                        <th class="col-md-2">Portfolio</th>
+                                        <th class="col-md-2">Sentiment</th>
+                                        <th class="col-md-2">Links</th>
                                     </tr>
                             </table>                       
                         </div>
@@ -72,7 +75,7 @@
                             </table>                       
                         </div>
                     </div>  
-                    <div class="block">
+                    <div class="block" style="padding:5px">
                         <h3>Market Sentiment</h3>
                         <div class="header">                      
                         </div>
@@ -101,34 +104,38 @@
                     function fillInData(urgent, important, earnings) {
                         urgent.forEach(function(x){
                             var newClone = $("#urgent-incoming").clone().removeAttr('id');
-                            var newItem = "<td class='col-md-2'>"+x.date+"</td><td  class='col-md-3'>"+x.name+"</td><td class='col-md-3'>"+x.type+"</td><td  class='col-md-3'>"+x.title+"</td>";
+                            console.log(newClone[0])
+                            var newItem = "<td class='col-md-2'>"+x.date+"</td><td  class='col-md-2'>"+x.name+"</td><td class='col-md-2'>"+x.type+"</td><td class='col-md-2'>"+x.sentiment+"</td><td  class='col-md-2'><a href='"+x.link+"' target='_blank'>"+x.title+"</a></td>";
                             newClone[0].innerHTML = newItem ; 
                             newClone.appendTo($("#urgent-pin"))
 
                         });
                         important.forEach(function(x){
                             var newClone = $("#important-incoming").clone().removeAttr('id');
-                            var newItem = "<td class='col-md-2'>"+x.date+"</td><td  class='col-md-3'>"+x.name+"</td><td class='col-md-3'>"+x.type+"</td><td  class='col-md-3'>"+x.title+"</td>";
+                            var newItem = "<td class='col-md-2'>"+x.date+"</td><td  class='col-md-2'>"+x.name+"</td><td class='col-md-2'>"+x.type+"</td><td class='col-md-2'>"+x.sentiment+"</td><td  class='col-md-2'><a href='"+x.link+"' target='_blank'>"+x.title+"</a></td>";
                             newClone[0].innerHTML = newItem ; 
                             newClone.appendTo($("#important-pin"))
 
                         });
                         earnings.forEach(function(x){
                             var newClone = $("#earnings-incoming").clone().removeAttr('id');
-                            var newItem = "<td class='col-md-2'>"+x.date+"</td><td  class='col-md-3'>"+x.name+"</td><td class='col-md-3'>"+x.type+"</td><td  class='col-md-3'>"+x.title+"</td>";
+                            var newItem = "<td class='col-md-2'>"+x.date+"</td><td  class='col-md-2'>"+x.name+"</td><td class='col-md-2'>"+x.type+"</td><td class='col-md-2'>"+x.sentiment+"</td><td  class='col-md-2'><a href='"+x.link+"' target='_blank'>"+x.title+"</a></td>";
                             newClone[0].innerHTML = newItem; 
                             newClone.appendTo($("#earnings-pin"))
 
                         })                                                  
                     }
                     data.forEach(function(desc,i){
+                            var sentiment = Math.floor((Math.random() * 100) + 0);
                             var newItem = {
                                 title: desc.title,
                                 date: desc.pubDate,
                                 link: desc.link,
                                 type: portfolioTypes[(Math.floor((Math.random() * 3) + 0))],
-                                name: stockNames[(Math.floor((Math.random() * 3) + 0))]
+                                name: stockNames[(Math.floor((Math.random() * 3) + 0))],
+                                sentiment: String(sentiment) + "%"
                             };
+                            console.log(newItem)
                             var priority = Math.floor((Math.random() * 3) + 0);
                             if (priority == 0) {
                                 urgent_news.push(newItem);
@@ -147,11 +154,7 @@
                 }
             };
         xhr.open('GET','http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo',true);
-        xhr.send();   
-        var bar = "";
-        $(window).on('resize',function(){
-            console.log('le resizing')
-        })        
+        xhr.send();    
     </script>
 
 {% block body %}

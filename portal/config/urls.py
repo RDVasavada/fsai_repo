@@ -20,10 +20,14 @@ urlpatterns = patterns('',
     (r'^user/portfolio/?$', views.portfolio),
     (r'^user/portfolio_settings/?$', views.portfolio_settings),
     (r'^user/portfolio_optimize/?$', views.portfolio_optimize),
+    (r'^user/save_portfolio/?$', views.save_portfolio),
     (r'^user/my_portfolios/?$', views.my_portfolios),
-    (r'^user/Individual_portfolio/?$', views.Individual_portfolio),
+    (r'^user/individual_portfolio/?$', views.individual_portfolio),
     (r'^user/individual_stock/?$', views.individual_stock),
-    (r'^user/news_portal/?$', views.news_portal)
+    (r'^user/news_portal/?$', views.news_portal),
+    (r'^user/top_portfolios/?$', views.top_portfolios),
+    (r'^user/search_portfolio/?$', views.search_portfolio),
+
 
 
 )
