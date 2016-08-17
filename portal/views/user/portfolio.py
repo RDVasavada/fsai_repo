@@ -21,6 +21,11 @@ def portfolio_settings(request):
     html = get_top_portfolios(request, 'user/portfolio_settings.html')
     return HttpResponse(html)
 
+@csrf_exempt
+def support(request):
+    html =  get_top_portfolios(request, 'user/support.html')
+    return HttpResponse(html)
+
 @login_required
 def individual_portfolio(request):
     html = get_top_portfolios(request, 'user/individual_portfolio.html')
