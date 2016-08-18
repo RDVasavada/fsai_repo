@@ -1,19 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-     <div class="col-md-8" style="padding-left:50px;padding-left:50px">
-        <h2 style="text-align:center;"> Apple Incorporate </h2>
+     <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">
+        <h2 style="text-align:center;"> {{company_name}} </h2>
         <div class="col-md-6 col-sm-6">
             <div class="block block-drop-shadow">
                  <div class="head bg-dot20">   
                      <h2>Work Culture</h2>
                  </div>
                  <div class="ibox-content" style="display: block;padding:50px">
-                    <span><h5>CEO Tim Cook<br></h5> 83% Approval Rating</span><br><br>
-                    <span><h5>Work Happiness Rating </h5> 45% </span> <br><br>
-                    <span><h5>Pros</h5>Working at Apple means that the things you work on get into the hands of hundreds of millions of people, literally. It's a lot of pressure to get things right and drives one to do the best work of their lives. 2+ years later I'm still blown away by the talent and creativity of people I work with. </span><br><br><br>
-                    <span><h5>Cons</h5>It's a lot of work, teams are usually strapped for resources and under pressure to deliver on strict timelines leading to high stress and long hours at certain times during the year. </span> <br><br>
-                 </div>                 
+                    <p>
+                    CEO Name<br>
+                    <h4>{{ company_stats.ceo.name }}</h4>
+                    </p><br><br>
+                    <p>CEO Approval Rating</p>
+                    <h4>{{ company_stats.ceo.pctApprove }}% based on  {{ company_stats.ceo.numberOfRatings }} ratings</h4>
+                    </p>
+                    </p><br><br>
+                    <p>Worker - Life Balance Rating</p>
+                    <h4>{{ company_stats.workLifeBalanceRating }}%</h4>
+                    </p><br>                    
+                    <p>Featured Review from Past Worker:<br>
+                    {{company_stats.featuredReview.reviewDateTime}}<br><br>
+                    <h6>Pros : {{ company_stats.featuredReview.pros }}</h6>
+                    <h6>Cons : {{ company_stats.featuredReview.cons }}</h6>
+                    </p>                     
+                     <a href='https://www.glassdoor.com/index.htm' style="font-size:8px">powered by <img style="width:25%;height:25%" src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
+                </div>
             </div>            
         </div> 
         <!--right side-->
@@ -31,7 +44,13 @@
                      <h2>Overview of Company</h2>
                  </div>
                  <div class="ibox-content" style="display: block;padding:50px">
-                     Apple, Inc. engages in the design, manufacture, and marketing of mobile communication, media devices, personal computers, and portable digital music players. The firm offers products and services under the iPhone, iPad, Mac, iPod, Apple Watch, and Apple TV brands; consumer and professional software applications under the iOS, OS, X, and watchOS brands; and operating systems under the iCloud and Apple Pay brands. It operates through the following segments: Americas, Europe, Greater China, Japan, and Rest of Asia Pacific. The company was founded by Steven Paul Jobs, Ronald Gerald Wayne, and Stephen G. Wozniak on April 1, 1976 and is headquartered in Cupertino, CA.
+                    <p>
+                    <img src='{{company_stats.squareLogo}}' style="display:block;margin:auto;width:25%;height:25%">
+                    </p>                 
+                    </p><br><br>
+                    <p>Industry</p>
+                    <h4>{{ company_stats.industryName }} </h4>
+                    </p>
                  </div>
             </div>
 

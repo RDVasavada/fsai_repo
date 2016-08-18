@@ -16,6 +16,17 @@
     <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
     
     <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/select2/select2.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/tagsinput/jquery.tagsinput.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui-timepicker-addon.js'></script>
+
+
+    <script type='text/javascript' src='/static/js/plugins/validationengine/languages/jquery.validationEngine-en.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/validationengine/jquery.validationEngine.js'></script>
+        
+    <script type='text/javascript' src='/static/js/plugins/maskedinput/jquery.maskedinput.min.js'></script>    
+    <script type='text/javascript' src='/static/js/plugins/stepy/jquery.stepy.min.js'></script>    
     
     <script type='text/javascript' src='/static/js/plugins.js'></script>    
     <script type='text/javascript' src='/static/js/actions.js'></script>    
@@ -23,13 +34,15 @@
 </head>
 <body class="bg-img-num1"> 
     
-    <div class="container">        
+    <div class="container" style="padding-top:18vh">        
 
         <div class="login-block">
             <div class="block block-transparent">
                 <div class="content controls npt">
                     <div class="single-pane">
-                        <h3 style="text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ADEAEA;font-size:100px;font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue";"><span style="letter-spacing:10px;""><i>V</i></span>ise</h3>
+                        <h3 style="opacity:0;text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ADEAEA;font-size:100px;font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue";" id="splash">
+                            <span style="letter-spacing:10px;"><i>V</i></span>ise
+                        </h3>
                     </div>
                     {% if errors %}
                         <div class="form-errors">
@@ -40,35 +53,264 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-        <form class="m-t" role="form" method="POST" action="/login">
-            {% csrf_token %}
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username" required="" name="username" >
-        </div>
-        <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password" required="" name="password" >
-        </div>
-        <div class="col-md-6">
-        <button type="submit" class="btn btn-default btn-block btn-clean">Login</button>
-        </div>
-        <div class="col-md-6">
-         <a href="/register" class="btn btn-default btn-block btn-clean">Register</a>  
-        </div>
-        </form> </br></br>
-                    <div class="row-form">          
-                        <div class="col-md-12">
-                           <p class="text-muted text-center" style="font-size:12px;font-weight:100;">Forgot your password?</p>
-                        </div>
-                   </div>  
-                       <div class="row-form">          
-                        <div class="col-md-12">
-                           <a href="/recover_password" class="btn btn-default btn-block btn-clean">Forgot</a>
-                        </div>
-                   </div>                                
+            <form class="m-t" role="form" method="POST" action="/login">
+                {% csrf_token %}
+                <div id="secondSplash" style="opacity:0">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" required="" name="username" >
                 </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required="" name="password" >
+                </div>
+                <div class="col-md-12" style="margin-top:12px">
+                    <button type="submit" href="#modal_default_1" class="btn btn-default btn-block btn-clean">Login</button>
+                </div>
+                <div class="col-md-12" style="margin-top:12px">
+                    <a href="#modal_default_1" data-toggle="modal" class="btn btn-default btn-block btn-clean" id="register" onClick="isVisible()">Register</a>
+                     <!-- <a href="/register" class="btn btn-default btn-block btn-clean">Register</a>   -->
+                </div>
+            </form> 
+            </br></br>
+           <div class="row-form">          
+                <div class="col-md-12" style="margin-top:12px">
+                    <a href="/recover_password">
+                       <p class="text-muted text-center" style="font-size:12px;font-weight:100;">Forgot your password?</p>
+                    </a>
+                </div>
+           </div>                                
+        </div>
+            </div>
             </div>
         </div>
     </div>
 
 </body>
+
+<div class="modal in" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: hidden"><div class="modal-backdrop  in"></div>
+        <!-- <div class="modal-dialog"> -->
+        <div class="modal-dialog" style="width: 100vw; height: 100vh; margin:0px;background:url('/static/img/background/bg_num1.jpg')">            
+            <div class="modal-content">
+                <div class="block" style="height:100vh">
+                    <div class="header">                                        
+                        <h2>VISE - New User Registration</h2>
+                        <div class="side pull-right">
+                            <button class="btn" type="button" onclick="isNotVisible()">Cancel</button>
+                        </div>
+                    </div>                
+                    <div class="content controls" style="padding-top:20vh;padding-left:30vw;padding-right:30vw;height:100%">                
+<!--                         <ul id="wizard_validate-titles" class="stepy-titles">
+                            <li id="wizard_validate-title-0" class="current-step" style="cursor: default;">
+                                <div>Step 1</div><span>User Info</span>
+                            </li>
+                            <li id="wizard_validate-title-1" style="cursor: default;">
+                                <div>Step 2</div><span>Contact Info</span>
+                            </li>
+                            <li id="wizard_validate-title-2" style="cursor: default;">
+                                <div>Step 3</div><span>Company Info</span>
+                            </li>
+                            <li id="wizard_validate-title-3" style="cursor: default;">
+                                <div>Step 4</div><span>Terms & Conditions</span>
+                            </li>                                                        
+                        </ul> -->
+
+                        <form action="/register" method="POST" id="wizard_validate" onsubmit="submitRegistration()">
+                            {% csrf_token %}
+                            <fieldset title="Step 1" class="step" id="wizard_validate-step-0">
+                                <legend>User Information</legend>
+                                <div class="form-row">
+                                    <div class="col-md-3">Username:</div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="username" id="username" class="form-control validate[required,minSize[4]]">
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Minimum 4 Characters</span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-3">Password:</div>
+                                    <div class="col-md-9">
+                                        <input type="password" id="password" name="password" class="form-control validate[required,minSize[9],maxSize[10]]">
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Minimum 9 Characters</span>
+                                    </div>
+                                </div>
+                                              
+                                <div class="form-row">
+                                    <div class="col-md-3">Repeat Password:</div>
+                                    <div class="col-md-9">
+                                        <input type="password" name="password_repeat" id="password_repeat" class="form-control validate[required,equals[password]]">
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Required</span>
+                                    </div>
+                                </div>
+
+                                <p id="wizard_validate-buttons-0" class="wizard_validate-buttons stepy_buttons">
+                                    <!-- <a id="wizard_validate-next-0" href="javascript:void(0);" class="btn">Next &gt;</a> -->
+                                </p>
+                            </fieldset>
+
+                            <fieldset title="Step 2" class="step" id="wizard_validate-step-1" style="display: none;">
+                                <legend>Contact Information</legend>
+                                <div class="form-row">
+                                    <div class="col-md-3">Email:</div>
+                                    <div class="col-md-9">
+                                        <input type="text" id="email" name="email" class="form-control validate[required,custom[email]]" autocomplete="off">
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, email</span>
+                                    </div>
+                                </div>
+                                <div class="form-row" id="makedinputs">
+                                    <div class="col-md-3">Phone Number:</div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="phone" id="phone" class="form-control validate[required,custom[phone]]" value="" autocomplete="off">
+                                        <span class="help-inline">Example: 98 (765) 432-10-98</span>
+                                    </div>
+                                </div>  
+                                <p id="wizard_validate-buttons-1" class="wizard_validate-buttons stepy_buttons">
+                                    <!-- <a id="wizard_validate-back-1" href="javascript:void(0);" class="btn">&lt; Back</a> -->
+                                    <!-- <button type="submit" class="btn btn-primary finish">Submit</button> -->
+                                </p>
+                            </fieldset>
+                            <fieldset title="Step 3" class="step" id="wizard_validate-step-2">
+                                <legend>Company Information</legend>
+                                <div class="form-row">
+                                    <div class="col-md-3">Firm Name:</div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="firmName" class="validate[required,maxSize[24]]" autocomplete="off">
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, max size 24 </span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-3">Firm Size:</div>
+                                    <div class="col-md-9">
+                                        <!-- <input type="text" name="password" class="validate[required,minSize[4],maxSize[10]]"> -->
+                                        <input type="text" name="firmSize" class="validate[required,custom[integer],min[1],max[2500]] form-control" autocomplete="off">                                        
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, 0 - 2500 limit </span>
+                                    </div>
+                                </div> 
+                                <div class="form-row">
+                                    <div class="col-md-3">Assets Under Management:</div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="firmSize" class="validate[required,custom[integer],min[1],max[50000000]] form-control" placeholder="$" autocomplete="off">
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, 0$ -50,000,000$</span>
+                                    </div>
+                                </div>                                                                
+                                <div class="form-row">
+                                    <div class="col-md-3">Firm\Occupation Type:</div>
+                                    <div class="col-md-9">
+                                        <!-- <input type="text" name="password" class="validate[required,minSize[4],maxSize[10]]"> -->
+                                        <!-- <span class="help-inline">Required</span> -->
+                                        <div class="dropdown">                            
+                                            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" style="padding-left:12px;color:rgba(255,255,255,.5);background-color:rgba(0,0,0,0.2);width:100%;display:inline-block"> Select an Industry<b class="caret" style="float:right;margin:12px"></b></a>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+                                                <li><a id="firmType" href="#tab3" tabindex="-1" data-toggle="tab" onClick="updateFirmType(this)">Example 3</a></li>
+                                                <li><a id="firmType" href="#tab4" tabindex="-1" data-toggle="tab" onClick="updateFirmType(this)">Example 4</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <p id="wizard_validate-buttons-2" class="wizard_validate-buttons stepy_buttons">
+                                    <!-- <a id="wizard_validate-next-0" href="javascript:void(0);" class="btn">Next &gt;</a> -->
+                                </p>
+                            </fieldset>
+                            <fieldset title="Step 4" class="step" id="wizard_validate-step-3">
+                                <legend>Terms & Conditions</legend>
+                                <div class="form-row">
+                                    <div class="col-md-12">Terms & Conditions</div>
+                                    <div class="col-md-12" style="height:25vh;overflow:scroll">
+                                        <!-- <input type="text" name="login" class="validate[required,minSize[4]]"> -->
+                                        <!-- <span class="help-inline">Required, minSize = 4</span> -->
+                                        <textarea style="height:100%">LOREM IPSUM
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum dolor sem, quis pharetra dui ultricies vel. Cras non pulvinar tellus, vel bibendum magna. Morbi tellus nulla, cursus non nisi sed, porttitor dignissim erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis commodo lectus. Vivamus vel tincidunt enim, non vulputate ipsum. Ut pellentesque consectetur arcu sit amet scelerisque. Fusce commodo leo eros, ut eleifend massa congue at.
+
+                                            Nam a nisi et nisi tristique lacinia non sit amet orci. Duis blandit leo odio, eu varius nulla fringilla adipiscing. Praesent posuere blandit diam, sit amet suscipit justo consequat sed. Duis cursus volutpat ante at convallis. Integer posuere a enim eget imperdiet. Nulla consequat dui quis purus molestie fermentum. Donec faucibus sapien eu nisl placerat auctor. Pellentesque quis justo lobortis, tempor sapien vitae, dictum orci.
+
+                                            Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.
+
+                                            Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.
+
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum dolor sem, quis pharetra dui ultricies vel. Cras non pulvinar tellus, vel bibendum magna. Morbi tellus nulla, cursus non nisi sed, porttitor dignissim erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis commodo lectus. Vivamus vel tincidunt enim, non vulputate ipsum. Ut pellentesque consectetur arcu sit amet scelerisque. Fusce commodo leo eros, ut eleifend massa congue at.
+
+                                            Nam a nisi et nisi tristique lacinia non sit amet orci. Duis blandit leo odio, eu varius nulla fringilla adipiscing. Praesent posuere blandit diam, sit amet suscipit justo consequat sed. Duis cursus volutpat ante at convallis. Integer posuere a enim eget imperdiet. Nulla consequat dui quis purus molestie fermentum. Donec faucibus sapien eu nisl placerat auctor. Pellentesque quis justo lobortis, tempor sapien vitae, dictum orci.
+
+                                            Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.
+
+                                            Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.
+
+                                            LOREM IPSUM
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum dolor sem, quis pharetra dui ultricies vel. Cras non pulvinar tellus, vel bibendum magna. Morbi tellus nulla, cursus non nisi sed, porttitor dignissim erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis commodo lectus. Vivamus vel tincidunt enim, non vulputate ipsum. Ut pellentesque consectetur arcu sit amet scelerisque. Fusce commodo leo eros, ut eleifend massa congue at.
+
+                                            Nam a nisi et nisi tristique lacinia non sit amet orci. Duis blandit leo odio, eu varius nulla fringilla adipiscing. Praesent posuere blandit diam, sit amet suscipit justo consequat sed. Duis cursus volutpat ante at convallis. Integer posuere a enim eget imperdiet. Nulla consequat dui quis purus molestie fermentum. Donec faucibus sapien eu nisl placerat auctor. Pellentesque quis justo lobortis, tempor sapien vitae, dictum orci.
+
+                                            Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.
+
+                                            Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.
+
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum dolor sem, quis pharetra dui ultricies vel. Cras non pulvinar tellus, vel bibendum magna. Morbi tellus nulla, cursus non nisi sed, porttitor dignissim erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis commodo lectus. Vivamus vel tincidunt enim, non vulputate ipsum. Ut pellentesque consectetur arcu sit amet scelerisque. Fusce commodo leo eros, ut eleifend massa congue at.
+
+                                            Nam a nisi et nisi tristique lacinia non sit amet orci. Duis blandit leo odio, eu varius nulla fringilla adipiscing. Praesent posuere blandit diam, sit amet suscipit justo consequat sed. Duis cursus volutpat ante at convallis. Integer posuere a enim eget imperdiet. Nulla consequat dui quis purus molestie fermentum. Donec faucibus sapien eu nisl placerat auctor. Pellentesque quis justo lobortis, tempor sapien vitae, dictum orci.
+
+                                            Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.
+
+                                            Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <span>
+                                            <input type="checkbox" class="validate[required]" name="terms" value="1">
+                                             Yes, I accept your terms and conditions.
+                                        </span>
+                                    </div>
+                                    <div class="col-md-12">Tell us the reason you are interested in Vise: </div>
+                                    <div class="col-md-12">
+
+                                        <textarea style="height:75px" class="form-control" id="reason" name="reason"></textarea>
+                                        <!-- <input type="text" name="reason" class="validate[required,minSize[4],maxSize[10]]"> -->
+                                        <!-- <span class="help-inline">Required, minSize = 4, maxSize = 10</span> -->
+                                    </div>
+                                </div>                                
+<!--                                 <div class="form-row">
+                                    <div class="col-md-3">Repeat Password:</div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="password" class="validate[required,minSize[4],maxSize[10]]">
+                                        <span class="help-inline">Required</span>
+                                    </div>
+                                </div>  -->                               
+                                <p id="wizard_validate-buttons-3" class="wizard_validate-buttons stepy_buttons">
+                                    <!-- <a id="wizard_validate-next-0" href="javascript:void(0);" class="btn">Next &gt;</a> -->
+                                </p>
+                            </fieldset>                            
+                            <button type="submit" class="btn btn-primary finish" style="position:relative;top:-29px" id="wizard_validate">Submit</button>
+                            
+                        </form>                
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </html>
+<script>
+$("#splash").animate({
+    opacity: 1,
+}, 750, function() {
+    $("#secondSplash").animate({
+        opacity: 1,
+    }, 750, function() {
+        console.log('done')
+    })
+})
+function updateFirmType(e) {
+    // console.log(e.innerText)
+    $("#myTabDrop1")[0].innerText = e.innerText
+}
+function isVisible() {
+    $("#modal_default_1").show('slow', function() {
+        $(this).trigger('isVisible')
+    })
+}
+function isNotVisible() {
+    $("#modal_default_1").hide('slow', function() {
+        $(this).trigger('isVisible')
+    })    
+}
+function submitRegistration() {
+    console.log("asdf")
+}
+</script>
