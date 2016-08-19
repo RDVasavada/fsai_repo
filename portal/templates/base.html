@@ -15,7 +15,10 @@
         <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
         <link href="/static/css2/stylesheet.css" rel="stylesheet" type="text/css"/>   
     {% endblock %}
-    {% block head %}
+    {% block head %}            
+        <script type="text/javascript">
+            $("body").css('display','none');
+        </script>
         <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
         <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>   
         <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
@@ -61,7 +64,7 @@
                     </div>
                     <ul class="page-navigation">
                         <li>
-                            <a href="#statusbar_2" class="stbar" id="/user/dashboard">
+                            <a href="#statusbar_2" class="stbar transition" id="/user/dashboard">
                                 <span class="icon-home"></span> Dashboard
                             </a>
                         </li>                            
@@ -77,9 +80,9 @@
                         <li>
                             <a id="myPortfolios"> <span class="icon-folder-open-alt"></span>My Portfolios</a>
                           <ul>
-                                <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
+                                <li><a class="stbar transition" href="/user/my_portfolios" id="/user/my_portfolios">Portfolio Summary </a></li>
                             {% for portfolio in portfolios %}
-                                <li><a class="stbar" href="/user/individual_portfolio">{{ portfolio.name }}</a></li>
+                                <li><a class="stbar transition" href="/user/individual_portfolio" id="/user/individual_portfolio">{{ portfolio.name }}</a></li>
                             {% endfor %}
                                 <!--<li><a href="#statusbar_2" class="stbar" id="/user/my_portfolios">Portfolio Summary </a></li>
                                 <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">High Risk Portfolio</a></li>
@@ -88,17 +91,17 @@
                             </ul> 
                         </li>  
                         <li>
-                            <a href="#statusbar_2" class="stbar" id="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
+                            <a href="#statusbar_2" class="stbar transition" id="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
                         </li>
                         <li>
-                            <a href="/user/news_portal" class="stbar" id="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
+                            <a href="/user/news_portal" class="stbar transition" id="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
                         </li>
                         <li>
-                            <a href="/user/support"><span class="icon-cogs"></span> Help & Suggestions</a>
+                            <a href="/user/support" id="/user/support" class="stbar transition"><span class="icon-cogs"></span> Help & Suggestions</a>
 
                         </li>
                         <li>
-                            <a href="/logout"><span class="icon-share-alt"></span> Log Out</a>
+                            <a href="/logout" id="/logout" class="stbar transition"><span class="icon-share-alt"></span> Log Out</a>
                         </li>                                                                   
                     </ul>
                 </div>
@@ -133,9 +136,13 @@
 
 <!-- FSAI scripts -->
 {% block scripts %}
+
             <script type="text/javascript">
+            $("body").css('display','none');
+            $( window ).load(function() {
+                        $("body").fadeIn(1000);
+            });
             $(".page-navigation li a").click(function(e){  
-            console.log("asdf")  
                 if (e.currentTarget.id == 'myPortfolios') {
                     var ul = $(this).parent('li').children('ul');
                         if(ul.is(':visible')) {
@@ -148,17 +155,20 @@
                             }, 100);
 
                         }
-                }
-                if (e.currentTarget.id !== 'myPortfolios') {
+                }else {
                     $(".statusbar").show()
                     setTimeout(function(){ 
                         var url = e.currentTarget.id
                             console.log(url)
                             if (url) {
-                            location.assign(url)
+                            $("body").fadeOut(1000, redirectPage(url));      
                         }
                     }, 1000);
                 };
+                function redirectPage(url) {
+                    location.assign(url)
+                    // window.location = url;
+                }
             })
             </script>
 {% endblock %}

@@ -1,8 +1,10 @@
 {% extends "base.html" %}
-
+        <script type="text/javascript">
+            $("body").css('display','none');
+        </script>
 {% block content %}
      <div class="col-md-7 col-sm-7" style="padding-left:50px;padding-right:20px">
-        <h2 style="text-align:center;" id="companyName"> {{company_name}} </h2>
+        <h2 style="text-align:center;" id="companyName"> {{company_name}} {{company_symbol}} </h2>
         <span style="display:none" id="companySymbol">{{company_symbol}}</span>
         <div class="col-md-12 col-sm-12">
             <div class="block block-drop-shadow">
@@ -14,7 +16,8 @@
                     <div id="tv-medium-widget-8fb94"></div>
                     <script type="text/javascript" src="https://s3.amazonaws.com/tradingview/tv.js"></script>
                     <script type="text/javascript">
-                    var symbol = "NASDAQ:"+$("#companySymbol")[0].innerText;
+                    var symbol = $("#companySymbol")[0].innerText;
+                    console.log(symbol)
                     new TradingView.MediumWidget({
                       "container_id": "tv-medium-widget-8fb94",
                       "symbols": [
@@ -79,13 +82,20 @@
                           method: 'GET',
                         }).done(function(result) {
                           var news = result.response.docs
-                          news.forEach(function(x) {
-                            var clone = $("#cloner").clone().removeAttr('id');
-                            var ohtml = "<div class='list-text'>"+x.snippet+"</div>"
-                            clone[0].children[0].outerHTML = ohtml
-                            clone.attr('href',x.web_url)
-                            clone.appendTo($("#newsPin")).css('display','')
-                          })
+                          if (news.length > 1) {
+                            news.forEach(function(x) {
+                              var clone = $("#cloner").clone().removeAttr('id');
+                              var ohtml = "<div class='list-text'>"+x.snippet+"</div>"
+                              clone[0].children[0].outerHTML = ohtml
+                              clone.attr('href',x.web_url)
+                              clone.appendTo($("#newsPin")).css('display','')
+                            })
+                          } else {
+                              var clone = $("#cloner").clone().removeAttr('id');
+                              var ohtml = "<div class='list-text'>No News Articles Found</div>"
+                              clone[0].children[0].outerHTML = ohtml
+                              clone.appendTo($("#newsPin")).css('display','')
+                          }
                         }).fail(function(err) {
                           throw err;
                         });

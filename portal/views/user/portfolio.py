@@ -4,9 +4,6 @@ from django.shortcuts import render
 import urllib2
 import requests
 import json
-import datetime as dt
-from yahoo_finance import Share
-from pprint import pprint
 from collections import OrderedDict
 from django.template import RequestContext, Context, loader
 from django.contrib.auth.decorators import login_required
@@ -40,16 +37,10 @@ def individual_portfolio(request):
 @login_required
 def individual_stock(request):
     context_dict = {}
-    context_dict["company_symbol"] = request.POST['company_name'];
-    today = dt.datetime.today().strftime("%Y-%m-%d")
-    # lastyear = today.replace('year=2014')
-    stock = Share(request.POST['company_name'])
-    pprint(stock.get_info())
-    # print(stock.get_historical('2015-08-18', today))
-    # print(info)
+    context_dict["company_symbol"] = request.POST["company_name"]
     response = requests.get("http://chstocksearch.herokuapp.com/api/"+request.POST['company_name'])
     context_dict["company_name"] = response.json()[0]['company']
-    # print(response.json()[0]['company'])
+    print(response.json()[0]['company'])
     params_gd = OrderedDict({
         "v": "1",
         "format": "json",
@@ -68,7 +59,11 @@ def individual_stock(request):
                                    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
                                })
     jsonResponse = response_gd.json()
-    company_stats = jsonResponse['response']['employers'][0]
+    try: 
+        company_stats = jsonResponse['response']['employers'][0]
+    except IndexError:
+        print(jsonResponse)
+        company_stats = {'industryName': 'Unavailable','workLifeBalanceRating':'--','ceo':{'name':'Unavailable','pctApprove':'--'}}
     # print(company_stats['employers'][0])
     #     numStocks = jsonResponse['numStocks']
     # company_stats = jsonResponseresponse_gd.content
