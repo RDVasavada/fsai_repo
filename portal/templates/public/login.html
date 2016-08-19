@@ -34,7 +34,7 @@
 </head>
 <body class="bg-img-num1"> 
     
-    <div class="container" style="padding-top:18vh">        
+    <div class="container">        
 
         <div class="login-block">
             <div class="block block-transparent">
@@ -86,18 +86,18 @@
 
 </body>
 
-<div class="modal in" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: hidden"><div class="modal-backdrop  in"></div>
+<div class="modal in" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: hidden">
         <!-- <div class="modal-dialog"> -->
         <div class="modal-dialog" style="width: 100vw; height: 100vh; margin:0px;background:url('/static/img/background/bg_num1.jpg')">            
             <div class="modal-content">
-                <div class="block" style="height:100vh">
+                <div class="block" style="height:100vh;overflow:hidden;margin-bottom:0px">
                     <div class="header">                                        
                         <h2>VISE - New User Registration</h2>
                         <div class="side pull-right">
                             <button class="btn" type="button" onclick="isNotVisible()">Cancel</button>
                         </div>
                     </div>                
-                    <div class="content controls" style="padding-top:20vh;padding-left:30vw;padding-right:30vw;height:100%">                
+                    <div class="content controls" style="padding-top:18vh;padding-left:30vw;padding-right:30vw;height:100%">                
 <!--                         <ul id="wizard_validate-titles" class="stepy-titles">
                             <li id="wizard_validate-title-0" class="current-step" style="cursor: default;">
                                 <div>Step 1</div><span>User Info</span>
@@ -127,7 +127,7 @@
                                 <div class="form-row">
                                     <div class="col-md-3">Password:</div>
                                     <div class="col-md-9">
-                                        <input type="password" id="password" name="password" class="form-control validate[required,minSize[9],maxSize[10]]">
+                                        <input type="password" id="password" name="password" class="form-control validate[required,minSize[9]]">
                                         <span class="help-inline" style="color:rgba(255,255,255,.5)">Minimum 9 Characters</span>
                                     </div>
                                 </div>
@@ -151,14 +151,14 @@
                                     <div class="col-md-3">Email:</div>
                                     <div class="col-md-9">
                                         <input type="text" id="email" name="email" class="form-control validate[required,custom[email]]" autocomplete="off">
-                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, email</span>
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Example: John.Doe@Yahoo.Com </span>
                                     </div>
                                 </div>
                                 <div class="form-row" id="makedinputs">
                                     <div class="col-md-3">Phone Number:</div>
                                     <div class="col-md-9">
                                         <input type="text" name="phone" id="phone" class="form-control validate[required,custom[phone]]" value="" autocomplete="off">
-                                        <span class="help-inline">Example: 98 (765) 432-10-98</span>
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Example: 98 (765) 432-10-98</span>
                                     </div>
                                 </div>  
                                 <p id="wizard_validate-buttons-1" class="wizard_validate-buttons stepy_buttons">
@@ -172,7 +172,7 @@
                                     <div class="col-md-3">Firm Name:</div>
                                     <div class="col-md-9">
                                         <input type="text" name="firmName" class="validate[required,maxSize[24]]" autocomplete="off">
-                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, max size 24 </span>
+                                        <!-- <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, max size 24 </span> -->
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -180,14 +180,18 @@
                                     <div class="col-md-9">
                                         <!-- <input type="text" name="password" class="validate[required,minSize[4],maxSize[10]]"> -->
                                         <input type="text" name="firmSize" class="validate[required,custom[integer],min[1],max[2500]] form-control" autocomplete="off">                                        
-                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, 0 - 2500 limit </span>
+                                        <!-- <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, 0 - 2500 limit </span> -->
                                     </div>
                                 </div> 
                                 <div class="form-row">
                                     <div class="col-md-3">Assets Under Management:</div>
                                     <div class="col-md-9">
-                                        <input type="text" name="firmSize" class="validate[required,custom[integer],min[1],max[50000000]] form-control" placeholder="$" autocomplete="off">
-                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, 0$ -50,000,000$</span>
+                                        <!-- <input type="text" name="firmSize" class="validate[required,custom[integer],min[1],max[50000000]] form-control" placeholder="$" autocomplete="off"> -->
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">$</span>
+                                            <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control">
+                                        </div>                             
+                                        <!-- <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, 0$ -50,000,000$</span> -->
                                     </div>
                                 </div>                                                                
                                 <div class="form-row">
@@ -195,12 +199,13 @@
                                     <div class="col-md-9">
                                         <!-- <input type="text" name="password" class="validate[required,minSize[4],maxSize[10]]"> -->
                                         <!-- <span class="help-inline">Required</span> -->
-                                        <div class="dropdown">                            
-                                            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" style="padding-left:12px;color:rgba(255,255,255,.5);background-color:rgba(0,0,0,0.2);width:100%;display:inline-block"> Select an Industry<b class="caret" style="float:right;margin:12px"></b></a>
-                                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
-                                                <li><a id="firmType" href="#tab3" tabindex="-1" data-toggle="tab" onClick="updateFirmType(this)">Example 3</a></li>
-                                                <li><a id="firmType" href="#tab4" tabindex="-1" data-toggle="tab" onClick="updateFirmType(this)">Example 4</a></li>
-                                            </ul>
+                                        <div class="input-group m-b">
+                                        <select class="form-control m-b" name="Market" id="Market">
+                                            <option value="1">Technology</option>
+                                            <option value="2">Business</option>
+                                            <option value="3">Finance</option>
+                                            <option value="4">Social</option>
+                                        </select>
                                         </div>
                                     </div>
                                 </div>                                
@@ -257,7 +262,7 @@
                                              Yes, I accept your terms and conditions.
                                         </span>
                                     </div>
-                                    <div class="col-md-12">Tell us the reason you are interested in Vise: </div>
+                                    <div class="col-md-12" style="margin-top:25px">Tell us the reason you are interested in Vise: </div>
                                     <div class="col-md-12">
 
                                         <textarea style="height:75px" class="form-control" id="reason" name="reason"></textarea>

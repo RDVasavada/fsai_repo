@@ -1,59 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-     <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">
-        <h2 style="text-align:center;"> {{company_name}} </h2>
-        <div class="col-md-6 col-sm-6">
+     <div class="col-md-7 col-sm-7" style="padding-left:50px;padding-right:20px">
+        <h2 style="text-align:center;" id="companyName"> {{company_name}} </h2>
+        <span style="display:none" id="companySymbol">{{company_symbol}}</span>
+        <div class="col-md-12 col-sm-12">
             <div class="block block-drop-shadow">
                  <div class="head bg-dot20">   
-                     <h2>Work Culture</h2>
-                 </div>
-                 <div class="ibox-content" style="display: block;padding:50px">
-                    <p>
-                    CEO Name<br>
-                    <h4>{{ company_stats.ceo.name }}</h4>
-                    </p><br><br>
-                    <p>CEO Approval Rating</p>
-                    <h4>{{ company_stats.ceo.pctApprove }}% based on  {{ company_stats.ceo.numberOfRatings }} ratings</h4>
-                    </p>
-                    </p><br><br>
-                    <p>Worker - Life Balance Rating</p>
-                    <h4>{{ company_stats.workLifeBalanceRating }}%</h4>
-                    </p><br>                    
-                    <p>Featured Review from Past Worker:<br>
-                    {{company_stats.featuredReview.reviewDateTime}}<br><br>
-                    <h6>Pros : {{ company_stats.featuredReview.pros }}</h6>
-                    <h6>Cons : {{ company_stats.featuredReview.cons }}</h6>
-                    </p>                     
-                     <a href='https://www.glassdoor.com/index.htm' style="font-size:8px">powered by <img style="width:25%;height:25%" src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
-                </div>
-            </div>            
-        </div> 
-        <!--right side-->
-        <div class="col-md-6 col-sm-6">
-<!--             <div class="block block-drop-shadow">
-                 <div class="head bg-dot20">   
-                     <h2>Forecast Graph</h2>
+                     <h2>Market Graph</h2>
                  </div>                        
-                  <div style="align:left" class="head-panel nm tac">
-                        <div class="chart" id="dash_chart_1" style="height: 150px;"></div>
-                 </div>
-            </div> -->
-            <div class="block block-drop-shadow">
-                 <div class="head bg-dot20">   
-                     <h2>Overview of Company</h2>
-                 </div>
-                 <div class="ibox-content" style="display: block;padding:50px">
-                    <p>
-                    <img src='{{company_stats.squareLogo}}' style="display:block;margin:auto;width:25%;height:25%">
-                    </p>                 
-                    </p><br><br>
-                    <p>Industry</p>
-                    <h4>{{ company_stats.industryName }} </h4>
-                    </p>
+                  <div style="align:left;height:400px" class="head-panel nm tac">
+                    <!-- TradingView Widget BEGIN -->
+                    <div id="tv-medium-widget-8fb94"></div>
+                    <script type="text/javascript" src="https://s3.amazonaws.com/tradingview/tv.js"></script>
+                    <script type="text/javascript">
+                    var symbol = "NASDAQ:"+$("#companySymbol")[0].innerText;
+                    new TradingView.MediumWidget({
+                      "container_id": "tv-medium-widget-8fb94",
+                      "symbols": [
+                        [
+                          "Apple",
+                          symbol
+                        ],
+                      ],
+                      "gridLineColor": "rgba(233, 233, 234, 1)",
+                      "fontColor": "rgba(131, 136, 141, 1)",
+                      "underLineColor": "rgba(219, 239, 251, 1)",
+                      "trendLineColor": "rgba(75, 175, 233, 1)",
+                      "width": "100%",
+                      "height": "400px",
+                      "tradeItWidget": false,
+                      "locale": "en"
+                    });
+                    </script>
+                    <!-- TradingView Widget END -->
+
+
                  </div>
             </div>
-
             <div class="block block-drop-shadow">
                 <div class="block block-drop-shadow">
                      <div class="head bg-dot20">   
@@ -63,6 +47,8 @@
                         The analysts offering 12-month price forecasts for Apple have a median target of 120.00, with a high estimate of 185.00 and a low estimate of 65.00. The median estimate represents a +23.70% increase from the last price of 97.01.
                      </div>
                 </div>
+            </div>
+            <div class="block block-drop-shadow">
                  <div class="head bg-dot20">   
                      <h2>Market Sentiment</h2>
                  </div>
@@ -70,6 +56,83 @@
                     The analysts offering 12-month price forecasts for Apple have a median target of 120.00, with a high estimate of 185.00 and a low estimate of 65.00. The median estimate represents a +23.70% increase from the last price of 97.01.
                  </div>
             </div>         
+            <div class="block block-drop-shadow">
+                 <div class="head bg-dot20">   
+                     <h2>Company Related News Articles</h2>
+                </div>
+                <div class="content np">
+                        <div class="list list-contacts" id="newsPin" style="background-color:'rgba(0,0,0,.5);padding:15px'">
+                            <a href="#" target="_blank" class="list-item" id="cloner" style="display:none">                                
+                                <div class="list-text"></div>                                
+                            </a>                       
+                        </div>                        
+                </div>
+                    <script>
+                        var company_name = $("#companyName")[0].innerText;
+                        var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+                        url += '?' + $.param({
+                          'api-key': "1cf6ae6247764c28824a8f160cf73c75",
+                          'q': company_name,
+                        });
+                        $.ajax({
+                          url: url,
+                          method: 'GET',
+                        }).done(function(result) {
+                          var news = result.response.docs
+                          news.forEach(function(x) {
+                            var clone = $("#cloner").clone().removeAttr('id');
+                            var ohtml = "<div class='list-text'>"+x.snippet+"</div>"
+                            clone[0].children[0].outerHTML = ohtml
+                            clone.attr('href',x.web_url)
+                            clone.appendTo($("#newsPin")).css('display','')
+                          })
+                        }).fail(function(err) {
+                          throw err;
+                        });
+                    </script>                    
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 col-sm-2" style="margin-right:50px">
+        <div class="block block-drop-shadow">
+             <div class="head bg-dot20">   
+                 <h2>Overview of Company</h2>
+             </div>
+             <div class="ibox-content" style="display: block">
+                <p>
+                <img src='{{company_stats.squareLogo}}' style="display:block;padding-top:50px;margin:auto;width:25%;height:25%">
+                </p><br><br>
+                <p>Industry</p>
+                <h4>{{ company_stats.industryName }} </h4>
+             </div>
+        </div>
+        <div class="block block-drop-shadow">
+             <div class="head bg-dot20">   
+                 <h2>Work Culture</h2>
+             </div>
+             <div class="ibox-content" style="display: block;padding:50px">
+                <p>
+                CEO Name<br>
+                <h4>{{ company_stats.ceo.name }}</h4>
+                </p><br><br>
+                <p>CEO Approval Rating<br>
+                based on  {{ company_stats.ceo.numberOfRatings }} ratings
+                <h4>{{ company_stats.ceo.pctApprove }}%</h4><br>
+                </p>
+                <p>Worker - Life Balance Rating
+                <h4>{{ company_stats.workLifeBalanceRating }}%</h4>
+                </p><br>                    
+                <p>Featured Review from Past Worker:<br>
+                Pros : {{ company_stats.featuredReview.pros }}<br><br>
+                Cons : {{ company_stats.featuredReview.cons }}<br><br>
+                </p>                     
+                <span style="font-size:8px">{{company_stats.featuredReview.reviewDateTime}}</span><br><br>
+                 <a href='https://www.glassdoor.com/index.htm' style="font-size:8px">powered by Glassdoor </a>
+            </div>
+        </div>            
+    </div>
+        <!--right side-->
+
         </div>
         </div>               
        </div>
