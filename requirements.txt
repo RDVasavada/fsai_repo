@@ -1,3 +1,4 @@
 django
 mysql-python
 django-extensions
+yahoo_finance

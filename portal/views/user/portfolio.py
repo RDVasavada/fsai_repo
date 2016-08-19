@@ -77,7 +77,7 @@ def individual_stock(request):
     if request.user.is_authenticated():
         username = request.user.username
         portalUser = PortalUser.objects.get(username=username)
-    portfolios = top_portfolios(27)
+    portfolios = top_portfolios(portalUser.id)
     context_dict["portfolios"] = portfolios
     context_dict["username"] = username    
     t = loader.get_template('user/individual_stock.html')
@@ -202,7 +202,7 @@ def portfolio_optimize(request):
     if request.user.is_authenticated():
         username = request.user.username
         portalUser = PortalUser.objects.get(username=username)
-    portfolios = top_portfolios(27)
+    portfolios = top_portfolios(portalUser.id)
     context_dict["portfolios"] = portfolios
     context_dict["username"] = username    
     # portfolios = top_portfolios()
@@ -231,9 +231,10 @@ def top_portfolios(user_id):
         #                                       "where p.id=s.show_id and p.user_id=1 group by p.id order by investment desc limit 3")
         #print(user_id)
         cursor = connection.cursor()
-        cursor.execute("select p.id as id,name,sum(investment) as value, COUNT(DISTINCT(ticker)) as no_of_tickers from "
+        cursor.execute("select p.id as id,name,sum(investment) as value, COUNT(DISTINCT(ticker)) as no_of_tickers, "
+                       "sum(current_price * number_of_shares) as total_value from "
                        "portal_portfolio p, portal_stock s where p.id=s.show_id "
-                       "and p.user_id=" + str(27) + " group by p.id order by investment desc limit 10")
+                       "and p.user_id=" + str(user_id) + " group by p.id order by investment desc limit 10")
         portfolios = dictfetchall(cursor)
         #print "this is all portfolios"
         print(portfolios)
@@ -259,7 +260,7 @@ def my_portfolios(request):
         print("getting all the portfolios")
         try:
             # all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
-            all_portfolios = Portfolio.objects.filter(user__id=27)
+            all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
             #print(all_portfolios)
 
             #all_portfolios = Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id])
@@ -297,7 +298,7 @@ def my_portfolios(request):
     context_dict = {}
     context_dict["all_portfolios"] = all_portfolios
     context_dict["username"] = username
-    t_portfolios = top_portfolios(27)
+    t_portfolios = top_portfolios(portalUser.id)
     context_dict["portfolios"] = t_portfolios
 
     t = loader.get_template('user/my_portfolios.html')
@@ -404,7 +405,7 @@ def get_top_portfolios(request, html_template):
         username = request.user.username
         portalUser = PortalUser.objects.get(username=username)
 
-    portfolios = top_portfolios(27)
+    portfolios = top_portfolios(portalUser.id)
     print portfolios
     # portfolios = top_portfolios(portalUser.id)
 
