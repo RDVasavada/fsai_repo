@@ -54,6 +54,9 @@
 </form>
 {% block scripts %}
 <script type="text/javascript">
+            $( window ).load(function() {
+                $("body").fadeIn(1000);
+            });
     // $("a#stockLink").click(function(e){
     //     var companyName = (e.currentTarget.parentNode.children[0].outerText)
     //     var url = "http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=83856&t.k=cbW9p5pFQDw&action=employers&q=" + companyName

@@ -155,6 +155,9 @@
 {% block scripts %}
 
             <script type="text/javascript">
+            $( window ).load(function() {
+                $("body").fadeIn(1000);
+            });
             $(".page-navigation li a").click(function(e){  
             console.log("asdf")  
                 if (e.currentTarget.id == 'myPortfolios') {

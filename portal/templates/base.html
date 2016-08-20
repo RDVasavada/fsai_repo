@@ -16,9 +16,6 @@
         <link href="/static/css2/stylesheet.css" rel="stylesheet" type="text/css"/>   
     {% endblock %}
     {% block head %}            
-        <script type="text/javascript">
-            $("body").css('display','none');
-        </script>
         <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
         <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>   
         <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
@@ -82,7 +79,7 @@
                           <ul>
                                 <li><a class="stbar transition" href="/user/my_portfolios" id="/user/my_portfolios">Portfolio Summary </a></li>
                             {% for portfolio in portfolios %}
-                                <li><a class="stbar transition" href="/user/individual_portfolio" id="/user/individual_portfolio">{{ portfolio.name }}</a></li>
+                                <li><a class="stbar transition" href="/user/individual_portfolio?q={{portfolio.name}}" id="/user/individual_portfolio">{{ portfolio.name }}</a></li>
                             {% endfor %}
                                 <!--<li><a href="#statusbar_2" class="stbar" id="/user/my_portfolios">Portfolio Summary </a></li>
                                 <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">High Risk Portfolio</a></li>
@@ -138,9 +135,8 @@
 {% block scripts %}
 
             <script type="text/javascript">
-            $("body").css('display','none');
             $( window ).load(function() {
-                        $("body").fadeIn(1000);
+                $("body").fadeIn(1000);
             });
             $(".page-navigation li a").click(function(e){  
                 if (e.currentTarget.id == 'myPortfolios') {

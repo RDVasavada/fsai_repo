@@ -1,7 +1,4 @@
 {% extends "base.html" %}
-            <script type="text/javascript">
-            $("body").css('display','none');
-        </script>
 {% block content %}
 <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">        
     <div class="block">
@@ -80,6 +77,9 @@
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript">
+    $( window ).load(function() {
+        $("body").fadeIn(1000);
+    });
     $("a#stockLink").click(function(e){
         $(".statusbar")[0].innerText = "Loading " + e.currentTarget.innerText + "'s Stock Information ..."
         $(".statusbar").show()

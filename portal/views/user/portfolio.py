@@ -25,14 +25,48 @@ def portfolio_settings(request):
     return HttpResponse(html)
 
 @csrf_exempt
-def support(request):
+def support(request): 
     html =  get_top_portfolios(request, 'user/support.html')
     return HttpResponse(html)
 @csrf_exempt
 @login_required
 def individual_portfolio(request):
-    html = get_top_portfolios(request, 'user/individual_portfolio.html')
-    return HttpResponse(html)
+    print(request.GET["q"])
+    context_dict = {}
+    if request.user.is_authenticated():
+            username = request.user.username
+            print("Authenticated User is :" + username)
+            portalUser = PortalUser.objects.get(username=username)
+            print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
+            print("getting all the portfolios")
+            try:
+                # all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
+                all_portfolios = Portfolio.objects.filter(user__id=27)
+                for port in all_portfolios:
+                    if (str(port.name) == request.GET["q"]):
+                        print("match!")
+                        portName = port.name
+                        context_dict["portname"] = portName
+                        portId = port.id
+                        thisport = port.stock_set.all()
+                        context_dict['thisport'] = thisport
+            except Exception as e:
+                print(e)
+                all_portfolios = None
+    else:
+        print("authentication is not successful")
+    # context_dict["thisport"] = thisport
+    context_dict["username"] = username
+    t_portfolios = top_portfolios(27)
+    context_dict["portfolios"] = t_portfolios
+
+    t = loader.get_template('user/individual_portfolio.html')
+    c = Context(context_dict)
+    html = t.render(context_dict)
+    #print(html)
+    return HttpResponse(html)                    
+    # html = get_top_portfolios(request, 'user/individual_portfolio.html')
+    # return HttpResponse(html)
 @csrf_exempt
 @login_required
 def individual_stock(request):
@@ -254,13 +288,13 @@ def my_portfolios(request):
         print("getting all the portfolios")
         try:
             # all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
-            all_portfolios = Portfolio.objects.filter(user__id=27)
+            all_portfolios = Portfolio.objects.filter(user__id=1)
             #print(all_portfolios)
 
             #all_portfolios = Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id])
             #print(all_portfolios)
             for port in all_portfolios:
-                #print(str(port.id) + "|" + port.name)
+                print(str(port.id) + "|" + port.name)
                 port.stocks = port.stock_set.all()
                 #print(port.stock_set.all())
                 #for stock in port.stock_set:
