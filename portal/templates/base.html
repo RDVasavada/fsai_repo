@@ -79,7 +79,7 @@
                           <ul>
                                 <li><a href="/user/my_portfolios">Portfolio Summary </a></li>
                             {% for portfolio in portfolios %}
-                                <li><a class="stbar" href="/user/individual_portfolio">{{ portfolio.name }}</a></li>
+                                <li><a class="stbar" href="/user/individual_portfolio/{{portfolio.id}}">{{ portfolio.name }}</a></li>
                             {% endfor %}
                                 <!--<li><a href="#statusbar_2" class="stbar" id="/user/my_portfolios">Portfolio Summary </a></li>
                                 <li><a href="#statusbar_2" class="stbar" id="/user/Individual_portfolio">High Risk Portfolio</a></li>

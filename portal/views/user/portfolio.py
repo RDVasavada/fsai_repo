@@ -14,6 +14,7 @@ from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
 from django.db import connection
 from portal.models.data.stock import Stock
+from stock import get_stocks_by_portfolio
 
 @login_required
 def portfolio(request):
@@ -31,11 +32,30 @@ def portfolio_settings(request):
 def support(request):
     html =  get_top_portfolios(request, 'user/support.html')
     return HttpResponse(html)
+
 @csrf_exempt
 @login_required
-def individual_portfolio(request):
-    html = get_top_portfolios(request, 'user/individual_portfolio.html')
+def individual_portfolio(request, portfolio_id):
+    #print("portfolio ID: " + portfolio_id)
+    if request.user.is_authenticated():
+        username = request.user.username
+        portalUser = PortalUser.objects.get(username=username)
+        portfolios = top_portfolios(portalUser.id)
+    stocks = get_stocks_by_portfolio(portfolio_id)
+    portfolio = Portfolio.objects.get(id=portfolio_id)
+    market_sentiment = range(1, 100, 1)
+    context_dict = {}
+    context_dict["portfolios"] = portfolios
+    context_dict["username"] = username
+    context_dict["stocks"] = stocks
+    context_dict["portfolio"] = portfolio
+    context_dict["market_sentiment"] = market_sentiment
+    #print(market_sentiment)
+    t = loader.get_template('user/individual_portfolio.html')
+    c = Context(context_dict)
+    html = t.render(context_dict)
     return HttpResponse(html)
+
 @csrf_exempt
 @login_required
 def individual_stock(request):
