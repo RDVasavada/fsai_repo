@@ -3,6 +3,9 @@
 {% block content %}
  <div class="col-md-8 col-sm-8" style="padding-left:60px;">
     <h2 style="text-align:center;">{{portfolio.risk}}% Risk, {{portfolio.name}}</h2>
+    <script type="text/javascript">
+        $("body").css('display','none');
+    </script>
     <!--first portfolio -->
     <div class="block block-drop-shadow">
         <div class="head bg-dot30">
@@ -42,6 +45,9 @@
                     {% endfor %}
                     <!--<tr>
                         <td><a href="#" id="stockLink">AAPL</a></td>
+                    {% for stock in thisport %}
+                    <tr>
+                        <td><a href="#" id="stockLink">{{stock.ticker}}</a></td>
                         <td class="text-center small">John Smith Inc</td>
                         <td class="text-center">12/11/2009</td>
                         <td class="text-center">01/11/2017</td>
@@ -178,13 +184,13 @@
         $(".statusbar").show()
         $("#company_name")[0].value = e.currentTarget.innerText;
         document.forms["myForm"].submit();
+    });
         // $.ajax({
         //     url: "/user/individual_stock",
         //     method: "POST",
         //     data: {url: e.currentTarget.innerText}
         // })
         // getStockInfo(e.currentTarget.innerText)
-    });
     // function getStockInfo(symbol) {
     //     var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
     //     var ahr = new XMLHttpRequest();

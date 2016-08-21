@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+        <script type="text/javascript">
+            $("body").css('display','none');
+        </script>
      <div class="col-lg-10" style="padding-left:50px;padding-right:50px;">
       <div class="col-lg-8">
         <div class="row">
@@ -66,18 +69,20 @@
 {% block scripts %}
 
             <script type="text/javascript">
+            $("body").css('display','none');
 
             function showtextbox(id)
             {
-	        var tb = document.getElementById(id);
-	        if(tb.style.display!=="none")
-	            tb.style.display="none";
-	        else
-	            tb.style.display="block";
+            var tb = document.getElementById(id);
+            if(tb.style.display!=="none")
+                tb.style.display="none";
+            else
+                tb.style.display="block";
             }
-
+            $( window ).load(function() {
+                        $("body").fadeIn(1000);
+            });
             $(".page-navigation li a").click(function(e){  
-            console.log("asdf")  
                 if (e.currentTarget.id == 'myPortfolios') {
                     var ul = $(this).parent('li').children('ul');
                         if(ul.is(':visible')) {
@@ -90,17 +95,20 @@
                             }, 100);
 
                         }
-                }
-                if (e.currentTarget.id !== 'myPortfolios') {
+                }else {
                     $(".statusbar").show()
                     setTimeout(function(){ 
                         var url = e.currentTarget.id
                             console.log(url)
                             if (url) {
-                            location.assign(url)
+                            $("body").fadeOut(1000, redirectPage(url));      
                         }
                     }, 1000);
                 };
+                function redirectPage(url) {
+                    location.assign(url)
+                    // window.location = url;
+                }
             })
             </script>
 {% endblock %}

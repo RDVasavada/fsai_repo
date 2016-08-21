@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-    
 {% block content %}
 <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">        
     <div class="block">
@@ -55,7 +54,7 @@
             {% if portfolio.stocks %}
                 {% for stock in portfolio.stocks %}   
                     <tr class="even">
-                        <td class=" sorting_1"><a href="individual_stock" id="stockLink"> {{ stock.ticker }} </a> </td>
+                        <td class=" sorting_1"><a href="#" id="stockLink"> {{ stock.ticker }} </a> </td>
                         <td class=" ">{{ stock.current_price }}<span id="priceChange"></span> </td>
                         <td class=" ">{{ stock.buy_date }} - {{ stock.sell_date }}</td>
                         <td class=" ">{{ stock.number_of_shares }}</td>
@@ -70,19 +69,25 @@
     </div>
     {% endfor %}
 </div>
-{% csrf_token %}
 <form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
-<input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
-<input type="text" class="form-control" id="ceo_name" value="ceo_name" name="ceo_name">    
-<input type="text" class="form-control" id="ceo_rating" value="ceo_rating" name="ceo_rating">    
-<input type="text" class="form-control" id="happiness_rating" value="happiness_rating" name="happiness_rating">    
-<input type="text" class="form-control" id="culture_pros" value="culture_pros" name="culture_pros">    
-<input type="text" class="form-control" id="culture_cons" value="culture_cons" name="culture_cons">    
-</form>    
+    {% csrf_token %}
+    <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
+</form> 
 <script src="/static/js/nouislider.min.js"></script>
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript">
+    $( window ).load(function() {
+        $("body").fadeIn(1000);
+    });
+    $("a#stockLink").click(function(e){
+        $(".statusbar")[0].innerText = "Loading " + e.currentTarget.innerText + "'s Stock Information ..."
+        $(".statusbar").show()
+        $("#company_name")[0].value = e.currentTarget.innerText;
+        // $("#company_name")[0].value = e.currentTarget.innerText;
+        document.forms["myForm"].submit();
+    });
+
 //portfolio search functions
 let availableTags, portDict, stockDict
     compileData()
@@ -186,57 +191,58 @@ let availableTags, portDict, stockDict
     }
 
 //changing view to individual_stock functions
-    $("a#stockLink").click(function(e){
-        $(".statusbar")[0].innerText = "Loading " + e.currentTarget.innerText + "'s Stock Information ..."
-        $(".statusbar").show()
-        getStockInfo(e.currentTarget.innerText)
-    });
+    // $("a#stockLink").click(function(e){
+    //     $(".statusbar")[0].innerText = "Loading " + e.currentTarget.innerText + "'s Stock Information ..."
+    //     $(".statusbar").show()
+    //     getStockInfo(e.currentTarget.innerText)
+    // });
 
-    function getStockInfo(symbol) {
-        var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
-        var ahr = new XMLHttpRequest();
-        ahr.onreadystatechange = function(){
-            if (ahr.readyState==4 && ahr.status==200) 
-            {
-                var companyName = JSON.parse(ahr.responseText)
-                console.log(companyName)
-                companyName = companyName.ResultSet.Result[0].name
-                var url = "http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=83856&t.k=cbW9p5pFQDw&action=employers&q=" + companyName
-                var bhr = new XMLHttpRequest();
-                bhr.onreadystatechange = function(){
-                    if (ahr.readyState==4 && ahr.status==200) 
-                    {
-                        var data = JSON.parse(bhr.responseText)
-                        $("#company_name")[0].value =  companyName
-                        $("#ceo_name")[0].value =  data.response.employers[0].ceo.name
-                        $("#ceo_rating")[0].value =  data.response.employers[0].ceo.pctApprove
-                        $("#happiness_rating")[0].value =  data.response.employers[0].cultureAndValuesRating
-                        $("#culture_pros")[0].value =  data.response.employers[0].featuredReview.pros
-                        $("#culture_cons")[0].value =  data.response.employers[0].featuredReview.cons
-                        document.forms["myForm"].submit();
-                    }
-                }
-                bhr.open('GET',url,true);
-                bhr.send();                                
-            }
-        }
-        ahr.open('GET',url,true);
-        ahr.send();
-    };
-    function companyNameFromSymbol(symbol) {
-        var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState==4 && xhr.status==200) 
-            {  
-                var companyName = JSON.parse(xhr.responseText)
-                companyName = companyName.ResultSet.Result[0].name
-                return companyName
-            }
-        }
-        xhr.open('GET',url,true);
-        xhr.send();                  
-    };
+    // function getStockInfo(symbol) {
+    //     var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
+    //     var ahr = new XMLHttpRequest();
+    //     ahr.onreadystatechange = function(){
+    //         if (ahr.readyState==4 && ahr.status==200) 
+    //         {
+    //             var companyName = JSON.parse(ahr.responseText)
+    //             console.log(companyName)
+    //             companyName = companyName.ResultSet.Result[0].name
+    //             var url = "http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=83856&t.k=cbW9p5pFQDw&action=employers&q=" + companyName
+    //             var bhr = new XMLHttpRequest();
+    //             bhr.onreadystatechange = function(){
+    //                 if (ahr.readyState==4 && ahr.status==200) 
+    //                 {
+    //                     var data = JSON.parse(bhr.responseText)
+    //                     $("#company_name")[0].value =  companyName
+    //                     $("#ceo_name")[0].value =  data.response.employers[0].ceo.name
+    //                     $("#ceo_rating")[0].value =  data.response.employers[0].ceo.pctApprove
+    //                     $("#happiness_rating")[0].value =  data.response.employers[0].cultureAndValuesRating
+    //                     $("#culture_pros")[0].value =  data.response.employers[0].featuredReview.pros
+    //                     $("#culture_cons")[0].value =  data.response.employers[0].featuredReview.cons
+    //                     document.forms["myForm"].submit();
+    //                 }
+    //             }
+    //             bhr.open('GET',url,true);
+    //             bhr.send();                                
+    //         }
+    //     }
+    //     ahr.open('GET',url,true);
+    //     ahr.send();
+    // };
+    // function companyNameFromSymbol(symbol) {
+    //     var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.onreadystatechange = function(){
+    //         if (xhr.readyState==4 && xhr.status==200) 
+    //         {  
+    //             var companyName = JSON.parse(xhr.responseText)
+    //             companyName = companyName.ResultSet.Result[0].name
+    //             return companyName
+    //         }
+    //     }
+    //     xhr.open('GET',url,true);
+    //     xhr.send();                  
+    // };
+    
 //navbar bug fix
 $(".page-navigation li a").click(function(e){
     renav(e)       

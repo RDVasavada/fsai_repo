@@ -1,4 +1,5 @@
 /* defaults */
+body{display:none}
 .tal{text-align: left !important;} .tar{text-align: right !important;} .tac{text-align: center !important;}
 .nm{margin: 0px !important;} .nmt{margin-top: 0px !important;} .nmb{margin-bottom: 0px !important;} .nmr{margin-right: 0px !important;} .nml{margin-left: 0px !important;}
 .np{padding: 0px !important;} .npt{padding-top: 0px !important;} .npb{padding-bottom: 0px !important;} .npr{padding-right: 0px !important;} .npl{padding-left: 0px !important;}    
@@ -19,7 +20,7 @@ a:hover,a:focus,a:active{color: #FFF; text-decoration: none;}
     {position: relative;min-height: 1px;padding-left: 10px;padding-right: 10px;}
     
         .container.container-fixed{width: 1200px; max-width: 1200px !important;}
-    /* eof set bootstrap to responsive */
+    /* eof set bootstsrap to responsive */
     body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {margin-right: 17px;}
     .modal{outline: none !important;}
         .modal.modal-draggable{overflow-y: auto !important;}
