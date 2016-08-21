@@ -301,16 +301,16 @@ def top_portfolios(user_id):
 
 @login_required
 def my_portfolios(request):
-    print("inside portfolios of user")
+    #print("inside portfolios of user")
     if request.user.is_authenticated():
         username = request.user.username
-        print("Authenticated User is :" + username)
+        #print("Authenticated User is :" + username)
         portalUser = PortalUser.objects.get(username=username)
         # Get User information from username
         # get the portfolios of the user
-        print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
+        #print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
 
-        print("getting all the portfolios")
+        #print("getting all the portfolios")
         try:
             # all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
             all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
@@ -319,7 +319,7 @@ def my_portfolios(request):
             #all_portfolios = Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id])
             #print(all_portfolios)
             for port in all_portfolios:
-                print(str(port.id) + "|" + port.name)
+                #print(str(port.id) + "|" + port.name)
                 port.stocks = port.stock_set.all()
                 #print(port.stock_set.all())
                 #for stock in port.stock_set:

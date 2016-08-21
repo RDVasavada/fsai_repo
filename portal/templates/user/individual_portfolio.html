@@ -21,6 +21,7 @@
                         <th class="text-center">Market Sentiment</th>
                         <!--<th class="text-center">Risk</th>-->
                         <!--<th class="text-center">Percent sales today</th>-->
+                        <th class="text-center">Stock Price</th>
                         <th class="text-center">Percent gains</th>
                     </tr>
                     </thead>
@@ -40,128 +41,18 @@
                                 <td class="text-center">High</td>
                             {% endif %}-->
                             <!--<td class="text-center">10%</td>-->
-                            <td class="text-center">{{ stock.gain }}%</td>
+                            <td class="text-center">${{ stock.current_price }}</td>
+                            {% if stock.gain >= 0%}
+                                <td class="text-center" style="color:rgba(0,255,0,1)"><span style="font-size:20px;">&uarr;</span>&nbsp;{{ stock.gain }}%</td>
+                            {% else %}
+                                <td class="text-center" style="color:rgba(255,0,0,1);"><span style="font-size:20px;">&darr;</span>&nbsp;{{ stock.gain }}%</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
-                    <!--<tr>
-                        <td><a href="#" id="stockLink">AAPL</a></td>
-                    {% for stock in thisport %}
-                    <tr>
-                        <td><a href="#" id="stockLink">{{stock.ticker}}</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">01/11/2017</td>
-                        <td class="text-center">82</td>
-                        <td class="text-center">Low</td>
-                        &lt;!&ndash;<td class="text-center">10%</td>&ndash;&gt;
-                        <td class="text-center">12%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" id="stockLink">GOOG</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">09/01/2016</td>
-                        <td class="text-center">76</td>
-                        <td class="text-center">Medium</td>
-                        &lt;!&ndash;<td class="text-center">10%</td>&ndash;&gt;
-                        <td class="text-center">12%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" id="stockLink">TSLA</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">02/17/2016</td>
-                        <td class="text-center">44</td>
-                        <td class="text-center">Low</td>
-                        &lt;!&ndash;<td class="text-center">4%</td>&ndash;&gt;
-                        <td class="text-center">9%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" id="stockLink">TXS</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">04/29/2017</td>
-                        <td class="text-center">55</td>
-                        <td class="text-center">High</td>
-                        &lt;!&ndash;<td class="text-center">1%</td>&ndash;&gt;
-                        <td class="text-center">7%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" id="stockLink">HP</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">07/21/2017</td>
-                        <td class="text-center">61</td>
-                        <td class="text-center">Medium</td>
-                        &lt;!&ndash;<td class="text-center">15%</td>&ndash;&gt;
-                        <td class="text-center">2%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" id="stockLink">MSFT</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">06/23/2017</td>
-                        <td class="text-center">79</td>
-                        <td class="text-center">Low</td>
-                        &lt;!&ndash;<td class="text-center">4%</td>&ndash;&gt;
-                        <td class="text-center">12%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" id="stockLink">TXN</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">11/01/2017</td>
-                        <td class="text-center">52</td>
-                        <td class="text-center">Low</td>
-                        &lt;!&ndash;<td class="text-center">10%</td>&ndash;&gt;
-                        <td class="text-center">8%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" id="stockLink">KO</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">01/27/2016</td>
-                        <td class="text-center">24</td>
-                        <td class="text-center">High</td>
-                        &lt;!&ndash;<td class="text-center">10%</td>&ndash;&gt;
-                        <td class="text-center">12%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" id="stockLink">WMT</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">05/23/2017</td>
-                        <td class="text-center">66</td>
-                        <td class="text-center">High</td>
-                        &lt;!&ndash;<td class="text-center">11%</td>&ndash;&gt;
-                        <td class="text-center">3%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" id="stockLink">TGT</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">10/18/2016</td>
-                        <td class="text-center">19</td>
-                        <td class="text-center">Medium</td>
-                        &lt;!&ndash;<td class="text-center">13%</td>&ndash;&gt;
-                        <td class="text-center">7%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" id="stockLink">HOG</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">12/11/2017</td>
-                        <td class="text-center">92</td>
-                        <td class="text-center">Low</td>
-                        &lt;!&ndash;<td class="text-center">15%</td>&ndash;&gt;
-                        <td class="text-center">3%</td>
-                    </tr>-->
                     </tbody>
                 </table>
             </div>
     </div>
-
-
    </div>
 </div>
 <!-- End -->
@@ -169,14 +60,11 @@
 
 <form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
     {% csrf_token %}
-    <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
+    <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">
 </form>
 </body>
 
-
-
 <script src="/static/js/nouislider.min.js"></script>
-
 
 <script type="text/javascript">
     $("a#stockLink").click(function(e){
@@ -195,14 +83,14 @@
     //     var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
     //     var ahr = new XMLHttpRequest();
     //     ahr.onreadystatechange = function(){
-    //         if (ahr.readyState==4 && ahr.status==200) 
+    //         if (ahr.readyState==4 && ahr.status==200)
     //         {
     //             var companyName = JSON.parse(ahr.responseText)
     //             companyName = companyName.ResultSet.Result[0].name
     //             var url = "http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=83856&t.k=cbW9p5pFQDw&action=employers&q=" + companyName
     //             var bhr = new XMLHttpRequest();
     //             bhr.onreadystatechange = function(){
-    //                 if (ahr.readyState==4 && ahr.status==200) 
+    //                 if (ahr.readyState==4 && ahr.status==200)
     //                 {
     //                     var data = JSON.parse(bhr.responseText)
     //                     $("#company_name")[0].value =  companyName
@@ -215,7 +103,7 @@
     //                 }
     //             }
     //             bhr.open('GET',url,true);
-    //             bhr.send();                                
+    //             bhr.send();
     //         }
     //     }
     //     ahr.open('GET',url,true);
@@ -225,8 +113,8 @@
     //     var url = "http://d.yimg.com/aq/autoc?query=" + symbol + "&region=US&lang=en-US"
     //     var xhr = new XMLHttpRequest();
     //     xhr.onreadystatechange = function(){
-    //         if (xhr.readyState==4 && xhr.status==200) 
-    //         {  
+    //         if (xhr.readyState==4 && xhr.status==200)
+    //         {
     //             var companyName = JSON.parse(xhr.responseText)
     //             companyName = companyName.ResultSet.Result[0].name
     //             console.log(companyName)
@@ -234,11 +122,11 @@
     //         }
     //     }
     //     xhr.open('GET',url,true);
-    //     xhr.send();                  
+    //     xhr.send();
     // };
 
     var rangeSlider = document.getElementById('basic_slider');
-    
+
     noUiSlider.create(rangeSlider, {
         start: [30],
         range: {
@@ -276,10 +164,10 @@
         if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
     }
 
-function popitup(url) {
-    newwindow=window.open(url,'name','height=400,width=400');
-    if (window.focus) {newwindow.focus()}
-    return false;
-}
+    function popitup(url) {
+        newwindow=window.open(url,'name','height=400,width=400');
+        if (window.focus) {newwindow.focus()}
+        return false;
+    }
 </script>
 {% endblock %}
