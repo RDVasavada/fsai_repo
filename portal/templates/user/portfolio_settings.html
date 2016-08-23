@@ -12,40 +12,34 @@
             $("body").css('display','none');
         </script>
 {% block content %}
-         <div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">
-            <div class="block block-drop-shadow">
-                <div class="head bg-dot30">  
-                <div class="ibox-content" style="display: block;background-color: rgba(0,0,0,0);color:white;border:0px">
-                        <form id="myForm" class="form-horizontal" action="/user/portfolio_optimize" method="post">
+ <div class="col-md-8" style="padding:50px">
+           <div class="block">
+              <div class="content controls">  
+                   <form id="wizard" class="form-horizontal" action="/user/portfolio_optimize" method="post">            
                         {% csrf_token %}
                         <!-- Details -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                        <h3>Details</h3>
-                            <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:140px;">Name</label>
-                                <a href="login.html" onclick="return popitup('/login')"
-                                 >?</a>
-                               <div class="col-sm-5">
-                                    <input type="text" class="form-control" value="High Risk Portfolio">
+                        <fieldset title="Step 1">
+                            <legend>Details</legend>
+                             <div class="form-row">
+                                    <div class="col-md-3">Name</div>
+                                    <a href="login.html" onclick="return popitup('/login')">?</a>
+                                   <div class="col-sm-5">
+                                        <input type="text" class="form-control" value="High Risk Portfolio">
+                                   </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:140px;">Description</label>
-                                 <a href="login.html" onclick="return popitup('/login')"
-                                 >?</a>
-                               <div class="col-sm-5">
-                                <textarea cols="40" rows="5" class="form-control">This is my profile for handling certain investments.</textarea>
+                                <div class="form-row">
+                                    <div class="col-md-3">Description</div>
+                                    <a href="login.html" onclick="return popitup('/login')">?</a>
+                                   <div class="col-sm-5">
+                                    <textarea cols="40" rows="5" class="form-control">This is my profile for handling certain investments.</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                             </div>
-                        </div>
-                        <hr>
-                            
-                            <h3>Expected Return</h3>
-                            <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:140px;">Return</label>
+                        </fieldset>
+                        <fieldset title="Step 2">
+                        <legend>Expected</legend>         
+                            <div class="form-row" style="padding:10px">
+                               <h6>Expected Return</h6>
+                               <br>
                                 <div style="width:400px;">
                                   <button type="button" class="btn btn-default btn-clean">Low</button>
                                   <button type="button"  class="btn btn-default btn-clean">Medium</button>
@@ -58,10 +52,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr>
-                            <h3>Expected Risk</h3>
-                            <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:140px;">Risk</label>
+                            <div class="form-row" style="padding:10px">
+                              <h6>Expected Risk</h6>
+                              <br>
                                 <div style="width:400px;">
                                   <button type="button"  id="lowrisk" class="btn btn-default btn-clean" onclick="lowrisk()">Low</button>
                                   <button type="button"  class="btn btn-default btn-clean">Medium</button>
@@ -74,14 +67,15 @@
                                     </div>
                                 </div>
                             </div>
-                      <hr>
-                        <!-- Time Frame -->
-                        
-                        <h3>Time Frame</h3>
-                        <div class="form-group">
-                             <label class="col-sm-1 control-label" style="width:140px;vertical-align:top;">Years</label>
-                            <div class="input-group m-b">
-                                <select class="form-control m-b" name="Years" id="Years">
+                    </fieldset>      
+            <fieldset title="Step 3">                            
+                <legend>Time Frame</legend>
+                           <div class="col-lg-12">                    
+                                <div class="form-group" style="padding:10px">
+                                <h6>Time Frame</h6>
+                                   <div class="col-md-3" vertical-align:top;">Years</div>
+                                  <div class="input-group m-b" style="width:80px;">
+                                    <select class="form-control m-b" name="Years" id="Years">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -113,184 +107,181 @@
                                     <option value="29">29</option>
                                     <option value="30">30</option>
                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                             <label class="col-sm-1 control-label" style="width:140px;">Months</label>
-                             <div class="input-group m-b">
-                              <select class="form-control m-b" name="Months" id="Months">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                           </div>
-                        </div>
-                        <hr>
-                        <!-- Control Market -->
-                        
-                        <h3>Control Market</h3>
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label" style="width:140px;"></label>
-                                <div class="input-group m-b">
-                                <select class="form-control m-b" name="Market" id="Market">
-                                    <option value="1">S&amp;P 500</option>
-                                    <option value="2">NASDAQ</option>
-                                    <option value="3">Dow Jones</option>
-                                    <option value="4">US Markets</option>
-                                </select>
                                 </div>
-                        </div>
-                         <hr>
-                        <!-- Investment  -->
-                        
-                        <h3>Investment</h3>
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label" style="width:140px;"></label>
-                                 <div class="input-group m-b">
-                                <div class="input-group m-b">
-                                    <span class="input-group-addon">$</span>
-                                    <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control">
-                                </div>  
-                                </div>                      
                             </div>
-                        <hr>
-                        <!-- Number of Stocks  -->
-                        
-                        <h3>Stocks</h3>
-                        <div class="form-group">
-                               <label class="col-sm-1 control-label" style="width:140px;">Number of stocks</label>
-                                 <div class="input-group m-b">
+                            <div class="form-group" style="padding:10px">
+                                 <div class="col-md-3">Months</div>
+                                 <div class="input-group m-b" style="width:80px;">
+                                  <select class="form-control m-b" name="Months" id="Months">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                               </div>
+                            </div>
+                            <div class="form-group" style="padding:10px">
+                                <h6>Control Market</h6>
+                                    <div class="col-md-3"></div>
+                                        <div class="input-group m-b" style="width:80px;">
+                                        <select class="form-control m-b" name="Market" id="Market">
+                                            <option value="1">S&amp;P 500</option>
+                                            <option value="2">NASDAQ</option>
+                                            <option value="3">Dow Jones</option>
+                                            <option value="4">US Markets</option>
+                                        </select>
+                                        </div>
+                                </div>
+                            </div>
+            </fieldset>
+            <fieldset title="Step 4">                            
+                <legend>Investment</legend>
+                           <div class="col-lg-12">  
+                            <h6>Investment</h6>
+                            <div class="form-group">
+                                <div class="col-md-3"></div>
+                                     <div class="input-group m-b" style="width:165px">
                                     <div class="input-group m-b">
-                                        <span class="input-group-addon"></span>
-                                        <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" class="form-control" onchange="stockChecker()">
+                                        <span class="input-group-addon">$</span>
+                                        <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control">
+                                    </div>  
+                                    </div>                      
+                                </div>
+                                <h6>Stocks</h6>
+                                <div class="form-group">
+                                  <div class="col-md-3">Number of stocks</div>
+                                     <div class="input-group m-b" style="width:165px">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon"></span>
+                                            <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" class="form-control" onchange="stockChecker()">
+                                        </div>
+                                     </div>
+                            </div>
+                         </div>
+            </fieldset>
+            <fieldset title="Step 5">                            
+                <legend>Stock Filters</legend>
+                           <div class="col-lg-12">
+                               <div class="form-group">
+                                   <div class="col-md-3">
+                                        <h7>Company Market Cap</h7>
                                     </div>
+                                   <div class="col-sm-3">
+                                        <input type="text" class="form-control" value="0">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h7>Company P\E Ratio</h7>
+                                    </div>
+                                   <div class="col-sm-3">
+                                        <input type="text" class="form-control" value="0">
+                                    </div>                                
+                                </div>
+                               <div class="form-group">
+                                    <div class="col-md-3">
+                                        <h7>Dividend Yield (%)</h7>
+                                    </div>
+                                   <div class="col-sm-3" style="padding-top:15px">
+                                        <input type="text" class="form-control" value="0">
+                                    </div>
+                                   <div class="col-md-3">
+                                        <h7>52 Week Price Change</h7>
+                                    </div>
+                                   <div class="col-sm-3" style="padding-top:15px">
+                                        <input type="text" class="form-control" value="0">
+                                    </div>                                
+                                </div>
+                                <br>
+                               <div class="form-group">
+                               <div class="col-md-3">
+                                <h7>Stock Filters</h7></div>
+                                  <div class="input-group m-b" style="padding:10px;">
+                                      <select class="form-control m-b" name="StockFilters" id="StockFilters" onchange="showfield()" style="width:165px;padding-left:10px;">
+                                            <option selected="selected">Select filter</option>
+                                            <option value="Last price">Last price</option>
+                                            <option value="EPS">EPS</option>
+                                            <option value="Quote Change(%)">Quote Change(%)</option>
+                                            <option value="52w high">52w high</option>
+                                            <option value="52w low">52w low</option>
+                                            <option value="52w price change(%)">52w price change(%)</option>
+                                            <option value="Div Recent Quarter">Div Recent Quarter</option>
+                                            <option value="Book value/share">Book value/share</option>
+                                            <option value="Cash/Share">Cash/Share</option>
+                                            <option value="Current Ratio">Current Ratio</option>
+                                            <option value="Interest Coverage">Interest Coverage</option>
+                                             <option value="Return on investment(TTM)(%)">Return on investment(TTM)(%)</option>
+                                        </select>
+                                  </div>
+                                </div>  
+                                <div class="form-group" id="stockinfo" style="display:none;">
+                                 <div class="col-md-3">
+                                     <h7 id="stockfillername"></h7>
                                  </div>
-                        </div>
-                         <hr>
-                           <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:160px;">
-                                    <h5>Company Market Cap</h5>
-                                </label>
-                               <div class="col-sm-3" style="padding-top:15px">
-                                    <input type="text" class="form-control" value="0">
+                                 <div class="col-sm-3" id="stockoptiontext">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                    </div> 
                                 </div>
-                                <label class="col-sm-1 control-label" style="width:160px;">
-                                    <h5>Company P\E Ratio</h5>
-                                </label>
-                               <div class="col-sm-3" style="padding-top:15px">
-                                    <input type="text" class="form-control" value="0">
-                                </div>                                
                             </div>
-                           <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:160px;">
-                                    <h5>Dividend Yield (%)</h5>
-                                </label>
-                               <div class="col-sm-3" style="padding-top:15px">
-                                    <input type="text" class="form-control" value="0">
-                                </div>
-                                <label class="col-sm-1 control-label" style="width:160px;">
-                                    <h5>52 Week Price Change</h5>
-                                </label>
-                               <div class="col-sm-3" style="padding-top:15px">
-                                    <input type="text" class="form-control" value="0">
-                                </div>                                
-                            </div>
-                            <!--Stock Filters-->
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label" style="width:160px;"><h5>Stock Filters</h5></label>
-                            <div class="input-group m-b" style="padding-left:10px;">
-                              <select class="form-control m-b" name="StockFilters" id="StockFilters" onchange="showfield()" style="width:165px;padding-left:10px;">
-                                    <option selected="selected">Select filter</option>
-                                    <option value="Last price">Last price</option>
-                                    <option value="EPS">EPS</option>
-                                    <option value="Quote Change(%)">Quote Change(%)</option>
-                                    <option value="52w high">52w high</option>
-                                    <option value="52w low">52w low</option>
-                                    <option value="52w price change(%)">52w price change(%)</option>
-                                    <option value="Div Recent Quarter">Div Recent Quarter</option>
-                                    <option value="Book value/share">Book value/share</option>
-                                    <option value="Cash/Share">Cash/Share</option>
-                                    <option value="Current Ratio">Current Ratio</option>
-                                    <option value="Interest Coverage">Interest Coverage</option>
-                                     <option value="Return on investment(TTM)(%)">Return on investment(TTM)(%)</option>
-                                </select>
-                            </div>
-                        </div>  
-                            <div class="form-group" id="stockinfo" style="display:none;">
-                             <label class="col-sm-1 control-label" id="stockoption" style="width:160px;">
-                                 <h5 id="stockfillername"></h5>
-                             </label>
-                             <div class="col-sm-3" id="stockoptiontext">
-                                    <input type="text" class="form-control"  style="width:160px;">
-                                </div> 
-                            </div>
-                            <hr>
-                            <h3>Add Stocks</h3>
-                             <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:200px;">
-                                    Stock Ticker
-                                </label>
-                               <div class="col-sm-3" style="padding-top:15px">
+            </fieldset>
+            <fieldset title="Step 6">                            
+                <legend>Add Stocks</legend>
+                           <div class="col-lg-12">
+                            <div class="form-group">
+                               <div class="col-md-3" style="width:150px;">
+                               <h7>Stock Ticker</h7>
+                               </div>
+                               <div class="col-sm-3">
                                     <input type="text" class="form-control" value="AAPL" placeholder="AAPL">
                                 </div> 
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:200px;">
-                                    Date Bought (MM/DD/YYYY)
-                                </label>
-                              <div class="input-group m-b">
-                                <div  style="width:170px;padding-left:10px;" class="input-group m-b">
+                                <div class="col-md-3" style="width:150px;">
+                               <h7>Date Bought</h7>
+                               </div>
+                              <div class="col-sm-3">
+                                <div class="input-group m-b">
                                 <span class="input-group-addon">$</span>
                                   <input type="text" class="form-control" id="datepicker" value="09/12/2016" placeholder="09/12/2016">
                                 </div>                              
                             </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:200px;">
-                                    Price Paid($)
-                                </label>
-                               <div class="col-sm-3" style="padding-top:15px">
+                              <div class="col-md-3" style="width:150px;">
+                               <h7>Price Paid($)</h7>
+                               </div>
+                               <div class="col-sm-3">
                                     <input type="text" class="form-control" value="2000" placeholder="2000">
                                 </div> 
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-1 control-label" style="width:200px;">
-                                    Shares Owned
-                                </label>
+                              <div class="col-md-3" style="width:150px;">
+                                <h7>Shares Owned</h7>
+                              </div>
+                               <div class="col-sm-3">
                                 <div class="input-group m-b">
-                                <div  style="width:170px;padding-left:10px;" class="input-group m-b">
-                                    <input type="number" placeholder="10" value="10" id="shares_owned" name="shares_owned" min="1" class="form-control">
-                                </div>  
+                                  <div class="input-group m-b">
+                                      <input type="number" placeholder="10" value="10" id="shares_owned" name="shares_owned" min="1" class="form-control">
+                                  </div>  
                                 </div> 
-                            </div>               
+                                </div>
+                            </div> 
+                          </div>  
+                      <div>       
+                        <div class="col-md-3" style="margin-top:15px">
+                            <a href="/" class="btn btn-default btn-block btn-clean" type="submit">Cancel</a>
                         </div>
-                            <div class="col-md-6" style="margin-top:15px">
-                                <a href="/" class="btn btn-default btn-block btn-clean" type="submit">Cancel</a>
-                                <!--<a href="#" class="btn btn-primary" type="submit" >-->
-                            </div>
-
-                            <div class="col-md-6" style="margin-top:15px">
-<!--                                 <input class="btn btn-default btn-block btn-clean" type="submit" value="Optimize"/>
- -->                                <a href="#modal_default_1" onclick="loadDummyData()" data-toggle="modal" class="btn btn-default btn-block btn-clean">Optimize</a>
-                            </div>              
-                    </form><!-- End of Form -->
-                </div><!-- End of Content -->
-            </div>
-        </div>
-
-
-</div>
-</div>
-</div>
+                        <div class="col-md-3" style="margin-top:15px">
+                          <a href="#modal_default_1" onclick="loadDummyData()" data-toggle="modal" class="btn btn-default btn-block btn-clean">Optimize</a>
+                        </div>   
+                    </div>
+            </fieldset>                               
+            </form><!-- End of Form -->
+        </div> <!-- End of Content -->
+     </div>
+   </div>
 
 <div class="modal" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog" style="margin-top:25%">
@@ -310,7 +301,7 @@
 </div>
 <script>
 function loadDummyData() {
-    setTimeout(function(){ document.forms["myForm"].submit(); }, 3000);
+    setTimeout(function(){ document.forms["wizard"].submit(); }, 3000);
 }
 $("button").click(function(e) {
     var button = e.currentTarget.outerText
