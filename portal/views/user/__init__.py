@@ -9,4 +9,5 @@ from portfolio_view import *
 from save_portfolio import *
 from search_portfolio import *
 from support import *
+from backtest import *
 from top_portfolios import *

@@ -19,6 +19,7 @@ def get_top_portfolios(request, html_template):
         print portalUser.id
 
     # portfolios = top_portfolios(request, 1)
+    # portfolios = top_portfolios(request, portalUser.id)
     portfolios = top_portfolios(request, portalUser.id)
     # print portfolios
 

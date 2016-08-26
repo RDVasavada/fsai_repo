@@ -49,6 +49,11 @@
     <div class="row" style="padding-left:20px">
         <div class="col-md-12">
             <ol class="breadcrumb" style="margin-top:33px">
+                <li><div class="single-pane">
+                    <h8 style="opacity: 1; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 28px;" helveticaneue-light",="" "helvetica="" neue="" light",="" neue";"=" id="splash">
+                        <span style="letter-spacing:1px;"><i>V</i></span>ise
+                    </h8>
+                </div></li>
                 <li><a href="#">Home</a></li>                    
                 <li><a href="dashboard">Dashboard</a>
                 </li>
@@ -57,7 +62,7 @@
         </div>
     </div>
     <div class="row" style="padding-left:20px">
-        <div class="col-lg-2" style="margin-top:50px">
+        <div class="col-lg-2">
             <div class="page-sidebar">
                 <div class="page-navigation-panel">
                     <div class="name">Howdy, {{username}}</div>
@@ -87,9 +92,25 @@
                     <li>
                         <a id="myPortfolios"> <span class="icon-folder-open-alt"></span>My Portfolios</a>
                       <ul>
-                            <li><a class="stbar transition" href="/user/my_portfolios" id="/user/my_portfolios">Portfolio Summary </a></li>
+                            <li>
+                                <a class="stbar transition" href="/user/my_portfolios" id="/user/my_portfolios">Portfolio Summary </a>
+                            </li>
                         {% for portfolio in portfolios %}
-                            <li><a class="stbar transition" href="/user/individual_portfolio?q={{portfolio.name}}" id="/user/individual_portfolio">{{ portfolio.name }}</a></li>
+                            <li>
+                                <div class="content list">
+                                <div class="list-item" style="background:transparent">
+                                    <div class="list-text">
+                                        <!-- <p>{{portfolio.name}}</p> -->
+                                        <a class="stbar transition" href="/user/individual_portfolio?q={{portfolio.name}}" id="/user/individual_portfolio">{{ portfolio.name }}</a>
+                                    </div>
+                                    <div class="list-controls" style="height: 78px; line-height: 28px;">
+                                            <a href="#modal_wide_1" class="modal-wide" style="background:transparent" onClick="backtest(this)">
+                                            Run Backtest
+                                            </a>
+    
+                                </div>                    
+                                </div>
+                            </li>
                         {% endfor %}
                         </ul> 
                     </li>  
@@ -114,6 +135,25 @@
             <div class="statusbar-text">Loading...</div>
             <div class="statusbar-close icon-remove"></div>
         </div>
+        <div class="modal in" id="modal_wide_1" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;display:none;height:110vh"><div class="modal-backdrop  in"></div>
+                <div class="modal-dialog" style="width: 1647px; height: 926px; padding-top: 15px; padding-bottom: 15px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Backtesting: Portfolio Test 4</h4>
+                            <span style="font-size:10px">Provided by PortfolioVisualizer @ Silicon Cloud Technologies LLc</span>
+                        </div>
+                        <div class="modal-body clearfix npr">
+                            <div class="scroll mCustomScrollbar _mCS_2" style="height: 821px;"><div class="mCustomScrollBox mCS-light" id="mCSB_2" style="position:relative; height:100%; overflow:hidden; max-width:100%;"><div class="mCSB_container" style="position:relative; top:0;">
+                                
+    
+                                <iframe src="https://www.portfoliovisualizer.com/backtest-portfolio" style="width:100%;height:80vh"></iframe>
+
+                            </div><div class="mCSB_scrollTools" style="position: absolute; display: block;"><div class="mCSB_draggerContainer"><div class="mCSB_dragger" style="position: absolute; top: 0px; height: 756px;" oncontextmenu="return false;"><div class="mCSB_dragger_bar" style="position: relative; line-height: 756px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>
+                        </div>                
+                    </div>
+                </div>
+            </div>        
         <div id="footer" class="footer" style="position:fixed;background-color:rgba(255,255,255,0);bottom:0px;border:0px">
             <a href="#" class="pull-right">Contact Us&nbsp;</a>
             <div style>

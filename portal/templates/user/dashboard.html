@@ -2,11 +2,13 @@
     {% block content %}
     <div class="col-lg-6 col-md-10 col-sm-10" style="min-width:723px;padding-left:4vw;margin-right:50px">
         <div class="block block-drop-shadow" style="width:723px">
-            <div class="head bg-dot20">   
+            <div class="head bg-default bg-light-ltr">   
                 <h2>My Portfolios</h2>
                      <div class="side pull-right"> 
                              <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/portfolio_settings">New</a></div>
                     </div>
+            </div>
+            <div class="head bg-dot20">
                     <div class="col-lg-12">   
                         <table class="table table-hover margin bottom">
                             <thead>
@@ -32,17 +34,19 @@
              </div>
        </div>
       <div class="block block-drop-shadow" style="width:732px;color:white">
-          <div class="head bg-dot30">
-                        <h2>Market Charts</h2> <br><span id="chosenMarket" style="top:25px;left:30px;position:relative"> S&P 500 </span>
+          <div class="head bg-default bg-light-ltr">
+                        <h2>Market Charts</h2> 
                         <div class="side pull-right">
-                                               <div class="btn-group btn-group-xs">
+                               <div class="btn-group btn-group-xs">
                                     <button type="button" class="btn btn-default btn-clean">1y</button>
                                     <button type="button" class="btn btn-default btn-clean">90d</button>
                                     <button type="button" class="btn btn-default btn-clean">30d</button>                                    
                                 </div>  
-                      
+                        </div>
+            </div>
 
-                        </div>                        
+          <div class="head bg-dot30">
+                        <br><span id="chosenMarket" style="top:10px;left:30px;position:relative"> S&P 500 </span>
                         <div class="ibox-content" style="display: block;background-color: rgba(0,0,0,0);border:0px;background-repeat:no-repeat;background-position:center" id="myBar">
                             <div class="row" style="overflow:hidden">
 

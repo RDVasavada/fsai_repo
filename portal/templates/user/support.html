@@ -1,61 +1,63 @@
 {% extends "base.html" %}
 
 {% block content %}
-     <div class="col-lg-10" style="padding-left:50px;padding-right:50px;">
-      <div class="col-lg-8">
+          <div class="col-lg-10" style="padding-left:50px;padding-right:50px;">
+      <div>
         <div class="row">
-            <h1 style="padding-left:200px;">Support Center</h1>
+           <center><h1>Support Center</h1><center>
         </div>
-      <div class="block block-drop-shadow" >
-      <div class="head bg-dot30" > 
         <div class="row">                
             <form role="search">
-                 <div class="input-group m-b" style="padding:60px;padding-left:80px;">
-                    <input style="width:500px;height:50px;font-size:20px;" id="Search" name="Search" placeholder="Enter your questions or keywords here">
-                  </div>                          
+                 <center><div class="input-group m-b" style="padding-top:60px;padding-bottom:60px;">
+                    <input style="width:700px;height:50px;font-size:20px;" id="Search" name="Search" placeholder="Enter your questions or keywords here">
+                  </div></center>                       
             </form> 
         </div> 
-        </div>
-      </div>
-        <div class="form-group" style="padding-top:250px;">
+        <div>
+        <div style="float:left;">
+        <div class="form-group">
         <div style="padding-bottom:20px;">
-        <h1>Frequently Asked Questions</h1>
+        <h3>Frequently Asked Questions</h3>
+         <hr>
         </div>
         <div>
-            <h3 onclick="showtextbox('textbox1')">How long does it take to transfer money?</h3>
+            <h3 style="color:#66d9ff;" onclick="showtextbox('textbox1')"><i class="icon-chevron-right"></i> &nbsp; How long does it take to transfer money?</h3>
         </div>
         <div>
-            <textarea id="textbox1" cols="40" rows="5" style="display:none;">Electronic deposits from your bank to Betterment typically invest the following business day for deposits made before 11PM EST. This includes requests made on Saturday and Sunday. The only exception is auto-deposits that fall on weekends. If your auto-deposit falls on the weekend, it will invest on Tuesday (assuming that Monday is not a market holiday).
+            <textarea id="textbox1" cols="40" rows="5" style="display:none;" >Electronic deposits from your bank to Betterment typically invest the following business day for deposits made before 11PM EST. This includes requests made on Saturday and Sunday. The only exception is auto-deposits that fall on weekends. If your auto-deposit falls on the weekend, it will invest on Tuesday (assuming that Monday is not a market holiday).
             Electronic withdrawals from Betterment to your bank generally take 4-5 business days due to the required sale and settlement of securities. For example, if you made a withdrawal on Monday morning, you can expect your funds the following Monday (assuming that there are no market or bank holidays in the interim). Note that your withdrawal time may also be impacted if you have made recent deposits within the previous 5 business days.
-			</textarea>
+            </textarea>
         </div>
         </div>
         <div class="form-group">
         <div>
-            <h3 onclick="showtextbox('textbox2')">What does Betterment cost?</h3>
+            <h3 style="color:#66d9ff;" onclick="showtextbox('textbox2')"><i class="icon-chevron-right"></i> &nbsp; What does Betterment cost?</h3>
         </div>
         <div>
             <textarea id="textbox2" cols="40" rows="5" style="display:none;">Betterment charges a management fee of 0.15% to 0.35%, depending on your balance and auto-deposit, and is prorated across the entire year and is charged at the end of each calendar quarter (every three months).
             For accounts under $10,000 we provide 2 pricing options. For those who have automated deposits turned on for at least $100/month, the rate is just 0.35%. If you choose not to automate your savings, the fee is still a low flat rate of just $3/month. This is either/or and never combined. After your account reaches $10,000 there are no longer deposit requirements and we focus on reducing your fee down to just 0.25% per year, and then further to 0.15% when your account is over $100,000.
-			</textarea>
+            </textarea>
         </div>
         </div>
-                <div class="form-group">
+        <div class="form-group">
         <div>
-            <h3 onclick="showtextbox('textbox3')">Is there a minimum deposit or balance? </h3>
+            <h3 style="color:#66d9ff;" onclick="showtextbox('textbox3')"><i class="icon-chevron-right"></i> &nbsp; Is there a minimum deposit or balance? </h3>
         </div>
         <div>
             <textarea id="textbox3" cols="40" rows="5" style="display:none;">There is no minimum investment at Betterment, and no minimum balance. One reason we have no minimum balance is to ensure that every investor can get started building wealth with both long-term and short-term goals. Betterment is a powerful way to put idle balances to work for you, including your safety net fund. Americans on average do not save nearly enough money, so we challenge you to deposit as much as you can comfortably afford because the more you invest the more that will grow.Note that the amount Betterment charges does depend on your account balance and auto-deposit settings. For more detail, look at our pricing page. 
-			</textarea>
+            </textarea>
         </div>
         </div>
-      </div>
+        </div>
         <!--right side-->
-       <div class="col-lg-4">
-           <a href="changes.ailabs.co"><h2>Feature/Change Requests</h2></a>
-           <textarea  rows="4" cols="50"></textarea>
+       <div style="float:right;padding-right:70px;">
+        <div style="padding-bottom:20px;">
+        <h3>Feature/Change Requests</h3>
+         <hr>
         </div>
-        </div>               
+           <textarea style="font-size:15px;" rows="4" cols="50" placeholder="Contact us at changes@ailabs.co"></textarea>
+       </div>
+        </div>              
        </div>
     </div>
 <!-- End -->
@@ -64,5 +66,45 @@
 {% endblock %}
 
 {% block scripts %}
- <script src="/static/js/user/support.js"></script>
+
+            <script type="text/javascript">
+    $( window ).load(function() {
+        $("body").fadeIn(500);
+    });
+            function showtextbox(id)
+            {
+            var tb = document.getElementById(id);
+            if(tb.style.display!=="none")
+                tb.style.display="none";
+            else
+                tb.style.display="block";
+            }
+
+            $(".page-navigation li a").click(function(e){  
+            console.log("asdf")  
+                if (e.currentTarget.id == 'myPortfolios') {
+                    var ul = $(this).parent('li').children('ul');
+                        if(ul.is(':visible')) {
+                            setTimeout(function(){ 
+                                ul.slideUp('fast');                
+                            }, 100);
+                        } else {
+                            setTimeout(function(){ 
+                                ul.slideDown('fast');                
+                            }, 100);
+
+                        }
+                }
+                if (e.currentTarget.id !== 'myPortfolios') {
+                    $(".statusbar").show()
+                    setTimeout(function(){ 
+                        var url = e.currentTarget.id
+                            console.log(url)
+                            if (url) {
+                            location.assign(url)
+                        }
+                    }, 1000);
+                };
+            })
+            </script>
 {% endblock %}

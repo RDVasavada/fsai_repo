@@ -575,11 +575,11 @@ dd{padding: 5px 0px;}
                 
             .list .list-item .list-text{padding: 8px 15px 8px 10px;}
                 .list .list-item .list-text .list-text-name{font-size: 14px; color: #333;}
-                .list .list-item .list-text p{margin: 5px 0px; font-size: 11px; color: #888D9A; line-height: 16px;}
+                .list .list-item .list-text p{margin: 5px 0px; font-size: 11px; color: white; line-height: 16px;}
                 .list .list-item .list-text .list-text-info{font-size: 11px; color: #666; margin-top: 3px; line-height: 14px;}
                 
                 
-            .list .list-item .list-controls{position: absolute; width: 50%; height: 80px; right: -50%; top: 0px; padding: 5px 10px; background: rgba(225,90,0,0.9); transition: 200ms; line-height: 64px;}
+            .list .list-item .list-controls{color: white;position: absolute; width: 50%; height: 80px; right: -50%; top: 0px; padding: 5px 10px; background: rgba(225,90,0,0.9); transition: 200ms; line-height: 64px;}
                 .list .list-item:hover .list-controls{transition: 200ms; right: 0;}
                 .list .list-item .list-controls a{margin-right: 10px;}                        
                 
