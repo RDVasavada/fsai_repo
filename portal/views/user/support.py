@@ -11,7 +11,7 @@ from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
 from django.db import connection
 from portal.models.data.stock import Stock
-from portal.views.user.portfolio import get_top_portfolios
+from portal.views.user.top_portfolios import *
 
 @login_required
 @csrf_exempt
