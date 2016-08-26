@@ -11,7 +11,7 @@ from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
 from django.db import connection
 from portal.models.data.stock import Stock
-from portal.views.user.top_portfolios import *
+from portal.views.user import top_portfolios
 
 @login_required
 def my_portfolios(request):
