@@ -1,8 +1,6 @@
 {% extends "base.html" %}
-        <script type="text/javascript">
-            $("body").css('display','none');
-        </script>
 {% block content %}
+ <script src="/static/js/user/individual_stock.js"></script>
      <div class="col-md-7 col-sm-7" style="padding-left:50px;padding-right:20px">
         <h2 style="text-align:center;" id="companyName"> {{company_name}} {{company_symbol}} </h2>
         <span style="display:none" id="companySymbol">{{company_symbol}}</span>
@@ -12,7 +10,6 @@
                      <h2>Market Graph</h2>
                  </div>                        
                   <div style="align:left;height:400px" class="head-panel nm tac">
-                    <!-- TradingView Widget BEGIN -->
                     <div id="tv-medium-widget-8fb94"></div>
                     <script type="text/javascript" src="https://s3.amazonaws.com/tradingview/tv.js"></script>
                     <script type="text/javascript">
@@ -36,9 +33,6 @@
                       "locale": "en"
                     });
                     </script>
-                    <!-- TradingView Widget END -->
-
-
                  </div>
             </div>
             <div class="block block-drop-shadow">
@@ -69,37 +63,7 @@
                                 <div class="list-text"></div>                                
                             </a>                       
                         </div>                        
-                </div>
-                    <script>
-                        var company_name = $("#companyName")[0].innerText;
-                        var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-                        url += '?' + $.param({
-                          'api-key': "1cf6ae6247764c28824a8f160cf73c75",
-                          'q': company_name,
-                        });
-                        $.ajax({
-                          url: url,
-                          method: 'GET',
-                        }).done(function(result) {
-                          var news = result.response.docs
-                          if (news.length > 1) {
-                            news.forEach(function(x) {
-                              var clone = $("#cloner").clone().removeAttr('id');
-                              var ohtml = "<div class='list-text'>"+x.snippet+"</div>"
-                              clone[0].children[0].outerHTML = ohtml
-                              clone.attr('href',x.web_url)
-                              clone.appendTo($("#newsPin")).css('display','')
-                            })
-                          } else {
-                              var clone = $("#cloner").clone().removeAttr('id');
-                              var ohtml = "<div class='list-text'>No News Articles Found</div>"
-                              clone[0].children[0].outerHTML = ohtml
-                              clone.appendTo($("#newsPin")).css('display','')
-                          }
-                        }).fail(function(err) {
-                          throw err;
-                        });
-                    </script>                    
+                </div>                 
             </div>
         </div>
     </div>
@@ -141,48 +105,11 @@
             </div>
         </div>            
     </div>
-        <!--right side-->
 
         </div>
         </div>               
        </div>
     </div>
-<!-- End -->
 </div>
 </body>
-{% endblock %}
-
-{% block scripts %}
-
-            <script type="text/javascript">
-            $( window ).load(function() {
-                $("body").fadeIn(1000);
-            });
-            $(".page-navigation li a").click(function(e){  
-            console.log("asdf")  
-                if (e.currentTarget.id == 'myPortfolios') {
-                    var ul = $(this).parent('li').children('ul');
-                        if(ul.is(':visible')) {
-                            setTimeout(function(){ 
-                                ul.slideUp('fast');                
-                            }, 100);
-                        } else {
-                            setTimeout(function(){ 
-                                ul.slideDown('fast');                
-                            }, 100);
-
-                        }
-                }
-                if (e.currentTarget.id !== 'myPortfolios') {
-                    $(".statusbar").show()
-                    setTimeout(function(){ 
-                        var url = e.currentTarget.id
-                            console.log(url)
-                            if (url) {
-                            location.assign(url)
-                        }
-                    }, 1000);
-                };
-            })
-            </script>
 {% endblock %}

@@ -9,28 +9,28 @@
     
     <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css" />        
     
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>   
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
-    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery.min.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery-ui.min.js'></script>   
+    <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery-migrate.min.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins/jquery/globalize.js'></script>    
+    <script type='text/javascript' src='/static/assets/js/plugins/bootstrap/bootstrap.min.js'></script>
     
-    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/select2/select2.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/tagsinput/jquery.tagsinput.min.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui-timepicker-addon.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins/uniform/jquery.uniform.min.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins/uniform/jquery.uniform.min.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins/select2/select2.min.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins/tagsinput/jquery.tagsinput.min.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery-ui-timepicker-addon.js'></script>
 
 
-    <script type='text/javascript' src='/static/js/plugins/validationengine/languages/jquery.validationEngine-en.js'></script>
-    <script type='text/javascript' src='/static/js/plugins/validationengine/jquery.validationEngine.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins/validationengine/languages/jquery.validationEngine-en.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins/validationengine/jquery.validationEngine.js'></script>
         
-    <script type='text/javascript' src='/static/js/plugins/maskedinput/jquery.maskedinput.min.js'></script>    
-    <script type='text/javascript' src='/static/js/plugins/stepy/jquery.stepy.min.js'></script>    
+    <script type='text/javascript' src='/static/assets/js/plugins/maskedinput/jquery.maskedinput.min.js'></script>    
+    <script type='text/javascript' src='/static/assets/js/plugins/stepy/jquery.stepy.min.js'></script>    
     
-    <script type='text/javascript' src='/static/js/plugins.js'></script>    
-    <script type='text/javascript' src='/static/js/actions.js'></script>    
-    <script type='text/javascript' src='/static/js/settings.js'></script>
+    <script type='text/javascript' src='/static/assets/js/plugins.js'></script>    
+    <script type='text/javascript' src='/static/assets/js/actions.js'></script>    
+    <script type='text/javascript' src='/static/assets/js/settings.js'></script>
 </head>
 <body class="bg-img-num1"> 
     
@@ -66,7 +66,7 @@
                     <button type="submit" href="#modal_default_1" class="btn btn-default btn-block btn-clean">Login</button>
                 </div>
                 <div class="col-md-12" style="margin-top:12px">
-                    <a href="#modal_default_1" data-toggle="modal" class="btn btn-default btn-block btn-clean" id="register" onClick="isVisible()">Register</a>
+                    <a href="#" data-toggle="modal" class="btn btn-default btn-block btn-clean" id="register" onClick="isVisible()">Register</a>
                      <!-- <a href="/register" class="btn btn-default btn-block btn-clean">Register</a>   -->
                 </div>
             </form> 
@@ -200,12 +200,15 @@
                                         <!-- <input type="text" name="password" class="validate[required,minSize[4],maxSize[10]]"> -->
                                         <!-- <span class="help-inline">Required</span> -->
                                         <div class="input-group m-b">
-                                        <select class="form-control m-b" name="Market" id="Market">
+                                  <!--       <select class="form-control m-b" name="Market" id="Market">
                                             <option value="1">Technology</option>
                                             <option value="2">Business</option>
                                             <option value="3">Finance</option>
                                             <option value="4">Social</option>
-                                        </select>
+                                        </select> -->
+                                        <select name="category" class="form-control m-b" name="Market" id="Market">
+                                        <option value="select">Select a category</option>
+                                            <optgroup label="Individual Investors"><option value="21">Average Net Worth Individual (Less than $100,000)</option><option value="1">Moderate Net Worth Individual ($100,000-$1 million)</option><option value="2">High Net Worth Individual ($1-$5 million)</option><option value="3">Ultra High Net Worth Individual (Over $5 million)</option><option value="18">Student</option></optgroup><optgroup label="Advisors"><option value="12">High Net Worth/Private Wealth Manager</option><option value="13">Independent CFP</option><option value="11">Independent Financial Advisor</option><option value="10">RIA</option><option value="14">Wirehouse Advisor</option></optgroup><optgroup label="Investment Firms"><option value="6">Consulting Group</option><option value="4">Family Office</option><option value="8">Fund of Funds</option><option value="9">Hedge Fund</option><option value="16">Investment Manager</option><option value="15">Wirehouse</option></optgroup><optgroup label="Institutions"><option value="5">Commercial/Investment Bank</option><option value="7">Foundation/Endowment</option><option value="19">Sovereign/Agency</option><option value="17">University/Academic Institution</option></optgroup><optgroup label="Businesses"><option value="22">Small-Medium Sized Business</option><option value="23">Large Corporation</option></optgroup><optgroup label="Other"><option value="20">Other</option></optgroup>                                   </select>                                        
                                         </div>
                                     </div>
                                 </div>                                
@@ -309,12 +312,13 @@ function updateFirmType(e) {
     $("#myTabDrop1")[0].innerText = e.innerText
 }
 function isVisible() {
-    $("#modal_default_1").show('slow', function() {
+    $("#modal_default_1").show('fast', function() {
         $(this).trigger('isVisible')
     })
 }
 function isNotVisible() {
-    $("#modal_default_1").hide('slow', function() {
+    $("#modal_default_1").hide('fast', function() {
+        $(this).trigger('isVisible')
         $(this).trigger('isVisible')
     })    
 }

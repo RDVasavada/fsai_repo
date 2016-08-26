@@ -8,7 +8,7 @@ body{display:none}
 .bpl{background-position: left top;} .bpr{background-position: right top;} .bpc{background-position: center top;}
 
 html{height: 100%; min-height: 100%;}
-body{background: url('../img/background/bg_num1.jpg') left top repeat-x #082648; font-family: 'Helvetica Neue Ultra Light', 'Helvetica', Arial, sans-serif; color: #FFF; height: 100%; font-weight:100 ; min-height: 100%; font-size: 12px;}
+body{background: url('../img/background/bg_num1.jpg') left top repeat-x #082648 !important; font-family: 'Helvetica Neue Ultra Light', 'Helvetica', Arial, sans-serif; color: #FFF; height: 100%; font-weight:100 ; min-height: 100%; font-size: 12px;}
 form{margin: 0px;}
 
 a{color: #FFF; outline: 0 !important;}
@@ -21,7 +21,7 @@ a:hover,a:focus,a:active{color: #FFF; text-decoration: none;}
     
         .container.container-fixed{width: 1200px; max-width: 1200px !important;}
     /* eof set bootstsrap to responsive */
-    body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {margin-right: 17px;}
+    body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {}
     .modal{outline: none !important;}
         .modal.modal-draggable{overflow-y: auto !important;}
             .modal.modal-draggable .modal-header{cursor: pointer;}
