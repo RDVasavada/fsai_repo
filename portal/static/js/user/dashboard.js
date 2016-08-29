@@ -107,6 +107,28 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
 });
 
 // ** Update data section (Called from the onclick)
+function changeTime(s) {
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var endDate = year + "-" + month + "-" + day;
+    document.getElementById('end').value = endDate;
+    if (s === '1y') {
+        year -=1
+    } else if (s == '90d') {
+        month -=3
+    } else if (s == '30d') {
+        month -=1
+    }
+    var startDate = year + "-" + month + "-" + day;
+    document.getElementById('start').value = startDate;
+    var market = document.getElementById('chosenMarket').innerText
+    console.log(market)
+    if (market == 'Nasdaq Composite') {updateData('^IXIC')}
+    if (market == 'Dow Jones Industrial Average') {updateData('^DJI')}
+    if (market == 'S&P 500') {updateData('^GSPC')}
+}
 function updateData(stock) {
 if (stock == '^IXIC') {document.getElementById('chosenMarket').innerText = "Nasdaq Composite"}
 if (stock == '^DJI') {document.getElementById('chosenMarket').innerText = "Dow Jones Industrial Average"}
@@ -114,6 +136,9 @@ if (stock == '^GSPC') {document.getElementById('chosenMarket').innerText = "S&P 
 var stock = stock;
 var start = document.getElementById('start').value;
 var end = document.getElementById('end').value;
+console.log(start)
+console.log(end)
+console.log(stock)
 
 var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     "?q=select%20*%20from%20yahoo.finance.historicaldata%20"+
@@ -125,7 +150,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
 
     // Get the data again
     d3.json(inputURL, function(error, data){
-
+        console.log(data.query)
         data.query.results.quote.forEach(function(d) {
             d.date = parseDate(d.Date);
             d.high = +d.High;
