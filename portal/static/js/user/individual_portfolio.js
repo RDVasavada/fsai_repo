@@ -1,4 +1,4 @@
-$("body").css('display','none');
+// $("body").css('display','none');
 function goStock(e) {
   $(".statusbar")[0].innerText = "Loading " + e.innerText + "'s Stock Information ..."
   $(".statusbar").show()

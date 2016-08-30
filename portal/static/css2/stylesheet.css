@@ -1,5 +1,5 @@
 /* defaults */
-body{display:none}
+/*body{display:none}*/
 .tal{text-align: left !important;} .tar{text-align: right !important;} .tac{text-align: center !important;}
 .nm{margin: 0px !important;} .nmt{margin-top: 0px !important;} .nmb{margin-bottom: 0px !important;} .nmr{margin-right: 0px !important;} .nml{margin-left: 0px !important;}
 .np{padding: 0px !important;} .npt{padding-top: 0px !important;} .npb{padding-bottom: 0px !important;} .npr{padding-right: 0px !important;} .npl{padding-left: 0px !important;}    

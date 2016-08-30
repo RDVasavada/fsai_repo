@@ -1,4 +1,4 @@
-$("body").css('display','none');
+// $("body").css('display','none');
    
    var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(){

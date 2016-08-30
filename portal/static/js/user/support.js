@@ -1,6 +1,6 @@
-$( window ).load(function() {
-    $("body").fadeIn(500);
-});
+// $( window ).load(function() {
+//     $("body").fadeIn(500);
+// });
 function showtextbox(id)
 {
 var tb = document.getElementById(id);
@@ -9,9 +9,9 @@ if(tb.style.display!=="none")
 else
     tb.style.display="block";
 }
-$( window ).load(function() {
-            $("body").fadeIn(500);
-});
+// $( window ).load(function() {
+//             $("body").fadeIn(500);
+// });
 $(".page-navigation li a").click(function(e){  
     if (e.currentTarget.id == 'myPortfolios') {
         var ul = $(this).parent('li').children('ul');

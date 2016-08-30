@@ -1,6 +1,6 @@
-$( window ).load(function() {
-    $("body").fadeIn(1000);
-});
+// $( window ).load(function() {
+//     $("body").fadeIn(1000);
+// });
    
 $(".page-navigation li a").click(function(e){  
     if (e.currentTarget.id == 'myPortfolios') {

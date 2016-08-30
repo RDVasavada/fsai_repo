@@ -1,7 +1,7 @@
-$("body").css('display','none');
-$( window ).load(function() {
-    $("body").fadeIn(500);
-});
+// $("body").css('display','none');
+// $( window ).load(function() {
+//     $("body").fadeIn(500);
+// });
 var company_name = $("#companyName")[0].innerText;
 var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
 url += '?' + $.param({

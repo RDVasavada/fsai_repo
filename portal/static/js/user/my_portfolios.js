@@ -1,6 +1,6 @@
-$( window ).load(function() {
-    $("body").fadeIn(1000);
-});
+// $( window ).load(function() {
+//     $("body").fadeIn(1000);
+// });
 function goStock(e) {
     $(".statusbar")[0].innerText = "Loading " + e.innerText + "'s Stock Information ..."
     $(".statusbar").show()

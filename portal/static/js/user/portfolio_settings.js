@@ -1,4 +1,4 @@
-$("body").css('display','none');
+// $("body").css('display','none');
 function loadDummyData() {
     setTimeout(function(){ document.forms["myForm"].submit(); }, 2000);
 }

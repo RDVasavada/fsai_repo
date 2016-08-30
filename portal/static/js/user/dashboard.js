@@ -1,7 +1,7 @@
 
 // $( window ).load(function() {
 
-$("body").fadeIn(500);
+// $("body").fadeIn(500);
 
 var margin = {top: 25, right: 25, bottom: 50, left: 50},
     width = 650 - margin.left - margin.right,
