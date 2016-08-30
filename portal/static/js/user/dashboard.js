@@ -113,13 +113,20 @@ function changeTime(s) {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
     var endDate = year + "-" + month + "-" + day;
+    month = String(month)
+    if (month.length == 1) {month = "0"+ month}
+    console.log(month)
     document.getElementById('end').value = endDate;
     if (s === '1y') {
         year -=1
     } else if (s == '90d') {
         month -=3
+        month = String(month)
+        if (month.length == 1) {month = "0"+ month}
     } else if (s == '30d') {
         month -=1
+        month = String(month)
+        if (month.length == 1) {month = "0"+ month}
     }
     var startDate = year + "-" + month + "-" + day;
     document.getElementById('start').value = startDate;

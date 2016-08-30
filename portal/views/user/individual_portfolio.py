@@ -25,8 +25,8 @@ def individual_portfolio(request):
             print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
             print("getting all the portfolios")
             try:
-                all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
-                # all_portfolios = Portfolio.objects.filter(user__id=1)
+                # all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
+                all_portfolios = Portfolio.objects.filter(user__id=27)
                 for port in all_portfolios:
                     if (str(port.name) == request.GET["q"]):
                         portName = port.name

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
     {% block content %}
-    <div class="col-lg-6 col-md-7 col-sm-6" style="width:723px;margin-right:25px;margin-left:-5px">
-        <div class="block block-drop-shadow" style="width:723px">
+    <div class="col-lg-5 col-md-7 col-sm-6" style="width:700px;margin-left:-5px;">
+        <div class="block block-drop-shadow" style="width:700px">
             <div class="head bg-default bg-light-ltr">   
                 <h2>My Portfolios</h2>
                      <div class="side pull-right"> 
@@ -33,14 +33,14 @@
                     </div>
              </div>
        </div>
-      <div class="block block-drop-shadow" style="width:732px;color:white">
+      <div class="block block-drop-shadow" style="width:700px;color:white">
           <div class="head bg-default bg-light-ltr">
                         <h2>Market Charts</h2> 
                         <div class="side pull-right">
                                <div class="btn-group btn-group-xs">
                                     <button type="button" class="btn btn-default btn-clean" onClick="changeTime('1y')">1y</button>
-                                    <button type="button" class="btn btn-default btn-clean" onClick=changeTime('90d')>90d</button>
-                                    <button type="button" class="btn btn-default btn-clean" onClick=changeTime('30d')>30d</button>                                    
+                                    <button type="button" class="btn btn-default btn-clean" onClick="changeTime('90d')">90d</button>
+                                    <button type="button" class="btn btn-default btn-clean" onClick="changeTime('30d')">30d</button>                                    
                                 </div>  
                         </div>
             </div>
@@ -79,9 +79,9 @@ var end = document.getElementById('end').value;
                             <div class="btn-toolbar">
                                 <div id="new_input">
                                  <div class="btn-group btn-group-xs">
-                                    <button type="button"  name="stock A" id="stock" value="^GSPC" class="btn btn-default btn-clean" onClick="updateData('^GSPC',1)">S&P500</button>
-                                   <button type="button"  name="stock" id="stock" value="^IXIC" class="btn btn-default btn-clean" onClick="updateData('^IXIC',2)">Nasdaq</button>
-                                   <button type="button"  name="stock" id="stock" value="^DJI" class="btn btn-default btn-clean" onClick="updateData('^DJI',3)">Dow Jones</button>
+                                    <button type="button"  name="stock A" id="stock" value="^GSPC" class="btn btn-default btn-clean" onClick="updateData('^GSPC')">S&P500</button>
+                                   <button type="button"  name="stock" id="stock" value="^IXIC" class="btn btn-default btn-clean" onClick="updateData('^IXIC')">Nasdaq</button>
+                                   <button type="button"  name="stock" id="stock" value="^DJI" class="btn btn-default btn-clean" onClick="updateData('^DJI')">Dow Jones</button>
 
                                     <!-- <button type="button" class="btn btn-default btn-clean">Nasdaq</button> -->
                                     <!-- <button type="button" class="btn btn-default btn-clean">Dow Jones</button>                                     -->
@@ -93,7 +93,7 @@ var end = document.getElementById('end').value;
              </div>   
         </div>
     </div>
-    <div class="col-lg-2 col-md-12 col-sm-10" style="padding-bottom:50px;min-width:375px;float:left">  
+    <div class="col-lg-1 col-md-12 col-sm-10" style="padding-bottom:50px;min-width:375px;margin-left:50px">  
         <div class="block block-drop-shadow">     
             <div class="head bg-default bg-light-ltr">   
                     <h2>Market Headlines</h2>
