@@ -26,13 +26,21 @@ var valueline = d3.svg.line()
     
   
 var svg = d3.select(".ibox-content")
-    .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" 
-            + margin.left 
-            + "," + margin.top + ")");
+    // .append("svg")
+    //     .attr("width", width + margin.left + margin.right)
+    //     .attr("height", height + margin.top + margin.bottom)
+   .append("div")
+   .classed("svg-container", true) //container class to make it responsive
+   .append("svg")
+   //responsive SVG needs these 2 attributes and no width and height attr
+   .attr("preserveAspectRatio", "xMinYMin meet")
+   .attr("viewBox", "0 0 650 300")
+   //class to make it responsive
+   .classed("svg-content-responsive", true)
+    .append("g")
+    .attr("transform", "translate(" 
+        + margin.left 
+        + "," + margin.top + ")");
 
 var stock = document.getElementById('stock').value;
 var start = document.getElementById('start').value;

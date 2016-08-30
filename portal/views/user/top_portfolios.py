@@ -40,7 +40,6 @@ def top_portfolios(request, user_id):
         print("getting top portfolios")
     portfolios = {}
     print(user_id)
-    user_id = 1
     try:
         #all_portfolios = Portfolio.objects.raw("select p.id as id,risk,"
         #                                       "timeframe,investment,control_market,name,sum(investment) as value "
