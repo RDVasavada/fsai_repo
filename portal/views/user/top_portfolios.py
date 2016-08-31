@@ -20,7 +20,6 @@ def get_top_portfolios(request, html_template):
 
     portfolios = top_portfolios(request, 27)
     # portfolios = top_portfolios(request, portalUser.id)
-    # portfolios = top_portfolios(request, portalUser.id)
     # print portfolios
 
     context_dict = {}

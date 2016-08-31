@@ -40,8 +40,6 @@
         <script type="text/javascript" src="/static/js/user/dashboard.js"></script>
         <script type="text/javascript" src="/static/js/user/individual_portfolio.js"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-
-
     {% endblock %}
 </head>
 
@@ -95,6 +93,26 @@
                             <li>
                                 <a class="stbar transition" href="/user/my_portfolios" id="/user/my_portfolios">Portfolio Summary </a>
                             </li>
+                            <script>
+                            function backtest(e) {
+                                var url = String("/user/backtest/")
+                                console.log(url)
+                                $.ajax({
+                                    url: url,
+                                    type: 'get',
+                                    data: {'portName':e}
+                                }).done(function(x) {
+                                    var frame = $("iframe")
+                                    contents = frame.contents()
+                                    body = contents.find('body'),
+                                    styleTag = contents
+                                        .find('head')
+                                        .append('<style></style>')
+                                        .children('style')
+                                    body.html(x.data)
+                                })
+                            }
+                            </script>
                         {% for portfolio in portfolios %}
                             <li>
                                 <div class="content list">
@@ -103,19 +121,16 @@
                                         <!-- <p>{{portfolio.name}}</p> -->
                                         <a class="stbar transition" href="/user/individual_portfolio?q={{portfolio.name}}" id="/user/individual_portfolio">{{ portfolio.name }}</a>
                                     </div>
-                                    <div class="list-controls" style="height: 78px; line-height: 28px;">
-                                            <a href="#modal_wide_1" class="modal-wide" style="" onClick="backtest(this)">
-                                            Test
-                                            </a>
-    
-                                </div>                    
+                                    <div class="list-controls" style="height: 78px; line-height: 28px; background-color:transparent">           
+                                        <a href="#modal_wide_1" onClick="backtest(('{{portfolio.name}}'))" class="modal-wide btn btn-default btn-block btn-clean"><center style="font-size:11px">Run Backtest</center></a>
+                                    </div>                    
                                 </div>
                             </li>
                         {% endfor %}
                         </ul> 
                     </li>  
                     <li>
-                        <a href="/user/portfolio_settings" class="stbar transition" id="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Portfolio</a>
+                        <a href="/user/portfolio_settings" class="stbar transition" id="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Client Portfolio</a>
                     </li>
                     <li>
                         <a href="/user/news_portal" class="stbar transition" id="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
@@ -138,36 +153,34 @@
         </div>
         <div class="modal in" id="modal_wide_1" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;display:none;height:110vh"><div class="modal-backdrop  in"></div>
                 <div class="modal-dialog" style="width: 1647px; height: 926px; padding-top: 15px; padding-bottom: 15px;">
+                    <script>
+                        function refresh() {
+                            location.assign('http://127.0.0.1:8000/user/dashboard')
+                        }                    
+                    </script>
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">Backtesting: Portfolio Test 4</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onClick="refresh()">×</button>
+                            <h4 class="modal-title">Backtesting your portfolio</h4>
                             <span style="font-size:10px">Provided by PortfolioVisualizer @ Silicon Cloud Technologies LLc</span>
                         </div>
                         <div class="modal-body clearfix npr">
                             <div class="scroll mCustomScrollbar _mCS_2" style="height: 821px;"><div class="mCustomScrollBox mCS-light" id="mCSB_2" style="position:relative; height:100%; overflow:hidden; max-width:100%;"><div class="mCSB_container" style="position:relative; top:0;">
                                 
-    
-                                <iframe src="https://www.portfoliovisualizer.com/backtest-portfolio" style="width:100%;height:80vh"></iframe>
+                                <iframe style="width:100%;height:80vh"></iframe>
+                                <!-- <iframe src="https://www.portfoliovisualizer.com/backtest-portfolio" style="width:100%;height:80vh"></iframe> -->
 
                             </div><div class="mCSB_scrollTools" style="position: absolute; display: block;"><div class="mCSB_draggerContainer"><div class="mCSB_dragger" style="position: absolute; top: 0px; height: 756px;" oncontextmenu="return false;"><div class="mCSB_dragger_bar" style="position: relative; line-height: 756px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>
                         </div>                
                     </div>
                 </div>
             </div>
-    <!-- <div class="page-footer">         -->
-    <!--     <div id="page-footer-wrap" class="footer" style="background-color:rgba(255,255,255,0);border:0px">
-        </div>    -->         
-    <!-- </div> -->
 {% block content %}
 
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript">
-    // $( window ).load(function() {
-    //     $("body").fadeIn(500);
-    // });
     $(".page-navigation li a").click(function(e){  
         if (e.currentTarget.id == 'myPortfolios') {
             var ul = $(this).parent('li').children('ul');
@@ -181,18 +194,18 @@
                     }, 100);
 
                 }
-        }else {
+        } else {
             $(".statusbar").show()
             setTimeout(function(){ 
                 var url = e.currentTarget.id
                     console.log(url)
                     if (url) {
-                    $("body").fadeOut(500, redirectPage(url));      
+                    $("body").fadeOut(500, redirectPage(url))
                 }
             }, 1000);
         };
         function redirectPage(url) {
-            location.assign(url)
+            $("body").fadeOut(500, location.assign(url));      
             // window.location = url;
         }
     })

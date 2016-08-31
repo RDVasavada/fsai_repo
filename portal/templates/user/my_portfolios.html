@@ -39,6 +39,7 @@
             </div>
             <h2 id="portfolioName">{{ portfolio.name }}</h2>
             <span style="color:rgba(255,0,0,1);float:right">{{ portfolio.risk}}% Risk </span>
+            <span style="float:right;margin-right:15px" id="portChange"></span>
         </div>
         <div class="content">
             <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper" role="grid">
@@ -47,7 +48,7 @@
                     <tr role="row">
                         <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="" style="width: 18px;background-color:rgba(0,0,0,0)">Symbol</th>
                         <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="ID: activate to sort column ascending" style="width: 237px;">Current Price</th>
-                        <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 241px;">Buy \ Sell Date</th><th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="E-mail: activate to sort column ascending" style="width: 245px;">Number of Shares</th><th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending" style="width: 242px;">Initital Price</th>
+                        <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 241px;">Buy \ Sell Date</th><th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="E-mail: activate to sort column ascending" style="width: 245px;">Number of Shares</th><th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending" style="width: 242px;">Initial Price</th>
                     </tr>
                 </thead>
                 
@@ -56,7 +57,7 @@
                 {% for stock in portfolio.stocks %}   
                     <tr class="even">
                         <td class=" sorting_1"><a href="#" onClick=goStock(this) id="stockLink"> {{ stock.ticker }} </a> </td>
-                        <td class=" ">{{ stock.current_price }}<span id="priceChange"></span> </td>
+                        <td class=" " id="currentPrice">{{ stock.current_price }}<span id="priceChange"></span> </td>
                         <td class=" ">{{ stock.buy_date }} - {{ stock.sell_date }}</td>
                         <td class=" ">{{ stock.number_of_shares }}</td>
                         <td class=" ">{{ stock.initial_price }}</td>                                    

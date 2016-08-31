@@ -1,13 +1,10 @@
-// $( window ).load(function() {
-//     $("body").fadeIn(1000);
-// });
 function goStock(e) {
     $(".statusbar")[0].innerText = "Loading " + e.innerText + "'s Stock Information ..."
     $(".statusbar").show()
     $("#company_name")[0].value = e.innerText;
+    // console.log($("#company_name"))
     document.forms["myForm"].submit();
 };
-console.log($("span#priceChange") )
 //portfolio search functions
 let availableTags, portDict, stockDict
     compileData()
@@ -97,18 +94,33 @@ let availableTags, portDict, stockDict
         }
     }    
 //calculate percentages    
-    var priceChanges = $("span#priceChange") 
-    for (var key in priceChanges) {
-        var obj = priceChanges[key]
-        if (typeof(obj) == 'object' && obj.nodeName == 'SPAN') {
-            var percentage = (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2)
-            if (percentage > 0) {
-                obj.innerHTML = "<span style='color:rgba(0,255,0,1)'>" + (" + " + (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2) + "%") + "</span>"
-            } else {
-                obj.innerHTML = "<span style='color:rgba(255,0,0,1)'>" + (" - "+(((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*-100).toFixed(2) + "%") + "</span>"
-            }
+var priceChanges = $("span#priceChange") 
+for (var key in priceChanges) {
+    var obj = priceChanges[key]
+    if (typeof(obj) == 'object' && obj.nodeName == 'SPAN') {
+        var percentage = (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2)
+        if (percentage > 0) {
+            obj.innerHTML = "<span style='color:rgba(0,255,0,1)'>" + (" + " + (((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*100).toFixed(2) + "%") + "</span>"
+            console.log($("#currentPrice"))
+        } else {
+            obj.innerHTML = "<span style='color:rgba(255,0,0,1)'>" + (" - "+(((parseFloat(obj.parentNode.outerText) - parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText)) / parseFloat(obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.innerText))*-100).toFixed(2) + "%") + "</span>"
         }
     }
+}
+var portChanges = $("span#portChange")
+for (var key in portChanges) {
+    var obj = portChanges[key]
+    if (typeof(obj) == 'object' && obj.nodeName == 'SPAN') {        
+        var random = (Math.random() * (10 + 10) - 10).toFixed(4)
+        if (random > 0) {
+            obj.innerText = '+' + random + '%'
+            obj.style.color = 'rgba(0,255,0,1)'
+        } else {
+            obj.innerText = random + '%'
+            obj.style.color = 'rgba(255,0,0,1)'
+        }
+    }
+}
   
 //navbar bug fix
 $(".page-navigation li a").click(function(e){

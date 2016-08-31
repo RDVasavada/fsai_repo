@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'^', include('portal.config.urls')),
 
     #Admin urls
-	url(r'^sa/', include(admin.site.urls)),
+	  url(r'^sa/', include(admin.site.urls)),
 
     #Socket io
     # url("", include('django_socketio.urls')),

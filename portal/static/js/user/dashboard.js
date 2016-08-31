@@ -1,8 +1,3 @@
-
-// $( window ).load(function() {
-
-// $("body").fadeIn(500);
-
 var margin = {top: 25, right: 25, bottom: 50, left: 50},
     width = 650 - margin.left - margin.right,
     height = 250 - margin.top - margin.bottom;
@@ -120,9 +115,9 @@ function changeTime(s) {
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
-    var endDate = year + "-" + month + "-" + day;
     month = String(month)
     if (month.length == 1) {month = "0"+ month}
+    var endDate = year + "-" + month + "-" + day;
     console.log(month)
     document.getElementById('end').value = endDate;
     if (s === '1y') {
