@@ -96,12 +96,23 @@
                             <script>
                             function backtest(e) {
                                 var url = String("/user/backtest/")
-                                console.log(url)
                                 $.ajax({
                                     url: url,
                                     type: 'get',
                                     data: {'portName':e}
                                 }).done(function(x) {
+                                    var passedHtml = String(x.data)
+                                    if (x.extras) {
+                                        x.extras.forEach(function(a,i) {
+                                            if (i == 0) {
+                                                var newStr = "<div class='row highlightRow asset-row'><div class='col-sm-2 separateTop'>Asset "+a.number+"</div><div class='col-sm-3'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='"+a.symbol+"'>Select asset "+a.number+"</label></span><input type='text' id='"+a.symbol+"' name='"+a.symbol+"' class='form-control fmt-ticker' maxlength='10' placeholder='Enter symbol' autocomplete='off' autocorrect='off' spellcheck='false' value='"+a.ticker+"'><span class='input-group-addon glyphicon glyphicon-search' title='Find ticker symbol'></span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_1'>Enter percentage allocation for asset "+a.number+" in portfolio 1</label></span><input type='text' id='allocation"+a.number+"_1' name='allocation"+a.number+"_1' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false' value='"+a.percentStock+"'><span class='input-group-addon'>%</span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_2'>Enter percentage allocation for asset "+a.number+" in portfolio 2</label></span><input type='text' id='allocation"+a.number+"_2' name='allocation"+a.number+"_2' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false'><span class='input-group-addon'>%</span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_3'>Enter percentage allocation for asset "+a.number+" in portfolio 3</label></span><input type='text' id='allocation"+a.number+"_3' name='allocation"+a.number+"_3' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false'><span class='input-group-addon'>%</span></div></div></div><div class='row topBorder'>"
+                                                    passedHtml = passedHtml.replace(/(<div class="row topBorder">)/,newStr)
+                                            } else {
+                                                var newStr = "<div class='row highlightRow asset-row'><div class='col-sm-2 separateTop'>Asset "+a.number+"</div><div class='col-sm-3'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='"+a.symbol+"'>Select asset "+a.number+"</label></span><input type='text' id='"+a.symbol+"' name='"+a.symbol+"' class='form-control fmt-ticker' maxlength='10' placeholder='Enter symbol' autocomplete='off' autocorrect='off' spellcheck='false' value='"+a.ticker+"'><span class='input-group-addon glyphicon glyphicon-search' title='Find ticker symbol'></span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_1'>Enter percentage allocation for asset "+a.number+" in portfolio 1</label></span><input type='text' id='allocation"+a.number+"_1' name='allocation"+a.number+"_1' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false' value='"+a.percentStock+"'><span class='input-group-addon'>%</span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_2'>Enter percentage allocation for asset "+a.number+" in portfolio 2</label></span><input type='text' id='allocation"+a.number+"_2' name='allocation"+a.number+"_2' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false'><span class='input-group-addon'>%</span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_3'>Enter percentage allocation for asset "+a.number+" in portfolio 3</label></span><input type='text' id='allocation"+a.number+"_3' name='allocation"+a.number+"_3' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false'><span class='input-group-addon'>%</span></div></div></div><div class='row topBorder'>"
+                                                    passedHtml = passedHtml.replace(/(<div class='row topBorder'>)/,newStr)
+                                            }
+                                        })
+                                    }
                                     var frame = $("iframe")
                                     contents = frame.contents()
                                     body = contents.find('body'),
@@ -109,7 +120,7 @@
                                         .find('head')
                                         .append('<style></style>')
                                         .children('style')
-                                    body.html(x.data)
+                                    body.html(passedHtml)
                                 })
                             }
                             </script>
@@ -122,7 +133,7 @@
                                         <a class="stbar transition" href="/user/individual_portfolio?q={{portfolio.name}}" id="/user/individual_portfolio">{{ portfolio.name }}</a>
                                     </div>
                                     <div class="list-controls" style="height: 78px; line-height: 28px; background-color:transparent">           
-                                        <a href="#modal_wide_1" onClick="backtest(('{{portfolio.name}}'))" class="modal-wide btn btn-default btn-block btn-clean"><center style="font-size:11px">Run Backtest</center></a>
+                                        <a href="#modal_wide_1" onClick="backtest(('{{portfolio.name}}'))" class="modal-wide btn btn-default btn-block btn-clean" style="background-color:rgba(0,0,0,0.7)"><center style="font-size:11px;">Run Backtest</center></a>
                                     </div>                    
                                 </div>
                             </li>
