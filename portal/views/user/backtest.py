@@ -44,22 +44,23 @@ def backtest(request):
             for stock in thisport:
                 symbol = "symbol" + str(i)
                 i+=1
-                sim = soup.find('input',id=symbol)
-                sim['value'] = stock.ticker
-                portStocks.append(stock.ticker)
+                try:
+                    sim = soup.find('input',id=symbol)
+                    sim['value'] = stock.ticker
+                    portStocks.append(stock.ticker)
+                except TypeError:
+                    portStocks.append(stock.ticker)
             percentStock = (100.00 / len(portStocks))
             i=1
             for stock in thisport:
                 allocation = "allocation" + str(i) + "_1"
                 print(allocation)
-                alloc = soup.find('input',id=allocation)
-                alloc['value'] = percentStock
                 i+=1
-                # print(symbol)
-            stockLength = []
-            for stock in thisport:
-                stockLength.append("a")
-            extras = []
+                try: 
+                    alloc = soup.find('input',id=allocation)
+                    alloc['value'] = percentStock
+                except TypeError:
+                    print("over 15 stocks...")
             # testing purposes
             # extras.append({'symbol':'symbol16','number':'16','ticker':'AAPL','percentStock':'5%'})
             # extras.append({'symbol':'symbol17','number':'17','ticker':'AAPL','percentStock':'5%'})
@@ -67,16 +68,14 @@ def backtest(request):
             # extras.append({'symbol':'symbol19','number':'19','ticker':'AAPL','percentStock':'5%'})
             # extras.append({'symbol':'symbol20','number':'20','ticker':'AAPL','percentStock':'5%'})
             # extras.append({'symbol':'symbol21','number':'21','ticker':'AAPL','percentStock':'5%'})
-            if len(stockLength) > 15:
-                extra = len(stockLength) - 15
-                pin_tag = soup.topBorder
+            if len(portStocks) > 15:
+                extras = []
+                extra = len(portStocks) - 15
                 extras = []
                 for x in range(0,extra):
                     sym = "symbol" + str(x)
-                    new_tag = {'symbol':sym, 'number':str(x), 'percentStock':percentStock, 'ticker':portStocks[15+int(x)]}
+                    new_tag = {'symbol':sym, 'number':str(15+int(x)), 'percentStock':str(percentStock), 'ticker':portStocks[15+int(x)]}
                     extras.append(new_tag)
-                    new_tag = soup.new_tag("div", class="", value="")
-                    new_tag.insert_before(pin_tag)
                 # print(allocation)
     # print(soup.prettify().encode('ascii', 'ignore'))    # pageReturn = str(soup)
     # print(pageReturn)
