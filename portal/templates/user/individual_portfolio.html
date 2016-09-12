@@ -1,0 +1,54 @@
+    {% extends "base.html" %}
+{% block content %}
+ <script src="/static/js/user/individual_portfolio.js"></script>
+ <div class="col-md-8 col-sm-8" style="padding-left:60px;">
+    <h2 style="text-align:center;">{{ portname }}</h2>
+    <!--first portfolio -->
+    <div class="block block-drop-shadow">
+        <!-- <div class="head bg-dot30"> -->
+        <div class="head bg-default bg-light-ltr">
+        <div class="side pull-right">
+                 </div>
+                    <table class="table table-hover margin bottom">
+                    <thead>
+                    <tr>
+                        <th>Market Ticker</th>
+                        <th class="text-center">Company Name</th>
+                        <th class="text-center">Buy Date</th>
+                        <th class="text-center">Recommended Sell Date</th>
+                        <th class="text-center">Market Sentiment</th>
+                        <th class="text-center">Risk</th>
+                        <th class="text-center">Percent sales today</th>
+                        <th class="text-center">Percent gains</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for stock in thisport %}
+                    <tr>
+                        <td><a href="#" onClick="goStock(this)" id="stockLink">{{stock.ticker}}</a></td>
+                        <td class="text-center small">John Smith Inc</td>
+                        <td class="text-center">12/11/2009</td>
+                        <td class="text-center">01/11/2017</td>
+                        <td class="text-center">82</td>
+                        <td class="text-center">Low</td>
+                        <td class="text-center">10%</td>
+                        <td class="text-center">12%</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    </div>
+
+
+   </div>
+</div>
+</div>
+
+<form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
+    {% csrf_token %}
+    <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
+</form>
+</body>
+
+{% endblock %}

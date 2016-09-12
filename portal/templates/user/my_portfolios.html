@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">        
+    <div class="block">
+        <div class="input-group">
+            <div class="input-group-addon"><span class="icon-search"></span></div>
+                <div class="ui-widget">
+                    <input type="text" id="tags" class="form-control" value="Search" placeholder="Keyword..." onkeypress="return runScript(event)">                        
+                </div>
+        </div>
+    </div>
+    <div class="block block-drop-shadow">
+        <div class="head bg-dot30">                      
+            <div class="head-panel nm">                            
+                <div class="hp-info pull-left">
+                    Sort portfolios : 
+                </div>   
+                <div class="hp-info pull-left">
+                    A-Z
+                </div> 
+                <div class="hp-info pull-left">
+                    Highest Return
+                </div>
+                <div class="hp-info pull-left">
+                    Lowest Return
+                </div>                                                        
+            </div>                        
+        </div>
+    </div>
+    <div id="pin"></pin>
+    {% for portfolio in all_portfolios %}
+    <div class="block">
+        <!-- <div class="header"> -->
+          <div class="head bg-default bg-light-ltr">
+            <div class="side pull-right">              
+                <ul class="buttons">       
+                    <li><a href="#" class="iport" id="/user/individual_portfolio"><span class="icon-plus"></span> Expand </a></li>                
+                </ul>
+            </div>
+            <h2 id="portfolioName">{{ portfolio.name }}</h2>
+            <span style="color:rgba(255,0,0,1);float:right">{{ portfolio.risk}}% Risk </span>
+            <span style="float:right;margin-right:15px" id="portChange"></span>
+        </div>
+        <div class="content">
+            <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper" role="grid">
+                <table cellpadding="0" cellspacing="0" width="100%" class="table table-bordered table-striped sortable dataTable" id="DataTables_Table_2" aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+                <thead>
+                    <tr role="row">
+                        <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="" style="width: 18px;background-color:rgba(0,0,0,0)">Symbol</th>
+                        <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="ID: activate to sort column ascending" style="width: 237px;">Current Price</th>
+                        <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 241px;">Buy \ Sell Date</th><th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="E-mail: activate to sort column ascending" style="width: 245px;">Number of Shares</th><th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending" style="width: 242px;">Initial Price</th>
+                    </tr>
+                </thead>
+                
+                <tbody role="alert" aria-live="polite" aria-relevant="all" id="stockPin">
+            {% if portfolio.stocks %}
+                {% for stock in portfolio.stocks %}   
+                    <tr class="even">
+                        <td class=" sorting_1"><a href="#" onClick=goStock(this) id="stockLink"> {{ stock.ticker }} </a> </td>
+                        <td class=" " id="currentPrice">{{ stock.current_price }}<span id="priceChange"></span> </td>
+                        <td class=" ">{{ stock.buy_date }} - {{ stock.sell_date }}</td>
+                        <td class=" ">{{ stock.number_of_shares }}</td>
+                        <td class=" ">{{ stock.initial_price }}</td>                                    
+                    </tr>
+                {% endfor %}
+            {% endif %}                       
+                </tbody>
+                </table>
+            </div>                                        
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
+    {% csrf_token %}
+    <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
+</form> 
+ <script src="/static/js/user/my_portfolios.js"></script>
+{% endblock %}
+
+

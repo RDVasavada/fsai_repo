@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+             <div class="col-md-8 col-sm-8" style="height:80vh;padding-right:50px;padding-left:50px;">
+                <div class="head bg-dot20">   
+                    <div class="ibox-content" style="height:800px;background-color:inherit;border-style:none">
+                        <h2>Portfolio Optimization Results</h2>    
+                    <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper" role="grid" id="DataTables_Table_2" aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+                        <table class="table table-bordered table-striped sortable dataTable">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight:100">Company Name</th>
+                                    <th style="font-weight:100">Ticker Symbol</th>
+                                    <th style="font-weight:100">Amount of Shares to purchase</th>
+                                    <th style="font-weight:100">Buy Date</th>
+                                    <th style="font-weight:100">Sell Date</th>
+                                    <th style="font-weight:100">Expected Return</th>
+                                    <th style="font-weight:100">Risk Level</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pin">
+                                {% for result in optimizeSearchResults %}
+                                <tr id="incoming">
+                                    <td id="companyName">
+                                        <p>TELSA</p>
+                                        <a id="stockLink" href="individual_stock">    <i class="fa fa-line-chart"></i> </a>
+                                        <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=" target="_blank"><i class="fa fa-hacker-news"></i></a>
+                                    </td>
+                                    <td id="months">{{ result.months }}</td>
+                                    <td id="market">{{ result.market }}</td>
+                                    <td id="investingAmount">{{ result.investingAmount }}</td>
+                                    <td id="numStocks">{{ result.numStocks }}</td>
+                                    <td id="expectedReturn"><b>{{ result.expectedReturn }}</b></td>
+                                    <td id="expectedRisk"><span class="label label-warning-light" >{{ result.expectedRisk }}</span></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3" style="position:bottom:0px">
+                            <a href="/user/portfolio_settings" class="btn btn-default btn-block btn-clean">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+                                {% csrf_token %}
+<form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
+    <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
+    <input type="text" class="form-control" id="ceo_name" value="ceo_name" name="ceo_name">    
+    <input type="text" class="form-control" id="ceo_rating" value="ceo_rating" name="ceo_rating">    
+    <input type="text" class="form-control" id="happiness_rating" value="happiness_rating" name="happiness_rating">    
+    <input type="text" class="form-control" id="culture_pros" value="culture_pros" name="culture_pros">    
+    <input type="text" class="form-control" id="culture_cons" value="culture_cons" name="culture_cons">    
+</form>
+{% block scripts %}
+ <script src="/static/js/user/portfolio_optimize.js"></script>
+{% endblock %}
+
+
+
+{% endblock %}

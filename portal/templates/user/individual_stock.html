@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+ <script src="/static/js/user/individual_stock.js"></script>
+     <div class="col-lg-6 col-md-5 col-sm-8" style="padding-left:20px;padding-right:20px">
+        <h2 style="text-align:center;" id="companyName"> {{company_name}} {{company_symbol}} </h2>
+        <span style="display:none" id="companySymbol">{{company_symbol}}</span>
+        <div class="col-md-12 col-sm-12">
+            <div class="block block-drop-shadow">
+                 <!-- <div class="head bg-dot20">    -->
+                 <div class="head bg-default bg-light-ltr">   
+                     <h2>Market Graph</h2>
+                 </div>                        
+                  <div style="align:left;height:400px" class="head-panel nm tac">
+                    <div id="tv-medium-widget-8fb94"></div>
+                    <script type="text/javascript" src="https://s3.amazonaws.com/tradingview/tv.js"></script>
+                    <script type="text/javascript">
+                    var symbol = $("#companySymbol")[0].innerText;
+                    if (symbol == 'APPL') {symbol = 'NASDAQ:AAPL'}
+                    console.log(symbol)
+                    new TradingView.MediumWidget({
+                      "container_id": "tv-medium-widget-8fb94",
+                      "symbols": [
+                        [
+                          "Apple",
+                          symbol
+                        ],
+                      ],
+                      "gridLineColor": "rgba(233, 233, 234, 1)",
+                      "fontColor": "rgba(131, 136, 141, 1)",
+                      "underLineColor": "rgba(219, 239, 251, 1)",
+                      "trendLineColor": "rgba(75, 175, 233, 1)",
+                      "width": "100%",
+                      "height": "400px",
+                      "tradeItWidget": false,
+                      "locale": "en"
+                    });
+                    </script>
+                 </div>
+            </div>
+            <div class="block block-drop-shadow">
+            <div class="head bg-default bg-light-ltr">   
+                         <h2>Future of Stock</h2>
+                     </div>
+                     <div class="ibox-content" style="display: block;padding:50px">
+                        The analysts offering 12-month price forecasts for Apple have a median target of 120.00, with a high estimate of 185.00 and a low estimate of 65.00. The median estimate represents a +23.70% increase from the last price of 97.01.
+                     </div>
+            </div>
+            <div class="block block-drop-shadow">
+            <div class="head bg-default bg-light-ltr">   
+                     <h2>Market Sentiment</h2>
+                 </div>
+                 <div class="ibox-content" style="display: block;padding:50px">
+                    The analysts offering 12-month price forecasts for Apple have a median target of 120.00, with a high estimate of 185.00 and a low estimate of 65.00. The median estimate represents a +23.70% increase from the last price of 97.01.
+                 </div>
+            </div>         
+            <div class="block block-drop-shadow">
+            <div class="head bg-default bg-light-ltr">   
+                     <h2>Company Related News Articles</h2>
+                </div>
+                <div class="content np">
+                    <div class="content list-group" id="newsfeed">
+                        {% for news in newsheadline %}
+                        <a href="{{news.web_url}}" target="_blank" class="list-group-item">{{news.headline.main}}</a>
+                        {% endfor %}
+                    </div>
+                    <div class="content list-group" id="noNews" style="display:none;padding:50px">
+                        <center>No Headlines Available</center>
+                    </div>                    
+                </div>                 
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-12" style="margin-right:50px">
+        <div class="block block-drop-shadow">
+            <div class="head bg-default bg-light-ltr">   
+                 <h2>Overview of Company</h2>
+             </div>
+             <div class="ibox-content" style="display: block">
+                <p>
+                <img src='{{company_stats.squareLogo}}' style="display:block;padding-top:50px;margin:auto;width:25%;height:25%" id="logo">
+                </p><br><br>
+                <p>Industry</p>
+                <h4 id="industryName">{{ company_stats.industryName }} </h4>
+             </div>
+        </div>
+        <div class="block block-drop-shadow">
+            <div class="head bg-default bg-light-ltr">   
+                 <h2>Work Culture</h2>
+             </div>
+             <div class="ibox-content" id="workCulture" style="display: block;padding:50px">
+                <p>
+                CEO Name<br>
+                <h4 id="ceoName">{{ company_stats.ceo.name }}</h4>
+                </p><br><br>
+                <p>CEO Approval Rating<br>
+                based on  {{ company_stats.ceo.numberOfRatings }} ratings
+                <h4>{{ company_stats.ceo.pctApprove }}%</h4><br>
+                </p>
+                <p>Worker - Life Balance Rating
+                <h4>{{ company_stats.workLifeBalanceRating }}%</h4>
+                </p><br>                    
+                <p>Featured Review from Past Worker:<br>
+                Pros : {{ company_stats.featuredReview.pros }}<br><br>
+                Cons : {{ company_stats.featuredReview.cons }}<br><br>
+                </p>                     
+                <span style="font-size:8px">{{company_stats.featuredReview.reviewDateTime}}</span><br><br>
+                 <a href='https://www.glassdoor.com/index.htm' style="font-size:8px">powered by Glassdoor </a>
+            </div>
+             <div class="ibox-content" id="noWorkCulture" style="padding-top:50px;margin:50px; display: none;">
+                <div style="padding:50px"> No Work Culture Available </div>
+            </div>
+        </div>            
+    </div>
+
+        </div>
+        </div>               
+       </div>
+    </div>
+</div>
+</body>
+{% endblock %}

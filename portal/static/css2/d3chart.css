@@ -1,0 +1,25 @@
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+    fill-opacity:0.5;
+}
+
+text.shadow {
+    opacity: 0.1;
+    color: white;
+}
+text {
+    color:white;
+    left: 200px;
+    position: relative;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: white;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>        
+    <title>Vise</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <link rel="icon" type="image/ico" href="favicon.ico"/>
+    
+    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css" />        
+    
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-ui.min.js'></script>   
+    <script type='text/javascript' src='/static/js/plugins/jquery/jquery-migrate.min.js'></script>
+    <script type='text/javascript' src='/static/js/plugins/jquery/globalize.js'></script>    
+    <script type='text/javascript' src='/static/js/plugins/bootstrap/bootstrap.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins/uniform/jquery.uniform.min.js'></script>
+    
+    <script type='text/javascript' src='/static/js/plugins.js'></script>    
+    <script type='text/javascript' src='/static/js/actions.js'></script>
+    <script type='text/javascript' src='/static/js/settings.js'></script>
+</head>
+<body class="bg-img-num1"> 
+    <div class="container">        
+        <div class="registration-block">
+            <div class="block block-transparent">
+                <div class="single-pane">
+                    <h3 style="text-align:center;font-weight:100;color:#ADEAEA;font-size:40px;font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue";">Account Creation</h3>
+                </div>
+         </div>
+    {% if errors %}
+        <div class="form-errors">
+            {% for error in errors %}
+                <div class="alert alert-danger">
+                    {{error}}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <form class="m-t" role="form" method="POST" action="/register">
+        {% csrf_token %}
+        <div class="content controls npt">
+            <div class="form-row">
+                 <div class="col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <span class="icon-user"></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Username" name="username" required="">
+                        </div>
+                 </div>
+              <div class="col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <span class="icon-phone"></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Phone" name="phone" required="">
+                     </div>
+              </div>
+            </div>
+        <div class="form-row">
+            <div class="col-md-6">
+                 <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="icon-lock"></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" name="password" required="">
+                  </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="icon-unlock-alt"></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Repeat Password" name="password_repeat" required="">
+                </div>
+              </div>
+        </div>
+       <div class="form-row">
+            <div class="col-md-6">
+                 <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="icon-envelope"></span>
+                    </div>
+             <input type="email" class="form-control" placeholder="Email" name="email" required="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="icon-group"></span>
+                    </div>
+                     <input type="text" class="form-control" placeholder="Firm Name" name="Firm_name" required="">
+                </div>
+              </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6">
+                 <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="icon-group"></span>
+                    </div>
+             <input type="text" class="form-control" placeholder="Firm Size" name="Firm_Size" required="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="icon-usd"></span>
+                    </div>
+                     <input type="text" class="form-control" placeholder="Assets Under Management" name="Assets_Under_Mgmt" required="">
+                </div>
+              </div>
+        </div>
+        <div class="form-row">
+           <div class="col-md-12" style="display: block;margin: auto;">
+            <p style="color:white; font-weight:100" class="text-muted text-center">Please tell us the reason you are interested in Vise</p>
+             <input type="reason" class="form-control" placeholder="I love ..." name="reason" required="">
+           </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12">
+                 <div class="checkbox">
+                <label style="font-weight:100"><input type="checkbox"/> Agree with terms and conditions</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-default btn-block btn-clean">Register</button>
+        </div>
+
+        <p class="text-muted text-center"><small>Already have an account?</small></p>
+         <div class="col-md-12">
+        <a class="btn btn-default btn-block btn-clean" href="/login">Login</a>
+        </div>
+  </div>
+    </form>
+    </div>
+</div>
+</body>

@@ -1,0 +1,1 @@
+# ACCOUNT_CREATED_SUCCESSFULLY_MESSAGE = "User Created Successfully"

@@ -1,0 +1,63 @@
+{% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>{% block title %}Vise{% endblock %}</title>    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block page_css %}
+        <link rel="icon" type="image/ico" href="favicon.ico"/>
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="/static/css/animate.css" rel="stylesheet">
+        <link href="/static/css/style.css" rel="stylesheet">
+        <link href="/static/css/fsai.css" rel="stylesheet">
+        <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
+        <link href="/static/css2/stylesheet.css" rel="stylesheet" type="text/css"/>   
+    {% endblock %}
+    {% block head %}
+        <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery.min.js'></script>
+        <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery-ui.min.js'></script>   
+        <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery-migrate.min.js'></script>
+        <script type='text/javascript' src='/static/assets/js/plugins/bootstrap/bootstrap.min.js'></script>
+        <script type='text/javascript' src='/static/assets/js/plugins/uniform/jquery.uniform.min.js'></script>
+        <script type='text/javascript' src='/static/assets/js/plugins/datatables/jquery.dataTables.min.js'></script>
+        <script type='text/javascript' src='/static/assets/js/fsai/plugins.js'></script>    
+        <script type='text/javascript' src='/static/assets/js/fsai/actions.js'></script>
+        <script type='text/javascript' src='/static/assets/js/fsai/settings.js'></script>
+        
+        <script type="text/javascript" src="/static/assets/js1/morris.js"></script>
+        <script type="text/javascript" src="/static/assets/js1/raphael.js"></script>
+        <script type='text/javascript' src='/static/assets/js/plugins/jquery/globalize.js'></script>
+        <script type='text/javascript' src='/static/assets/js/plugins/jquery/globalize.js'></script>    
+    {% endblock %}    
+    </head>
+
+<body>
+    <div id="container"></div>
+<!--         <div class="block">
+            <div class="header">
+                <h2>Chat Bot Dashboard</h2>
+            </div>
+            <div class="content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>date_created</th>
+                            <th>phone_number</th>
+                            <th>user_id</th>
+                            <th>message</th>
+                            <th>analysis</th>
+                            <th>resolution</th>
+                        </tr>
+                    </thead>
+                    <tbody> -->
+                    {% render_bundle 'main' %}
+           <!--          </tbody>
+                </table>                       
+            </div>
+        </div> -->
+    </div>      
+    </body>
+</html>
