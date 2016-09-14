@@ -8,10 +8,12 @@ from django.db import connection
 from django.http import JsonResponse
 import json
 import requests
+import re
 from portal.models.user.portal_user import PortalUser
 from portal.views.public.sms import sms_symbolexchange
 from portal.views.public.sms import sms_portcheck
 from portal.views.public.sms import sms_backtest
+from portal.views.public.sms import sms_company
 
 @csrf_exempt
 def getsms(request):
@@ -25,36 +27,60 @@ def getsms(request):
 @csrf_exempt
 def sms(request):
   user_id = 1
-  # number = request.POST.get('From', '')
-  # phone_number = number[2:]
-  phone_number = 9492459949
+  number = request.POST.get('From', '')
+  phone_number = number[2:]
+  # phone_number = 9492459949
   cursor = connection.cursor()
   cursor.execute("select * from portal_portaluser where '" + str(phone_number) + "' = phone ")
   user = dictfetchall(cursor)
   user_id = user[0]['id']
-  # message = request.POST.get('Body', '')
-  message = "how are my portfolios going to do in 60 days"
-  analyze(message)
-  status = sms_backtest.sms_backtest(user_id, 'all')
-  print(status)
-  company_name = "alphabet"
+  message = request.POST.get('Body', '')
+  # message = "how are my portfolios doing"
+  # message = "who is the ceo of alphabet?"
+  rtnstring = analyze(message, user_id)
+  # status = sms_company.sms_company(1,'Amazon')
+  # print(status)
+  # company_name = "ABM"
   # company_name = sms_symbolexchange.sms_symbolexchange(message)
   # response = requests.get("http://chstocksearch.herokuapp.com/api/"+str(message))
   # symbol= response.json()[0]['company']
   # symbol = "AAPL"
   cursor.execute("INSERT INTO `portal_sms` (date_created, phone_number, user_id, message, analysis, resolution) VALUES"
                  "('2016-07-09 12:11:25'," + str(phone_number) + "," + str(user_id) +  ",'" + str(message) + "', 'Unresolved','Unresolved')")
-  twiml = '<Response><Message>' + str(company_name) + '</Message></Response>'
+  twiml = '<Response><Message>' + str(rtnstring) + '</Message></Response>'
   return HttpResponse(twiml, content_type='text/xml')
 
-def analyze(message):
+def analyze(message, user_id):
   if "my portfolios" in message:
-    print("your portfolio is doing fine !")
-  if "will" in message:
-    if "my portfolios" in message:
-      print("in the next 60 days your portfolio will gain 20 dollars")
-  if "day" in message:
-    print("your profit will be up in 60 days")
+    return sms_portcheck.sms_portcheck(user_id, 'all')
+  if "what" in message:
+    if "buy" in message:
+      s = re.search("buy (.*) for", message)
+      return sms_company.sms_company(user_id, str(s.groups()))
+    if "ceo of" in message:
+      s = re.search("ceo of (.*)", message)
+      s = s.groups()
+      s = str(s)
+      s = re.sub(r'[^\w\s]','',s)
+      return sms_company.sms_ceo(s)
+    if "ceo for" in message:
+      s = re.search("ceo for (.*)", message)
+      s = s.groups()
+      s = str(s)
+      s = re.sub(r'[^\w\s]','',s)
+      return sms_company.sms_ceo(s)
+  if "who" in message:
+    if "ceo of" in message:
+      s = re.search("ceo of (.*)", message)
+      s = s.groups()
+      s = str(s)
+      s = re.sub(r'[^\w\s]','',s)
+      return sms_company.sms_ceo(s)
+    if "ceo for" in message:
+      s = re.search("ceo for (.*)", message)
+      s = s.groups()
+      s = str(s)
+      s = re.sub(r'[^\w\s]','',s)    
 
 @csrf_exempt
 def chat_portal(request):

@@ -79,6 +79,7 @@ def backtest(request):
                 # print(allocation)
     # print(soup.prettify().encode('ascii', 'ignore'))    # pageReturn = str(soup)
     # print(pageReturn)
+    print("asdfasdf")
     try:
         print(extras)
         return JsonResponse({'data': soup.prettify().encode('ascii', 'ignore'), 'extras':extras })

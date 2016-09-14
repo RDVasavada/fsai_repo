@@ -109,6 +109,7 @@ function del_cookie() {
                                     type: 'get',
                                     data: {'portName':e}
                                 }).done(function(x) {
+                                    console.log(x.extras)
                                     var passedHtml = String(x.data)
                                     if (x.extras) {
                                         x.extras.forEach(function(a,i) {
