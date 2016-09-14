@@ -7,7 +7,11 @@ from django.template import RequestContext, Context, loader
 from django.db import connection
 from django.http import JsonResponse
 import json
+import requests
 from portal.models.user.portal_user import PortalUser
+from portal.views.public.sms import sms_symbolexchange
+from portal.views.public.sms import sms_portcheck
+from portal.views.public.sms import sms_backtest
 
 @csrf_exempt
 def getsms(request):
@@ -21,12 +25,36 @@ def getsms(request):
 @csrf_exempt
 def sms(request):
   user_id = 1
-  phone_number = request.POST.get('From', '')
-  message = request.POST.get('Body', '')
+  # number = request.POST.get('From', '')
+  # phone_number = number[2:]
+  phone_number = 9492459949
   cursor = connection.cursor()
-  cursor.execute("INSERT INTO `portal_sms` (date_created, phone_number, user_id, message, analysis, resolution) VALUES ('2016-07-09 12:11:25',"+str(phone_number)+",'1',"+str(message)+", 'Unresolved','Unresolved')")
-  twiml = '<Response><Message>Saved message to DB!</Message></Response>'
+  cursor.execute("select * from portal_portaluser where '" + str(phone_number) + "' = phone ")
+  user = dictfetchall(cursor)
+  user_id = user[0]['id']
+  # message = request.POST.get('Body', '')
+  message = "how are my portfolios going to do in 60 days"
+  analyze(message)
+  status = sms_backtest.sms_backtest(user_id, 'all')
+  print(status)
+  company_name = "alphabet"
+  # company_name = sms_symbolexchange.sms_symbolexchange(message)
+  # response = requests.get("http://chstocksearch.herokuapp.com/api/"+str(message))
+  # symbol= response.json()[0]['company']
+  # symbol = "AAPL"
+  cursor.execute("INSERT INTO `portal_sms` (date_created, phone_number, user_id, message, analysis, resolution) VALUES"
+                 "('2016-07-09 12:11:25'," + str(phone_number) + "," + str(user_id) +  ",'" + str(message) + "', 'Unresolved','Unresolved')")
+  twiml = '<Response><Message>' + str(company_name) + '</Message></Response>'
   return HttpResponse(twiml, content_type='text/xml')
+
+def analyze(message):
+  if "my portfolios" in message:
+    print("your portfolio is doing fine !")
+  if "will" in message:
+    if "my portfolios" in message:
+      print("in the next 60 days your portfolio will gain 20 dollars")
+  if "day" in message:
+    print("your profit will be up in 60 days")
 
 @csrf_exempt
 def chat_portal(request):

@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     (r'^sms/?$', views.sms),
     (r'^getsms/?$', views.getsms),
     (r'^chat_portal/?$', views.chat_portal),
+    (r'^sms/sms_symbolexchange/?$', views.sms_symbolexchange),
 
 
     #General User Pages
