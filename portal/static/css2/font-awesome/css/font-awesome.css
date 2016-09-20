@@ -229,6 +229,7 @@
   content: "\f013";
 }
 .fa-trash-o:before {
+  display:none;
   content: "\f014";
 }
 .fa-home:before {
@@ -1617,6 +1618,7 @@
   content: "\f1f7";
 }
 .fa-trash:before {
+  display:none;
   content: "\f1f8";
 }
 .fa-copyright:before {

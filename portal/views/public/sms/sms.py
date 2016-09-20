@@ -10,10 +10,7 @@ import json
 import requests
 import re
 from portal.models.user.portal_user import PortalUser
-from portal.views.public.sms import sms_symbolexchange
-from portal.views.public.sms import sms_portcheck
-from portal.views.public.sms import sms_backtest
-from portal.views.public.sms import sms_company
+from portal.views.public.sms import sms_portcheck, sms_company
 
 @csrf_exempt
 def getsms(request):
@@ -27,17 +24,19 @@ def getsms(request):
 @csrf_exempt
 def sms(request):
   user_id = 1
-  number = request.POST.get('From', '')
-  phone_number = number[2:]
-  # phone_number = 9492459949
+  # number = request.POST.get('From', '')
+  # phone_number = number[2:]
+  phone_number = 9492459949
   cursor = connection.cursor()
   cursor.execute("select * from portal_portaluser where '" + str(phone_number) + "' = phone ")
   user = dictfetchall(cursor)
   user_id = user[0]['id']
-  message = request.POST.get('Body', '')
+  # message = request.POST.get('Body', '')
   # message = "how are my portfolios doing"
-  # message = "who is the ceo of alphabet?"
+  message = "what is the CEO of alphabet?"
   rtnstring = analyze(message, user_id)
+  print(rtnstring)
+  # print("^^^^^^")
   # status = sms_company.sms_company(1,'Amazon')
   # print(status)
   # company_name = "ABM"

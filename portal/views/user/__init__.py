@@ -12,3 +12,5 @@ from support import *
 from backtest import *
 from top_portfolios import *
 from inbox import *
+from deleted import *
+from starred import *

@@ -73,7 +73,7 @@
                            <div class="col-lg-12">                    
                                 <div class="form-group" style="padding:10px">
                                 <h6>Time Frame</h6>
-                                   <div class="col-md-3" vertical-align:top;">Years</div>
+                                   <div class="col-md-3" style="vertical-align:top;">Years</div>
                                   <div class="input-group m-b" style="width:80px;">
                                     <select class="form-control m-b" name="Years" id="Years">
                                     <option value="1">1</option>
@@ -171,65 +171,216 @@
                 <legend>Stock Filters</legend>
                            <div class="col-lg-12">
                                <div class="form-group">
-                                   <div class="col-md-3">
-                                        <h7>Company Market Cap</h7>
-                                    </div>
-                                   <div class="col-sm-3">
-                                        <input type="text" class="form-control" value="0">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h7>Company P\E Ratio</h7>
-                                    </div>
-                                   <div class="col-sm-3">
-                                        <input type="text" class="form-control" value="0">
-                                    </div>                                
-                                </div>
-                               <div class="form-group">
-                                    <div class="col-md-3">
-                                        <h7>Dividend Yield (%)</h7>
-                                    </div>
-                                   <div class="col-sm-3" style="padding-top:15px">
-                                        <input type="text" class="form-control" value="0">
-                                    </div>
-                                   <div class="col-md-3">
-                                        <h7>52 Week Price Change</h7>
-                                    </div>
-                                   <div class="col-sm-3" style="padding-top:15px">
-                                        <input type="text" class="form-control" value="0">
-                                    </div>                                
-                                </div>
-                                <br>
-                               <div class="form-group">
                                <div class="col-md-3">
                                 <h7>Stock Filters</h7></div>
                                   <div class="input-group m-b" style="padding:10px;">
                                       <select class="form-control m-b" name="StockFilters" id="StockFilters" onchange="showfield()" style="width:165px;padding-left:10px;">
                                             <option selected="selected">Select filter</option>
-                                            <option value="Last price">Last price</option>
-                                            <option value="EPS">EPS</option>
-                                            <option value="Quote Change(%)">Quote Change(%)</option>
-                                            <option value="52w high">52w high</option>
-                                            <option value="52w low">52w low</option>
-                                            <option value="52w price change(%)">52w price change(%)</option>
-                                            <option value="Div Recent Quarter">Div Recent Quarter</option>
-                                            <option value="Book value/share">Book value/share</option>
-                                            <option value="Cash/Share">Cash/Share</option>
-                                            <option value="Current Ratio">Current Ratio</option>
-                                            <option value="Interest Coverage">Interest Coverage</option>
-                                             <option value="Return on investment(TTM)(%)">Return on investment(TTM)(%)</option>
+                                            <option value="Price">Price</option>
+                                            <option value="Valuation">Valuation</option>
+                                            <option value="Dividend">Dividend</option>
+                                            <option value="Financial Ratios">Financial Ratios</option>
+                                            <option value="Operating Metrics">Operating Metrics</option>
+                                            <option value="Stock Metrics">Stock Metrics</option>
+                                            <option value="Margins">Margins</option>
+                                            <option value="Growth">Growth</option>
                                         </select>
                                   </div>
-                                </div>  
-                                <div class="form-group" id="stockinfo" style="display:none;">
-                                 <div class="col-md-3">
-                                     <h7 id="stockfillername"></h7>
-                                 </div>
-                                 <div class="col-sm-3" id="stockoptiontext">
-                                        <input type="text" class="form-control"  style="width:160px;">
+                                </div> 
+                            <div id="all_filters" style="display:none;">
+                            <div class="form-group" id="priceinfo" style="padding:10px;display:none;">
+                                 <h5 id="stockfillername1"></h5>
+                                 <div class="form-group" style="padding-bottom:5px;">
+                                   <div class="col-md-3" style="width:160px;">
+                                       <h7>Last Price </h7>               
+                                   </div>
+                                   <div class="col-sm-3">
+                                          <input type="text" class="form-control"  style="width:160px;">
                                     </div> 
+                                   <div class="col-md-3" style="width:160px;">
+                                       <h7>EPS</h7>               
+                                   </div>
+                                   <div class="col-sm-3">
+                                          <input type="text" class="form-control"  style="width:160px;">
+                                    </div> 
+                                  </div>
+                                  <div class="form-group" style="padding-bottom:5px;">
+                                    <div class="col-md-3" style="width:160px;">
+                                       <h7>Quote Change(%) </h7>               
+                                   </div>
+                                   <div class="col-sm-3">
+                                          <input type="text" class="form-control"  style="width:160px;">
+                                    </div> 
+                                    <div class="col-md-3" style="width:160px;">
+                                       <h7>52w High</h7>               
+                                   </div>
+                                   <div class="col-sm-3">
+                                          <input type="text" class="form-control"  style="width:160px;">
+                                    </div> 
+                                  </div>
+                                  <div class="form-group" style="padding-bottom:5px;">
+                                     <div class="col-sm-3" style="width:160px;"> 
+                                         <h7>52w low </h7>               
+                                     </div>
+                                     <div class="col-sm-3">
+                                            <input type="text" class="form-control"  style="width:160px;">
+                                    </div> 
+                                    <div class="col-md-3" style="width:160px;">
+                                         <h7>52w price change (%) </h7>               
+                                     </div>
+                                     <div class="col-sm-3">
+                                            <input type="text" class="form-control"  style="width:160px;">
+                                    </div> 
+                                  </div>
+                              </div>
+                              <div class="form-group" id="valuationinfo" style="padding:10px;display:none;">
+                                 <h5 id="stockfillername2"></h5>
+                                 <div class="form-group" style="padding-bottom:5px;">
+                                   <div class="col-md-3" style="width:160px;">
+                                       <h7>Market Cap </h7>               
+                                   </div>
+                                   <div class="col-sm-3">
+                                          <input type="text" class="form-control"  style="width:160px;">
+                                    </div> 
+                                   <div class="col-md-3" style="width:160px;">
+                                       <h7>P/E Ratio</h7>               
+                                   </div>
+                                   <div class="col-sm-3">
+                                          <input type="text" class="form-control"  style="width:160px;">
+                                    </div> 
+                                  </div>
                                 </div>
-                            </div>
-            </fieldset>
+                     
+                           <div class="form-group" id="dividendinfo" style="padding:10px;display:none;">
+                               <h5 id="stockfillername3"></h5>
+                               <div class="form-group" style="padding-bottom:5px;">
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Div Recent Quarter</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                </div>
+                           </div>
+                        <div class="form-group" id="FRinfo" style="padding:10px;display:none;">
+                               <h5 id="stockfillername4"></h5>
+                               <div class="form-group" style="padding-bottom:5px;">
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Book Value/Share</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Cash/Share</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                </div>
+                              <div class="form-group" style="padding-bottom:5px;">
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Current Ratio</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div>  
+                                </div>
+                           </div>
+                           <div class="form-group" id="OMinfo" style="padding:10px;display:none;">
+                               <h5 id="stockfillername5"></h5>
+                               <div class="form-group" style="padding-bottom:5px;">
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Interest coverage</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Return on investment(TTM)(%)</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                </div>
+                              <div class="form-group" style="padding-bottom:5px;">
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Return on assets(TTM)(%)</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div>
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Return on equity(TTM)(%)</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div>    
+                                </div>
+                           </div>
+                          <div class="form-group" id="SMinfo" style="padding:10px;display:none;">
+                               <h5 id="stockfillername6"></h5>
+                               <div class="form-group" style="padding-bottom:5px;">
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Beta</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Float</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                </div>
+                              <div class="form-group" style="padding-bottom:5px;">
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Volume</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                </div>
+                           </div>
+                          <div class="form-group" id="margininfo" style="padding:10px;display:none;">
+                               <h5 id="stockfillername7"></h5>
+                               <div class="form-group" style="padding-bottom:5px;">
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>Gross margin(%)</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>EBITDA margin(%)</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                </div>
+                           </div>
+                           <div class="form-group" id="growthinfo" style="padding:10px;display:none;">
+                               <h5 id="stockfillername8"></h5>
+                               <div class="form-group" style="padding-bottom:5px;">
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>5y net income growth rate</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                 <div class="col-md-3" style="width:160px;">
+                                     <h7>5y EPS growth rate</h7>               
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <input type="text" class="form-control"  style="width:160px;">
+                                  </div> 
+                                </div>
+                           </div>
+                        </div>
+                         </div>
+                </fieldset>
+              
             <fieldset title="Step 6">                            
                 <legend>Add Stocks</legend>
                            <div class="col-lg-12">
@@ -360,12 +511,114 @@ $("button").click(function(e) {
     function showfield(){
         var mydropdown = document.getElementById('StockFilters');
         var strselect = mydropdown.options[mydropdown.selectedIndex].text;
-        if(strselect=="Select filter")
-            document.getElementById('stockinfo').style.display="none";
-        else
-            document.getElementById('stockinfo').style.display="block";
-            document.getElementById('stockfillername').innerHTML=strselect;
-       
+           if(strselect=="Select filter")
+           {
+              document.getElementById('all_filters').style.display="none";
+           }
+           else if (strselect=="Price")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('priceinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername1').innerHTML=strselect;
+           }
+           else if (strselect=="Valuation")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('valuationinfo').style.display="block";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername2').innerHTML=strselect;
+           }
+           else if (strselect=="Dividend")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('dividendinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername3').innerHTML=strselect; 
+            }   
+          else if (strselect=="Financial Ratios")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('FRinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername4').innerHTML=strselect; 
+            }  
+           else if (strselect=="Operating Metrics")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('OMinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername5').innerHTML=strselect; 
+            }   
+           else if (strselect=="Stock Metrics")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('SMinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername6').innerHTML=strselect; 
+            }   
+           else if (strselect=="Margins")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('margininfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername7').innerHTML=strselect; 
+            } 
+            else if (strselect=="Growth")
+             {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('growthinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('stockfillername8').innerHTML=strselect; 
+            }      
     }
    function lowrisk(){
     /*
