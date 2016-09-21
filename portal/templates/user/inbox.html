@@ -4,8 +4,9 @@
 <script>
 localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
 </script>
- <div class="col-lg-2" style="padding:0px;height:80vh;color:black;overflow:scroll">
-    <div class="block block-drop-shadow" style="height:80vh;background-color:rgba(0,0,0,0.2)">
+<div class="row" style="height:80vh">
+ <div class="col-lg-2 col-md-2" style="padding:0px;height:100%;color:black;overflow:hidden">
+    <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.2)">
         <div class="header">
             <h2>Inbox</h2>
             <div class="input-group" style="margin-left:50px;margin-bottom:10px">                        
@@ -13,11 +14,11 @@ localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
             <div class="input-group-addon"><span class="icon-search"></span></div>
             </div>            
         </div>                    
-        <div class="content list-group list-group-icons">
+        <div class="content list-group list-group-icons" style="height:100%;display:inline-block;overflow:scroll;padding-bottom:50px">
             <a href="#" class="list-group-item" style="margin:20px"><span class="icon-gears"></span>Hyperchat Bot<i class="icon-angle-right pull-right"></i></a>
             {% for friend in friends %}
 
-            <a href="#" id="a{{friend.id}}" onClick="select({{friend.id}})" class="list-group-item" style="margin:20px"><span class="icon-trash"></span></span>{{friend.username}}<i class="icon-angle-right pull-right"></i></a>
+            <a href="#" id="a{{friend.id}}" onClick="select({{friend.id}})" class="list-group-item" style="margin:20px"><span class="icon-trash"></span></span>{{friend.username}}<i class="icon-angle-right pull-right"></i><i id="emptystar" style="margin-right:5px" class="icon-star-empty pull-right"></i></a>
 
             {% endfor %}
             
@@ -27,7 +28,7 @@ localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
 
 </div>
 
-<div class="col-lg-6" style="height:80vh;margin-left:50px">
+<div class="col-lg-6 col-md-4" style="height:80vh;margin-left:25px">
     <div class="block block-drop-shadow" style="height:99%">
         <div class="header">
             <h2>Messaging</h2>
@@ -85,25 +86,38 @@ localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
         </div>        
     </div>
 </div>
-<div class="statusbar center" id="statusbar_8" style="width:45%;height:150px;position:absolute;left:26%;top:45%;background-color:black">
-        <div class="statusbar-body">
+</div>
+<div class="statusbar center" id="statusbar_8" style="width:45%;height:100px;position:absolute;left:26%;top:45%;background-color:black">
+        <div class="statusbar-body" style="width:100%">
                 <div class="form-group">                    
                     <div class="form-group" style="margin-left:10px;margin-right:10px">                    
-                        <label>Search</label>
+                        <label>Search for User</label>
+                        <div class="statusbar-close icon-remove pull-right" style="position:relative;padding:10px;right:-8px"></div>
+                        </div>                   
                     </div>
-                    <input type="text"  class="form-control" id="query" name="query" placeholder="Search by Username or Email ..." style="width:40vw">
-                    <input class="form-control" name="sendId" id="selected" style="display:none"></input>
-                    <input class="form-control" name="sendId" id="selectedId" style="display:none" value="0"></input>
-                    <button style="margin-left:10px;width:100%;margin-top:10px" class="btn btn-default btn-block btn-clean" onClick="addfriend()">Submit</a>
-                    <div class="statusbar-close icon-remove"></div>
-                                                            
+                    <div class="stepone" style="display:none;padding-left:25px;margin-bottom:10px"></div>
+                    <div class="input-group" id="addfriend" style="padding-left:25px;margin-top:10px">
+                        <input type="text"  class="form-control" id="query" name="query" placeholder="Search by Username or Email ..." style="width:40vw">
+                            <input class="form-control" name="sendId" id="selected" style="display:none"></input>
+                            <input class="form-control" name="sendId" id="selectedId" style="display:none" value="0"></input>
+                        <span class="input-group-btn">
+                            <button class="btn" onClick="addfriend()"><span class="icon-chevron-right"></span></button>
+                        </span>
+                    <!-- <button style="margin-left:10px;width:100%;margin-top:10px" class="btn btn-default btn-block btn-clean" onClick="addfriend()">Submit</a> -->
+                    </div>
             </form>             
         </div>
     </div>
 {% endblock %}
 {% block scripts %}
  <script>
-localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
+ $("i#emptystar").click(function() {
+    if ($(this).attr('class') == 'icon-star-empty pull-right') {
+        $(this).attr('class','icon-star pull-right')    
+    } else {
+        $(this).attr('class','icon-star-empty pull-right')    
+    }
+})
 let addfriend = function() {
     var username = $("#query")[0].value
     console.log(username)
@@ -111,9 +125,23 @@ let addfriend = function() {
         type: 'POST',
         url: '/user/addconnection',
         data: {'query':username}
+    }).done(function(result){
+        if (result.data == 0){
+            $(".stepone").css('display','none')
+            $("#statusbar_8").css('height','150px')
+            $(".stepone")[0].innerText = "We could not find a user by that name or email. Try Again!"
+            $(".stepone").css('display','initial')
+        } else{
+            $("#addfriend").css('display','none')
+            $("#statusbar_8").css('height','150px')
+            $(".stepone")[0].outerHTML = "<img src='/static/img/loader.gif' style='display:block;margin:auto;padding-top:20px'></div>"
+            setTimeout(function(){ 
+                window.location = "/user/inbox";
+            }, 200);
+            
+        }
     })
-    $(".statusbar").css('display','none')
-    location.reload()
+    // $(".statusbar").css('display','none')
 }
 let select = function(e) {
     if ($("a#selected").prevObject[0].activeElement.innerText == 'New Friend Request') {

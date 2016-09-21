@@ -11,7 +11,7 @@ $(document).ready(function(){
     if($("#layout_scroll").length > 0)
         $("#layout_scroll").height($(window).height() - 80);    
     
-    if($(".scroll").length > 0) $(".scroll").mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
+    // if($(".scroll").length > 0) $(".scroll").mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
     
         $(".modal").on('shown.bs.modal',function(){
             $(this).find('.scroll').mCustomScrollbar('update');

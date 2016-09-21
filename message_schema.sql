@@ -18,3 +18,4 @@ CREATE TABLE `portal_message` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+AL

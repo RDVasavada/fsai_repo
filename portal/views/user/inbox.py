@@ -21,7 +21,7 @@ def inbox(request):
     portalUser = PortalUser.objects.get(username=username)
     try:
         arr = getconnections(request)
-        print(arr)
+        # print(arr)
         context_dict['friends'] = arr
     except Exception as e:
       print(e)
@@ -37,8 +37,8 @@ def inbox(request):
 def sent(request):
   context_dict = {}
   arr = getconnections(request)
-  print("connections")
-  print(arr)
+  # print("connections")
+  # print(arr)
   context_dict['friends'] = arr
   rotate_token(request)
   if request.user.is_authenticated():
@@ -65,7 +65,7 @@ def getsent(request):
   msgs = dictfetchall(cursor)
   rtnarray = []
   for msg in msgs:
-    print(msg['id'])
+    # print(msg['id'])
     cursor.execute("SELECT content from portal_message WHERE "
                     "'" + str(msg['id']) + "' = header_id")
     content = dictfetchall(cursor)
@@ -73,7 +73,7 @@ def getsent(request):
       rtnarray.append(content)
     except AttributeError:
       print(content)
-  print(rtnarray)
+  # print(rtnarray)
   return JsonResponse({'data':rtnarray})
 
 @csrf_exempt
@@ -121,66 +121,101 @@ def getmsg(request):
     cursor.execute("SELECT id,to_id from portal_messageheader WHERE"
                     "'" + str(userid) + "' = from_id AND 'notfriends' = status")
     pendingInvite = dictfetchall(cursor)
-    print(pendingInvite)
+    # print(pendingInvite)
     if len(pendingInvite) == 0:
         cursor.execute("SELECT id FROM portal_messageheader WHERE "
                        "'" + str(fromid) + "' = to_id AND '" + str(userid) + "' = from_id ")
         msgs = dictfetchall(cursor)
         for msg in msgs:
-          print(msg)
-          cursor.execute("SELECT content FROM portal_message WHERE "
+          # print(msg)
+          cursor.execute("SELECT content, id FROM portal_message WHERE "
                          "'" + str(msg['id']) + "' = header_id")
           returnmsg = dictfetchall(cursor)
-          print(returnmsg)
+          # print(returnmsg)
           rtnarray.append(returnmsg)
         cursor.execute("SELECT id FROM portal_messageheader WHERE "
                        "'" + str(fromid) + "' = from_id AND'" + str(userid) + "' = to_id ")
         msgs = dictfetchall(cursor)
         for msg in msgs:
-          print(msg)
-          cursor.execute("SELECT content FROM portal_message WHERE "
+          # print(msg)
+          cursor.execute("SELECT content, id FROM portal_message WHERE "
                          "'" + str(msg['id']) + "' = header_id")
           returnmsg = dictfetchall(cursor)
-          print(returnmsg)
-          rtnarray.append(returnmsg)          
-        return JsonResponse({'data':rtnarray})  
+          # print(returnmsg)
+          rtnarray.append(returnmsg)
+        sortArr=[]
+        for msg in rtnarray:
+          try:
+            sortArr.append(msg[0]['id'])
+          except IndexError:
+            sortArr.append(msg)
+        sortArr = sorted(sortArr)
+        newArr=[]
+        for msg in sortArr:
+          if msg > 0:
+            for x in rtnarray:
+              try:
+                if x[0]['id'] == msg:
+                  b = []
+                  b.append(x[0])
+                  newArr.append(b)
+              except IndexError:
+                if x == msg:
+                  b=[]
+                  b.append(x)
+                  newArr.append(b)                    
+        return JsonResponse({'data':newArr})  
     else:
       for invite in pendingInvite:
-        # print(fromid)
-        # print(invite['to_id'])
-        # print(invite['id'])
         if str(invite['to_id']) == str(fromid):
-          print("arriba")
           cursor = connection.cursor()
-          cursor.execute("SELECT content from portal_message WHERE "
+          cursor.execute("SELECT content,id from portal_message WHERE "
                        "'" + str(invite['id']) + "' = header_id")
           contents = dictfetchall(cursor)
           if contents[0]['content'] == 'blank':
-            print(rtnarray)
             rtnarray.append(contents[0]['content'])
-      print(rtnarray)
       if len(rtnarray) == 0:
         cursor.execute("SELECT id FROM portal_messageheader WHERE "
                        "'" + str(fromid) + "' = to_id AND '" + str(userid) + "' = from_id ")
         msgs = dictfetchall(cursor)
         for msg in msgs:
-          print(msg)
-          cursor.execute("SELECT content FROM portal_message WHERE "
+          # print(msg)
+          cursor.execute("SELECT content, id FROM portal_message WHERE "
                          "'" + str(msg['id']) + "' = header_id")
           returnmsg = dictfetchall(cursor)
-          print(returnmsg)
+          # print(returnmsg)
           rtnarray.append(returnmsg)
         cursor.execute("SELECT id FROM portal_messageheader WHERE "
                        "'" + str(fromid) + "' = from_id AND'" + str(userid) + "' = to_id ")
         msgs = dictfetchall(cursor)
         for msg in msgs:
-          print(msg)
-          cursor.execute("SELECT content FROM portal_message WHERE "
+          cursor.execute("SELECT content,id FROM portal_message WHERE "
                          "'" + str(msg['id']) + "' = header_id")
           returnmsg = dictfetchall(cursor)
-          print(returnmsg)
-          rtnarray.append(returnmsg)          
-        return JsonResponse({'data':rtnarray})            
+          rtnarray.append(returnmsg)        
+        sortArr=[]
+        for msg in rtnarray:
+          try:
+            sortArr.append(msg[0]['id'])
+          except IndexError:
+            sortArr.append(msg)
+        sortArr = sorted(sortArr)
+        newArr=[]
+        for msg in sortArr:
+          if msg > 0:
+            for x in rtnarray:
+              try:
+                if x[0]['id'] == msg:
+                  b = []
+                  b.append(x[0])
+                  newArr.append(b)
+              except IndexError:
+                if x == msg:
+                  b=[]
+                  b.append(x)
+                  newArr.append(b)
+        # print(newArr)
+        return JsonResponse({'data':newArr})            
       return JsonResponse({'data':rtnarray})
 
     #   else:
@@ -215,10 +250,10 @@ def sendmsg(request):
   if request.user.is_authenticated():
     username = request.user.username
     portId = request.user.id
-    print("Authenticated User is :" + username)
+    # print("Authenticated User is :" + username)
     portalUser = PortalUser.objects.get(username=username)
-    print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
-    print("getting all the portfolios")
+    # print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
+    # print("getting all the portfolios")
     try:
         arr = getconnections(request)
         context_dict['friends'] = arr
@@ -258,7 +293,7 @@ def getconnections(request):
       cursor.execute("SELECT username, id FROM portal_portaluser WHERE "
                       "" + str(user) + " = id")
       user = dictfetchall(cursor)
-      print(user)
+      # print(user)
       try:
         arr.append({
           'username' : user[0]['username'],
@@ -270,7 +305,7 @@ def getconnections(request):
                    "'" + str(userid) + "' = to_id AND 'notfriends'  = status")
     newfriends = dictfetchall(cursor)
     for friend in newfriends:
-      print(friend)
+      # print(friend)
       arr.append({
         'username' : 'New Friend Request',
         'id'  : newfriends[0]['from_id'] ,
@@ -292,44 +327,35 @@ def addconnection(request):
     user_id = request.user.id
   query = request.POST['query']
   connections = searchuser(query)
-  for u in connections:
-    yours = str(yours) + "," + str(u.id)
-    cursor = connection.cursor()
-    cursor.execute("UPDATE portal_portaluser SET connections "
-                    " = '" + str(yours) + "' WHERE id = '" + str(user_id) + "'")
-  cursor = connection.cursor()
-  cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
-                 "('" + str(user_id) + "','" + str(u.id) + "','friends','12:11:25','notfriends');")
-  cursor.execute("SELECT LAST_INSERT_ID();")
-  header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
-  cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
-                   "('" + str(header_id) + "','" + str(user_id) + "','blank');")  
-  context_dict = {}
-  if request.user.is_authenticated():
-    username = request.user.username
-    portId = request.user.id
-    print("Authenticated User is :" + username)
-    portalUser = PortalUser.objects.get(username=username)
-    print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
-    print("getting all the portfolios")
-    try:
-        arr = getconnections(request)
-        context_dict['friends'] = arr
-    except Exception as e:
-      print(e)
+  print(len(connections))
+  if len(connections) == 0:
+    return JsonResponse({'data':'0'})
   else:
-    print("authentication is not successful")
-  context_dict["username"] = username
-  t = loader.get_template('user/inbox.html')
-  c = Context(context_dict)
-  html = t.render(context_dict)
-  return HttpResponse(html)    
+    for u in connections:
+      yours = str(yours) + "," + str(u.id)
+      cursor = connection.cursor()
+      cursor.execute("UPDATE portal_portaluser SET connections "
+                      " = '" + str(yours) + "' WHERE id = '" + str(user_id) + "'")
+      cursor = connection.cursor()
+      cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
+                     "('" + str(user_id) + "','" + str(u.id) + "','friends','12:11:25','notfriends');")
+      cursor.execute("SELECT LAST_INSERT_ID();")
+      header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
+      cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
+                       "('" + str(header_id) + "','" + str(user_id) + "','blank');")
+      addusername = u.username
+      return JsonResponse({'data':addusername})   
 
 def searchuser(query):
+  rtn = 0
   if "@" in str(query):
-    return byemail(query)
+    rtn = byemail(query)
   else:
-    return byuser(query)
+    rtn = byuser(query)
+  if rtn != 0:
+    return rtn
+  else:
+    return 0
 
 def byuser(query):
   user = PortalUser.objects.filter(username=str(query))
