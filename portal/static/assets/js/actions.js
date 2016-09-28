@@ -1,5 +1,23 @@
 $(document).ready(function(){
-    
+url = String(window.location.href)
+console.log(url)
+if ((url.indexOf("dashboard")) > 0 ){
+    $("#nav1").attr('class','icon-circle')
+} else if ((url.indexOf("inbox")) > 0 || (url.indexOf("sent")) > 0 ){
+    $("#nav2").attr('class','icon-circle')
+} else if ((url.indexOf("my_portfolios")) > 0 || (url.indexOf("individual")) > 0 ){
+    $("#nav3").attr('class','icon-circle')
+} else if ((url.indexOf("settings")) > 0 ){
+    $("#nav4").attr('class','icon-circle')
+} else if ((url.indexOf("news_portal")) > 0 ){
+    $("#nav5").attr('class','icon-circle')
+} else if ((url.indexOf("support")) > 0 || (url.indexOf("sent")) > 0 ){
+    $("#nav6").attr('class','icon-circle')
+} 
+// console.log($("#nav4"))
+
+
+
     /* ajax modal call */
         $(".modal-ajax").click(function(){            
             $('#modal_ajax').find('.modal-title').html($(this).attr('data-title'));

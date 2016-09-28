@@ -8,6 +8,10 @@
     <link rel="icon" type="image/ico" href="favicon.ico"/>
     
     <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css" />        
+    <link href="/static/css2/keyframes.css" rel="stylesheet" type="text/css" />        
+    <link href="/static/css2/layout.css" rel="stylesheet" type="text/css" />        
+    <link href="/static/css2/normalize.css" rel="stylesheet" type="text/css" />        
+    <link href="/static/css2/pageTransitions.css" rel="stylesheet" type="text/css" />        
     
     <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery.min.js'></script>
     <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery-ui.min.js'></script>   
@@ -34,16 +38,19 @@
 </head>
 <body class="bg-img-num1"> 
     
+<div class="m-scene" id="main">
     <div class="container">        
 
         <div class="login-block">
             <div class="block block-transparent">
                 <div class="content controls npt">
+  <div class="m-header scene_element scene_element--fadeinup">
                     <div class="single-pane">
-                        <h3 style="opacity:0;text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ADEAEA;font-size:100px;font-family:Helvetica Neue" id="splash">
+                        <h3 style="text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ADEAEA;font-size:100px;font-family:Helvetica Neue" id="splash">
                             <span style="letter-spacing:10px;"><i>V</i></span>ise
                         </h3>
                     </div>
+    </div>
                     {% if errors %}
                         <div class="form-errors">
                             {% for error in errors %}
@@ -55,21 +62,29 @@
                     {% endif %}
             <form class="m-t" role="form" method="POST" action="/login">
                 {% csrf_token %}
-                <div id="secondSplash" style="opacity:0">
+                <div id="secondSplash">
+<div class="m-page scene_element scene_element--fadein1 scene_element--delayed" style="opacity:0">                      
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Username" required="" name="username" >
                 </div>
+</div>
+<div class="m-page scene_element scene_element--fadein2 scene_element--delayed">             
                 <div class="form-group">
                     <input type="password" class="form-control" placeholder="Password" required="" name="password" >
                 </div>
+</div>
+<div class="m-page scene_element scene_element--fadein3 scene_element--delayed">   
                 <div class="checkbox-inline" style="padding:5px">
                    <label style="font-weight:100;font-size:10px;margin-right:15px"><div class="checker"><span><input type="checkbox"></span></div> Enable High Security Mode</label>
                    <label style="font-weight:100;font-size:10px"><div class="checker"><span><input type="checkbox"></span></div> Stay Logged In </label>
                 </div>
-      
+</div>
+<div class="m-page scene_element scene_element--fadein4 scene_element--delayed">  
                 <div class="col-md-12" style="margin-top:12px">
                     <button type="submit" href="#modal_default_1" class="btn btn-default btn-block btn-clean">Login</button>
                 </div>
+</div>
+<div class="m-page scene_element scene_element--fadein5 scene_element--delayed">  
                 <div class="col-md-12" style="margin-top:12px">
                     <a href="#" data-toggle="modal" class="btn btn-default btn-block btn-clean" id="register" onClick="isVisible()">Register</a>
                      <!-- <a href="/register" class="btn btn-default btn-block btn-clean">Register</a>   -->
@@ -82,13 +97,16 @@
                        <p class="text-muted text-center" style="font-size:12px;font-weight:100;">Forgot your password?</p>
                     </a>
                 </div>
-           </div>                                
+           </div>
+</div>
+                          
         </div>
             </div>
             </div>
         </div>
     </div>
 
+    </div>
 </body>
 
 <div class="modal in" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: hidden">
@@ -300,18 +318,18 @@
     </div>
 </html>
 <script>
-$( window ).load(function() {
-    $("body").fadeIn(1000);
-});
-$("#splash").animate({
-    opacity: 1,
-}, 750, function() {
-    $("#secondSplash").animate({
-        opacity: 1,
-    }, 750, function() {
-        console.log('done')
-    })
-})
+// $( window ).load(function() {
+//     $("body").fadeIn(1000);
+// });
+// $("#splash").animate({
+//     opacity: 1,
+// }, 750, function() {
+//     $("#secondSplash").animate({
+//         opacity: 1,
+//     }, 750, function() {
+//         console.log('done')
+//     })
+// })
 function updateFirmType(e) {
     // console.log(e.innerText)
     $("#myTabDrop1")[0].innerText = e.innerText

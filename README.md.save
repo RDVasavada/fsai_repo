@@ -1,63 +1,155 @@
-# FSAI-Django-Web-App
+def hasNumber(string):
+  return any(char.isdigit() for char in string)  
 
-## Installation
+def hasPortfolio(str):
+  all_portfolios = ['test 2','test 3','50% risk portfolio']
+  for port in all_portfolios:
+    if port in str:
+      return port
+      
+def findCompany(str):
+  import re
+  string = str.lower()
+  string = re.sub(r'[^\w\s]','',string)
+  string = ''.join([i for i in string if not i.isdigit()])  
+  string = string.split()
+  bank = ['?','my','how','are','you','see','can','i','whatsup','with','did','anything','is','there','should','know','to','the','what','much','will','profit','be','future','projected','budget','backtest','portfolio','unrealized','gains','buy','perform','performing','top','today','stock','stocks','about','a','into','for','who','whats','share','of','in','ceo','store','analyst','revenue','volume','day','hi','doing',"what's",'symbol','losses','dividend','company','name','ndx','dji','dow jones','nasdaq','sp','sp500','market','rating','analyst','analyze','revenue','year','compare','does','in','price','against','margin']
+  for word in bank:
+    try:
+      string.remove(word)
+    except ValueError:
+      continue
+  return(string)
 
-Install the software and server packages, this is only for Ubuntu/linux
+def analyze(messages):
+  message = messages.lower()
+  if "my portfolios" in message:
+    if "sp500" in messages or "s&p" in message:
+      return("compare sp to my port")
+    elif "nasdaq" in messages or "ndx" in message:
+      return("compare ndx to my port")
+    elif "dow" in messages or "dji" in message or "dow jones" in message:
+      return("compare dji to my port")
+    else:
+      return("get status of ports")
+  if "compare" in message:
+    if "s&p500" in message or "s&p" in message:
+      if (hasPortfolio(message)):
+        return("your portfolio <" + hasPortfolio(message) + "> compares well")      
+      else:
+        try:
+          return("compare " + findCompany(message)[0] + " to my the s&p")
+        except IndexError:
+          return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+    elif "nasdaq" in messages or "ndx" in messages:
+      if (hasPortfolio(message)):
+        return("your portfolio <" + hasPortfolio(message) + "> compares well")      
+      else:     
+        try:
+          return("compare " + findCompany(message)[0] + " to my the ndx")
+        except IndexError:
+          return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+    elif "dow" in messages or "dji" in messages or "dow jones" in messages:
+      if (hasPortfolio(message)):
+        return("your portfolio <" + hasPortfolio(message) + "> compares well")      
+      else:     
+        try:
+          return("compare " + findCompany(message)[0] + " to my the dji")
+        except IndexError:
+          return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+    else:
+      return("get status of ports")
+  elif "buy" in messages and "for" in messages:
+    try:
+      return("you bought <" + findCompany(message)[0] + "> for 3$")
+    except IndexError:
+      return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+  elif "top" in message or "highest performing" in message:
+    return("the top stocks today are my d !")
+  elif "lowest" in message or "worst" in message: 
+    return("the lowest stocks today are my d !")
+  elif "how" in messages and "performing" in message:
+    if (hasPortfolio(message)):
+      return("your portfolio <" + hasPortfolio(message) + "> is doing well!")
+    elif (findCompany(message)):
+      try:
+        return("your stock <" + findCompany(message)[0] + "> is doing quite well")
+      except IndexError:
+        return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+  elif "how" in messages and "doing" in message:
+    if (hasPortfolio(message)):
+      return("your portfolio <" + hasPortfolio(message) + "> is doing well!")
+    elif (findCompany(message)):
+      try:
+        return("your stock <" + findCompany(message)[0] + "> is doing quite well")
+      except IndexError:
+        return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")       
+  elif "symbol for" in messages or "symbol of" in messages:
+    if (findCompany(message)):
+      return("the symbol for <" + findCompany(message)[0] + "> is google !")
+  elif "company name of" in messages or "company name for" in messages or "what company is" in messages:
+    if (findCompany(message)):
+      return("the company name for <" + findCompany(message)[0] + "> is google !")
+  elif "ceo of" in messages or "ceo for" in messages:
+    if (findCompany(message)):
+      return("the ceo of <" + findCompany(message)[0] + "> is tim cook !")
+  elif "dividends" in messages and "does" in messages:
+    if (findCompany(message)):
+      return("the company <" + findCompany(message)[0] + "> does pay dividends!")
+  elif "what" in messages and "price" in messages:
+    if (findCompany(message)):
+      return("the market price for the company <" + findCompany(message)[0] + "> is 2!")
+  elif "gain" in messages:
+    if hasPortfolio(message):
+      return("your gains for <" + hasPortfolio(message) + "> is 3$!")
+    elif findCompany(message):
+      try:
+        return("your gains for <" +  findCompany(message)[0] + "> is 3$")
+      except IndexError:
+        return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+  elif "losses" in messages:
+    if hasPortfolio(message):
+      return("your losses for <" + hasPortfolio(message) + "> is 3$!")
+    elif findCompany(message):
+      try:
+        return("your losses for <" +  findCompany(message)[0] + "> is 3$")
+      except IndexError:
+        return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+  elif "rating" in messages:
+    if (findCompany(message)):
+      return("the rating for the company <" + findCompany(message)[0] + "> by analysts are high!")
+  elif "pe ratio" in messages:
+    if (findCompany(message)):
+      return("the PE ratio for the company <" + findCompany(message)[0] + "> by analysts are high!")
+  elif "beta" in messages:
+    if (findCompany(message)):
+      return("the beta for the company <" + findCompany(message)[0] + "> by analysts are high!")
+  else:
+    return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
 
-```bash
-sh dependencies.sh
-```
+      
 
-Install the Python dependencies using pip
+print(analyze("what is my highest performing stock?"))
 
-```python
-pip install -r requirements.txt
-```
+#     elif "nasdaq" in messages or "ndx" in messages:
+#     elif "dow" in messages or "dji" in messages or "dow jones" in messages:
+  #elif "buy" in messages and "for" in messages:
+#   elif "top" in messages or "highest performing" in messages:
 
-## Setup
+#   elif "future" in messages:
+#   elif "back test" in messages or "back-test" in messages or "backtesting" in messages:
 
-To create the initial database, or update an old database to the latest version. Run the following command from the project root.
+#   elif "symbol for" in messages or "symbol of" in messages:
+#   elif "company name of" in messages or "company name for" in messages or "what company is" in messages:
+#   elif "ceo of" in messages or "ceo for" in messages:
 
-```python
-python manage.py migrate
-```
+#   elif "dividends" in messages and "does" in messages:
+#   elif "gain" in messages:
+#   elif "losses" in messages:
+  #elif "rating" in messages and "analyst" in messages:
+#   elif "pe ratio" in messages:
+#   elif "beta" in messages:
 
-## How to Run
+    
 
-Once you have installed the dependencies and created the database, you can use the following command to run the web application
-
-```python
-python manage.py runserver
-```
-
-## Style Guidlines
-PEP-8
-
-## Deployment
-
-## Contract Information
-AI Labs
-Samir
-
-Start Date: Nov 2nd 2015
-End Date: Nov 29th 2015
-
-from django.db import models
-
-from portal.models.base import BaseModel
-
-class Sms(BaseModel):
-    phone_number = models.IntegerField()
-    user_id = models.IntegerField()
-    message = models.TextField()
-    analysis = models.TextField()
-    resolution = models.TextField()
-
-    def __str__(self):
-        return str(self.nessage) + "|" + self.phone_number
-
-    class Meta:
-        app_label = 'Sms'
-
-
-
+# print(findOperatingNouns("whats the 60 day profit margin for valspar?"))

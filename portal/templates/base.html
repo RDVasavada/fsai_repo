@@ -28,6 +28,7 @@
         <script type='text/javascript' src='/static/assets/js/plugins/knob/jquery.knob.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/sparkline/jquery.sparkline.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/flot/jquery.flot.js'></script>     
+        <script type='text/javascript' src='/static/assets/js/plugins/flot/jquery.flot.pie.js'></script>     
         <script type='text/javascript' src='/static/assets/js/plugins/flot/jquery.flot.resize.js'></script>
 
         <script type='text/javascript' src='/static/assets/js/plugins.js'></script>    
@@ -40,6 +41,7 @@
         <script type="text/javascript" src="/static/js/user/dashboard.js"></script>
         <script type="text/javascript" src="/static/js/user/individual_portfolio.js"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+       <script src="/static/assets/js/d3pie.min.js"></script>
     {% endblock %}
 </head>
 
@@ -52,118 +54,56 @@ function del_cookie() {
             }
 </script>
 <body onunload="del_cookie()">
-    <div class="row" style="padding-left:20px">
-        <div class="col-md-12">
-            <ol class="breadcrumb" style="margin-top:33px">
+    <div class="row">
+        <div class="col-md-2">
+            <h1><span class="icon-angle-left" style="display: inline-block;line-height: 100vh;position: absolute;left:12vw"></span></h1>
+        </div>
+        <div class="col-md-8" style="padding:0px">
+            <ol class="breadcrumb" style="margin-top:25px;text-align:center">
                 <li><div class="single-pane">
-                    <h8 style="opacity: 1; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 28px;" helveticaneue-light",="" "helvetica="" neue="" light",="" neue";"=" id="splash">
-                        <span style="letter-spacing:1px;"><i>V</i></span>ise
+                    <h8 style="opacity: 1; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 54px;font-family:'Helvetica Neue';" id="splash">
+                        <span style="letter-spacing:1px;"><i>V</i></span>ise<br>
                     </h8>
                 </div></li>
-                <li><a href="#">Home</a></li>                    
-                <li><a href="dashboard">Dashboard</a>
+                    <li>
+                        <a href="/user/dashboard" class="stbar transition" id="/user/dashboard">
+                            <span class="icon-home" style="font-size:24px"></span><br>Dashboard
+                        </a>
+                    </li>                            
+                    <li>
+                        <a href="/user/inbox"><span class="icon-comments" style="font-size:24px"></span> 
+                        <br>Messages</a>                
+                    </li>
+                    <li>
+                        <a href="/user/my_portfolios"> <span class="icon-folder-open-alt" style="font-size:24px"></span>
+                            <br>My Portfolios</a>
+                    </li>  
+                    <li>
+                        <a href="/user/portfolio_settings" class="stbar transition" id="/user/portfolio_settings"><span class="icon-plus" style="font-size:24px"></span><br>
+                         New Portfolio</a>
+                    </li>
+                    <li>
+                        <a href="/user/news_portal" class="stbar transition" id="/user/news_portal"><span class="icon-flag-alt"style="font-size:24px"></span> 
+                        <br>News & Sentiment</a>
+                    </li>
+                    <li>
+                        <a href="/user/support" id="/user/support" class="stbar transition"><span class="icon-cogs" style="font-size:24px"></span> 
+                        <br>Support</a>
+
+                    </li>
+                    <li>
+                        <a href="/logout" id="/logout" class="stbar transition"><span class="icon-share-alt" style="font-size:24px"></span> 
+                        <br>Log Out</a>
+                    </li>                                                                   
                 </li>
 
             </ol>
         </div>
+        <div class="col-md-2">
+            <h1><span class="icon-angle-right" style="display: inline-block;line-height: 100vh;position: absolute;right:12vw"></span>
+        </div>
     </div>
     <div class="row" style="padding-left:20px;padding-right:20px">
-        <div class="col-lg-2" style="width:275px">
-            <div class="page-sidebar">
-                <div class="page-navigation-panel">
-                    <div class="name">Howdy, {{username}}</div>
-                    <div class="control"><a href="#" class="psn-control"><span class="icon-reorder"></span></a></div>
-                </div>            
-                <div class="page-navigation-panel search">                                
-                    <div class="input-group">                        
-                        <input type="text" class="form-control" placeholder="Search...">
-                        <div class="input-group-addon"><span class="icon-search"></span></div>
-                    </div>                
-                </div>
-                <ul class="page-navigation">
-                    <li>
-                        <a href="/user/dashboard" class="stbar transition" id="/user/dashboard">
-                            <span class="icon-home"></span> Dashboard
-                        </a>
-                    </li>                            
-                    <li>
-                        <a id="myPortfolios" href="#"><span class="icon-comments"></span> Messages</a>
-                        <ul>                                    
-                            <li><a href="/user/inbox">Inbox</a></li>
-                            <li><a href="/user/sent">Sent</a></li>
-                            <li><a href="/user/deleted">Deleted</a></li>
-                            <li><a href="/user/starred">Starred</a></li>
-                        </ul>                                
-                    </li>
-                    <li>
-                        <a id="myPortfolios"> <span class="icon-folder-open-alt"></span>My Portfolios</a>
-                      <ul>
-                            <li>
-                                <a class="stbar transition" href="/user/my_portfolios" id="/user/my_portfolios">Portfolio Summary </a>
-                            </li>
-                            <script>
-                            function backtest(e) {
-                                var url = String("/user/backtest/")
-                                $.ajax({
-                                    url: url,
-                                    type: 'get',
-                                    data: {'portName':e}
-                                }).done(function(x) {
-                                    var passedHtml = String(x.data)
-                                    if (x.extras) {
-                                        x.extras.forEach(function(a,i) {
-                                            if (i == 0) {
-                                                var newStr = "<div class='row highlightRow asset-row'><div class='col-sm-2 separateTop'>Asset "+a.number+"</div><div class='col-sm-3'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='"+a.symbol+"'>Select asset "+a.number+"</label></span><input type='text' id='"+a.symbol+"' name='"+a.symbol+"' class='form-control fmt-ticker' value='"+a.ticker+" maxlength='10' placeholder='Enter symbol' autocomplete='off' autocorrect='off' spellcheck='false''><span class='input-group-addon glyphicon glyphicon-search' title='Find ticker symbol'></span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_1'>Enter percentage allocation for asset "+a.number+" in portfolio 1</label></span><input type='text' id='allocation"+a.number+"_1' name='allocation"+a.number+"_1' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false' value='"+a.percentStock+"'><span class='input-group-addon'>%</span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_2'>Enter percentage allocation for asset "+a.number+" in portfolio 2</label></span><input type='text' id='allocation"+a.number+"_2' name='allocation"+a.number+"_2' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false'><span class='input-group-addon'>%</span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_3'>Enter percentage allocation for asset "+a.number+" in portfolio 3</label></span><input type='text' id='allocation"+a.number+"_3' name='allocation"+a.number+"_3' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false'><span class='input-group-addon'>%</span></div></div></div><div class='row topBorder'>"
-                                                    passedHtml = passedHtml.replace(/(<div class="row topBorder">)/,newStr)
-                                            } else {
-                                                var newStr = "<div class='row highlightRow asset-row'><div class='col-sm-2 separateTop'>Asset "+a.number+"</div><div class='col-sm-3'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='"+a.symbol+"'>Select asset "+a.number+"</label></span><input type='text' id='"+a.symbol+"' name='"+a.symbol+"' class='form-control fmt-ticker' maxlength='10' placeholder='Enter symbol' autocomplete='off' autocorrect='off' spellcheck='false' value='"+a.ticker+"'><span class='input-group-addon glyphicon glyphicon-search' title='Find ticker symbol'></span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_1'>Enter percentage allocation for asset "+a.number+" in portfolio 1</label></span><input type='text' id='allocation"+a.number+"_1' name='allocation"+a.number+"_1' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false' value='"+a.percentStock+"'><span class='input-group-addon'>%</span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_2'>Enter percentage allocation for asset "+a.number+" in portfolio 2</label></span><input type='text' id='allocation"+a.number+"_2' name='allocation"+a.number+"_2' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false'><span class='input-group-addon'>%</span></div></div><div class='col-sm-2'><div class='input-group smallMargin'><span class='hidden_jaws'><label for='allocation"+a.number+"_3'>Enter percentage allocation for asset "+a.number+" in portfolio 3</label></span><input type='text' id='allocation"+a.number+"_3' name='allocation"+a.number+"_3' class='form-control fmt-pct' maxlength='6' autocomplete='off' autocorrect='off' spellcheck='false'><span class='input-group-addon'>%</span></div></div></div><div class='row topBorder'>"
-                                                    passedHtml = passedHtml.replace(/(<div class='row topBorder'>)/,newStr)
-                                            }
-                                        })
-                                    }
-                                    var frame = $("iframe")
-                                    contents = frame.contents()
-                                    body = contents.find('body'),
-                                    styleTag = contents
-                                        .find('head')
-                                        .append('<style></style>')
-                                        .children('style')
-                                    body.html(passedHtml)
-                                })
-                            }
-                            </script>
-                        {% for portfolio in portfolios %}
-                            <li>
-                                <div class="content list">
-                                <div class="list-item" style="background:transparent">
-                                    <div class="list-text">
-                                        <!-- <p>{{portfolio.name}}</p> -->
-                                        <a class="stbar transition" href="/user/individual_portfolio?q={{portfolio.name}}" id="/user/individual_portfolio">{{ portfolio.name }}</a>
-                                    </div>
-                                    <div class="list-controls" style="height: 78px; line-height: 28px; background-color:transparent">           
-                                        <a href="#modal_wide_1" onClick="backtest(('{{portfolio.name}}'))" class="modal-wide btn btn-default btn-block btn-clean" style="background-color:rgba(0,0,0,0.7)"><center style="font-size:11px;">Run Backtest</center></a>
-                                    </div>                    
-                                </div>
-                            </li>
-                        {% endfor %}
-                        </ul> 
-                    </li>  
-                    <li>
-                        <a href="/user/portfolio_settings" class="stbar transition" id="/user/portfolio_settings"><span class="icon-plus"></span> Create a New Client Portfolio</a>
-                    </li>
-                    <li>
-                        <a href="/user/news_portal" class="stbar transition" id="/user/news_portal"><span class="icon-flag-alt"></span> News & Sentiment</a>
-                    </li>
-                    <li>
-                        <a href="/user/support" id="/user/support" class="stbar transition"><span class="icon-cogs"></span> Help & Suggestions</a>
-
-                    </li>
-                    <li>
-                        <a href="/logout" id="/logout" class="stbar transition"><span class="icon-share-alt"></span> Log Out</a>
-                    </li>                                                                   
-                </ul>
-            </div>
-        </div>
         
         <div class="statusbar" id="statusbar_2" style="display: block;z-index:999;display:none;width:110vw">
             <div class="statusbar-icon"><img src="/static/img/loader.gif"></div>
@@ -194,42 +134,28 @@ function del_cookie() {
                     </div>
                 </div>
             </div>
+</div>
+<div class="name" style="display:none">{{username}}</div>
 {% block content %}
 
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript">
-    $(".page-navigation li a").click(function(e){  
-        if (e.currentTarget.id == 'myPortfolios') {
-            var ul = $(this).parent('li').children('ul');
-                if(ul.is(':visible')) {
-                    setTimeout(function(){ 
-                        ul.slideUp('fast');                
-                    }, 100);
-                } else {
-                    setTimeout(function(){ 
-                        ul.slideDown('fast');                
-                    }, 100);
 
-                }
-        } else {
-            $(".statusbar").show()
-            setTimeout(function(){ 
-                var url = e.currentTarget.id
-                    console.log(url)
-                    if (url) {
-                    $("body").fadeOut(500, redirectPage(url))
-                }
-            }, 1000);
-        };
-        function redirectPage(url) {
-            $("body").fadeOut(500, location.assign(url));      
-            // window.location = url;
-        }
-    })
-    </script>
 {% endblock %}
+
+    <div class="page-footer">
+        <div class="page-footer-wrap" style="text-align:center;background:transparent">
+            <i class="icon-circle-blank" id="nav1"></i>
+            <i class="icon-circle-blank" id="nav2"></i>
+            <i class="icon-circle-blank" id="nav3"></i>
+            <i class="icon-circle-blank" id="nav4"></i>
+            <i class="icon-circle-blank" id="nav5"></i>
+            <i class="icon-circle-blank" id="nav6"></i>
+        </div>
+    </div>
+    <script type='text/javascript' src='/static/assets/jquery.smoothState.min.js'></script>   
+    <script type='text/javascript' src='/static/assets/js/main.js'></script>    
 
 </body>
 

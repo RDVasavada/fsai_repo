@@ -3631,6 +3631,7 @@ img.circle-border {
 }
 .breadcrumb > li a {
   color: inherit;
+  margin-left:-12px;
 }
 .breadcrumb > .active {
   color: inherit;

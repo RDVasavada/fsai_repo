@@ -477,8 +477,8 @@ dd{padding: 5px 0px;}
 
 /* breadcrumb */
 .breadcrumb{background: rgba(0,0,0,0.2); color: #FFF;}
-    .breadcrumb > li+li:before{content: "\f105"; font-family: 'FontAwesome'; padding: 0px 8px;}
-    .breadcrumb > li{color: #FFF; opacity: 0.6; filter: alpha(opacity=60);}
+    .breadcrumb > li+li:before{font-family: 'FontAwesome'; padding: 0px 8px;}
+    .breadcrumb > li{color: #FFF; margin: 5px 1vw; opacity: 0.6; filter: alpha(opacity=60);}
     .breadcrumb > li.active{opacity: 1; filter: alpha(opacity=100); color: #FFF;}
     .breadcrumb > li:hover{opacity: 1; filter: alpha(opacity=100);}
 

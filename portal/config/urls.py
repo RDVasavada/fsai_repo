@@ -7,6 +7,7 @@ urlpatterns = patterns('',
 
     #User Authentication based views
     (r'^/?$', views.main),
+    (r'^splash/?$', views.splash),
     (r'^login/?$', views.loginview),
     (r'^logout/?$', views.logoutview),
     (r'^register/?$', views.register),
@@ -26,7 +27,7 @@ urlpatterns = patterns('',
     (r'^user/portfolio_optimize/?$', views.portfolio_optimize),
     (r'^user/save_portfolio/?$', views.save_portfolio),
     (r'^user/my_portfolios/?$', views.my_portfolios),
-    (r'^user/individual_portfolio/?$', views.individual_portfolio),
+    (r'^user/individual_portfolio/(?P<portfolio_id>[0-9]+)/?$', views.individual_portfolio),    
     (r'^user/individual_stock/?$', views.individual_stock),
     (r'^user/news_portal/?$', views.news_portal),
     (r'^user/top_portfolios/?$', views.top_portfolios),
@@ -46,6 +47,7 @@ urlpatterns = patterns('',
     (r'^user/getmsg/?$', views.getmsg),   
     (r'^user/getsent/?$', views.getsent),   
     (r'^user/sendmsg/?$', views.sendmsg),   
+    (r'^user/starmsg/?$', views.starmsg),   
     # (r'^ring/?$', views.ring)
 
 

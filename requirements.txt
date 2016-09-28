@@ -4,3 +4,4 @@ djangorestframework==3.3.2
 wheel==0.26.0
 mysql-python
 django-extensions
+yahoo_finance

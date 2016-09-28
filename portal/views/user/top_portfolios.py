@@ -18,7 +18,7 @@ def get_top_portfolios(request, html_template):
         portalUser = PortalUser.objects.get(username=username)
         print portalUser.id
 
-    portfolios = top_portfolios(request, 27)
+    portfolios = top_portfolios(request, portalUser.id)
     # portfolios = top_portfolios(request, portalUser.id)
     # print portfolios
 
@@ -46,9 +46,9 @@ def top_portfolios(request, user_id):
         #                                       "where p.id=s.show_id and p.user_id=1 group by p.id order by investment desc limit 3")
         #print(user_id)
         cursor = connection.cursor()
-        cursor.execute("select p.id as id,name,sum(investment) as value, COUNT(DISTINCT(ticker)) as no_of_tickers from "
+        cursor.execute("select p.id as id,name,sum(investment) as value, COUNT(DISTINCT(ticker)) as total_value from "
                        "portal_portfolio p, portal_stock s where p.id=s.show_id "
-                       "and p.user_id=" + str(27) + " group by p.id order by investment desc limit 10")
+                       "and p.user_id=" + str(portalUser.id) + " group by p.id order by investment desc limit 10")
         portfolios = dictfetchall(cursor)
         #print "this is all portfolios"
         print(portfolios)

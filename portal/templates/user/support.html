@@ -1,124 +1,107 @@
 {% extends "base.html" %}
+
 {% block content %}
- <script src="/static/js/user/inbox.js"></script>
- <div class="col-lg-2" style="padding:0px;height:80vh;color:black;overflow:scroll">
-    <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.2)">
-        <div class="header">
-            <h2>Sent Mail</h2>
-            <div class="input-group" style="margin-left:75px;margin-bottom:10px">                        
-            <input type="text" class="form-control" placeholder="Search...">
-            <div class="input-group-addon"><span class="icon-search"></span></div>
-            </div>            
-        </div>                    
-        <div class="content list-group list-group-icons">
-            <a href="#" class="list-group-item" style="margin:20px"><span class="icon-trash"></span></span>AdamT<i class="icon-angle-right pull-right"></i></a>
-            <a href="#" class="list-group-item" style="margin:20px"><span class="icon-trash"></span></span>Ramana<i class="icon-angle-right pull-right"></i></a>
-            <a href="#" class="list-group-item" style="margin:20px"><span class="icon-trash"></span></span>Chaitra<i class="icon-angle-right pull-right"></i></a>                        
-            <a href="#" class="list-group-item" style="margin:20px"><span class="icon-trash"></span></span>Rohan<i class="icon-angle-right pull-right"></i></a>          
-        </div>                
-    </div>    
-
+<div class="col-lg-2"></div>
+          <div class="col-lg-8" style="padding-left:50px;padding-right:50px;">
+      <div>
+        <div class="row">
+           <center><h1>Support Center</h1><center>
+        </div>
+        <div class="row">                
+            <form role="search">
+                 <center><div class="input-group m-b" style="padding-top:60px;padding-bottom:60px;">
+                    <input style="width:700px;height:50px;font-size:20px;" id="Search" name="Search" placeholder="Enter your questions or keywords here">
+                  </div></center>                       
+            </form> 
+        </div> 
+        <div>
+        <div style="float:left;">
+        <div class="form-group">
+        <div style="padding-bottom:20px;">
+        <h3>Frequently Asked Questions</h3>
+         <hr>
+        </div>
+        <div>
+            <h3 style="color:#66d9ff;" onclick="showtextbox('textbox1')"><i class="icon-chevron-right"></i> &nbsp; How long does it take to transfer money?</h3>
+        </div>
+        <div>
+            <textarea id="textbox1" cols="40" rows="5" style="display:none;" >Electronic deposits from your bank to Betterment typically invest the following business day for deposits made before 11PM EST. This includes requests made on Saturday and Sunday. The only exception is auto-deposits that fall on weekends. If your auto-deposit falls on the weekend, it will invest on Tuesday (assuming that Monday is not a market holiday).
+            Electronic withdrawals from Betterment to your bank generally take 4-5 business days due to the required sale and settlement of securities. For example, if you made a withdrawal on Monday morning, you can expect your funds the following Monday (assuming that there are no market or bank holidays in the interim). Note that your withdrawal time may also be impacted if you have made recent deposits within the previous 5 business days.
+            </textarea>
+        </div>
+        </div>
+        <div class="form-group">
+        <div>
+            <h3 style="color:#66d9ff;" onclick="showtextbox('textbox2')"><i class="icon-chevron-right"></i> &nbsp; What does Betterment cost?</h3>
+        </div>
+        <div>
+            <textarea id="textbox2" cols="40" rows="5" style="display:none;">Betterment charges a management fee of 0.15% to 0.35%, depending on your balance and auto-deposit, and is prorated across the entire year and is charged at the end of each calendar quarter (every three months).
+            For accounts under $10,000 we provide 2 pricing options. For those who have automated deposits turned on for at least $100/month, the rate is just 0.35%. If you choose not to automate your savings, the fee is still a low flat rate of just $3/month. This is either/or and never combined. After your account reaches $10,000 there are no longer deposit requirements and we focus on reducing your fee down to just 0.25% per year, and then further to 0.15% when your account is over $100,000.
+            </textarea>
+        </div>
+        </div>
+        <div class="form-group">
+        <div>
+            <h3 style="color:#66d9ff;" onclick="showtextbox('textbox3')"><i class="icon-chevron-right"></i> &nbsp; Is there a minimum deposit or balance? </h3>
+        </div>
+        <div>
+            <textarea id="textbox3" cols="40" rows="5" style="display:none;">There is no minimum investment at Betterment, and no minimum balance. One reason we have no minimum balance is to ensure that every investor can get started building wealth with both long-term and short-term goals. Betterment is a powerful way to put idle balances to work for you, including your safety net fund. Americans on average do not save nearly enough money, so we challenge you to deposit as much as you can comfortably afford because the more you invest the more that will grow.Note that the amount Betterment charges does depend on your account balance and auto-deposit settings. For more detail, look at our pricing page. 
+            </textarea>
+        </div>
+        </div>
+        </div>
+        <!--right side-->
+       <div style="float:right;padding-right:70px;">
+        <div style="padding-bottom:20px;">
+        <h3>Feature/Change Requests</h3>
+         <hr>
+        </div>
+           <textarea style="font-size:15px;" rows="4" cols="50" placeholder="Contact us at changes@ailabs.co"></textarea>
+       </div>
+        </div>              
+       </div>
+    </div>
+<!-- End -->
 </div>
-<div class="col-lg-6" style="height:80vh;margin-left:25px">
-                <div class="block block-drop-shadow" style="height:99%">
-                    <div class="header">
-                        <h2>Messaging</h2>
-                        <div class="input-group" style="margin-left:100px">                        
-                        <input type="text" class="form-control" placeholder="Search...">
-                        <div class="input-group-addon"><span class="icon-search"></span></div>
-                        </div>
-                    </div>
-                    <div class="content messages npr npt" style="height:75vh;overflow:scroll"> 
-                        <!-- <div class="scroll mCustomScrollbar _mCS_1" style="height: 100%;"> -->
-                        <!-- <div class="mCustomScrollBox mCS-light" id="mCSB_1" style="position:relative; min-height:90%; overflow:hidden; max-width:100%;"> -->
-                        <div class="mCSB_container" style="position: relative; top: -7px;height:90%">
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Duis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum neque</div>
-                                <div class="messages-item-date">14:33 30.08.2013</div>
-                            </div>
-                            <div class="messages-item inbox">
-                                <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque condimentum nisl velit</div>
-                                <div class="messages-item-date">14:32 30.08.2013</div>
-                            </div>                                                                                                            
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Duis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum neque</div>
-                                <div class="messages-item-date">14:20 30.08.2013</div>
-                            </div>                        
-                            <div class="messages-item inbox">
-                                <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque condimentum nisl velit</div>
-                                <div class="messages-item-date">14:19 30.08.2013</div>
-                            </div>
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Duis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum nequeuis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum nequeuis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum nequeuis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum nequeuis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum nequeuis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum neque</div>
-                                <div class="messages-item-date">14:33 30.08.2013</div>
-                            </div>
-                            <div class="messages-item inbox">
-                                <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque condimentum nisl velit</div>
-                                <div class="messages-item-date">14:32 30.08.2013</div>
-                            </div>                                                                                                            
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Duis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum neque</div>
-                                <div class="messages-item-date">14:20 30.08.2013</div>
-                            </div>                        
-                            <div class="messages-item inbox">
-                                <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque condimentum nisl velit</div>
-                                <div class="messages-item-date">14:19 30.08.2013</div>
-                            </div>
-                                                        <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Duis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum neque</div>
-                                <div class="messages-item-date">14:33 30.08.2013</div>
-                            </div>
-                            <div class="messages-item inbox">
-                                <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque condimentum nisl velit</div>
-                                <div class="messages-item-date">14:32 30.08.2013</div>
-                            </div>                                                                                                            
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Duis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum neque</div>
-                                <div class="messages-item-date">14:20 30.08.2013</div>
-                            </div>                        
-                            <div class="messages-item inbox">
-                                <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque condimentum nisl velit</div>
-                                <div class="messages-item-date">14:19 30.08.2013</div>
-                            </div>
-                            
-                                                                              <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Duis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum neque</div>
-                                <div class="messages-item-date">14:33 30.08.2013</div>
-                            </div>
-                            <div class="messages-item inbox">
-                                <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque condimentum nisl velit</div>
-                                <div class="messages-item-date">14:32 30.08.2013</div>
-                            </div>                                                                                                            
-                            <div class="messages-item">
-                                <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Duis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum nequeuis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum nequeuis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum nequeuis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum nequeuis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum neque</div>
-                                <div class="messages-item-date">14:20 30.08.2013</div>
-                            </div>                        
-                            <div class="messages-item inbox">
-                                <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail">
-                                <div class="messages-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque condimentum nisl velit</div>
-                                <div class="messages-item-date">14:19 30.08.2013</div>
-                            </div>
-                            
-                
-
-                    </div>
-
-                </div>
-
-
+</body>
 {% endblock %}
+
+{% block scripts %}
+
+            <script type="text/javascript">
+            function showtextbox(id)
+            {
+            var tb = document.getElementById(id);
+            if(tb.style.display!=="none")
+                tb.style.display="none";
+            else
+                tb.style.display="block";
+            }
+            $(".page-navigation li a").click(function(e){  
+            console.log("asdf")  
+                if (e.currentTarget.id == 'myPortfolios') {
+                    var ul = $(this).parent('li').children('ul');
+                        if(ul.is(':visible')) {
+                            setTimeout(function(){ 
+                                ul.slideUp('fast');                
+                            }, 100);
+                        } else {
+                            setTimeout(function(){ 
+                                ul.slideDown('fast');                
+                            }, 100);
+                        }
+                }
+                if (e.currentTarget.id !== 'myPortfolios') {
+                    $(".statusbar").show()
+                    setTimeout(function(){ 
+                        var url = e.currentTarget.id
+                            console.log(url)
+                            if (url) {
+                            location.assign(url)
+                        }
+                    }, 1000);
+                };
+            })
+            </script>
+{% endblock %}
+Contact GitHub API Training Shop Blog About

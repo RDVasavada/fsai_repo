@@ -1,131 +1,123 @@
 {% extends "base.html" %}
     {% block content %}
-    <div class="col-lg-5 col-md-7 col-sm-6" style="margin-left:-5px">
-        <div class="block block-drop-shadow" style="">
-            <div class="head bg-default bg-light-ltr">   
-                <h2>My Portfolios</h2>
-                     <div class="side pull-right"> 
-                             <div class="btn-group btn-group-xs"><a class="btn btn-default btn-block btn-clean" href="/user/portfolio_settings">New</a></div>
-                    </div>
+<div class="col-lg-2 col-md-2 col-sm-2"></div>
+<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" style="margin:10px;height:70vh;padding:0px">
+  <div class="row">
+    <div class="col-lg-3 col-md-3" style="padding-left:0px;padding-right:0px">
+        <div class="block">
+            <div class="header">
+                <h2>Your Portfolios</h2>
             </div>
-            <div class="head bg-dot20">
-                    <div class="col-lg-12">   
-                        <table class="table table-hover margin bottom">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th class="text-center">Stocks</th>
-                                <th class="text-center">Current Value</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                        {% for portfolio in portfolios %}
-                            <tr>
-                                <td>{{ portfolio.name }} </td> 
-                                <td class="text-center">{{portfolio.no_of_tickers}} Tickers</td>
-                                <td class="text-center small">{{portfolio.value}}<span class="icon-usd"></span>
-                                </td>
-                                </td>
-                            </tr>
-                        {% endfor %}                                
-                            </tbody>
-                        </table>
-                    </div>
-             </div>
-       </div>
-      <div class="block block-drop-shadow" style="color:white">
-          <div class="head bg-default bg-light-ltr">
-                        <h2>Market Charts</h2> 
-                        <div class="side pull-right">
-                               <div class="btn-group btn-group-xs">
-                                    <button type="button" class="btn btn-default btn-clean" onClick="changeTime('1y')">1y</button>
-                                    <button type="button" class="btn btn-default btn-clean" onClick="changeTime('90d')">90d</button>
-                                    <button type="button" class="btn btn-default btn-clean" onClick="changeTime('30d')">30d</button>                                    
-                                </div>  
-                        </div>
+            <div class="content list-group ui-sortable" id="sortable_example_1" style="background:rgba(0,0,0,0.5)">
+                {% for portfolio in portfolios %}
+                <a href="#" class="list-group-item" style="text-align:center;height:150px">{{portfolio.name}}
+                  <br>
+                  <span style="font-size:24px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
+                    ${{portfolio.value}}
+                  </span><br><br>
+                 <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
+                      +33%
+                  </span><br>
+                 <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue'">
+                    {{portfolio.no_of_tickers}} Tickers
+                  </span>                
+                </a>
+                {% endfor %}
             </div>
+        </div> 
+      </div>
+    <div class="col-lg-6 col-md-6" style="height:67vh;overflow:hidden;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;">
+        <div class="block" style="margin-bottom:10px">
+            <div class="header">
+                <h2>Newest Vise Picks</h2>
+            </div>
+            <div class="block content" style="background:rgba(0,0,0,0.6);height:200px;margin-bottom:0px">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" style="text-align:center;height:auto">
+                        <div class="item active">                              
+                            <div class="carousel-content" style="height:auto">
+                                <p>
+                                  Reccomendation by Jean-Marie Eveillard:<br>
+                                  <h4>ARQL:NAS</h4> Arqule Inc<br>
+                                  Biotechnology - Healthcare<br><br>
+                                  <h2 style="color:#00ff00">+96.18%</h2> <h4>on 4/29</h4><br>
+                                </p>                           
+                             </div>
+                        </div>                                                                
+                    </div>
 
-          <div class="head bg-dot30">
-                        <br><span id="chosenMarket" style="top:10px;left:30px;position:relative"> S&P 500 </span>
-                        <div class="ibox-content" style="display: block;background-color: rgba(0,0,0,0);border:0px;background-repeat:no-repeat;background-position:center" id="myBar">
-                            <div class="row" style="overflow:hidden">
+                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                        <span class="icon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                        <span class="icon-chevron-right"></span>
+                    </a>
+                </div>                          
+            </div>
+        </div>  
+      <div class="block">
+          <div class="header">
+                <h2>Market Charts</h2> 
+                <div class="side pull-right">
+                   <div class="btn-group btn-group-xs">
+                        <button type="button" class="btn btn-default btn-clean" onClick="changeTime('1y')">1y</button>
+                        <button type="button" class="btn btn-default btn-clean" onClick="changeTime('90d')">90d</button>
+                        <button type="button" class="btn btn-default btn-clean" onClick="changeTime('30d')">30d</button>                                    
+                    </div>  
+                </div>
+            </div>
+            <div class="content bg-dot30" style="height:auto;background:rgba(0,0,0,0.6)">
+                  <br><span id="chosenMarket" style="top:10px;left:30px;position:relative"> 
+                    S&P 500<br>
+                    <h6 style="color:#00ff00">+0.23% </h4>
+                  </span><br>
 
-                            </div>
-                        </div> 
-<!-- <div id="new_input">
-    &nbsp &nbsp
-    Stock: <input type="text" name="stock" id="stock" value="YHOO" 
-    style="width: 70px;">
-    &nbsp &nbsp
-    Start: <input type="text" name="start" id="start" value="2013-08-10"
-    style="width: 80px;">
-    &nbsp &nbsp
-    End: <input type="text" name="end" id="end" value="2014-03-10" 
-    style="width: 80px;">
-    &nbsp &nbsp
-    <input name="updateButton" 
-    type="button" 
-    value="Update" 
-    onclick="updateData()" />
-</div>       -->                  
-<!-- 
-function updateData() {
+                  <div class="ibox-content" style="display: block;background-color: rgba(0,0,0,0);border:0px;background-repeat:no-repeat;background-position:center;padding:0px;position:relative;height:225px" id="myBar">
+                      <div class="row" style="overflow:hidden">
+                      </div>
+                  </div> 
+                  <div class="head-panel nm">
+                      <div class="btn-toolbar">
+                          <div id="new_input">
+                           <div class="btn-group btn-group-xs">
+                              <button type="button"  name="stock A" id="stock" value="^GSPC" class="btn btn-default btn-clean" onClick="updateData('^GSPC')">S&P500</button>
+                             <button type="button"  name="stock" id="stock" value="^IXIC" class="btn btn-default btn-clean" onClick="updateData('^IXIC')">Nasdaq</button>
+                             <button type="button"  name="stock" id="stock" value="^DJI" class="btn btn-default btn-clean" onClick="updateData('^DJI')">Dow Jones</button>
 
-var stock = document.getElementById('stock').value;
-var start = document.getElementById('start').value;
-var end = document.getElementById('end').value;
- -->
-                        <div class="head-panel nm">
-                            <div class="btn-toolbar">
-                                <div id="new_input">
-                                 <div class="btn-group btn-group-xs">
-                                    <button type="button"  name="stock A" id="stock" value="^GSPC" class="btn btn-default btn-clean" onClick="updateData('^GSPC')">S&P500</button>
-                                   <button type="button"  name="stock" id="stock" value="^IXIC" class="btn btn-default btn-clean" onClick="updateData('^IXIC')">Nasdaq</button>
-                                   <button type="button"  name="stock" id="stock" value="^DJI" class="btn btn-default btn-clean" onClick="updateData('^DJI')">Dow Jones</button>
-
-                                    <!-- <button type="button" class="btn btn-default btn-clean">Nasdaq</button> -->
-                                    <!-- <button type="button" class="btn btn-default btn-clean">Dow Jones</button>                                     -->
-                                </div>
-                              
-                                </div>
-                            </div>
-                       </div>                       
+                              <!-- <button type="button" class="btn btn-default btn-clean">Nasdaq</button> -->
+                              <!-- <button type="button" class="btn btn-default btn-clean">Dow Jones</button>                                     -->
+                          </div>
+                        
+                          </div>
+                      </div>
+                 </div>                   
              </div>   
-        </div>
+        </div>          
     </div>
-    <div class="col-lg-3 col-md-12 col-sm-10" style="padding-bottom:50px;min-width:375px">  
-        <div class="block block-drop-shadow">     
-            <div class="head bg-default bg-light-ltr">   
-                    <h2>Market Headlines</h2>
+    <div class="col-lg-3 col-md-3" style="padding-left:0px;padding-right:0px;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px">
+        <div class="block">
+            <div class="header">
+                <h2>Market Headlines</h2>
             </div>
-
-                <div class="head bg-dot30">
-                        <div class="head-panel nm">
-                            <div class="col-lg-12" style="height:367px;overflow:scroll">   
-                                <table class="table table-hover margin bottom">
-                                    <tbody id="newsPin">
-                                        <tr id="incomingNews" style="display:none">
-                                            <td><a href="#" target="_blank" style="width:100%;display:inline-block;color:#428bca;text-decoration: underline;"></a></td> 
-                                        </tr> 
-                                        </tbody>
-                                    </table>
-                                </div>
-                        </div>                      
-                </div>                                                                                                             
-        </div>
-        <div class="block block-drop-shadow">  
-            <div class="head bg-default bg-light-ltr">   
-                <h2>Finsist</h2>
-                <div class="side pull-right">                            
-                    <ul class="buttons">                                
-                        <li><a href="#"><span class="icon-user"></span></a></li>
-                        <li><a href="#"><span class="icon-cogs"></span></a></li>
-                    </ul>
-                </div>                                                
+            <div class="content bg-dot30" style="height:63vh;overflow:hidden;background:rgba(0,0,0,0.6)">
+                <div class="head-panel nm">
+                    <div class="col-lg-12" style="height:60vh;overflow:scroll">   
+                        <table class="table table-hover margin bottom">
+                            <tbody id="newsPin">
+                                <tr id="incomingNews" style="display:none">
+                                    <td><a href="#" target="_blank" style="width:100%;display:inline-block;color:#428bca;text-decoration: underline;"></a></td> 
+                                </tr> 
+                                </tbody>
+                            </table>
+                        </div>
+                </div>                      
+            </div>    
             </div>
-            <div class="head bg-dot30">
-            </div>
-            <div id="new_input" style="display:none">
+        </div> 
+      </div>
+  </div>
+<div class="col-lg-2 col-md-2 col-sm-2">
+              <div id="new_input" style="display:none">
                     &nbsp &nbsp
                     Stock: <input type="text" name="stock" id="stock" value="YHOO" 
                     style="width: 70px;">
@@ -141,51 +133,9 @@ var end = document.getElementById('end').value;
                     value="Update" 
                     onclick="updateData()" />
                 </div>
-            <div class="content messages npr npb">                         
-                <div class="scroll oh" style="height: 250px;">
-                    <div class="messages-item">
-                        <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
-                        <div class="messages-item-text">Dmitry has joined this session!</div>
-                        <div class="messages-item-date">14:32 30.08.2013</div>
-                    </div>                                                                                                            
-                    <div class="messages-item">
-                        <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail"/>
-                        <div class="messages-item-text">Connected with Dmitry. Your reference number for this chat session is 2508333.</div>
-                        <div class="messages-item-date">14:20 30.08.2013</div>
-                    </div>                        
-                    <div class="messages-item inbox">
-                        <img src="/static/img/example/user/olga_s.jpg" class="img-circle img-thumbnail"/>
-                        <div class="messages-item-text">Hello Dmitry</div>
-                        <div class="messages-item-date">14:19 30.08.2013</div>
-                    </div>
-                      
-                </div>
-            </div>
-            <div class="footer">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="icon-comment"></i></span>
-                    <input type="text" class="form-control" placeholder="message..">
-                    <span class="input-group-btn">
-                        <button class="btn"><span class="icon-chevron-up"></span></button>
-                    </span>
-                </div>                        
-            </div>
-        </div>  
-    </div>         
-        <div class="row">
-            <div class="page-footer">
-                <div class="page-footer-wrap">
-                    <!-- <div class="side pull-left"> -->
-                        <a href="#" class="pull-right">Contact Us&nbsp;</a>
-                        <div style>
-                            <strong>Copyright</strong> VISE &copy; 2015
-                        </div>
-                        <!-- Copyirght © YourCompany 2013. All rights reserved. -->
-                    <!-- </div> -->
-                </div>
-            </div>
-        </div>                   
-{% endblock %}
+</div>
+                
+    {% endblock %}
 {% block scripts %}
     <link href="/static/css2/d3chart.css" rel="stylesheet">
     <script src="/static/js/user/dashboard.js"></script>

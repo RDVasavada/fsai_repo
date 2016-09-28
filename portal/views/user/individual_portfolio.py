@@ -12,47 +12,28 @@ from portal.models.user.portal_user import PortalUser
 from django.db import connection
 from portal.models.data.stock import Stock
 from portal.views.user import top_portfolios
+from stock import get_stocks_by_portfolio
 
 @csrf_exempt
 @login_required
-def individual_portfolio(request):
-    print(request.GET["q"])
-    context_dict = {}
+def individual_portfolio(request, portfolio_id):
     if request.user.is_authenticated():
-            username = request.user.username
-            print("Authenticated User is :" + username)
-            portalUser = PortalUser.objects.get(username=username)
-            print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
-            print("getting all the portfolios")
-            try:
-                # all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
-                all_portfolios = Portfolio.objects.filter(user__id=27)
-                for port in all_portfolios:
-                    if (str(port.name) == request.GET["q"]):
-                        portName = port.name
-                        context_dict["portname"] = portName
-                        portId = port.id
-                        t_portfolios = top_portfolios(request, portId)
-                        context_dict["portfolios"] = t_portfolios
-                        thisport = port.stock_set.all()
-                        context_dict['thisport'] = thisport
-            except Exception as e:
-                print(e)
-                all_portfolios = None
-    else:
-        print("authentication is not successful")
-    # context_dict["thisport"] = thisport
-    context_dict["username"] = username
-    # portfolios = top_portfolios(request, portId)
-    # context_dict["portfolios"] = t_portfolios
-
+        username = request.user.username
+        portalUser = PortalUser.objects.get(username=username)
+        portfolios = top_portfolios(request, portalUser.id)
+    stocks = get_stocks_by_portfolio(request, portfolio_id)
+    portfolio = Portfolio.objects.get(id=portfolio_id)
+    market_sentiment = range(1, 100, 1)
+    context_dict = {}
+    context_dict["portfolios"] = portfolios
+    context_dict["stocks"] = stocks
+    context_dict["portfolio"] = portfolio
+    context_dict["market_sentiment"] = market_sentiment
     t = loader.get_template('user/individual_portfolio.html')
     c = Context(context_dict)
     html = t.render(context_dict)
-    #print(html)
     return HttpResponse(html)                    
-    # html = get_top_portfolios(request, 'user/individual_portfolio.html')
-    # return HttpResponse(html)
+
 
 
 

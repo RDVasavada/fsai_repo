@@ -56,6 +56,7 @@ def sent(request):
 @csrf_exempt
 def getsent(request):
   selected = request.POST['selected']
+  # print(selected)
   if request.user.is_authenticated():
     username = request.user.username
     userid = request.user.id  
@@ -95,7 +96,9 @@ def accept(request):
     cursor.execute("SELECT LAST_INSERT_ID();")
     header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']    
     cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
-                     "(" + str(header_id) + ",'" + str(user_id) + "','newfriend');")      
+                     "(" + str(header_id) + ",'" + str(user_id) + "','newfriend');")
+    cursor.close()
+    connection.close()                           
     return JsonResponse({'data':str(acceptid)})
   else:
     return JsonResponse({'data':'fail'})
@@ -264,7 +267,7 @@ def sendmsg(request):
   context_dict["username"] = username
   message = str(request.POST['message'])
   message = "<" + username + "> : " + message
-  print(message)
+  # print(message)
   recipient = request.POST['to']
   cursor = connection.cursor()
   cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
@@ -298,6 +301,7 @@ def getconnections(request):
         arr.append({
           'username' : user[0]['username'],
           'id': user[0]['id'],
+          'status': 'friends',
         })
       except IndexError:
         print(user)
@@ -305,15 +309,18 @@ def getconnections(request):
                    "'" + str(userid) + "' = to_id AND 'notfriends'  = status")
     newfriends = dictfetchall(cursor)
     for friend in newfriends:
-      # print(friend)
+      cursor.execute("SELECT username FROM portal_portaluser WHERE"
+                    "'" + str(newfriends[0]['from_id']) + "' = id")
+      user = dictfetchall(cursor)
       arr.append({
-        'username' : 'New Friend Request',
+        'username' : user[0]['username'],
         'id'  : newfriends[0]['from_id'] ,
-        'status'  : newfriends[0]['status']
+        'status'  : 'New Friend Request',
       })
     # try: 
-    # except IndexError:     
-  return arr
+    # except IndexError: 
+  # print(arr)    
+  return JsonResponse({'data':arr})
 # def getmessages(request):
 
 # def getheaders(request):
@@ -327,7 +334,7 @@ def addconnection(request):
     user_id = request.user.id
   query = request.POST['query']
   connections = searchuser(query)
-  print(len(connections))
+  # print(len(connections))
   if len(connections) == 0:
     return JsonResponse({'data':'0'})
   else:
@@ -344,7 +351,44 @@ def addconnection(request):
       cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
                        "('" + str(header_id) + "','" + str(user_id) + "','blank');")
       addusername = u.username
-      return JsonResponse({'data':addusername})   
+      return JsonResponse({'data':addusername})
+
+@csrf_exempt
+def starmsg(request):
+  if request.user.is_authenticated():
+    username = request.user.username
+    portalUser = PortalUser.objects.get(username=username)
+    yours = portalUser.connections
+    user_id = request.user.id  
+  msgid = request.POST['id']
+  cursor = connection.cursor()
+  cursor.execute("SELECT status from portal_messageheader WHERE "
+                  "to_id = '" +str(msgid) + "' AND subject = 'starred'")
+  stars = dictfetchall(cursor)
+  if len(stars) == 0:
+    cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
+                  "('" + str(user_id) + "','" + str(msgid) + "','starred', '12:11:25','friends');")
+    return JsonResponse({'data':'star'})
+  else:
+    cursor.execute("DELETE FROM portal_messageheader WHERE"
+                    " from_id = '" + str(user_id) + "' AND to_id = '" + str(msgid) + "' AND subject = 'starred'")
+    JsonResponse({'data':'unstar'})
+  msg = "star"
+  return JsonResponse({'data':msg})
+
+@csrf_exempt
+def delmsg(request):
+  if request.user.is_authenticated():
+    username = request.user.username
+    portalUser = PortalUser.objects.get(username=username)
+    yours = portalUser.connections
+    user_id = request.user.id  
+  delid = request.POST['id']
+  cursor = connection.cursor()
+  cursor.execute("UPDATE `portal_messageheader` SET subject "
+                "= 'deleted' WHERE from_id = '" + str(user_id) + "' and id = '" + str(delid) + "'")
+  msg = "deleted"
+  return JsonResponse({'data':msg})  
 
 def searchuser(query):
   rtn = 0

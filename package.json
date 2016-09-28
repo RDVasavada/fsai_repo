@@ -1,5 +1,5 @@
 {
-  "name": "drf_react",
+  "name": " ",
   "version": "0.0.2",
   "description": "Django and React",
   "main": "index.js",
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "esprima": "^3.0.0",
-    "jquery-mousewheel": "^3.1.13"
+    "jquery-mousewheel": "^3.1.13",
+    "react-icons": "^2.2.1"
   }
 }

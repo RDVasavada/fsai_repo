@@ -10,11 +10,13 @@ from portal.models.user.portal_user import PortalUser
 from django.contrib.auth.models import User
 from django.conf import settings
 from portal.utils import TokenGenerator
+from django.template import RequestContext
 
 def main(request):
-    if request.user is None:
-        return HttpResponseRedirect('/login')
-    return HttpResponseRedirect('/user/dashboard')
+    return render(request, 'public/splash.html')
+
+def splash(request):
+    return render(request, 'user/dashboard.html')
 
 def logoutview(request):
     ''' Logout the current user '''
@@ -38,7 +40,7 @@ def loginview(request):
             if user.is_active:
                 login(request, user)
                 # Redirect to a success page.
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/user/dashboard')
             else:
                 errors.append('This account is disabled, please contact us @ 555-555-5555')
         else:

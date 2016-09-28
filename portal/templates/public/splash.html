@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="/static/css2/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css2/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/static/css2/animate.css" rel="stylesheet">
+    <link href="/static/css2/style.css" rel="stylesheet">
+    <link href="/static/css2/fsai.css" rel="stylesheet">
+    <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
+
+</head>
+
+<body>
+    <div id="display" class="single-pane" style="padding-top:26em;text-align:center">
+        <h3 style="text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ADEAEA;font-size:100px;font-family:Helvetica Neue" id="splash">
+            <span style="letter-spacing:10px;"><i>V</i></span>ise
+        </h3>
+        <img src="/static/img/loader.gif" style="margin-bottom:15px"><br>
+        <span style="font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;"> "The thing I have discovered about working with personal finance is <br>that the good news is that it is not rocket science. Personal finance <br>is about 80 percent behavior. It is only about 20 percent head knowledge."<br> -Dave Ramsey</span>
+    </div>
+    
+<script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery.min.js'></script>
+<script>
+    function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+    return null;
+    }
+    setTimeout(function(){ 
+        if(readCookie('csrftoken')){
+            window.location = ("/user/dashboard")
+        } else {
+            $("#display").css('display','none')
+            window.location = ("/login")
+        }
+    }, 1000);    
+</script>
+</body>
+
+</html>
+

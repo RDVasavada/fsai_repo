@@ -1,14 +1,226 @@
-    {% extends "base.html" %}
+{% extends "base.html" %}
 {% block content %}
- <script src="/static/js/user/individual_portfolio.js"></script>
- <div class="col-md-8 col-sm-8" style="padding-left:60px;">
-    <h2 style="text-align:center;">{{ portname }}</h2>
+<div class="row" style="height:auto">
+<div class="col-lg-2 col-md-2 col-sm-1"></div>
+ <div class="col-lg-2 col-md-2 col-sm-10" style="padding:0px;height:100%;color:black;margin-bottom:0px;overflow:initial">
+    <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.2)">
+        <div class="header">
+            <h2>My Portfolios</h2>
+        </div>
+        <div class="content list-group ui-sortable" id="sortable_example_1" style="background:rgba(0,0,0,0.5);">
+            <a href="/user/my_portfolios" class="list-group-item" style="text-align:center;height:150px">
+              <br>
+              <span style="font-size:24px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
+          Portfolios Summary
+              </span><br><br>
+             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
+              </span><br>           
+            </a>            
+            {% for portfolio in portfolios %}      
+            <a href="/user/individual_portfolio/{{portfolio.id}}" id="/user/individual_portfolio"  class="list-group-item" style="text-align:center;height:150px">{{portfolio.name}}
+              <br>
+              <span style="font-size:24px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
+                ${{portfolio.value}}
+              </span><br><br>
+             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
+                  {{portfolio.risk}} , {{portfolio.total_value}}
+              </span><br>
+             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue'">
+                {{portfolio.no_of_tickers}} Tickers
+              </span>                
+            </a>
+            {% endfor %}
+        </div>        
+    </div>
+</div> 
+ <div class="col-lg-6 col-md-6 col-sm-6" style="padding-left:60px;">
     <!--first portfolio -->
     <div class="block block-drop-shadow">
+    <div class="header">
+        <h2 style="text-align:center;">{{ portfolio.name }}</h2>
+    </div>
         <!-- <div class="head bg-dot30"> -->
-        <div class="head bg-default bg-light-ltr">
-        <div class="side pull-right">
-                 </div>
+        <div class="content" style="background-color:rgba(0,0,0,0.6)">
+
+        <div id="pieChart" style="width:100%;text-align:center"></div>
+            <script>
+            var pie = new d3pie("pieChart", {
+                "header": {
+                    "title": {
+                        "text": "Stock Distribution",
+                        "color": "#ffffff",
+                        "fontSize": 24,
+                        "font": "helvetica"
+                    },
+                    "subtitle": {
+                        "color": "#999999",
+                        "fontSize": 12,
+                        "font": "open sans"
+                    },
+                    "titleSubtitlePadding": 9
+                },
+                "footer": {
+                    "color": "#999999",
+                    "fontSize": 10,
+                    "font": "open sans",
+                    "location": "bottom-left"
+                },
+                "size": {
+                    "canvasWidth": 590,
+                    "pieOuterRadius": "90%"
+                },
+                "data": {
+                    "sortOrder": "value-desc",
+                    "content": [
+                        {
+                            "label": "Objective-C",
+                            "value": 36344,
+                            "color": "#cb2121"
+                        },
+                        {
+                            "label": "Shell",
+                            "value": 28561,
+                            "color": "#830909"
+                        },
+                        {
+                            "label": "Cobol",
+                            "value": 24131,
+                            "color": "#923e99"
+                        },
+                        {
+                            "label": "C#",
+                            "value": 100,
+                            "color": "#ae83d5"
+                        },
+                        {
+                            "label": "Coldfusion",
+                            "value": 68,
+                            "color": "#bf273e"
+                        },
+                        {
+                            "label": "Fortran",
+                            "value": 218812,
+                            "color": "#ce2aeb"
+                        },
+                        {
+                            "label": "Coffeescript",
+                            "value": 157618,
+                            "color": "#bca44a"
+                        },
+                        {
+                            "label": "Node",
+                            "value": 114384,
+                            "color": "#618d1b"
+                        },
+                        {
+                            "label": "Basic",
+                            "value": 95002,
+                            "color": "#1ee67b"
+                        },
+                        {
+                            "label": "Cola",
+                            "value": 36344,
+                            "color": "#b0ec44"
+                        },
+                        {
+                            "label": "Perl",
+                            "value": 32170,
+                            "color": "#a4a0c9"
+                        },
+                        {
+                            "label": "Dart",
+                            "value": 28561,
+                            "color": "#322849"
+                        },
+                        {
+                            "label": "Processing",
+                            "value": 157618,
+                            "color": "#7d9058"
+                        },
+                        {
+                            "label": "Smalltalk",
+                            "value": 114384,
+                            "color": "#44b9b0"
+                        },
+                        {
+                            "label": "Scala",
+                            "value": 95002,
+                            "color": "#7c37c0"
+                        },
+                        {
+                            "label": "Visual Basic",
+                            "value": 78327,
+                            "color": "#cc9fb1"
+                        },
+                        {
+                            "label": "Scheme",
+                            "value": 67706,
+                            "color": "#e65414"
+                        },
+                        {
+                            "label": "Rust",
+                            "value": 36344,
+                            "color": "#8b6834"
+                        },
+                        {
+                            "label": "FoxPro",
+                            "value": 32170,
+                            "color": "#248838"
+                        }
+                    ]
+                },
+                "labels": {
+                    "outer": {
+                        "pieDistance": 32
+                    },
+                    "inner": {
+                        "hideWhenLessThanPercentage": 3
+                    },
+                    "mainLabel": {
+                        "color": "#ffffff",
+                        "fontSize": 11
+                    },
+                    "percentage": {
+                        "color": "#ffffff",
+                        "decimalPlaces": 0
+                    },
+                    "value": {
+                        "color": "#adadad",
+                        "fontSize": 11
+                    },
+                    "lines": {
+                        "enabled": true
+                    },
+                    "truncation": {
+                        "enabled": true
+                    }
+                },
+                "effects": {
+                    "pullOutSegmentOnClick": {
+                        "effect": "linear",
+                        "speed": 400,
+                        "size": 8
+                    }
+                },
+                "misc": {
+                    "gradient": {
+                        "enabled": true,
+                        "percentage": 100
+                    }
+                }
+            });
+            </script>
+
+                <div class="block" style="width:100%">
+                    <div class="input-group" style="width:100%;text-align:center">
+                        <div class="btn-group btn-group-lg" style="text-align:center">
+                            <button type="button" class="btn btn-default btn-clean">Table View</button>
+                            <button type="button" class="btn btn-default btn-clean">Card View</button>
+                            <button type="button" class="btn btn-default btn-clean">Back Test</button>    
+                        </div>              
+                    </div>  
+                </div>  
+
                     <table class="table table-hover margin bottom">
                     <thead>
                     <tr>
@@ -17,22 +229,25 @@
                         <th class="text-center">Buy Date</th>
                         <th class="text-center">Recommended Sell Date</th>
                         <th class="text-center">Market Sentiment</th>
-                        <th class="text-center">Risk</th>
-                        <th class="text-center">Percent sales today</th>
+                        <th class="text-center">Stock Price</th>
                         <th class="text-center">Percent gains</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for stock in thisport %}
+                    {% for stock in stocks %}
                     <tr>
                         <td><a href="#" onClick="goStock(this)" id="stockLink">{{stock.ticker}}</a></td>
-                        <td class="text-center small">John Smith Inc</td>
-                        <td class="text-center">12/11/2009</td>
-                        <td class="text-center">01/11/2017</td>
-                        <td class="text-center">82</td>
-                        <td class="text-center">Low</td>
-                        <td class="text-center">10%</td>
-                        <td class="text-center">12%</td>
+                        <td class="text-center small">{{stock.ticker}}</td>
+                        <td class="text-center">{{stock.buy_date}}</td>
+                        <td class="text-center">{{stock.sell_date}}</td>
+                        <td class="text-center">{{market_sentiment | random }}</td>
+                        <td class="text-center">{{stock.current_price}}</td>
+{% if stock.gain >= 0%}
+                         <td class="text-center" style="color:rgba(0,255,0,1)"><span style="font-size:20px;">&uarr;</span>&nbsp;{{ stock.gain }}%</td>
+ {% else %}
+                         <td class="text-center" style="color:rgba(255,0,0,1);"><span style="font-size:20px;">&darr;</span>&nbsp;{{ stock.gain }}%</td>
+ {% endif %}
+
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -50,5 +265,10 @@
     <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
 </form>
 </body>
+
+{% endblock %}
+{% block scripts %}
+ <script src="/static/js/user/individual_portfolio.js"></script>
+
 
 {% endblock %}

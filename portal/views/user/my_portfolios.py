@@ -15,18 +15,15 @@ from portal.views.user import top_portfolios
 
 @login_required
 def my_portfolios(request):
-    print("inside portfolios of user")
     if request.user.is_authenticated():
         username = request.user.username
-        print("Authenticated User is :" + username)
         portalUser = PortalUser.objects.get(username=username)
         # Get User information from username
         # get the portfolios of the user
-        print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
-        print("getting all the portfolios")
+        # print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
         try:
-            # all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
-            all_portfolios = Portfolio.objects.filter(user__id=27)
+            all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
+            # all_portfolios = Portfolio.objects.filter(user__id=1)
             #print(all_portfolios)
 
             #all_portfolios = Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id])

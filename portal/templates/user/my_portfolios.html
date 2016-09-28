@@ -1,6 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="col-md-8 col-sm-8" style="padding-left:50px;padding-right:50px">        
+<div class="row" style="height:auto">
+<div class="col-lg-2 col-md-2 col-sm-1"></div>
+ <div class="col-lg-2 col-md-2 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:auto;margin-bottom:0px;overflow:initial">
+    <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.2)">
+        <div class="header">
+            <h2>My Portfolios</h2>
+        </div>
+        <div class="content list-group ui-sortable" id="sortable_example_1" style="background:rgba(0,0,0,0.5);">
+            <a href="#" class="list-group-item" style="text-align:center;height:150px">
+              <br>
+              <span style="font-size:24px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
+          Portfolios Summary
+              </span><br><br>
+             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
+              </span><br>           
+            </a>            
+            {% for portfolio in portfolios %}      
+            <a href="/user/individual_portfolio/{{portfolio.id}}" id="/user/individual_portfolio"  class="list-group-item" style="text-align:center;height:150px">{{portfolio.name}}
+              <br>
+              <span style="font-size:24px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
+                ${{portfolio.value}}
+              </span><br><br>
+             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
+                  +33%
+              </span><br>
+             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue'">
+                {{portfolio.no_of_tickers}} Tickers
+              </span>                
+            </a>
+            {% endfor %}
+        </div>        
+    </div>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-10"> 
+    <div style="height:125px">
     <div class="block">
         <div class="input-group">
             <div class="input-group-addon"><span class="icon-search"></span></div>
@@ -27,11 +61,13 @@
             </div>                        
         </div>
     </div>
+</div>
+    <div>
     <div id="pin"></pin>
     {% for portfolio in all_portfolios %}
-    <div class="block">
+    <div class="block" style="margin-top:50px;margin-bottom:50px">
         <!-- <div class="header"> -->
-          <div class="head bg-default bg-light-ltr">
+          <div class="header" style="background-color:rgba(0,0,0,0.4)">
             <div class="side pull-right">              
                 <ul class="buttons">       
                     <li><a href="#" class="iport" id="/user/individual_portfolio"><span class="icon-plus"></span> Expand </a></li>                
@@ -70,6 +106,7 @@
         </div>
     </div>
     {% endfor %}
+</div>
 </div>
 <form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
     {% csrf_token %}

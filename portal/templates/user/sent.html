@@ -4,29 +4,45 @@
 <script>
 localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
 </script>
- <div class="col-lg-2" style="padding:0px;height:80vh;color:black;overflow:scroll">
-    <div class="block block-drop-shadow" style="height:80vh;background-color:rgba(0,0,0,0.2)">
+<div class="col-lg-2"></div>
+ <div class="col-lg-2 col-md-2 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:650px">
+    <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.4)">
         <div class="header">
-            <h2>Inbox</h2>
+            <h2>Sent</h2>
             <div class="input-group" style="margin-left:50px;margin-bottom:10px">                        
             <input type="text" class="form-control" placeholder="Search...">
             <div class="input-group-addon"><span class="icon-search"></span></div>
             </div>            
-        </div>                    
-        <div class="content list-group list-group-icons">
-     
+        </div>
+            <div style="height:100%;display:inline-block;overflow:scroll;padding-bottom:50px;width:100%">
+                <a href="/user/inbox" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-upload-alt" style="padding:5px"></span>Inbox<i class="icon-angle-right pull-right"></i></a>    
+                <a href="#" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-star" style="padding:5px"></span>Starred<i class="icon-angle-right pull-right"></i></a>
+                <a href="#" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-trash" style="padding:5px"></span>Deleted<i class="icon-angle-right pull-right"></i></a>                    
+                <div id="acontainer">
+                {% render_bundle 'main' %}
+                </div>
+            </div>
+<!-- 
+        <div class="content list-group list-group-icons" style="height:100%;display:inline-block;overflow:scroll;padding-bottom:50px">
             {% for friend in friends %}
 
-            <a href="#" id="a{{friend.id}}" onClick="select({{friend.id}})" class="list-group-item" style="margin:20px"><span class="icon-trash"></span></span>{{friend.username}}<i class="icon-angle-right pull-right"></i></a>
+            <a href="#" id="a{{friend.id}}" onClick="select({{friend.id}},'{{friend.status}}')" class="list-group-item" style="margin:20px">
+
+            <span class="icon-trash"></span></span>{{friend.username}}
+
+            <i class="icon-angle-right pull-right"></i
+            >
+
+            <i id="emptystar" style="margin-right:5px" class="icon-star-empty pull-right"></i></a>
 
             {% endfor %}
-        </div>                
+        </div>     -->            
     </div>    
-
 </div>
 
-<div class="col-lg-6" style="height:80vh;margin-left:50px">
-    <div class="block block-drop-shadow" style="height:99%">
+
+<div class="col-lg-6" style="height:650px;">
+    <div class="block block-drop-shadow" style="height:650px">
         <div class="header">
             <h2>Messaging</h2>
             <div class="input-group" style="margin-left:100px">                        
@@ -34,7 +50,7 @@ localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
                 <div class="input-group-addon"><span class="icon-search"></span></div>
             </div>
         </div>
-        <div class="content messages npr npt" style="height:75vh;overflow:scroll"> 
+        <div class="content messages npr npt" style="height:562px;overflow:scroll;background-color:rgba(0,0,0,0.6)"> 
             <div class="mCSB_container" style="position: relative; top: -7px;height:90%;overflow:scroll" >
                 <div id="mcontainer">
                 {% render_bundle 'main' %}
