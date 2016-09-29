@@ -20,7 +20,7 @@ def individual_portfolio(request, portfolio_id):
     if request.user.is_authenticated():
         username = request.user.username
         portalUser = PortalUser.objects.get(username=username)
-        portfolios = top_portfolios(request, portalUser.id)
+        portfolios = top_portfolios(request, 27)
     stocks = get_stocks_by_portfolio(request, portfolio_id)
     portfolio = Portfolio.objects.get(id=portfolio_id)
     market_sentiment = range(1, 100, 1)

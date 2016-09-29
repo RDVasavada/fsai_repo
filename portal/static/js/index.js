@@ -114,9 +114,12 @@ var MSGList = React.createClass({
             } else {
                 var messages = b.map(function(x,i) {
                     if (x.length > 0) {
-                        // console.log(x[0])
+                        var divStyle = {
+                            position: 'relative',
+                            top:'20px'
+                        }
                         if (x == "blank") {
-                            return <span>This person has not yet accepted your friend request.</span>   
+                            return <span style={divStyle}>This person has not yet accepted your friend request.</span>   
                         }
                         if (x == "newfriend") {
                             return <div> Accepted your friend request! </div>

@@ -24,13 +24,15 @@ def getsms(request):
 @csrf_exempt
 def sms(request):
   user_id = 1
-  number = request.POST.get('From', '')
-  phone_number = number[2:]
+  # number = request.POST.get('From', '')
+  # phone_number = number[2:]
+  phone_number = 9492459949
   cursor = connection.cursor()
   cursor.execute("select * from portal_portaluser where '" + str(phone_number) + "' = phone ")
   user = dictfetchall(cursor)
-  user_id = user[0]['id']
-  message = request.POST.get('Body', '')
+  # user_id = user[0]['id']
+  # message = request.POST.get('Body', '')
+  message = "test"
   rtnstring = analyze(message)
   cursor.execute("INSERT INTO `portal_sms` (date_created, phone_number, user_id, message, analysis, resolution) VALUES"
                  "('2016-07-09 12:11:25'," + str(phone_number) + "," + str(user_id) +  ",'" + str(message) + "', '" + str(rtnstring) + "', 'Unresolved')")
@@ -175,19 +177,19 @@ def findCompany(str):
 def chat_portal(request):
     context_dict = {}
     if request.user.is_authenticated():
-            username = request.user.username
-            print("Authenticated User is :" + username)
-            portalUser = PortalUser.objects.get(username=username)
-            print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
-            try:
-                cursor = connection.cursor()
-                cursor.execute("select * from portal_sms")        
-                texts = dictfetchall(cursor)
-                print(texts)
-                context_dict["texts"] = texts
-                print(texts)
-            except Exception as e:
-                print(e)
+      username = request.user.username
+      print("Authenticated User is :" + username)
+      portalUser = PortalUser.objects.get(username=username)
+      print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
+      try:
+          cursor = connection.cursor()
+          cursor.execute("select * from portal_sms")        
+          texts = dictfetchall(cursor)
+          print(texts)
+          context_dict["texts"] = texts
+          print(texts)
+      except Exception as e:
+          print(e)
     else:
         print("authentication is not successful")
     context_dict["username"] = username

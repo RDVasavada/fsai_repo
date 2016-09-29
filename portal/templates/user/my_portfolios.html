@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row" style="height:auto">
-<div class="col-lg-2 col-md-2 col-sm-1"></div>
- <div class="col-lg-2 col-md-2 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:auto;margin-bottom:0px;overflow:initial">
+  <div class="nav">
+    <a href="/user/portfolio_settings" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:88vw;"></span></h1></a>
+    <a href="/user/inbox" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:12vw;"></span></h1>
+    </a>
+  </div>
+<div class="sceneElement" data-viewport="0">
+ <div class="col-lg-3 col-md-3 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:650px;padding-left:35px">
     <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.2)">
         <div class="header">
             <h2>My Portfolios</h2>
@@ -10,7 +16,7 @@
         <div class="content list-group ui-sortable" id="sortable_example_1" style="background:rgba(0,0,0,0.5);">
             <a href="#" class="list-group-item" style="text-align:center;height:150px">
               <br>
-              <span style="font-size:24px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
+              <span style="font-size:20px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:0px;position:relative;display:inline;line-height:75px">
           Portfolios Summary
               </span><br><br>
              <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
@@ -33,7 +39,7 @@
         </div>        
     </div>
 </div>
-<div class="col-lg-6 col-md-6 col-sm-10"> 
+<div class="col-lg-9 col-md-9 col-sm-10"> 
     <div style="height:125px">
     <div class="block">
         <div class="input-group">
@@ -65,7 +71,7 @@
     <div>
     <div id="pin"></pin>
     {% for portfolio in all_portfolios %}
-    <div class="block" style="margin-top:50px;margin-bottom:50px">
+    <div class="block" style="margin-top:2vh;margin-bottom:23vh">
         <!-- <div class="header"> -->
           <div class="header" style="background-color:rgba(0,0,0,0.4)">
             <div class="side pull-right">              

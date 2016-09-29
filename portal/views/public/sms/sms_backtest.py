@@ -6,10 +6,10 @@ import json
 from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
 from datetime import datetime
-from prophet import Prophet
-from prophet.data import YahooCloseData
-from prophet.analyze import default_analyzers
-from prophet.orders import Orders
+# from prophet import Prophet
+# from prophet.data import YahooCloseData
+# from prophet.analyze import default_analyzers
+# from prophet.orders import Orders
 
 class OrderGenerator(object):
 

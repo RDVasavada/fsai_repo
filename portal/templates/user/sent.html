@@ -4,8 +4,15 @@
 <script>
 localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
 </script>
-<div class="col-lg-2"></div>
- <div class="col-lg-2 col-md-2 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:650px">
+  <div class="nav">
+    <a href="/user/inbox" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:88vw;"></span></h1></a>
+    <a href="/user/dashboard/skip" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:12vw;"></span></h1>
+    </a>
+  </div>
+
+ <div class="col-lg-3 col-md-3 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:650px;padding-left:35px">
     <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.4)">
         <div class="header">
             <h2>Sent</h2>
@@ -41,9 +48,9 @@ localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
 </div>
 
 
-<div class="col-lg-6" style="height:650px;">
+<div class="col-lg-9    " style="height:650px;">
     <div class="block block-drop-shadow" style="height:650px">
-        <div class="header">
+        <div class="header" style="background-color:rgba(0,0,0,0.4)">
             <h2>Messaging</h2>
             <div class="input-group" style="margin-left:100px">                        
                 <input type="text" class="form-control" placeholder="Search...">

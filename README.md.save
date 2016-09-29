@@ -153,3 +153,122 @@ print(analyze("what is my highest performing stock?"))
     
 
 # print(findOperatingNouns("whats the 60 day profit margin for valspar?"))
+
+
+
+  <div class="row" style="margin:0px">
+    <div class="col-lg-2 col-md-2" style="height:600px;padding-left:0px;padding-right:0px;margin-right:10px">
+        <div class="block" style="height:599px;margin:0px">
+            <div class="header">
+                <h2 style="font-size:12px;font-weight:100;font-family:'helvetica neue">Your Portfolios</h2>
+            </div>
+            <div class="content list-group ui-sortable" id="sortable_example_1" style="height:559px;background:rgba(0,0,0,0.5);overflow:hidden">
+                {% for portfolio in portfolios %}
+                <a href="#" class="list-group-item" style="text-align:center;height:150px">{{portfolio.name}}
+                  <br>
+                  <span style="font-size:18px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
+                    ${{portfolio.value}}
+                  </span><br><br>
+                 <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
+                      +33%
+                  </span><br>
+                 <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue'">
+                    {{portfolio.no_of_tickers}} Tickers
+                  </span>                
+                </a>
+                {% endfor %}
+            </div>
+        </div> 
+      </div>
+    <div class="col-lg-7 col-md-5" style="width:61%;margin-left:1vw;margin-right:1vw;padding:0px;height:605px;overflow:hidden;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;">
+        <div class="block" style="margin-left:-5px;margin-bottom:10px;height:240px;">
+            <div class="header">
+                <h2 style="font-size:12px;letter-spacing:2px;padding-left:2px"> Performance Summary </h2>
+                  <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="letter-spacing:2px">
+                    Select Analytic <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Portfolio Summary</a></li>
+                        <li><a href="#">Compare to S&P 500</a></li>
+                        <li><a href="#">Compare to NDX</a></li>
+                        <li><a href="#">Compare to DJI</a></li>
+                        <li><a href="#">Back-Test</a></li>
+                      <li class="divider"></li>                        
+                        <li><a href="#">Your Stocks</a></li>
+
+          <!--       {% for portfolio in portfolios %}                      
+                        <li><a href="#">{{portfolio.name}}</a></li>
+                {% endfor %} -->
+                    </ul>
+                 </div>
+            </div>
+            <div class="block content" style="background:rgba(0,0,0,0.6);height:200px;margin-bottom:0px">
+              <label style="font-weight:100;font-family:'helvetica neue'">Unrealized Gains</label>    <br>           
+                  <div class="knob" style="margin:10px">
+                      <div style="display: block; width: 100px; height: 100px;">
+                        <canvas width="100" height="100" style="position: absolute !important; top:-100px !important"></canvas>
+                        <input type="text" data-fgcolor="#FFFFFF" data-min="0" data-max="100" data-width="100" data-height="100" value="99" style="width: 50px; height: 33px; position: absolute; vertical-align: middle; top: 0px; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(255, 255, 255); padding: 0px; -webkit-appearance: none;"></div>
+                  </div>
+
+            </div>
+        </div>  
+      <div class="block" style="margin-left:-5px;margin-bottom:20px;margin-top:8px;height:340px">
+          <div class="header">
+                <h2 style="font-size:12px">Market Charts</h2> 
+                <div class="side pull-right">
+                   <div class="btn-group btn-group-xs">
+                        <button type="button" class="btn btn-default btn-clean" onClick="changeTime('1y')">1y</button>
+                        <button type="button" class="btn btn-default btn-clean" onClick="changeTime('90d')">90d</button>
+                        <button type="button" class="btn btn-default btn-clean" onClick="changeTime('30d')">30d</button>                                    
+                    </div>  
+                </div>
+            </div>
+            <div class="content bg-dot30" style="height:300px;background:rgba(0,0,0,0.6)">
+                  <br><span id="chosenMarket" style="top:-10px;left:85px;position:relative"> 
+                    S&P 500
+                  </span>
+
+                  <div class="ibox-content" id="myBar" style="height:150px;position:relative;top:-2vh;left:1vw">
+                      <div class="row" style="overflow:hidden">
+                      </div>
+                  </div> 
+                  <div class="head-panel nm" style="position:absolute;top:310px;left:25px">
+                      <div class="btn-toolbar">
+                          <div id="new_input">
+                           <div class="btn-group btn-group-xs">
+                              <button type="button"  name="stock A" id="stock" value="^GSPC" class="btn btn-default btn-clean" onClick="updateData('^GSPC')">S&P500</button>
+                             <button type="button"  name="stock" id="stock" value="^IXIC" class="btn btn-default btn-clean" onClick="updateData('^IXIC')">Nasdaq</button>
+                             <button type="button"  name="stock" id="stock" value="^DJI" class="btn btn-default btn-clean" onClick="updateData('^DJI')">Dow Jones</button>
+
+                              <!-- <button type="button" class="btn btn-default btn-clean">Nasdaq</button> -->
+                              <!-- <button type="button" class="btn btn-default btn-clean">Dow Jones</button>                                     -->
+                          </div>
+                        
+                          </div>
+                      </div>
+                 </div>                   
+             </div>   
+        </div>          
+  </div>
+    <div class="col-lg-2 col-md-2" style="padding-left:0px;padding-right:0px;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;height:600px;margin-left:2.5px">
+        <div class="block" style="margin:0px;height:599px">
+            <div class="header">
+                <h2 style="font-size:12px;letter-spacing:0.25px">Market Headlines</h2>
+            </div>
+            <div class="content bg-dot30" style="height:560px;overflow:hidden;background:rgba(0,0,0,0.6)">
+                <div class="head-panel nm">
+                    <div class="col-lg-12" style="height:560px;overflow:scroll">   
+                        <table class="table table-hover margin bottom">
+                            <tbody id="newsPin">
+                                <tr id="incomingNews" style="display:none">
+                                    <td><a href="#" target="_blank" style="width:100%;display:inline-block;color:#428bca;text-decoration: underline;"></a></td> 
+                                </tr> 
+                                </tbody>
+                            </table>
+                        </div>
+                </div>                      
+        </div>    
+    </div>
+        </div> 
+      </div>

@@ -1,8 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
  <script src="/static/js/user/individual_stock.js"></script>
- <div class="col-lg-2 col-md-2"></div>
-     <div class="col-lg-6 col-md-6 col-sm-8">
+  <div class="nav">
+    <a href="/user/my_portfolios" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:88vw;"></span></h1></a>
+    <a href="/user/dashboard/skip" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:12vw;"></span></h1>
+    </a>
+  </div>
+<div class="sceneElement" data-viewport="0">
+ <div class="col-lg-3 col-md-3 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:650px;padding-left:35px">
+     <div class="col-lg-8 col-md-8 col-sm-8">
         <h2 style="text-align:center;" id="companyName"> {{company_name}} {{company_symbol}} </h2>
         <span style="display:none" id="companySymbol">{{company_symbol}}</span>
         <div class="col-md-12 col-sm-12">
@@ -71,7 +79,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-md-2 col-sm-12" style="margin-right:50px">
+    <div class="col-lg-4 col-md-4 col-sm-12" >
         <div class="block block-drop-shadow">
             <div class="header">   
                  <h2>Overview of Company</h2>

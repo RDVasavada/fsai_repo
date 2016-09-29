@@ -22,8 +22,8 @@ def my_portfolios(request):
         # get the portfolios of the user
         # print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
         try:
-            all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
-            # all_portfolios = Portfolio.objects.filter(user__id=1)
+            # all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
+            all_portfolios = Portfolio.objects.filter(user__id=27)
             #print(all_portfolios)
 
             #all_portfolios = Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id])
@@ -63,7 +63,6 @@ def my_portfolios(request):
     context_dict["username"] = username
     t_portfolios = top_portfolios(request, portalUser.id)
     context_dict["portfolios"] = t_portfolios
-
     t = loader.get_template('user/my_portfolios.html')
     c = Context(context_dict)
     html = t.render(context_dict)

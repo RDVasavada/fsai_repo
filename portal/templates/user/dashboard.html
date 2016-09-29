@@ -1,21 +1,34 @@
 {% extends "base.html" %}
     {% block content %}
-<div class="col-lg-2 col-md-2 col-sm-2"></div>
-<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" style="margin:10px;height:70vh;padding:0px">
-  <div class="row">
-    <div class="col-lg-3 col-md-3" style="padding-left:0px;padding-right:0px">
-        <div class="block">
+
+<div class="col-lg-2 col-md-2 col-sm-2" style="padding:0px">
+  <div class="nav">
+    <a href="/user/inbox" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:88vw;"></span></h1></a>
+    <a href="/user/support" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:12vw;"></span></h1>
+    </a>
+  </div>
+</div>
+<div class="sceneElement" data-viewport="0">
+<div class="col-lg-12 col-md-12 col-sm-8 col-xs-12" style="margin:0px;height:600px;padding-left:0px;padding-right:0px;margin-left:1vw;margin-right:1vw;">
+  <div class="row" style="margin:0px">
+    <div class="col-lg-2 col-md-2" style="height:600px;padding-left:0px;padding-right:0px;margin-right:10px">
+        <div class="block" style="height:599px;margin:0px">
             <div class="header">
-                <h2>Your Portfolios</h2>
+                <h2 style="font-size:12px;font-weight:100;font-family:'helvetica neue">Your Portfolios</h2>
             </div>
-            <div class="content list-group ui-sortable" id="sortable_example_1" style="background:rgba(0,0,0,0.5)">
+            <div class="content list-group ui-sortable" id="sortable_example_1" style="height:559px;background:rgba(0,0,0,0.5);overflow:hidden;letter-spacing:1px;font-weight:100;font-family:'Helvetica Neue'">
                 {% for portfolio in portfolios %}
                 <a href="#" class="list-group-item" style="text-align:center;height:150px">{{portfolio.name}}
                   <br>
-                  <span style="font-size:24px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
-                    ${{portfolio.value}}
-                  </span><br><br>
-                 <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
+                  <span style="font-size:18px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative" id="currVal">
+                    {{portfolio.value}}
+                  </span>
+                  <div style="display:none" id="initVal">{{portfolio.investment}}</div>
+                  <div style="display:none" id="riskVal">{{portfolio.risk}}</div>
+                  <br><br>
+                 <span id="percent" style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
                       +33%
                   </span><br>
                  <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue'">
@@ -26,38 +39,64 @@
             </div>
         </div> 
       </div>
-    <div class="col-lg-6 col-md-6" style="height:67vh;overflow:hidden;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;">
-        <div class="block" style="margin-bottom:10px">
+    <div class="col-lg-7 col-md-5" style="width:61%;margin-left:1vw;margin-right:1vw;padding:0px;height:605px;overflow:hidden;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;">
+        <div class="block" style="margin-left:-5px;margin-bottom:10px;height:240px;">
             <div class="header">
-                <h2>Newest Vise Picks</h2>
+                <h2 style="font-size:12px;letter-spacing:2px;padding-left:2px"> Performance Summary </h2>
+                  <div class="btn-group pull-right">
+    <!--                 <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="letter-spacing:2px">
+                    Select Analytic <span class="caret"></span>
+                    </button>
+ --><!--                     <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Portfolio Summary</a></li>
+                        <li><a href="#">Compare to S&P 500</a></li>
+                        <li><a href="#">Compare to NDX</a></li>
+                        <li><a href="#">Compare to DJI</a></li>
+                        <li><a href="#">Back-Test</a></li>
+                      <li class="divider"></li>                        
+                        <li><a href="#">Your Stocks</a></li> -->
+<!-- 
+                {% for portfolio in portstocks %}  
+                        <li><a href="#">
+                          {{portfolio.name}}</a></li>
+                {% endfor %} -->
+                    <!-- </ul> -->
+                 </div>
             </div>
-            <div class="block content" style="background:rgba(0,0,0,0.6);height:200px;margin-bottom:0px">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner" style="text-align:center;height:auto">
-                        <div class="item active">                              
-                            <div class="carousel-content" style="height:auto">
-                                <p>
-                                  Reccomendation by Jean-Marie Eveillard:<br>
-                                  <h4>ARQL:NAS</h4> Arqule Inc<br>
-                                  Biotechnology - Healthcare<br><br>
-                                  <h2 style="color:#00ff00">+96.18%</h2> <h4>on 4/29</h4><br>
-                                </p>                           
-                             </div>
-                        </div>                                                                
-                    </div>
+            <div class="block content" id="performance" style="background:rgba(0,0,0,0.6);height:200px;margin-bottom:0px">
+              <div class="historical" style="display:none">
+              {% for stock in stockDict %}
+              {{stock}}
+              {% endfor %}
+            </div>
+                {% for port in all_portfolios %}
+                {{port}}              
+                {% endfor %}
+                  <div class="hp-info pull-left" style="line-height:50px;text-align:center;width:50%;">
+                    <span class="icon-thumbs-up-alt" style="position:absolute;font-size:175px;top:90px;left:75px;color:rgba(255,255,255,0.1)"></span>
+                      <div class="hp-icon" style="font-size:24px" >
+                          <span class="hp-sm">Total Gains</span> <br>                               
+                          <span class="icon-usd" style="font-weight:100;position:relative;top:25px"></span>
+                          <span class="hp-main" id="gains" style="position:relative;top:25px"></span>                                
+                      </div>                                                 
+                  </div>
+                 <div class="hp-info pull-left" style="line-height:50px;text-align:center;width:50%;">
+                      <div class="hp-icon" style="font-size:24px">
+                          <span class="hp-sm">Aggregate Risk</span> <br>                               
+                        <div class="knob">
+                            <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas>
+                              <input id="risks" type="text" data-fgcolor="red" data-min="0" data-max="100" data-width="100" data-height="100" value="44" data-readonly="true" readonly="readonly" style="width: 50px; height: 33px; position: absolute; vertical-align: middle; top: 50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 16px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                            </div>
+                        </div>
+                          <span class="hp-main" id="risks"></span>                                
+                      </div>                                                 
+                  </div>
 
-                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                        <span class="icon-chevron-left"></span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                        <span class="icon-chevron-right"></span>
-                    </a>
-                </div>                          
             </div>
         </div>  
-      <div class="block">
+      <div class="block" style="margin-left:-5px;margin-bottom:20px;margin-top:8px;height:340px">
           <div class="header">
-                <h2>Market Charts</h2> 
+                <h2 style="font-size:12px">Market Charts</h2> 
                 <div class="side pull-right">
                    <div class="btn-group btn-group-xs">
                         <button type="button" class="btn btn-default btn-clean" onClick="changeTime('1y')">1y</button>
@@ -66,17 +105,16 @@
                     </div>  
                 </div>
             </div>
-            <div class="content bg-dot30" style="height:auto;background:rgba(0,0,0,0.6)">
-                  <br><span id="chosenMarket" style="top:10px;left:30px;position:relative"> 
-                    S&P 500<br>
-                    <h6 style="color:#00ff00">+0.23% </h4>
-                  </span><br>
+            <div class="content bg-dot30" style="height:300px;background:rgba(0,0,0,0.6)">
+                  <br><span id="chosenMarket" style="top:-10px;left:85px;position:relative"> 
+                    S&P 500
+                  </span>
 
-                  <div class="ibox-content" style="display: block;background-color: rgba(0,0,0,0);border:0px;background-repeat:no-repeat;background-position:center;padding:0px;position:relative;height:225px" id="myBar">
+                  <div class="ibox-content" id="myBar" style="height:150px;position:relative;top:-2vh;left:1vw">
                       <div class="row" style="overflow:hidden">
                       </div>
                   </div> 
-                  <div class="head-panel nm">
+                  <div class="head-panel nm" style="position:absolute;top:310px;left:25px">
                       <div class="btn-toolbar">
                           <div id="new_input">
                            <div class="btn-group btn-group-xs">
@@ -93,15 +131,15 @@
                  </div>                   
              </div>   
         </div>          
-    </div>
-    <div class="col-lg-3 col-md-3" style="padding-left:0px;padding-right:0px;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px">
-        <div class="block">
+  </div>
+    <div class="col-lg-2 col-md-2" style="padding-left:0px;padding-right:0px;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;height:600px;margin-left:2.5px">
+        <div class="block" style="margin:0px;height:599px">
             <div class="header">
-                <h2>Market Headlines</h2>
+                <h2 style="font-size:12px;letter-spacing:0.25px">Market Headlines</h2>
             </div>
-            <div class="content bg-dot30" style="height:63vh;overflow:hidden;background:rgba(0,0,0,0.6)">
+            <div class="content bg-dot30" style="height:560px;overflow:hidden;background:rgba(0,0,0,0.6)">
                 <div class="head-panel nm">
-                    <div class="col-lg-12" style="height:60vh;overflow:scroll">   
+                    <div class="col-lg-12" style="height:560px;overflow:scroll">   
                         <table class="table table-hover margin bottom">
                             <tbody id="newsPin">
                                 <tr id="incomingNews" style="display:none">
@@ -111,12 +149,17 @@
                             </table>
                         </div>
                 </div>                      
-            </div>    
-            </div>
+        </div>    
+    </div>
         </div> 
       </div>
   </div>
-<div class="col-lg-2 col-md-2 col-sm-2">
+
+
+  </body>
+</html>
+
+<div class="col-lg-1 col-md-2 col-sm-2">
               <div id="new_input" style="display:none">
                     &nbsp &nbsp
                     Stock: <input type="text" name="stock" id="stock" value="YHOO" 
@@ -134,11 +177,128 @@
                     onclick="updateData()" />
                 </div>
 </div>
-                
+</div>      
     {% endblock %}
 {% block scripts %}
     <link href="/static/css2/d3chart.css" rel="stylesheet">
     <script src="/static/js/user/dashboard.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
+          
 {% endblock %}
 
+ <!-- <!--  <div class="row" style="margin:0px">
+    <div class="col-lg-2 col-md-2" style="height:600px;padding-left:0px;padding-right:0px;margin-right:10px">
+        <div class="block" style="height:599px;margin:0px">
+            <div class="header">
+                <h2 style="font-size:12px;font-weight:100;font-family:'helvetica neue">Your Portfolios</h2>
+            </div>
+            <div class="content list-group ui-sortable" id="sortable_example_1" style="height:559px;background:rgba(0,0,0,0.5);overflow:hidden">
+                {% for portfolio in portfolios %}
+                <a href="#" class="list-group-item" style="text-align:center;height:150px">{{portfolio.name}}
+                  <br>
+                  <span style="font-size:18px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
+                    ${{portfolio.value}}
+                  </span><br><br>
+                 <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
+                      +33%
+                  </span><br>
+                 <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue'">
+                    {{portfolio.no_of_tickers}} Tickers
+                  </span>                
+                </a>
+                {% endfor %}
+            </div>
+        </div> 
+      </div>
+    <div class="col-lg-7 col-md-5" style="width:61%;margin-left:1vw;margin-right:1vw;padding:0px;height:605px;overflow:hidden;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;">
+        <div class="block" style="margin-left:-5px;margin-bottom:10px;height:240px;">
+            <div class="header">
+                <h2 style="font-size:12px;letter-spacing:2px;padding-left:2px"> Performance Summary </h2>
+                  <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="letter-spacing:2px">
+                    Select Analytic <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Portfolio Summary</a></li>
+                        <li><a href="#">Compare to S&P 500</a></li>
+                        <li><a href="#">Compare to NDX</a></li>
+                        <li><a href="#">Compare to DJI</a></li>
+                        <li><a href="#">Back-Test</a></li>
+                      <li class="divider"></li>                        
+                        <li><a href="#">Your Stocks</a></li>
+
+          <!--       {% for portfolio in portfolios %}                      
+                        <li><a href="#">{{portfolio.name}}</a></li>
+                {% endfor %} -->
+                    </ul>
+                 </div>
+            </div>
+            <div class="block content" style="background:rgba(0,0,0,0.6);height:200px;margin-bottom:0px">
+              <label style="font-weight:100;font-family:'helvetica neue'">Unrealized Gains</label>    <br>           
+                  <div class="knob" style="margin:10px">
+                      <div style="display: block; width: 100px; height: 100px;">
+                        <canvas width="100" height="100" style="position: absolute !important; top:-100px !important"></canvas>
+                        <input type="text" data-fgcolor="#FFFFFF" data-min="0" data-max="100" data-width="100" data-height="100" value="99" style="width: 50px; height: 33px; position: absolute; vertical-align: middle; top: 0px; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(255, 255, 255); padding: 0px; -webkit-appearance: none;"></div>
+                  </div>
+
+            </div>
+        </div>  
+      <div class="block" style="margin-left:-5px;margin-bottom:20px;margin-top:8px;height:340px">
+          <div class="header">
+                <h2 style="font-size:12px">Market Charts</h2> 
+                <div class="side pull-right">
+                   <div class="btn-group btn-group-xs">
+                        <button type="button" class="btn btn-default btn-clean" onClick="changeTime('1y')">1y</button>
+                        <button type="button" class="btn btn-default btn-clean" onClick="changeTime('90d')">90d</button>
+                        <button type="button" class="btn btn-default btn-clean" onClick="changeTime('30d')">30d</button>                                    
+                    </div>  
+                </div>
+            </div>
+            <div class="content bg-dot30" style="height:300px;background:rgba(0,0,0,0.6)">
+                  <br><span id="chosenMarket" style="top:-10px;left:85px;position:relative"> 
+                    S&P 500
+                  </span>
+
+                  <div class="ibox-content" id="myBar" style="height:150px;position:relative;top:-2vh;left:1vw">
+                      <div class="row" style="overflow:hidden">
+                      </div>
+                  </div> 
+                  <div class="head-panel nm" style="position:absolute;top:310px;left:25px">
+                      <div class="btn-toolbar">
+                          <div id="new_input">
+                           <div class="btn-group btn-group-xs">
+                              <button type="button"  name="stock A" id="stock" value="^GSPC" class="btn btn-default btn-clean" onClick="updateData('^GSPC')">S&P500</button>
+                             <button type="button"  name="stock" id="stock" value="^IXIC" class="btn btn-default btn-clean" onClick="updateData('^IXIC')">Nasdaq</button>
+                             <button type="button"  name="stock" id="stock" value="^DJI" class="btn btn-default btn-clean" onClick="updateData('^DJI')">Dow Jones</button>
+
+                              <!-- <button type="button" class="btn btn-default btn-clean">Nasdaq</button> -->
+                              <!-- <button type="button" class="btn btn-default btn-clean">Dow Jones</button>                                     -->
+                          </div>
+                        
+                          </div>
+                      </div>
+                 </div>                   
+             </div>   
+        </div>          
+  </div>
+    <div class="col-lg-2 col-md-2" style="padding-left:0px;padding-right:0px;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;height:600px;margin-left:2.5px">
+        <div class="block" style="margin:0px;height:599px">
+            <div class="header">
+                <h2 style="font-size:12px;letter-spacing:0.25px">Market Headlines</h2>
+            </div>
+            <div class="content bg-dot30" style="height:560px;overflow:hidden;background:rgba(0,0,0,0.6)">
+                <div class="head-panel nm">
+                    <div class="col-lg-12" style="height:560px;overflow:scroll">   
+                        <table class="table table-hover margin bottom">
+                            <tbody id="newsPin">
+                                <tr id="incomingNews" style="display:none">
+                                    <td><a href="#" target="_blank" style="width:100%;display:inline-block;color:#428bca;text-decoration: underline;"></a></td> 
+                                </tr> 
+                                </tbody>
+                            </table>
+                        </div>
+                </div>                      
+        </div>    
+    </div>
+        </div> 
+      </div> 

@@ -1,6 +1,20 @@
-// $("body").css('display','none');
+console.log($("div#visePicked"))
+  $("div#vise").hover(function() {
+    $("li#selectedOption")[0].innerHTML = "Vise's Portfolio Wizard allows for the highest level of customization and freedom <br>for creaing portfolios. This option is recommended if you have specific preferences for trading, <br>such specific company stocks, restricting your portfolio to certain industries, or basing portfolios off of <br>desired return and risk calculation.Given your individual preferences, Vise will think <br>of a portfolio based on your specs and information derived from algorithms which analyze market movers."
+  })
+  $("div#vise").click(function(){
+    $("#picker").css('display','none')
+    $("#visePicked").css('display','initial')
+  })     
+  $("div#guru").hover(function() {
+    $("li#selectedOption")[0].innerHTML = " <li>Creating a portfolio based on our Financial Guru's advice offers more flexibility <br>than templated portfolios, but offers less options compared to Vise's Portfolio Wizard. <br>This is recommended for users with some experience investing, <br>but would like to become more familiar with different strategies and options for trading.<li>"
+  })
+  $("div#template").hover(function() {
+    $("li#selectedOption")[0].innerHTML = "<li> This option is a smart choice for beginners with no specific preference for portfolio settings.<br> Templated portfolios provide a standard base foundation and introduction toward investing with Vise.<li>"
+  })    
+
 function loadDummyData() {
-    setTimeout(function(){ document.forms["myForm"].submit(); }, 2000);
+    setTimeout(function(){ document.forms["wizard"].submit(); }, 3000);
 }
 $("button").click(function(e) {
     var button = e.currentTarget.outerText
@@ -16,53 +30,120 @@ $("button").click(function(e) {
 
 
 
-    var rangeSlider = document.getElementById('basic_slider');
-    
-    noUiSlider.create(rangeSlider, {
-        start: [30],
-        range: {
-            'min': [ 0 ],
-            'max': [ 100 ]
-        }
-    });
-    var rangeSliderValueElement = document.getElementById('basic_slider_value');
-    var riskSliderRiskElement = document.getElementById('risk_slider_risk');
-    rangeSlider.noUiSlider.on('update', function( values, handle ) {
-        rangeSliderValueElement.innerHTML = values[handle] + "%";
-        if(values[handle] < 30) {
-            riskSliderRiskElement.innerHTML = "<p style='color:green;'>Low Risk</p>"
-        } else if(values[handle] > 30 && values[handle] < 60) {
-            riskSliderRiskElement.innerHTML = "<p style='color:orange;'>Medium Risk</p>"
-        } else if (values[handle] > 60) {
-            riskSliderRiskElement.innerHTML = "<p style='color:red;'>High Risk</p>"
-        }
-    });
-    function stockChecker() {
-        var stocksNumberElement = document.getElementById('stocks_number');
-        if (stocksNumberElement.value > 30) { stocksNumberElement.value = 30} else if (stocksNumberElement.value < 3) { stocksNumberElement.value = 3}
-    }
-    function returnChecker() {
-        var expReturnElement = document.getElementById('expReturn');
-        if (expReturnElement.value > 50) { expReturnElement.value = 50} else if (expReturnElement.value < 1) { expReturnElement.value = 1}
-    }
-    function riskChecker() {
-        var expRiskElement = document.getElementById('expRisk');
-        if (expRiskElement.value > 20) { expRiskElement.value = 20} else if (expRiskElement.value < 1) { expRiskElement.value = 1}
-    }
-    function popitup(url) {
-        newwindow=window.open(url,'name','height=400,width=400');
-        if (window.focus) {newwindow.focus()}
-        return false;
-    }
+
+
+ 
     function showfield(){
         var mydropdown = document.getElementById('StockFilters');
         var strselect = mydropdown.options[mydropdown.selectedIndex].text;
-        if(strselect=="Select filter")
-            document.getElementById('stockinfo').style.display="none";
-        else
-            document.getElementById('stockinfo').style.display="block";
-            document.getElementById('stockfillername').innerHTML=strselect;
-       
+           if(strselect=="Select filter")
+           {
+              document.getElementById('all_filters').style.display="none";
+           }
+           else if (strselect=="Price")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('priceinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername1').innerHTML=strselect;
+           }
+           else if (strselect=="Valuation")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('valuationinfo').style.display="block";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername2').innerHTML=strselect;
+           }
+           else if (strselect=="Dividend")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('dividendinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername3').innerHTML=strselect; 
+            }   
+          else if (strselect=="Financial Ratios")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('FRinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername4').innerHTML=strselect; 
+            }  
+           else if (strselect=="Operating Metrics")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('OMinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername5').innerHTML=strselect; 
+            }   
+           else if (strselect=="Stock Metrics")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('SMinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername6').innerHTML=strselect; 
+            }   
+           else if (strselect=="Margins")
+           {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('margininfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('growthinfo').style.display="none";
+              document.getElementById('stockfillername7').innerHTML=strselect; 
+            } 
+            else if (strselect=="Growth")
+             {
+              document.getElementById('all_filters').style.display="block";
+              document.getElementById('growthinfo').style.display="block";
+              document.getElementById('valuationinfo').style.display="none";
+              document.getElementById('priceinfo').style.display="none";
+              document.getElementById('dividendinfo').style.display="none";
+              document.getElementById('FRinfo').style.display="none";
+              document.getElementById('OMinfo').style.display="none";
+              document.getElementById('SMinfo').style.display="none";
+              document.getElementById('margininfo').style.display="none";
+              document.getElementById('stockfillername8').innerHTML=strselect; 
+            }      
     }
    function lowrisk(){
     /*
@@ -72,7 +153,7 @@ $("button").click(function(e) {
     return false;
     }
 
-  $( function() {
-    $( "#datepicker" ).calendarsPicker();
-  } );
+  // $( function() {
+  //   $( "#datepicker" ).calendarsPicker();
+  // } );
    

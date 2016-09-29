@@ -16,7 +16,8 @@ def main(request):
     return render(request, 'public/splash.html')
 
 def splash(request):
-    return render(request, 'user/dashboard.html')
+    # return render(request, 'user/dashboard.html')
+    return HttpResponseRedirect('/user/dashboard')
 
 def logoutview(request):
     ''' Logout the current user '''

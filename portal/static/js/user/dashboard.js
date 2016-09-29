@@ -1,25 +1,16 @@
 var margin = {top: 25, right: 25, bottom: 50, left: 50},
-    width = 650 - margin.left - margin.right,
-    height = 250 - margin.top - margin.bottom;
-
-// Parse the date / time
+    width = 600 - margin.left - margin.right,
+    height = 265 - margin.top - margin.bottom;
 var parseDate = d3.time.format("%Y-%m-%d").parse;
-
-// Set the ranges
 var x = d3.time.scale().range([0, width]);
 var y = d3.scale.linear().range([height, 0]);
-
 var xAxis = d3.svg.axis().scale(x)
     .orient("bottom").ticks(5);
-
 var    yAxis = d3.svg.axis().scale(y)
     .orient("left").ticks(5);
-
 var valueline = d3.svg.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.high); });
-    
-  
 var svg = d3.select(".ibox-content")
     // .append("svg")
     //     .attr("width", width + margin.left + margin.right)
@@ -36,7 +27,6 @@ var svg = d3.select(".ibox-content")
     .attr("transform", "translate(" 
         + margin.left 
         + "," + margin.top + ")");
-
 var stock = document.getElementById('stock').value;
 var start = document.getElementById('start').value;
 var end = document.getElementById('end').value;
@@ -89,24 +79,6 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
         .attr("text-anchor", "start")
         .style("fill", "steelblue")
         .text("high");
-
-    // svg.append("text")          // Add the title shadow
-    //     .attr("x", (width / 2))
-    //     .attr("y", margin.top / 2)
-    //     .attr("text-anchor", "middle")
-    //     .attr("class", "shadow")
-    //     .style("font-size", "16px")
-    //     .style("fill", "#fff")
-    //     .text(stock);
-        
-    // svg.append("text")          // Add the title
-    //     .attr("class", "stock")
-    //     .attr("x", (width / 2))
-    //     .attr("y", margin.top / 2)
-    //     .attr("text-anchor", "middle")
-    //     .style("font-size", "16px")
-    //     .style("fill", "transparent")
-    //     .text(stock);
 });
 
 // ** Update data section (Called from the onclick)
@@ -218,7 +190,7 @@ xhr.onreadystatechange = function(){
             var news  = JSON.parse(xhr.responseText).items
             news.forEach(function(x) {
                 var clone = $("#incomingNews").clone()
-                clone[0].children[0].children[0].href = x.link
+                // clone[0].children[0].children[0].href = x.link
                 clone[0].children[0].children[0].innerText = x.title
                 clone.removeAttr('id').css('display','initial').appendTo($("#newsPin"))
             })
@@ -226,6 +198,60 @@ xhr.onreadystatechange = function(){
     }
 xhr.open('GET','http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo,appl,googl,tsla',true);
 xhr.send();
+
+
+if (!localStorage['historical']) {
+    var stocks = $(".historical")[0].innerText
+    stocks = stocks.replace(/\s/g, '');
+    localStorage.setItem('historical',stocks)
+} else {
+    var gains = 0
+    var data = JSON.parse(localStorage['historical'])
+    data.forEach(function(x,i) {
+        for (key in x) {
+            for (ley in x[key]){
+                makeGraph(x[key][ley].data, x[key][ley])
+                var buy_price = x[key][ley].data[0]
+                var price = (x[key][ley].current_price)
+                var gain = (Number(price) - buy_price) * x[key][ley].number_of_shares
+                if (gain) {
+                    gains+=gain
+                    localStorage.setItem('gains',gains)
+                    $("span#gains")[0].innerText = gains.toFixed(2)
+                }
+            }
+        }
+    })
+}
+function makeGraph(hist, ticker){
+    
+}
+var initval = $("div#initVal")
+for (d in initval) {
+    if (parseInt(d) || d == 0){
+        var a = initval[d].parentNode.children[1].innerText
+        var b = initval[d].parentNode.children[2].innerText
+        var c = (parseFloat(a)/parseFloat(b)*100).toFixed(2)
+        initval[d].parentNode.children[6].innerText = c + "%"
+    }
+}
+var risks = $("div#riskVal")
+var totalRisk = 0
+for (e in risks) {
+    total = 1
+    if (parseInt(e) || e == 0){
+        var r = risks[e].innerText
+        totalRisk+=Number(r)
+        total += 1
+        totalRisk = totalRisk / total
+        $("input#risks")[0].value =totalRisk.toFixed(0)
+    }
+}
+// initval.forEach(function(x) {
+//     console.log(typeof(x))
+// })
+// console.log(parseInt(currval)/parseInt(initval))
+
 
 
 

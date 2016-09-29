@@ -4,7 +4,8 @@
 <head>
     <title>{% block title %}Vise{% endblock %}</title>    
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block page_css %}
         <link rel="icon" type="image/ico" href="favicon.ico"/>
         <link href="/static/css2/bootstrap.min.css" rel="stylesheet">
@@ -14,6 +15,7 @@
         <link href="/static/css2/fsai.css" rel="stylesheet">
         <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
         <link href="/static/css2/stylesheet.css" rel="stylesheet" type="text/css"/>   
+        <link href="/static/css2/viseanimations.css" rel="stylesheet" type="text/css"/>   
     {% endblock %}
     {% block head %}            
         <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery.min.js'></script>
@@ -33,7 +35,8 @@
 
         <script type='text/javascript' src='/static/assets/js/plugins.js'></script>    
         <script type='text/javascript' src='/static/assets/js/actions.js'></script>
-        <script type='text/javascript' src='/static/assets/js/settings.js'></script>
+<!--         // <script type='text/javascript' src='/static/assets/js/settings.js'></script> -->
+        <script type='text/javascript' src='/static/assets/jquery.smoothState.min.js'></script> 
         <script type="text/javascript" src="/static/assets/js1/morris.js"></script>
         <script type="text/javascript" src="/static/assets/js1/raphael.js"></script>
         <script type='text/javascript' src='/static/assets/js/plugins/jquery/globalize.js'></script>
@@ -42,66 +45,50 @@
         <script type="text/javascript" src="/static/js/user/individual_portfolio.js"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
        <script src="/static/assets/js/d3pie.min.js"></script>
+         <script type='text/javascript' src='/static/assets/main.js'></script>    
     {% endblock %}
 </head>
 
 <script>
+
 function del_cookie() {
                 var cst = getCookie("csrftoken")
                 var ssi = getCookie("sessionid")
                 deleteCookie('cst')
                 deleteCookie('ssi')
             }
+
 </script>
 <body onunload="del_cookie()">
     <div class="row">
-        <div class="col-md-2">
-            <h1><span class="icon-angle-left" style="display: inline-block;line-height: 100vh;position: absolute;left:12vw"></span></h1>
-        </div>
-        <div class="col-md-8" style="padding:0px">
-            <ol class="breadcrumb" style="margin-top:25px;text-align:center">
-                <li><div class="single-pane">
-                    <h8 style="opacity: 1; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 54px;font-family:'Helvetica Neue';" id="splash">
+
+        <div class="col-md-8" style="padding-left:25px;position:relative;left:13vw;width:75.5vw">
+            <div class="btn-group btn-group-justified" style="height:10vh;margin-top:25px;text-align:center">
+                <div class="btn">
+                    <h8 style="opacity: 0.4; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 54px;font-family:'Helvetica Neue';display:inline;line-height:75px;text-align:center" id="splash">
                         <span style="letter-spacing:1px;"><i>V</i></span>ise<br>
                     </h8>
-                </div></li>
-                    <li>
-                        <a href="/user/dashboard" class="stbar transition" id="/user/dashboard">
-                            <span class="icon-home" style="font-size:24px"></span><br>Dashboard
-                        </a>
-                    </li>                            
-                    <li>
-                        <a href="/user/inbox"><span class="icon-comments" style="font-size:24px"></span> 
-                        <br>Messages</a>                
-                    </li>
-                    <li>
-                        <a href="/user/my_portfolios"> <span class="icon-folder-open-alt" style="font-size:24px"></span>
-                            <br>My Portfolios</a>
-                    </li>  
-                    <li>
-                        <a href="/user/portfolio_settings" class="stbar transition" id="/user/portfolio_settings"><span class="icon-plus" style="font-size:24px"></span><br>
-                         New Portfolio</a>
-                    </li>
-                    <li>
-                        <a href="/user/news_portal" class="stbar transition" id="/user/news_portal"><span class="icon-flag-alt"style="font-size:24px"></span> 
-                        <br>News & Sentiment</a>
-                    </li>
-                    <li>
-                        <a href="/user/support" id="/user/support" class="stbar transition"><span class="icon-cogs" style="font-size:24px"></span> 
-                        <br>Support</a>
-
-                    </li>
-                    <li>
-                        <a href="/logout" id="/logout" class="stbar transition"><span class="icon-share-alt" style="font-size:24px"></span> 
-                        <br>Log Out</a>
-                    </li>                                                                   
-                </li>
-
-            </ol>
+                </div>                
+                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/dashboard/skip" class="btn btn-default btn-clean stbar transition" id="/user/dashboard">
+                    <span class="icon-home" style="font-size:24px"></span><br>Dashboard
+                </a>               
+                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/inbox"class="btn btn-default btn-clean"><span class="icon-comments" style="font-size:24px"></span> 
+                <br>Messages</a>
+                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/my_portfolios" class="btn btn-default btn-clean"> <span class="icon-folder-open-alt" style="font-size:24px"></span>
+                    <br>My Portfolios</a>
+                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/portfolio_settings" class="btn btn-default btn-clean" id="/user/portfolio_settings"><span class="icon-plus" style="font-size:24px"></span><br>
+                 New Portfolio</a>
+                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/news_portal" class="btn btn-default btn-clean" id="/user/news_portal"><span class="icon-flag-alt"style="font-size:24px"></span> 
+                <br>News & Sentiment</a>
+                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/support" id="/user/support" class="btn btn-default btn-clean"><span class="icon-cogs" style="font-size:24px"></span> 
+                <br>Support</a>
+                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/logout" id="/logout" class="btn btn-default btn-clean"><span class="icon-share-alt" style="font-size:24px"></span> 
+                <br>Log Out</a>
+            </div>            
         </div>
-        <div class="col-md-2">
-            <h1><span class="icon-angle-right" style="display: inline-block;line-height: 100vh;position: absolute;right:12vw"></span>
+        <div class="col-md-2" style="margin-right:10px">
         </div>
+
     </div>
     <div class="row" style="padding-left:20px;padding-right:20px">
         
@@ -136,15 +123,22 @@ function del_cookie() {
             </div>
 </div>
 <div class="name" style="display:none">{{username}}</div>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css2/viseanimations.css">
+    <div id="main">
+
 {% block content %}
 
 {% endblock %}
-
+</div>
+</div>
 {% block scripts %}
 
 {% endblock %}
 
-    <div class="page-footer">
+    <div class="page-footer" style="margin-top:50px">
         <div class="page-footer-wrap" style="text-align:center;background:transparent">
             <i class="icon-circle-blank" id="nav1"></i>
             <i class="icon-circle-blank" id="nav2"></i>
@@ -154,8 +148,8 @@ function del_cookie() {
             <i class="icon-circle-blank" id="nav6"></i>
         </div>
     </div>
-    <script type='text/javascript' src='/static/assets/jquery.smoothState.min.js'></script>   
-    <script type='text/javascript' src='/static/assets/js/main.js'></script>    
+      
+  
 
 </body>
 

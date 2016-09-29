@@ -20,8 +20,9 @@
         <h3 style="text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ADEAEA;font-size:100px;font-family:Helvetica Neue" id="splash">
             <span style="letter-spacing:10px;"><i>V</i></span>ise
         </h3>
+        <span style="font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;"> "The thing I have discovered about working with personal finance is <br>that the good news is that it is not rocket science. Personal finance <br>is about 80 percent behavior. It is only about 20 percent head knowledge."<br> -Dave Ramsey</span><br><br>
         <img src="/static/img/loader.gif" style="margin-bottom:15px"><br>
-        <span style="font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;"> "The thing I have discovered about working with personal finance is <br>that the good news is that it is not rocket science. Personal finance <br>is about 80 percent behavior. It is only about 20 percent head knowledge."<br> -Dave Ramsey</span>
+        <span style="color:rgba(0,0,0,0.6)" id="narrate"> Checking user. . .</span>
     </div>
     
 <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery.min.js'></script>
@@ -38,7 +39,15 @@
     }
     setTimeout(function(){ 
         if(readCookie('csrftoken')){
-            window.location = ("/user/dashboard")
+            if(localStorage['historical'] !== "") {
+                window.location = ("/user/dashboard")
+            } else {
+                window.location = ("/user/dashboard/skip")
+            }
+            setTimeout(function(){ 
+                $("#narrate")[0].innerText = "Downloading your market data . ."
+                    console.log(localStorage['historical'])
+            }, 500);             
         } else {
             $("#display").css('display','none')
             window.location = ("/login")
