@@ -9,18 +9,41 @@ function rerun() {
            href: "/static/css2/d3chart.css"
         }).appendTo('head');        
         $.getScript("/static/js/user/dashboard.js")
+        $.getScript("/static/assets/js/actions.js")
     } else if ((url.indexOf("inbox")) > 0 ) {
-        $.getScript("/static/assets/js/actions.js")
         $.getScript("/static/js/user/inbox.js")
-    }   else if ((url.indexOf("sent")) > 0 ) {
         $.getScript("/static/assets/js/actions.js")
-    }     else if ((url.indexOf("portfolio_settings")) > 0 ) {
-        $.getScript("/static/assets/js/plugins/jquery/jquery-ui.min.js")
+    } else if ((url.indexOf("sent")) > 0 ) {
+        $.getScript("/static/assets/js/actions.js")
+    } else if ((url.indexOf("portfolio_settings")) > 0 ) {
+        $.getScript("/static/assets/js/plugins.js")
         $.getScript("/static/assets/js/plugins/stepy/jquery.stepy.min.js")
         $.getScript("/static/js/user/portfolio_settings.js")
-    }   
-
+        $.getScript("/static/assets/js/actions.js")
+    } else if ((url.indexOf("individual_portfolio")) > 0 ) {  
+        $.getScript("/static/assets/js/plugins/knob/jquery.knob.js")
+        $.getScript("/static/js/user/individual_portfolio.js")
+        $.getScript("/static/assets/js/actions.js") 
+        $("input#risks").knob();
+        $("#pieChart").d3pie();
+    } else if ((url.indexOf("individual_stock")) > 0 ) {  
+        $.getScript("/static/js/user/individual_stock.js")
+        $.getScript("/static/assets/js/actions.js") 
+    }else if ((url.indexOf("my_portfolios")) > 0 ) {  
+        $.getScript("/static/assets/js/actions.js")
+        $.getScript("/static/assets/js/plugins/knob/jquery.knob.js")
+        $("input#risks").knob();
+        $.getScript("/static/js/user/my_portfolios.js")
+    }else if ((url.indexOf("news_portal")) > 0 ) {  
+        $.getScript("/static/js/user/news_portal.js")
+        $.getScript("/static/assets/js/actions.js")
+    }
+    else if ((url.indexOf("support")) > 0 ) {  
+        $.getScript("/static/js/user/support.js")
+        $.getScript("/static/assets/js/actions.js")
+    }    
 }
+
 (function ($) {
     'use strict';
 

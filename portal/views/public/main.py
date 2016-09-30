@@ -60,6 +60,7 @@ def register(request):
         email = request.POST.get('email', None)
         address = request.POST.get('address', None)
         reason = request.POST.get('reason', None)
+        connections = 0
         errors = []
 
         if password == password_repeat:

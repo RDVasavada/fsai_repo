@@ -26,7 +26,7 @@
         <script type='text/javascript' src='/static/assets/js/plugins/datatables/jquery.dataTables.min.js'></script>
 
         <script type='text/javascript' src='/static/assets/js/plugins/uniform/jquery.uniform.min.js'></script>
-        
+         <script type='text/javascript' src='/static/assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/knob/jquery.knob.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/sparkline/jquery.sparkline.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/flot/jquery.flot.js'></script>     
@@ -69,20 +69,20 @@ function del_cookie() {
                         <span style="letter-spacing:1px;"><i>V</i></span>ise<br>
                     </h8>
                 </div>                
-                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/dashboard/skip" class="btn btn-default btn-clean stbar transition" id="/user/dashboard">
+                <a id="a1" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/dashboard/skip" class="btn btn-default btn-clean stbar transition" id="/user/dashboard">
                     <span class="icon-home" style="font-size:24px"></span><br>Dashboard
                 </a>               
-                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/inbox"class="btn btn-default btn-clean"><span class="icon-comments" style="font-size:24px"></span> 
+                <a id="a2" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/inbox"class="btn btn-default btn-clean"><span class="icon-comments" style="font-size:24px"></span> 
                 <br>Messages</a>
-                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/my_portfolios" class="btn btn-default btn-clean"> <span class="icon-folder-open-alt" style="font-size:24px"></span>
+                <a id="a3" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/my_portfolios" class="btn btn-default btn-clean"> <span class="icon-folder-open-alt" style="font-size:24px"></span>
                     <br>My Portfolios</a>
-                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/portfolio_settings" class="btn btn-default btn-clean" id="/user/portfolio_settings"><span class="icon-plus" style="font-size:24px"></span><br>
+                <a id="a4" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/portfolio_settings" class="btn btn-default btn-clean" id="/user/portfolio_settings"><span class="icon-plus" style="font-size:24px"></span><br>
                  New Portfolio</a>
-                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/news_portal" class="btn btn-default btn-clean" id="/user/news_portal"><span class="icon-flag-alt"style="font-size:24px"></span> 
+                <a id="a5" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/news_portal" class="btn btn-default btn-clean" id="/user/news_portal"><span class="icon-flag-alt"style="font-size:24px"></span> 
                 <br>News & Sentiment</a>
-                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/support" id="/user/support" class="btn btn-default btn-clean"><span class="icon-cogs" style="font-size:24px"></span> 
+                <a id="a6" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/support" id="/user/support" class="btn btn-default btn-clean"><span class="icon-cogs" style="font-size:24px"></span> 
                 <br>Support</a>
-                <a style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/logout" id="/logout" class="btn btn-default btn-clean"><span class="icon-share-alt" style="font-size:24px"></span> 
+                <a id="a" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/logout" id="/logout" class="btn btn-default btn-clean"><span class="icon-share-alt" style="font-size:24px"></span> 
                 <br>Log Out</a>
             </div>            
         </div>
@@ -134,21 +134,22 @@ function del_cookie() {
 {% endblock %}
 </div>
 </div>
-{% block scripts %}
-
-{% endblock %}
-
-    <div class="page-footer" style="margin-top:50px">
-        <div class="page-footer-wrap" style="text-align:center;background:transparent">
+    <div class="page-footer" style="margin-top:0px;text-align:center;margin-top:5px">
+        <!-- <div class="page-footer-wrap"> -->
             <i class="icon-circle-blank" id="nav1"></i>
             <i class="icon-circle-blank" id="nav2"></i>
             <i class="icon-circle-blank" id="nav3"></i>
             <i class="icon-circle-blank" id="nav4"></i>
             <i class="icon-circle-blank" id="nav5"></i>
             <i class="icon-circle-blank" id="nav6"></i>
-        </div>
+        <!-- </div> -->
     </div>
-      
+
+{% block scripts %}
+
+{% endblock %}
+
+
   
 
 </body>

@@ -9,6 +9,7 @@ $( window ).load(function() {
   if ($("#ceoName")[0].innerText == "Unavailable") {
     $("#workCulture").css('display','none')
     $("#noWorkCulture").css('display','initial')
+    $("#noWorkCulture").css('background','rgba(0,0,0,0.4)')
   }
 });
 // var company_name = $("#companyName")[0];

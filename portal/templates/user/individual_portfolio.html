@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
   <div class="nav">
-    <a href="/user/my_portfolios" data-target="-1" style=";margin-right:50px;float:right">           
+    <a href="/user/portfolio_settings" data-target="-1" style=";margin-right:50px;float:right">           
       <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:88vw;"></span></h1></a>
-    <a href="/user/dashboard/skip" data-target="1" style=";margin-left:50px;float:left">
+    <a href="/user/my_portfolios" data-target="1" style=";margin-left:50px;float:left">
        <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:12vw;"></span></h1>
     </a>
   </div>
 <div class="sceneElement" data-viewport="0">
- <div class="col-lg-3 col-md-3 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:650px;padding-left:35px">
+ <div class="col-lg-3 col-md-3 col-sm-10" style="padding:0px;height:100%;color:black;padding-left:35px">
     <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.2)">
         <div class="header">
             <h2>My Portfolios</h2>
@@ -22,14 +22,29 @@
              <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
               </span><br>           
             </a>            
-            {% for portfolio in portfolios %}      
-            <a href="/user/individual_portfolio/{{portfolio.id}}" id="/user/individual_portfolio"  class="list-group-item" style="text-align:center;height:150px">{{portfolio.name}}
+           {% for portfolio in portfolios %}      
+            <a href="/user/individual_portfolio/{{portfolio.id}}" id="/user/individual_portfolio"  class="list-group-item" style="text-align:center;height:auto">{{portfolio.name}}
               <br>
               <span style="font-size:24px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
                 ${{portfolio.value}}
               </span><br><br>
-             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
-                  {{portfolio.risk}} , {{portfolio.total_value}}
+             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:white">
+                <div class="hp-icon" style="font-size:12px">
+                      <span class="hp-sm"> Risk</span> <br>      
+                <div class="knob">
+                    <div style="display: block; width: 100px; height: 100px;">
+                        <canvas width="100" height="100" style="position:absolute;bottom:0px"></canvas>
+                        <input id="risks" type="text" 
+                            {% if portfolio.risk > 50 %}
+                                 data-fgcolor="red" 
+                            {% else %}
+                                data-fgcolor="green"
+                            {% endif %} data-min="0" data-max="100" data-width="100" data-height="100" value="{{portfolio.risk}}" data-readonly="true" readonly="readonly" style="width: 50px; height: 33px; position: absolute; vertical-align: middle; top: 25%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(255, 0, 0); padding: 0px; -webkit-appearance: none;">
+                        </input>
+                    </div>
+                </div>
+                  <span class="hp-main" id="risks"></span>                                
+              </div>                  
               </span><br>
              <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue'">
                 {{portfolio.no_of_tickers}} Tickers
@@ -39,6 +54,11 @@
         </div>        
     </div>
 </div> 
+<form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
+    {% csrf_token %}
+    <input type="text" class="form-control" id="company_name" value="" name="company_name">    
+</form>
+
  <div class="col-lg-9 col-md-9 col-sm-6">
     <!--first portfolio -->
     <div class="block block-drop-shadow">
@@ -50,13 +70,14 @@
 
         <div id="pieChart" style="width:100%;text-align:center"></div>
             <script>
+            var colors = ["white","#87CEEB","rgb(79, 155, 43)","color: rgb(255, 152, 6)"," color: rgb(166, 45, 45);"]
             var pie = new d3pie("pieChart", {
                 "header": {
                     "title": {
                         "text": "Stock Distribution",
                         "color": "#ffffff",
                         "fontSize": 24,
-                        "font": "helvetica"
+                        "": "helvetica"
                     },
                     "subtitle": {
                         "color": "#999999",
@@ -78,101 +99,14 @@
                 "data": {
                     "sortOrder": "value-desc",
                     "content": [
+                    {% for stock in stocks %}
                         {
-                            "label": "Objective-C",
-                            "value": 36344,
-                            "color": "#cb2121"
+                            "label": "{{stock.ticker}}",
+                            "value": {{stock.number_of_shares}},
+                            "color": colors[{{ forloop.counter }}]
                         },
-                        {
-                            "label": "Shell",
-                            "value": 28561,
-                            "color": "#830909"
-                        },
-                        {
-                            "label": "Cobol",
-                            "value": 24131,
-                            "color": "#923e99"
-                        },
-                        {
-                            "label": "C#",
-                            "value": 100,
-                            "color": "#ae83d5"
-                        },
-                        {
-                            "label": "Coldfusion",
-                            "value": 68,
-                            "color": "#bf273e"
-                        },
-                        {
-                            "label": "Fortran",
-                            "value": 218812,
-                            "color": "#ce2aeb"
-                        },
-                        {
-                            "label": "Coffeescript",
-                            "value": 157618,
-                            "color": "#bca44a"
-                        },
-                        {
-                            "label": "Node",
-                            "value": 114384,
-                            "color": "#618d1b"
-                        },
-                        {
-                            "label": "Basic",
-                            "value": 95002,
-                            "color": "#1ee67b"
-                        },
-                        {
-                            "label": "Cola",
-                            "value": 36344,
-                            "color": "#b0ec44"
-                        },
-                        {
-                            "label": "Perl",
-                            "value": 32170,
-                            "color": "#a4a0c9"
-                        },
-                        {
-                            "label": "Dart",
-                            "value": 28561,
-                            "color": "#322849"
-                        },
-                        {
-                            "label": "Processing",
-                            "value": 157618,
-                            "color": "#7d9058"
-                        },
-                        {
-                            "label": "Smalltalk",
-                            "value": 114384,
-                            "color": "#44b9b0"
-                        },
-                        {
-                            "label": "Scala",
-                            "value": 95002,
-                            "color": "#7c37c0"
-                        },
-                        {
-                            "label": "Visual Basic",
-                            "value": 78327,
-                            "color": "#cc9fb1"
-                        },
-                        {
-                            "label": "Scheme",
-                            "value": 67706,
-                            "color": "#e65414"
-                        },
-                        {
-                            "label": "Rust",
-                            "value": 36344,
-                            "color": "#8b6834"
-                        },
-                        {
-                            "label": "FoxPro",
-                            "value": 32170,
-                            "color": "#248838"
-                        }
+                    {% endfor %}
+
                     ]
                 },
                 "labels": {
@@ -210,7 +144,7 @@
                 },
                 "misc": {
                     "gradient": {
-                        "enabled": true,
+                        "enabled": false,
                         "percentage": 100
                     }
                 }
@@ -241,8 +175,7 @@
                     </thead>
                     <tbody>
                     {% for stock in stocks %}
-                    <tr>
-                        <td><a href="#" onClick="goStock(this)" id="stockLink">{{stock.ticker}}</a></td>
+                        <td><a href="#" onClick=goStock(this) id="stockLink">{{stock.ticker}}</a></td>
                         <td class="text-center small">{{stock.ticker}}</td>
                         <td class="text-center">{{stock.buy_date}}</td>
                         <td class="text-center">{{stock.sell_date}}</td>
@@ -266,15 +199,14 @@
 </div>
 </div>
 
-<form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
-    {% csrf_token %}
-    <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
-</form>
+                    <tr>
+
+
 </body>
 
 {% endblock %}
 {% block scripts %}
- <script src="/static/js/user/individual_portfolio.js"></script>
 
+ <script src="/static/js/user/individual_portfolio.js"></script>
 
 {% endblock %}

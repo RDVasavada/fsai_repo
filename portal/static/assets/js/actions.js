@@ -1,17 +1,36 @@
 $(document).ready(function(){
 url = String(window.location.href)
 console.log(url)
+$("#nav1").attr('class','icon-circle-blank')
+$("#nav2").attr('class','icon-circle-blank')
+$("#nav3").attr('class','icon-circle-blank')
+$("#nav4").attr('class','icon-circle-blank')
+$("#nav5").attr('class','icon-circle-blank')
+$("#nav6").attr('class','icon-circle-blank')
+    $("a#a1").css('color','rgba(255,255,255,0.4')
+    $("a#a2").css('color','rgba(255,255,255,0.4')
+    $("a#a3").css('color','rgba(255,255,255,0.4')
+    $("a#a4").css('color','rgba(255,255,255,0.4')
+    $("a#a5").css('color','rgba(255,255,255,0.4')
+    $("a#a6").css('color','rgba(255,255,255,0.4')
+    $("a#a7").css('color','rgba(255,255,255,0.4')
 if ((url.indexOf("dashboard")) > 0 ){
+    $("a#a1").css('color','white')
     $("#nav1").attr('class','icon-circle')
 } else if ((url.indexOf("inbox")) > 0 || (url.indexOf("sent")) > 0 ){
+    $("a#a2").css('color','white')
     $("#nav2").attr('class','icon-circle')
 } else if ((url.indexOf("my_portfolios")) > 0 || (url.indexOf("individual")) > 0 ){
+    $("a#a3").css('color','white')
     $("#nav3").attr('class','icon-circle')
-} else if ((url.indexOf("settings")) > 0 ){
+} else if ((url.indexOf("portfolio_settings")) > 0 ){
+    $("a#a4").css('color','white')
     $("#nav4").attr('class','icon-circle')
 } else if ((url.indexOf("news_portal")) > 0 ){
+    $("a#a5").css('color','white')
     $("#nav5").attr('class','icon-circle')
 } else if ((url.indexOf("support")) > 0 || (url.indexOf("sent")) > 0 ){
+    $("a#a6").css('color','white')
     $("#nav6").attr('class','icon-circle')
 } 
 // console.log($("#nav4"))

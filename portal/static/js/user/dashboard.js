@@ -214,6 +214,7 @@ if (!localStorage['historical']) {
                 var buy_price = x[key][ley].data[0]
                 var price = (x[key][ley].current_price)
                 var gain = (Number(price) - buy_price) * x[key][ley].number_of_shares
+
                 if (gain) {
                     gains+=gain
                     localStorage.setItem('gains',gains)

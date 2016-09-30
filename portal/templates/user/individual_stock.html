@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
- <script src="/static/js/user/individual_stock.js"></script>
+
   <div class="nav">
-    <a href="/user/my_portfolios" data-target="-1" style=";margin-right:50px;float:right">           
+    <a href="/user/portfolio_settings" data-target="-1" style=";margin-right:50px;float:right">           
       <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:88vw;"></span></h1></a>
-    <a href="/user/dashboard/skip" data-target="1" style=";margin-left:50px;float:left">
+    <a href="/user/my_portfolios" data-target="1" style=";margin-left:50px;float:left">
        <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:12vw;"></span></h1>
     </a>
   </div>
 <div class="sceneElement" data-viewport="0">
- <div class="col-lg-3 col-md-3 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:650px;padding-left:35px">
-     <div class="col-lg-8 col-md-8 col-sm-8">
-        <h2 style="text-align:center;" id="companyName"> {{company_name}} {{company_symbol}} </h2>
+ <div class="col-lg-8 col-md-8 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:650px;padding-left:35px">
+     <!-- <div class="col-lg-8 col-md-8 col-sm-8"> -->
+        <h2 style="text-align:center;color:white" id="companyName"> {{company_name}} {{company_symbol}} </h2>
         <span style="display:none" id="companySymbol">{{company_symbol}}</span>
         <div class="col-md-12 col-sm-12">
             <div class="block block-drop-shadow">
@@ -50,7 +50,7 @@
             <div class="header">   
                          <h2>Future of Stock</h2>
                      </div>
-                     <div class="ibox-content" style="display: block;padding:50px;background-color:rgba(0,0,0,0.6)">
+                     <div class="ibox-content" style="display: block;padding:50px;background-color:rgba(0,0,0,0.6);color:white">
                         The analysts offering 12-month price forecasts for Apple have a median target of 120.00, with a high estimate of 185.00 and a low estimate of 65.00. The median estimate represents a +23.70% increase from the last price of 97.01.
                      </div>
             </div>
@@ -128,3 +128,6 @@
 </div>
 </body>
 {% endblock %}
+{% block scripts %}
+ <script src="/static/js/user/individual_stock.js"></script>
+ {% endblock %}

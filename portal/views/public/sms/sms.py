@@ -24,15 +24,15 @@ def getsms(request):
 @csrf_exempt
 def sms(request):
   user_id = 1
-  # number = request.POST.get('From', '')
-  # phone_number = number[2:]
-  phone_number = 9492459949
+  number = request.POST.get('From', '')
+  phone_number = number[2:]
+  # phone_number = 9492459949
   cursor = connection.cursor()
   cursor.execute("select * from portal_portaluser where '" + str(phone_number) + "' = phone ")
   user = dictfetchall(cursor)
-  # user_id = user[0]['id']
-  # message = request.POST.get('Body', '')
-  message = "test"
+  user_id = user[0]['id']
+  message = request.POST.get('Body', '')
+  # message = "test"
   rtnstring = analyze(message)
   cursor.execute("INSERT INTO `portal_sms` (date_created, phone_number, user_id, message, analysis, resolution) VALUES"
                  "('2016-07-09 12:11:25'," + str(phone_number) + "," + str(user_id) +  ",'" + str(message) + "', '" + str(rtnstring) + "', 'Unresolved')")
@@ -49,11 +49,11 @@ def analyze(message):
     elif "dow" in message or "dji" in message or "dow jones" in message:
       return("compare dji to my port")
     else:
-      return("get status of ports")
+      return("Your portfolios are doing well!")
   if "compare" in message:
     if "s&p500" in message or "s&p" in message:
       if (hasPortfolio(message)):
-        return("Your portfolio <" + hasPortfolio(message) + "> compares well")      
+        return("Your portfolio " + hasPortfolio(message) + " compares well")      
       else:
         try:
           return("compare " + findCompany(message)[0] + " to my the s&p")
@@ -61,7 +61,7 @@ def analyze(message):
           return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
     elif "nasdaq" in message or "ndx" in message:
       if (hasPortfolio(message)):
-        return("your portfolio <" + hasPortfolio(message) + "> compares well")      
+        return("your portfolio " + hasPortfolio(message) + " compares well")      
       else:     
         try:
           return("compare " + findCompany(message)[0] + " to my the ndx")
@@ -69,7 +69,7 @@ def analyze(message):
           return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
     elif "dow" in message or "dji" in message or "dow jones" in message:
       if (hasPortfolio(message)):
-        return("your portfolio <" + hasPortfolio(message) + "> compares well")      
+        return("your portfolio " + hasPortfolio(message) + " compares well")      
       else:     
         try:
           return("compare " + findCompany(message)[0] + " to my the dji")
@@ -79,7 +79,7 @@ def analyze(message):
       return("get status of ports")
   elif "buy" in message and "for" in message:
     try:
-      return("you bought <" + findCompany(message)[0] + "> for 3$")
+      return("you bought " + findCompany(message)[0] + " for 3$")
     except IndexError:
       return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
   elif "top" in message or "highest performing" in message:
@@ -88,60 +88,60 @@ def analyze(message):
     return("the lowest stocks today are my d !")
   elif "how" in message and "performing" in message:
     if (hasPortfolio(message)):
-      return("your portfolio <" + hasPortfolio(message) + "> is doing well!")
+      return("your portfolio " + hasPortfolio(message) + " is doing well!")
     elif (findCompany(message)):
       try:
-        return("your stock <" + findCompany(message)[0] + "> is doing quite well")
+        return("your stock " + findCompany(message)[0] + " is doing quite well")
       except IndexError:
         return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
   elif "how" in message and "doing" in message:
     if (hasPortfolio(message)):
-      return("your portfolio <" + hasPortfolio(message) + "> is doing well!")
+      return("your portfolio " + hasPortfolio(message) + " is doing well!")
     elif (findCompany(message)):
       try:
-        return("your stock <" + findCompany(message)[0] + "> is doing quite well")
+        return("your stock " + findCompany(message)[0] + " is doing quite well")
       except IndexError:
         return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")       
   elif "symbol for" in message or "symbol of" in message:
     if (findCompany(message)):
-      return("the symbol for <" + findCompany(message)[0] + "> is google !")
+      return("the symbol for " + findCompany(message)[0] + " is google !")
   elif "company name of" in message or "company name for" in message or "what company is" in message:
     if (findCompany(message)):
-      return("the company name for <" + findCompany(message)[0] + "> is google !")
+      return("the company name for " + findCompany(message)[0] + " is google !")
   elif "ceo of" in message or "ceo for" in message:
     if (findCompany(message)):
       return("the ceo of " + findCompany(message)[0] + " is tim cook !")
   elif "dividends" in message and "does" in message:
     if (findCompany(message)):
-      return("the company <" + findCompany(message)[0] + "> does pay dividends!")
+      return("the company " + findCompany(message)[0] + " does pay dividends!")
   elif "what" in message and "price" in message:
     if (findCompany(message)):
-      return("the market price for the company <" + findCompany(message)[0] + "> is 2!")
+      return("the market price for the company " + findCompany(message)[0] + " is 2!")
   elif "gain" in message:
     if hasPortfolio(message):
-      return("your gains for <" + hasPortfolio(message) + "> is 3$!")
+      return("your gains for " + hasPortfolio(message) + " is 3$!")
     elif findCompany(message):
       try:
-        return("your gains for <" +  findCompany(message)[0] + "> is 3$")
+        return("your gains for " +  findCompany(message)[0] + " is 3$")
       except IndexError:
         return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
   elif "losses" in message:
     if hasPortfolio(message):
-      return("your losses for <" + hasPortfolio(message) + "> is 3$!")
+      return("your losses for " + hasPortfolio(message) + " is 3$!")
     elif findCompany(message):
       try:
-        return("your losses for <" +  findCompany(message)[0] + "> is 3$")
+        return("your losses for " +  findCompany(message)[0] + " is 3$")
       except IndexError:
         return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
   elif "rating" in message:
     if (findCompany(message)):
-      return("the rating for the company <" + findCompany(message)[0] + "> by analysts are high!")
+      return("the rating for the company " + findCompany(message)[0] + " by analysts are high!")
   elif "pe ratio" in message:
     if (findCompany(message)):
-      return("the PE ratio for the company <" + findCompany(message)[0] + "> by analysts are high!")
+      return("the PE ratio for the company " + findCompany(message)[0] + " by analysts are high!")
   elif "beta" in message:
     if (findCompany(message)):
-      return("the beta for the company <" + findCompany(message)[0] + "> by analysts are high!")
+      return("the beta for the company " + findCompany(message)[0] + " by analysts are high!")
   else:
     return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
 
