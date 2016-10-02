@@ -38,60 +38,120 @@
                         <fieldset title="Step 1">
                             <legend>Details</legend>
                              <div class="form-row">
-                                    <div class="col-md-3">Name</div>
-                                    <a href="login.html" onclick="return popitup('/login')">?</a>
-                                   <div class="col-sm-5">
-                                        <input type="text" class="form-control" value="High Risk Portfolio">
+                              <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;letter-spacing:2px">
+                                  What would you like to name your portfolio?
+                                </h2>       
+                                    <div class="col-md-2"></div>
+                                    <a href="login.html" onclick="return popitup('/login')"></a>
+                                   <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Your new portfolio . . ." style="padding:50px;font-size:18px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100">
                                    </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="col-md-3">Description</div>
+                          <!--           <div class="col-md-3">Description</div>
                                     <a href="login.html" onclick="return popitup('/login')">?</a>
                                    <div class="col-sm-5">
                                     <textarea cols="40" rows="5" class="form-control">This is my profile for handling certain investments.</textarea>
-                                    </div>
+                                    </div> -->
                                 </div>
                         </fieldset>
                         <fieldset title="Step 2">
                           <legend>Expected</legend>         
-                            <div class="form-row" style="padding:10px">
-                               <h6>Expected Return</h6>
-                               <br>
-                                <div style="width:400px;">
+                            <div class="form-row" style="width:50%;text-align:center">
+                                <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;letter-spacing:2px">
+                                  How much <span style="text-decoration: underline">Return</span> are you expecting?
+                                </h2>                              <br>
+                                <div style="width:400px;margin:auto">
                                   <button type="button" class="btn btn-default btn-clean">Low</button>
                                   <button type="button"  class="btn btn-default btn-clean">Medium</button>
                                   <button type="button"  class="btn btn-default btn-clean">High</button>
                                 </div>
-                                <div class="input-group m-b" style="padding-top:10px;width:200px;">
+                                <div class="input-group m-b" style="padding-top:10px;width:200px;margin:auto">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">%</span>
                                         <input id="expReturn" name="expReturn" type="number" value="5" placeholder="1" min="1" max="50" class="form-control" onchange="returnChecker()">
                                     </div>
                                 </div>
+                                <div class="knob">
+                                  <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="30" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                                </div>
+                        </div>                                
                             </div>
-                            <div class="form-row" style="padding:10px">
-                              <h6>Expected Risk</h6>
-                              <br>
-                                <div style="width:400px;">
+                            <div class="form-row" style="width:50%;text-align:center">
+                                <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;letter-spacing:2px">
+                                  How much <span style="text-decoration: underline">Risk</span> are you willing to consider?
+                                </h2>                              <br>
+                                <div style="width:400px;margin:auto">
                                   <button type="button"  id="lowrisk" class="btn btn-default btn-clean" onclick="lowrisk()">Low</button>
                                   <button type="button"  class="btn btn-default btn-clean">Medium</button>
                                   <button type="button"  class="btn btn-default btn-clean">High</button>
                                 </div>
-                                <div class="input-group m-b" style="padding-top:10px;width:200px;">
+                                <div class="input-group m-b" style="padding-top:10px;width:200px;margin:auto">
                                      <div class="input-group m-b">
                                         <span class="input-group-addon">%</span>
                                         <input id="expRisk" name="expRisk" type="number" value="10" placeholder="1" min="1" max="20" class="form-control" onchange="riskChecker()">
                                     </div>
                                 </div>
+                               <div class="knob">
+                                  <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="30" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                                </div>                                
                             </div>
+
                         </fieldset>      
             <fieldset title="Step 3">                            
                 <legend>Time Frame</legend>
                            <div class="col-lg-12">                    
                                 <div class="form-group" style="padding:10px">
-                                <h6>Time Frame</h6>
-                                   <div class="col-md-3" style="vertical-align:top;">Years</div>
-                                  <div class="input-group m-b" style="width:80px;">
+                             <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px;letter-spacing:2px">
+                                      How long would you like to invest for?
+                                    </h2>
+                                <div class="row">
+                                   <div class="col-md-6" style="vertical-align:top;text-align:center">Years<br>
+                                    <div class="knob">
+                                      <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="12" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                                      </div>                                    
+                                      </div>                                    
+                                   </div>
+                                 <div class="col-md-6" style="vertical-align:top;text-align:center">Months<br>
+                                    <div class="knob">
+                                      <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="3" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                                      </div>                                    
+                                      </div>                                    
+                                   </div>
+                                  </div>
+                                <div class="row">
+                                   <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px;letter-spacing:2px"> 
+                                              Which market would you like to invest in?
+                                            </h2>
+                                   <div class="col-md-4" style="vertical-align:top;"><br>
+                                       <div class="block block-white">                   
+                                          <div class="content">
+                                            <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px">
+                                              NASDAQ
+                                            </h2>
+                                          </div>
+                                      </div>                             
+                                   </div>
+                                  <div class="col-md-4" style="vertical-align:top;"><br>
+                                       <div class="block block-white">                   
+                                          <div class="content">
+                                            <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px">
+                                              S&P500 
+                                            </h2>
+                                          </div>
+                                      </div>                             
+                                   </div>
+                                  <div class="col-md-4" style="vertical-align:top;"><br>
+                                       <div class="block block-white">                   
+                                          <div class="content">
+                                            <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px">
+                                              Dow Jones
+                                            </h2>
+                                          </div>
+                                      </div>                             
+                                   </div>                                                                      
+                                 </div>
+                                 <!--  <div class="input-group m-b" style="width:80px;">
                                     <select class="form-control m-b" name="Years" id="Years">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -123,10 +183,10 @@
                                     <option value="28">28</option>
                                     <option value="29">29</option>
                                     <option value="30">30</option>
-                               </select>
-                                </div>
-                            </div>
-                            <div class="form-group" style="padding:10px">
+                                   </select>
+                                </div> -->
+                           
+                           <!--  <div class="form-group" style="padding:10px">
                                  <div class="col-md-3">Months</div>
                                  <div class="input-group m-b" style="width:80px;">
                                   <select class="form-control m-b" name="Months" id="Months">
@@ -157,30 +217,37 @@
                                         </select>
                                         </div>
                                 </div>
-                            </div>
+                            </div> -->
             </fieldset>
             <fieldset title="Step 4">                            
                 <legend>Investment</legend>
                            <div class="col-lg-12">  
-                            <h6>Investment</h6>
-                            <div class="form-group">
+                 <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px;letter-spacing:2px"> 
+                                              How much would you like to invest?
+                                            </h2>                            <div class="form-group">
                                 <div class="col-md-3"></div>
                                      <div class="input-group m-b" style="width:165px">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">$</span>
-                                        <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control">
+                                        <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control" style="width:33vw;height:200px;text-align:center;font-size:48px;font-family:'Helvetica Neue';font-weight:100;letter-spacing:2px">
                                     </div>  
                                     </div>                      
                                 </div>
-                                <h6>Stocks</h6>
-                                <div class="form-group">
-                                  <div class="col-md-3">Number of stocks</div>
-                                     <div class="input-group m-b" style="width:165px">
-                                        <div class="input-group m-b">
-                                            <span class="input-group-addon"></span>
-                                            <input id="stocks_number" name="stocks_number" type="number" value="3" placeholder="3" min="3" class="form-control" onchange="stockChecker()">
-                                        </div>
-                                     </div>
+
+                     
+                                <div class="slider_example ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 40%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 40%;"></a></div>
+
+                 <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px;letter-spacing:2px"> 
+                                              How many stocks would you like to invest with?
+                                            </h2>
+                                  <div class="col-md-4"></div>
+                                  <div class="col-md-4" style="margin-left:14px">
+                                 <div class="knob">
+                                  <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="30" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                                </div>                                
+                                    
+                                  </div>
+                                  <div class="col-md-4"></div>
                             </div>
                          </div>
             </fieldset>

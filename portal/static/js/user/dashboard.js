@@ -23,6 +23,8 @@ var svg = d3.select(".ibox-content")
    .attr("viewBox", "0 0 650 300")
    //class to make it responsive
    .classed("svg-content-responsive", true)
+    .style("max-height", "265") 
+    .style("min-height", "265") 
     .append("g")
     .attr("transform", "translate(" 
         + margin.left 
@@ -104,6 +106,7 @@ function changeTime(s) {
         if (month.length == 1) {month = "0"+ month}
     }
     var startDate = year + "-" + month + "-" + day;
+    console.log(startDate)
     document.getElementById('start').value = startDate;
     var market = document.getElementById('chosenMarket').innerText
     console.log(market)
@@ -190,7 +193,7 @@ xhr.onreadystatechange = function(){
             var news  = JSON.parse(xhr.responseText).items
             news.forEach(function(x) {
                 var clone = $("#incomingNews").clone()
-                // clone[0].children[0].children[0].href = x.link
+                clone[0].children[0].children[0].href = x.link
                 clone[0].children[0].children[0].innerText = x.title
                 clone.removeAttr('id').css('display','initial').appendTo($("#newsPin"))
             })

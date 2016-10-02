@@ -179,20 +179,31 @@ var MSGList = React.createClass({
                                                 }).done(function(res) {
                                                     if (String(res.data) == 'star') {
                                                         var starid = "star"+id
-                                                        $("#"+starid)[0].getAttribute("data-reactid")
+                                                        ReactDOM.render(<FaStar id={starid} style={iconStar} />,
+                                                            document.getElementById(starid))                          
                                                     } else {
                                                         var starid = "star"+id
-                                                        $("#"+starid)[0].innerHTML = <FaTrash  id={starid} style={iconStar} />
-                                                        $("#"+starid)[0].innerText = ""
-
-                                                    }                                                    
+                                                        ReactDOM.render(<FaStarO id={starid}  style={iconStar} />,
+                                                            document.getElementById(starid))                          
+                                                    }    
                                                 })
+                                            }
+                                            var delMe = function(id) {
+                                               $.ajax({
+                                                    url: '/user/delmsg',
+                                                    type: 'POST',
+                                                    data: {'delid': id},
+                                                    datatype: 'json'
+                                                }).done(function(res) {
+                                                   console.log(res)
+                                                   this.forceUpdate()
+                                                })                                                
                                             }
                                             var myStar = React.createClass
                                             return(
                                                 <div>
                                                     <span style={spanRight}>{you}
-                                                     <FaTrash style={iconDel} />
+                                                     <FaTrash onClick={() => { delMe(x[0].id) }} style={iconDel} />
                                                      <myStar />
                                                      <div id={starid} style={divStyle}>
                                                      <FaStarO onClick={() => { starMe(x[0].id) }} id={starid} style={iconStar} />
@@ -233,12 +244,11 @@ var MSGList = React.createClass({
                                                 color:'white'
                                             }            
                                             var starMe = function(id){
-                                                console.log(id)
+                                               $("#"+starid)[0].innerHTML = <FaStar  id={starid} style={iconStar} />
                                             }                                
                                             return( 
                                                 <div>
                                                     <span style={spanLeft}>{writer}
-                                                     <FaTrash style={iconDel} />
                                                      <FaStarO onClick={() => { starMe(x[0].id) }} style={iconStar} />
                                                     </span>                                                    
                                                     <div style={style}>{str}</div>
@@ -266,6 +276,190 @@ var SentList = React.createClass({
         var status = JSON.parse(localStorage.getItem('user')).status;
         $.ajax({
             url: "/user/getsent",
+            data: {'selected':chosen},
+            type: 'POST',
+            datatype: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({data: data.data, status: 'friend'})
+            }.bind(this)
+        })
+    },
+
+    getInitialState: function() {
+        return {data: []};
+    },
+
+    componentDidMount: function() {  
+        this.loadMessagesFromServer();
+        setInterval(this.loadMessagesFromServer,
+                    this.props.pollInterval)
+    },
+    render: function() {
+        if (this.state.data) {
+            var a = this.state.status
+            var b = this.state.data
+            var messages = b.map(function(x,i) {
+                if (x.length > 0) {            
+                    if (x[0].content !== 'newfriend') {
+                        if (x[0].content !== 'blank') {
+                            if (x[0].content) {
+                                var you = $("div.name")[0].innerText.indexOf(',')
+                                you = $("div.name")[0].innerText.slice(you+2)
+                                var ct = String(x[0].content)
+                                var trim = x[0].content.indexOf('>')
+                                var str = ct.slice(trim+3)
+                                var writer = ct.slice(1,trim)
+                                if (writer == you) {
+                                    var style = {
+                                        marginRight: '75px',
+                                        fontSize: '12px',
+                                        background: 'rgba(0,0,0,0.2)',
+                                        padding: '10px',
+                                        position: 'relative',
+                                        textAlign: 'right',
+                                        marginTop: '10px',
+                                    }
+                                    var spanRight = {
+                                        float: 'right'
+                                    }
+                                    return(
+                                        <div>
+                                            <span style={spanRight}>{you}</span>
+                                            <div style={style}>{str}</div>
+                                        </div>
+                                    )
+                                } else {
+                                    var style = {
+                                        marginLeft: '75px',
+                                        fontSize: '12px',
+                                        background: 'rgba(0,0,0,0.2)',
+                                        padding: '10px',
+                                        position: 'relative',
+                                        textAlign: 'left',
+                                        marginTop: '10px'
+                                    }
+                                    var spanLeft = {
+                                        float: 'left'
+                                    }                                                                                
+                                    return( 
+                                        <div>
+                                            <span style={spanLeft}>{writer}</span>
+                                            <div style={style}>{str}</div>
+                                        </div>
+                                    )
+                                } 
+                            }
+                        }
+                    }
+                }
+            })
+        }
+        return (
+            <div>
+                {messages}
+            </div>
+        )
+    }
+})
+var StarredList = React.createClass({
+    loadMessagesFromServer: function() {
+        var chosen = JSON.parse(localStorage.getItem('user')).id;
+        var status = JSON.parse(localStorage.getItem('user')).status;
+        $.ajax({
+            url: "/user/getstarred",
+            data: {'selected':chosen},
+            type: 'POST',
+            datatype: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({data: data.data, status: 'friend'})
+            }.bind(this)
+        })
+    },
+
+    getInitialState: function() {
+        return {data: []};
+    },
+
+    componentDidMount: function() {  
+        this.loadMessagesFromServer();
+        setInterval(this.loadMessagesFromServer,
+                    this.props.pollInterval)
+    },
+    render: function() {
+        if (this.state.data) {
+            var a = this.state.status
+            var b = this.state.data
+            var messages = b.map(function(x,i) {
+                if (x.length > 0) {            
+                    if (x[0].content !== 'newfriend') {
+                        if (x[0].content !== 'blank') {
+                            if (x[0].content) {
+                                var you = $("div.name")[0].innerText.indexOf(',')
+                                you = $("div.name")[0].innerText.slice(you+2)
+                                var ct = String(x[0].content)
+                                var trim = x[0].content.indexOf('>')
+                                var str = ct.slice(trim+3)
+                                var writer = ct.slice(1,trim)
+                                if (writer == you) {
+                                    var style = {
+                                        marginRight: '75px',
+                                        fontSize: '12px',
+                                        background: 'rgba(0,0,0,0.2)',
+                                        padding: '10px',
+                                        position: 'relative',
+                                        textAlign: 'right',
+                                        marginTop: '10px',
+                                    }
+                                    var spanRight = {
+                                        float: 'right'
+                                    }
+                                    return(
+                                        <div>
+                                            <span style={spanRight}>{you}</span>
+                                            <div style={style}>{str}</div>
+                                        </div>
+                                    )
+                                } else {
+                                    var style = {
+                                        marginLeft: '75px',
+                                        fontSize: '12px',
+                                        background: 'rgba(0,0,0,0.2)',
+                                        padding: '10px',
+                                        position: 'relative',
+                                        textAlign: 'left',
+                                        marginTop: '10px'
+                                    }
+                                    var spanLeft = {
+                                        float: 'left'
+                                    }                                                                                
+                                    return( 
+                                        <div>
+                                            <span style={spanLeft}>{writer}</span>
+                                            <div style={style}>{str}</div>
+                                        </div>
+                                    )
+                                } 
+                            }
+                        }
+                    }
+                }
+            })
+        }
+        return (
+            <div>
+                {messages}
+            </div>
+        )
+    }
+})
+var DelList = React.createClass({
+    loadMessagesFromServer: function() {
+        var chosen = JSON.parse(localStorage.getItem('user')).id;
+        var status = JSON.parse(localStorage.getItem('user')).status;
+        $.ajax({
+            url: "/user/getdeleted",
             data: {'selected':chosen},
             type: 'POST',
             datatype: 'json',
@@ -401,7 +595,7 @@ var ContactList = React.createClass({
             var texts = a.map(function(x,i){
                 return(
                     <div style={divStyle}>
-                        <FaTrash style={icon} />
+                        <FaTrash onClick={() => { delFriend(x.id) }} style={icon} />
                         <a href="#" onClick={() => { select(x.id, x.status) }} style={linkStyle}>{x.username}</a>
                     </div>
                 )
@@ -413,6 +607,16 @@ var ContactList = React.createClass({
             </div>
         )
     }
+})
+var delFriend = (function(id) {
+    $.ajax({
+        url: '/user/delfriend',
+        data: {'delid':id},
+        datatype: 'JSON',
+        type: 'POST'
+    }).done(function(res) {
+        console.log(res)
+    })
 })
 var select = (function(id, status) {
     $("#selected")[0].value = id
@@ -432,6 +636,18 @@ if ((url.indexOf("inbox")) > 0 ){
         document.getElementById('acontainer'))    
 } else if ((url.indexOf("sent")) > 0 ) {
     ReactDOM.render(<SentList pollInterval={1000} />, 
+        document.getElementById('mcontainer'))
+    ReactDOM.render(<ContactList pollInterval={1000} />,
+        document.getElementById('acontainer'))       
+}
+ else if ((url.indexOf("starred")) > 0 ) {
+    ReactDOM.render(<StarredList pollInterval={1000} />, 
+        document.getElementById('mcontainer'))
+    ReactDOM.render(<ContactList pollInterval={1000} />,
+        document.getElementById('acontainer'))       
+}
+ else if ((url.indexOf("deleted")) > 0 ) {
+    ReactDOM.render(<DelList pollInterval={1000} />, 
         document.getElementById('mcontainer'))
     ReactDOM.render(<ContactList pollInterval={1000} />,
         document.getElementById('acontainer'))       

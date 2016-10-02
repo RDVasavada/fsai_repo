@@ -21,11 +21,11 @@ function rerun() {
         $.getScript("/static/js/user/portfolio_settings.js")
         $.getScript("/static/assets/js/actions.js")
     } else if ((url.indexOf("individual_portfolio")) > 0 ) {  
+        $("input#risks").knob();
+        $("#pieChart").d3pie();
         $.getScript("/static/assets/js/plugins/knob/jquery.knob.js")
         $.getScript("/static/js/user/individual_portfolio.js")
         $.getScript("/static/assets/js/actions.js") 
-        $("input#risks").knob();
-        $("#pieChart").d3pie();
     } else if ((url.indexOf("individual_stock")) > 0 ) {  
         $.getScript("/static/js/user/individual_stock.js")
         $.getScript("/static/assets/js/actions.js") 

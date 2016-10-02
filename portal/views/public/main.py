@@ -66,7 +66,7 @@ def register(request):
         if password == password_repeat:
             if len(password) > 8:
 
-                new_user = PortalUser.objects.create_user(username=username, email=email, password=password)
+                new_user = PortalUser.objects.create_user(username=username, email=email, password=password, connections=0)
 
                 new_user.phone=phone
                 new_user.email=email

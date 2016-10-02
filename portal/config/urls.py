@@ -46,9 +46,13 @@ urlpatterns = patterns('',
     (r'^user/accept/?$', views.accept),   
     (r'^user/getconnections/?$', views.getconnections),   
     (r'^user/getmsg/?$', views.getmsg),   
+    (r'^user/getstarred/?$', views.getstarred),   
+    (r'^user/getdeleted/?$', views.getdeleted),   
+    (r'^user/delmsg/?$', views.delmsg),   
     (r'^user/getsent/?$', views.getsent),   
     (r'^user/sendmsg/?$', views.sendmsg),   
     (r'^user/starmsg/?$', views.starmsg),   
+    (r'^user/delfriend/?$', views.delfriend),   
     # (r'^ring/?$', views.ring)
 
 

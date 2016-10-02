@@ -78,6 +78,55 @@ def getsent(request):
   return JsonResponse({'data':rtnarray})
 
 @csrf_exempt
+def getstarred(request):
+  selected = request.POST['selected']
+  # print(selected)
+  if request.user.is_authenticated():
+    username = request.user.username
+    userid = request.user.id  
+  cursor = connection.cursor()
+  cursor.execute("SELECT to_id FROM portal_messageheader WHERE "
+                "'" + str(userid) + "' = from_id AND + 'starred' = subject ")
+  msgs = dictfetchall(cursor)
+  rtnarray = []
+  for msg in msgs:
+    # print(msg['id'])
+    cursor.execute("SELECT content from portal_message WHERE "
+                    "'" + str(msg['to_id']) + "' = id")
+    content = dictfetchall(cursor)
+    try:
+      rtnarray.append(content)
+    except AttributeError:
+      print(content)
+  # print(rtnarray)
+  return JsonResponse({'data':rtnarray}) 
+
+@csrf_exempt
+def getdeleted(request):
+  selected = request.POST['selected']
+  # print(selected)
+  if request.user.is_authenticated():
+    username = request.user.username
+    userid = request.user.id  
+  cursor = connection.cursor()
+  cursor.execute("SELECT id FROM portal_messageheader WHERE "
+                "'" + str(userid) + "' = from_id AND '" + str(selected) + "' = to_id AND 'deleted' = subject ")
+  msgs = dictfetchall(cursor)
+  rtnarray = []
+  for msg in msgs:
+    # print(msg['id'])
+    cursor.execute("SELECT content from portal_message WHERE "
+                    "'" + str(msg['id']) + "' = header_id")
+    content = dictfetchall(cursor)
+    try:
+      rtnarray.append(content)
+    except AttributeError:
+      print(content)
+  # print(rtnarray)
+  return JsonResponse({'data':rtnarray})  
+
+
+@csrf_exempt
 def accept(request):
   acceptid = request.POST['acceptid']
   if request.user.is_authenticated():
@@ -110,6 +159,7 @@ def getmsg(request):
     userid = request.user.id
   fromstatus = request.GET['status']
   fromid = request.GET['selected']
+#any new incoming friend requests?  
   if fromstatus == 'newfriend':
     cursor = connection.cursor()
     cursor.execute("SELECT username FROM portal_portaluser WHERE"
@@ -118,16 +168,18 @@ def getmsg(request):
     user = []
     user.append(fromid)
     return JsonResponse({'data':user})
+#if no new friend requests:
   else: 
     cursor = connection.cursor()
     rtnarray = []
+#any sent friend requests?
     cursor.execute("SELECT id,to_id from portal_messageheader WHERE"
                     "'" + str(userid) + "' = from_id AND 'notfriends' = status")
     pendingInvite = dictfetchall(cursor)
-    # print(pendingInvite)
+#if none:
     if len(pendingInvite) == 0:
         cursor.execute("SELECT id FROM portal_messageheader WHERE "
-                       "'" + str(fromid) + "' = to_id AND '" + str(userid) + "' = from_id ")
+                       "'deleted' != subject AND'" + str(fromid) + "' = to_id AND '" + str(userid) + "' = from_id")
         msgs = dictfetchall(cursor)
         for msg in msgs:
           # print(msg)
@@ -137,7 +189,7 @@ def getmsg(request):
           # print(returnmsg)
           rtnarray.append(returnmsg)
         cursor.execute("SELECT id FROM portal_messageheader WHERE "
-                       "'" + str(fromid) + "' = from_id AND'" + str(userid) + "' = to_id ")
+                       "'deleted' != subject AND '" + str(fromid) + "' = from_id AND'" + str(userid) + "")
         msgs = dictfetchall(cursor)
         for msg in msgs:
           # print(msg)
@@ -168,6 +220,7 @@ def getmsg(request):
                   b.append(x)
                   newArr.append(b)                    
         return JsonResponse({'data':newArr})  
+#if you do have pending friend requests:
     else:
       for invite in pendingInvite:
         if str(invite['to_id']) == str(fromid):
@@ -179,7 +232,7 @@ def getmsg(request):
             rtnarray.append(contents[0]['content'])
       if len(rtnarray) == 0:
         cursor.execute("SELECT id FROM portal_messageheader WHERE "
-                       "'" + str(fromid) + "' = to_id AND '" + str(userid) + "' = from_id ")
+                       "'unread' = subject AND '" + str(fromid) + "' = to_id AND '" + str(userid) + "' = from_id ")
         msgs = dictfetchall(cursor)
         for msg in msgs:
           # print(msg)
@@ -189,7 +242,7 @@ def getmsg(request):
           # print(returnmsg)
           rtnarray.append(returnmsg)
         cursor.execute("SELECT id FROM portal_messageheader WHERE "
-                       "'" + str(fromid) + "' = from_id AND'" + str(userid) + "' = to_id ")
+                       "'unread' = subject AND '" + str(fromid) + "' = from_id AND'" + str(userid) + "' = to_id ")
         msgs = dictfetchall(cursor)
         for msg in msgs:
           cursor.execute("SELECT content,id FROM portal_message WHERE "
@@ -383,12 +436,39 @@ def delmsg(request):
     portalUser = PortalUser.objects.get(username=username)
     yours = portalUser.connections
     user_id = request.user.id  
-  delid = request.POST['id']
+  delid = request.POST['delid']
+  print(delid)
   cursor = connection.cursor()
-  cursor.execute("UPDATE `portal_messageheader` SET subject "
-                "= 'deleted' WHERE from_id = '" + str(user_id) + "' and id = '" + str(delid) + "'")
+  cursor.execute("SELECT header_id FROM portal_message"
+                  " WHERE id = '" + str(delid) + "'")
+  msgheaders = dictfetchall(cursor)
+  for msgid in msgheaders:
+    cursor.execute("UPDATE `portal_messageheader` SET subject "
+                  "= 'deleted' WHERE from_id = '" + str(user_id) + "' and id = '" + str(msgid['header_id']) + "'")
+  connection.close()
+  cursor.close()
   msg = "deleted"
-  return JsonResponse({'data':msg})  
+  return JsonResponse({'data':msg})
+
+@csrf_exempt
+def delfriend(request):
+  delid = request.POST['delid']
+  if request.user.is_authenticated():
+    username = request.user.username
+    userid = request.user.id
+    portalUser = PortalUser.objects.get(username=username)
+    connections = portalUser.connections
+    connections = connections.split(',')
+    arr = []
+    for person in connections:
+      if str(person) != str(delid):
+        arr.append(str(person))
+    arr = ",".join(arr)
+    cursor = connection.cursor()
+    cursor.execute("UPDATE `portal_portaluser` SET connections "
+                    " = '" + str(arr) + "' WHERE id = '" + str(userid) + "'" )
+    connection.close()
+  return JsonResponse({'data':'deleted'}) 
 
 def searchuser(query):
   rtn = 0
