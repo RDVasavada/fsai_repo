@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load render_bundle from webpack_loader %}
+<!-- {% load render_bundle from webpack_loader %} -->
 {% block content %}
 <script>
 localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
@@ -23,8 +23,8 @@ localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
         </div>
             <div style="height:100%;display:inline-block;overflow:scroll;padding-bottom:50px;width:100%">
                 <a href="/user/sent" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-upload-alt" style="padding:0px"></span>Sent<i class="icon-angle-right pull-right"></i></a>    
-                <a href="/user/starred" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-star" style="padding:0px"></span>Starred<i class="icon-angle-right pull-right"></i></a>
-                <a href="/user/deleted" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-trash" style="padding:0px"></span>Deleted<i class="icon-angle-right pull-right"></i></a>                    
+      <!--           <a href="/user/starred" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-star" style="padding:0px"></span>Starred<i class="icon-angle-right pull-right"></i></a>
+                <a href="/user/deleted" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-trash" style="padding:0px"></span>Deleted<i class="icon-angle-right pull-right"></i></a>      -->               
                 <a href="#" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-gears" style="padding:0px"></span>Hyperchat<i class="icon-angle-right pull-right"></i></a>
                 <div id="acontainer">
                 {% render_bundle 'main' %}
@@ -125,33 +125,31 @@ localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
     </div>
 {% endblock %}
 {% block scripts %}
-
-    <script src="/static/js/user/inbox.js"></script>
-
+<script src="/static/js/user/inbox.js"></script>
 <script>
-let addfriend = function() {
-    var username = $("#query")[0].value
-    console.log(username)
-    $.ajax({
-        type: 'POST',
-        url: '/user/addconnection',
-        data: {'query':username}
-    }).done(function(result){
-        if (result.data == 0){
-            $(".stepone").css('display','none')
-            $("#statusbar_8").css('height','150px')
-            $(".stepone")[0].innerText = "We could not find a user by that name or email. Try Again!"
-            $(".stepone").css('display','initial')
-        } else{
-            $("#addfriend").css('display','none')
-            $("#statusbar_8").css('height','150px')
-            $(".stepone")[0].outerHTML = "<img src='/static/img/loader.gif' style='display:block;margin:auto;padding-top:20px'></div>"
-            setTimeout(function(){ 
-                window.location = "/user/inbox";
-            }, 200);
+// let addfriend = function() {
+//     var username = $("#query")[0].value
+//     console.log(username)
+//     $.ajax({
+//         type: 'POST',
+//         url: '/user/addconnection',
+//         data: {'query':username}
+//     }).done(function(result){
+//         if (result.data == 0){
+//             $(".stepone").css('display','none')
+//             $("#statusbar_8").css('height','150px')
+//             $(".stepone")[0].innerText = "We could not find a user by that name or email. Try Again!"
+//             $(".stepone").css('display','initial')
+//         } else{
+//             $("#addfriend").css('display','none')
+//             $("#statusbar_8").css('height','150px')
+//             $(".stepone")[0].outerHTML = "<img src='/static/img/loader.gif' style='display:block;margin:auto;padding-top:20px'></div>"
+//             setTimeout(function(){ 
+//                 window.location = "/user/inbox";
+//             }, 200);
             
-        }
-    })
-}
+//         }
+//     })
+// }
 </script>
 {% endblock %}

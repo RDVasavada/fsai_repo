@@ -362,190 +362,190 @@ var SentList = React.createClass({
         )
     }
 })
-var StarredList = React.createClass({
-    loadMessagesFromServer: function() {
-        var chosen = JSON.parse(localStorage.getItem('user')).id;
-        var status = JSON.parse(localStorage.getItem('user')).status;
-        $.ajax({
-            url: "/user/getstarred",
-            data: {'selected':chosen},
-            type: 'POST',
-            datatype: 'json',
-            cache: false,
-            success: function(data) {
-                this.setState({data: data.data, status: 'friend'})
-            }.bind(this)
-        })
-    },
+// var StarredList = React.createClass({
+//     loadMessagesFromServer: function() {
+//         var chosen = JSON.parse(localStorage.getItem('user')).id;
+//         var status = JSON.parse(localStorage.getItem('user')).status;
+//         $.ajax({
+//             url: "/user/getstarred",
+//             data: {'selected':chosen},
+//             type: 'POST',
+//             datatype: 'json',
+//             cache: false,
+//             success: function(data) {
+//                 this.setState({data: data.data, status: 'friend'})
+//             }.bind(this)
+//         })
+//     },
 
-    getInitialState: function() {
-        return {data: []};
-    },
+//     getInitialState: function() {
+//         return {data: []};
+//     },
 
-    componentDidMount: function() {  
-        this.loadMessagesFromServer();
-        setInterval(this.loadMessagesFromServer,
-                    this.props.pollInterval)
-    },
-    render: function() {
-        if (this.state.data) {
-            var a = this.state.status
-            var b = this.state.data
-            var messages = b.map(function(x,i) {
-                if (x.length > 0) {            
-                    if (x[0].content !== 'newfriend') {
-                        if (x[0].content !== 'blank') {
-                            if (x[0].content) {
-                                var you = $("div.name")[0].innerText.indexOf(',')
-                                you = $("div.name")[0].innerText.slice(you+2)
-                                var ct = String(x[0].content)
-                                var trim = x[0].content.indexOf('>')
-                                var str = ct.slice(trim+3)
-                                var writer = ct.slice(1,trim)
-                                if (writer == you) {
-                                    var style = {
-                                        marginRight: '75px',
-                                        fontSize: '12px',
-                                        background: 'rgba(0,0,0,0.2)',
-                                        padding: '10px',
-                                        position: 'relative',
-                                        textAlign: 'right',
-                                        marginTop: '10px',
-                                    }
-                                    var spanRight = {
-                                        float: 'right'
-                                    }
-                                    return(
-                                        <div>
-                                            <span style={spanRight}>{you}</span>
-                                            <div style={style}>{str}</div>
-                                        </div>
-                                    )
-                                } else {
-                                    var style = {
-                                        marginLeft: '75px',
-                                        fontSize: '12px',
-                                        background: 'rgba(0,0,0,0.2)',
-                                        padding: '10px',
-                                        position: 'relative',
-                                        textAlign: 'left',
-                                        marginTop: '10px'
-                                    }
-                                    var spanLeft = {
-                                        float: 'left'
-                                    }                                                                                
-                                    return( 
-                                        <div>
-                                            <span style={spanLeft}>{writer}</span>
-                                            <div style={style}>{str}</div>
-                                        </div>
-                                    )
-                                } 
-                            }
-                        }
-                    }
-                }
-            })
-        }
-        return (
-            <div>
-                {messages}
-            </div>
-        )
-    }
-})
-var DelList = React.createClass({
-    loadMessagesFromServer: function() {
-        var chosen = JSON.parse(localStorage.getItem('user')).id;
-        var status = JSON.parse(localStorage.getItem('user')).status;
-        $.ajax({
-            url: "/user/getdeleted",
-            data: {'selected':chosen},
-            type: 'POST',
-            datatype: 'json',
-            cache: false,
-            success: function(data) {
-                this.setState({data: data.data, status: 'friend'})
-            }.bind(this)
-        })
-    },
+//     componentDidMount: function() {  
+//         this.loadMessagesFromServer();
+//         setInterval(this.loadMessagesFromServer,
+//                     this.props.pollInterval)
+//     },
+//     render: function() {
+//         if (this.state.data) {
+//             var a = this.state.status
+//             var b = this.state.data
+//             var messages = b.map(function(x,i) {
+//                 if (x.length > 0) {            
+//                     if (x[0].content !== 'newfriend') {
+//                         if (x[0].content !== 'blank') {
+//                             if (x[0].content) {
+//                                 var you = $("div.name")[0].innerText.indexOf(',')
+//                                 you = $("div.name")[0].innerText.slice(you+2)
+//                                 var ct = String(x[0].content)
+//                                 var trim = x[0].content.indexOf('>')
+//                                 var str = ct.slice(trim+3)
+//                                 var writer = ct.slice(1,trim)
+//                                 if (writer == you) {
+//                                     var style = {
+//                                         marginRight: '75px',
+//                                         fontSize: '12px',
+//                                         background: 'rgba(0,0,0,0.2)',
+//                                         padding: '10px',
+//                                         position: 'relative',
+//                                         textAlign: 'right',
+//                                         marginTop: '10px',
+//                                     }
+//                                     var spanRight = {
+//                                         float: 'right'
+//                                     }
+//                                     return(
+//                                         <div>
+//                                             <span style={spanRight}>{you}</span>
+//                                             <div style={style}>{str}</div>
+//                                         </div>
+//                                     )
+//                                 } else {
+//                                     var style = {
+//                                         marginLeft: '75px',
+//                                         fontSize: '12px',
+//                                         background: 'rgba(0,0,0,0.2)',
+//                                         padding: '10px',
+//                                         position: 'relative',
+//                                         textAlign: 'left',
+//                                         marginTop: '10px'
+//                                     }
+//                                     var spanLeft = {
+//                                         float: 'left'
+//                                     }                                                                                
+//                                     return( 
+//                                         <div>
+//                                             <span style={spanLeft}>{writer}</span>
+//                                             <div style={style}>{str}</div>
+//                                         </div>
+//                                     )
+//                                 } 
+//                             }
+//                         }
+//                     }
+//                 }
+//             })
+//         }
+//         return (
+//             <div>
+//                 {messages}
+//             </div>
+//         )
+//     }
+// })
+// var DelList = React.createClass({
+//     loadMessagesFromServer: function() {
+//         var chosen = JSON.parse(localStorage.getItem('user')).id;
+//         var status = JSON.parse(localStorage.getItem('user')).status;
+//         $.ajax({
+//             url: "/user/getdeleted",
+//             data: {'selected':chosen},
+//             type: 'POST',
+//             datatype: 'json',
+//             cache: false,
+//             success: function(data) {
+//                 this.setState({data: data.data, status: 'friend'})
+//             }.bind(this)
+//         })
+//     },
 
-    getInitialState: function() {
-        return {data: []};
-    },
+//     getInitialState: function() {
+//         return {data: []};
+//     },
 
-    componentDidMount: function() {  
-        this.loadMessagesFromServer();
-        setInterval(this.loadMessagesFromServer,
-                    this.props.pollInterval)
-    },
-    render: function() {
-        if (this.state.data) {
-            var a = this.state.status
-            var b = this.state.data
-            var messages = b.map(function(x,i) {
-                if (x.length > 0) {            
-                    if (x[0].content !== 'newfriend') {
-                        if (x[0].content !== 'blank') {
-                            if (x[0].content) {
-                                var you = $("div.name")[0].innerText.indexOf(',')
-                                you = $("div.name")[0].innerText.slice(you+2)
-                                var ct = String(x[0].content)
-                                var trim = x[0].content.indexOf('>')
-                                var str = ct.slice(trim+3)
-                                var writer = ct.slice(1,trim)
-                                if (writer == you) {
-                                    var style = {
-                                        marginRight: '75px',
-                                        fontSize: '12px',
-                                        background: 'rgba(0,0,0,0.2)',
-                                        padding: '10px',
-                                        position: 'relative',
-                                        textAlign: 'right',
-                                        marginTop: '10px',
-                                    }
-                                    var spanRight = {
-                                        float: 'right'
-                                    }
-                                    return(
-                                        <div>
-                                            <span style={spanRight}>{you}</span>
-                                            <div style={style}>{str}</div>
-                                        </div>
-                                    )
-                                } else {
-                                    var style = {
-                                        marginLeft: '75px',
-                                        fontSize: '12px',
-                                        background: 'rgba(0,0,0,0.2)',
-                                        padding: '10px',
-                                        position: 'relative',
-                                        textAlign: 'left',
-                                        marginTop: '10px'
-                                    }
-                                    var spanLeft = {
-                                        float: 'left'
-                                    }                                                                                
-                                    return( 
-                                        <div>
-                                            <span style={spanLeft}>{writer}</span>
-                                            <div style={style}>{str}</div>
-                                        </div>
-                                    )
-                                } 
-                            }
-                        }
-                    }
-                }
-            })
-        }
-        return (
-            <div>
-                {messages}
-            </div>
-        )
-    }
-})
+//     componentDidMount: function() {  
+//         this.loadMessagesFromServer();
+//         setInterval(this.loadMessagesFromServer,
+//                     this.props.pollInterval)
+//     },
+//     render: function() {
+//         if (this.state.data) {
+//             var a = this.state.status
+//             var b = this.state.data
+//             var messages = b.map(function(x,i) {
+//                 if (x.length > 0) {            
+//                     if (x[0].content !== 'newfriend') {
+//                         if (x[0].content !== 'blank') {
+//                             if (x[0].content) {
+//                                 var you = $("div.name")[0].innerText.indexOf(',')
+//                                 you = $("div.name")[0].innerText.slice(you+2)
+//                                 var ct = String(x[0].content)
+//                                 var trim = x[0].content.indexOf('>')
+//                                 var str = ct.slice(trim+3)
+//                                 var writer = ct.slice(1,trim)
+//                                 if (writer == you) {
+//                                     var style = {
+//                                         marginRight: '75px',
+//                                         fontSize: '12px',
+//                                         background: 'rgba(0,0,0,0.2)',
+//                                         padding: '10px',
+//                                         position: 'relative',
+//                                         textAlign: 'right',
+//                                         marginTop: '10px',
+//                                     }
+//                                     var spanRight = {
+//                                         float: 'right'
+//                                     }
+//                                     return(
+//                                         <div>
+//                                             <span style={spanRight}>{you}</span>
+//                                             <div style={style}>{str}</div>
+//                                         </div>
+//                                     )
+//                                 } else {
+//                                     var style = {
+//                                         marginLeft: '75px',
+//                                         fontSize: '12px',
+//                                         background: 'rgba(0,0,0,0.2)',
+//                                         padding: '10px',
+//                                         position: 'relative',
+//                                         textAlign: 'left',
+//                                         marginTop: '10px'
+//                                     }
+//                                     var spanLeft = {
+//                                         float: 'left'
+//                                     }                                                                                
+//                                     return( 
+//                                         <div>
+//                                             <span style={spanLeft}>{writer}</span>
+//                                             <div style={style}>{str}</div>
+//                                         </div>
+//                                     )
+//                                 } 
+//                             }
+//                         }
+//                     }
+//                 }
+//             })
+//         }
+//         return (
+//             <div>
+//                 {messages}
+//             </div>
+//         )
+//     }
+// })
 var ContactList = React.createClass({
     loadBooksFromServer: function(){
         $.ajax({
@@ -640,18 +640,18 @@ if ((url.indexOf("inbox")) > 0 ){
     ReactDOM.render(<ContactList pollInterval={1000} />,
         document.getElementById('acontainer'))       
 }
- else if ((url.indexOf("starred")) > 0 ) {
-    ReactDOM.render(<StarredList pollInterval={1000} />, 
-        document.getElementById('mcontainer'))
-    ReactDOM.render(<ContactList pollInterval={1000} />,
-        document.getElementById('acontainer'))       
-}
- else if ((url.indexOf("deleted")) > 0 ) {
-    ReactDOM.render(<DelList pollInterval={1000} />, 
-        document.getElementById('mcontainer'))
-    ReactDOM.render(<ContactList pollInterval={1000} />,
-        document.getElementById('acontainer'))       
-} else if ((url.indexOf("chat_portal")) > 0 ) {
-    ReactDOM.render(<SMSList pollInterval={1000} />, 
-        document.getElementById('container'))
-}
+//  else if ((url.indexOf("starred")) > 0 ) {
+//     ReactDOM.render(<StarredList pollInterval={1000} />, 
+//         document.getElementById('mcontainer'))
+//     ReactDOM.render(<ContactList pollInterval={1000} />,
+//         document.getElementById('acontainer'))       
+// }
+//  else if ((url.indexOf("deleted")) > 0 ) {
+//     ReactDOM.render(<DelList pollInterval={1000} />, 
+//         document.getElementById('mcontainer'))
+//     ReactDOM.render(<ContactList pollInterval={1000} />,
+//         document.getElementById('acontainer'))       
+// } else if ((url.indexOf("chat_portal")) > 0 ) {
+//     ReactDOM.render(<SMSList pollInterval={1000} />, 
+//         document.getElementById('container'))
+// }

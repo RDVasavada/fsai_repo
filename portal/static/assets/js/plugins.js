@@ -284,6 +284,29 @@ $(document).ready(function(){
           btn.button('reset')
         }, 3000);
     });  
+
+$("a#wizard-next-3.btn").click(function() {
+  var portname = $("#portname")[0].value
+  if (portname) {
+      $("#xname")[0].innerText = $("#portname")[0].value
+  } else {
+    $("#xname")[0].innerText = "Test Portfolio"
+  }
+  $("#xinvest")[0].innerText = "$" + $("#investing_amount")[0].value
+  $("#xshare")[0].innerText = $("#stocks_number")[0].value + " shares"
+  $("#xyear")[0].innerText = "for " + $("#Years")[0].value + " Years"
+  $("#xmonth")[0].innerText = $("#Months")[0].value + " Months"
+  if ($("#Market")[0].value == "Nasdaq") {
+    $("#xmarket")[0].innerText = "NASDAQ"
+  } else if ($("#Market")[0].value == "S&P500") {
+    $("#xmarket")[0].innerText = "S&P500"
+  } else if ($("#Market")[0].value == "Dow Jones") {
+    $("#xmarket")[0].innerText = "Dow Jones"
+  }
+  $("#xrisk")[0].innerText = "with " + $("#expRisk")[0].value + "% Risk"
+  $("#xreturn")[0].innerText = "and " + $("#expReturn")[0].value + "% Return"
+})
+
     /* eof button state(demo)*/    
 
     /* sortable (demo)*/

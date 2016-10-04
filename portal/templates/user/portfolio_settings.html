@@ -44,7 +44,7 @@
                                     <div class="col-md-2"></div>
                                     <a href="login.html" onclick="return popitup('/login')"></a>
                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" placeholder="Your new portfolio . . ." style="padding:50px;font-size:18px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100">
+                                        <input type="text" class="form-control" id="portname" placeholder="Your new portfolio . . ."  style="padding:50px;font-size:18px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100">
                                    </div>
                                 </div>
                                 <div class="form-row">
@@ -62,18 +62,19 @@
                                   How much <span style="text-decoration: underline">Return</span> are you expecting?
                                 </h2>                              <br>
                                 <div style="width:400px;margin:auto">
-                                  <button type="button" class="btn btn-default btn-clean">Low</button>
-                                  <button type="button"  class="btn btn-default btn-clean">Medium</button>
-                                  <button type="button"  class="btn btn-default btn-clean">High</button>
+                                  <button type="button" class="btn btn-default btn-clean" onClick="expreturn('low')">Low</button>
+                                  <button type="button"  class="btn btn-default btn-clean" onClick="expreturn('med')">Medium</button>
+                                  <button type="button"  class="btn btn-default btn-clean" onClick="expreturn('high')">High</button>
                                 </div>
                                 <div class="input-group m-b" style="padding-top:10px;width:200px;margin:auto">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">%</span>
-                                        <input id="expReturn" name="expReturn" type="number" value="5" placeholder="1" min="1" max="50" class="form-control" onchange="returnChecker()">
+                                        <input id="expReturn" name="expReturn" type="number" value="5" placeholder="1" min="1" max="100" class="form-control" onchange="returnChecker()">
                                     </div>
                                 </div>
                                 <div class="knob">
-                                  <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="30" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                                  <div style="display: block; width: 100px; height: 100px;">
+                                    <input type="text" id="returnR" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="30" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
                                 </div>
                         </div>                                
                             </div>
@@ -82,9 +83,9 @@
                                   How much <span style="text-decoration: underline">Risk</span> are you willing to consider?
                                 </h2>                              <br>
                                 <div style="width:400px;margin:auto">
-                                  <button type="button"  id="lowrisk" class="btn btn-default btn-clean" onclick="lowrisk()">Low</button>
-                                  <button type="button"  class="btn btn-default btn-clean">Medium</button>
-                                  <button type="button"  class="btn btn-default btn-clean">High</button>
+                                  <button type="button"  id="lowrisk" class="btn btn-default btn-clean" onclick="riskreturn('low')">Low</button>
+                                  <button type="button"  class="btn btn-default btn-clean" onclick="riskreturn('med')">Medium</button>
+                                  <button type="button"  class="btn btn-default btn-clean" onclick="riskreturn('high')">High</button>
                                 </div>
                                 <div class="input-group m-b" style="padding-top:10px;width:200px;margin:auto">
                                      <div class="input-group m-b">
@@ -93,7 +94,7 @@
                                     </div>
                                 </div>
                                <div class="knob">
-                                  <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="30" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                                  <div style="display: block; width: 100px; height: 100px;"><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" id="riskR" value="30" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
                                 </div>                                
                             </div>
 
@@ -108,13 +109,13 @@
                                 <div class="row">
                                    <div class="col-md-6" style="vertical-align:top;text-align:center">Years<br>
                                     <div class="knob">
-                                      <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="12" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                                      <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input class="form-control" name="Years" id="Years" type="text" data-fgcolor="#3F97FE" data-min="0" data-max="60" data-width="100" data-height="100" value="12" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
                                       </div>                                    
                                       </div>                                    
                                    </div>
                                  <div class="col-md-6" style="vertical-align:top;text-align:center">Months<br>
                                     <div class="knob">
-                                      <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="3" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                                      <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input class="form-control" name="Months" id="Months" type="text" data-fgcolor="#3F97FE" data-min="0" data-max="12" data-width="100" data-height="100" value="3" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
                                       </div>                                    
                                       </div>                                    
                                    </div>
@@ -124,29 +125,29 @@
                                               Which market would you like to invest in?
                                             </h2>
                                    <div class="col-md-4" style="vertical-align:top;"><br>
+                                    <div class="form-control" style="display:none">
+                                      <input id="Market" name="Market" class="form-control" value="">
+                                    </div>
                                        <div class="block block-white">                   
                                           <div class="content">
-                                            <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px">
-                                              NASDAQ
-                                            </h2>
+                                            <input type="button" onClick="choseMarket('NDX')" id="ndxmkt" value="NASDAQ" style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px;background:transparent;font-size:24px;height:136px">
+                                            </input>                             
+                                          </div>
+                                      </div>
+                                   </div>
+                                  <div class="col-md-4" style="vertical-align:top;"><br>
+                                       <div class="block block-white">                   
+                                          <div class="content">
+                                             <input type="button" onClick="choseMarket('SP')" id="spmkt" value="S&P500" style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px;background:transparent;font-size:24px;height:136px">
+                                            </input>   
                                           </div>
                                       </div>                             
                                    </div>
                                   <div class="col-md-4" style="vertical-align:top;"><br>
                                        <div class="block block-white">                   
                                           <div class="content">
-                                            <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px">
-                                              S&P500 
-                                            </h2>
-                                          </div>
-                                      </div>                             
-                                   </div>
-                                  <div class="col-md-4" style="vertical-align:top;"><br>
-                                       <div class="block block-white">                   
-                                          <div class="content">
-                                            <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px">
-                                              Dow Jones
-                                            </h2>
+                                            <input type="button" onClick="choseMarket('DJI')" id="djimkt" value="Dow Jones" style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px;background:transparent;font-size:24px;height:136px">
+                                            </input>   
                                           </div>
                                       </div>                             
                                    </div>                                                                      
@@ -228,14 +229,14 @@
                                 <div class="col-md-3"></div>
                                      <div class="input-group m-b" style="width:165px">
                                     <div class="input-group m-b">
-                                        <span class="input-group-addon">$</span>
+                                        <span class="input-group-addon" style="font-size:48px;font-weight:100;font-family:'Helvetica Neue'">$</span>
                                         <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control" style="width:33vw;height:200px;text-align:center;font-size:48px;font-family:'Helvetica Neue';font-weight:100;letter-spacing:2px">
                                     </div>  
                                     </div>                      
                                 </div>
 
                      
-                                <div class="slider_example ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 40%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 40%;"></a></div>
+                                <div class="slider_example ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 50%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" id="theslider" href="#" style="left: 50%"></a></div>
 
                  <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px;letter-spacing:2px"> 
                                               How many stocks would you like to invest with?
@@ -243,7 +244,8 @@
                                   <div class="col-md-4"></div>
                                   <div class="col-md-4" style="margin-left:14px">
                                  <div class="knob">
-                                  <div style="display: block; width: 100px; height: 100px;"><canvas width="100" height="100" style="position:absolute;bottom:150px"></canvas><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="30" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
+                                  <div style="display: block; width: 100px; height: 100px;">
+                                    <input type="text" class="form-control" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" value="30" id="stocks_number" name="stocks_number" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
                                 </div>                                
                                     
                                   </div>
@@ -252,116 +254,33 @@
                          </div>
             </fieldset>
             <fieldset title="Step 5">                            
-                <legend>Stock Filters</legend>
-                           <div class="col-lg-12">
-                               <div class="form-group">
-                                   <div class="col-md-3">
-                                        <h7>Company Market Cap</h7>
+                <legend>Summary</legend>
+                           <div class="col-md-12" style="height:auto;top:-10px;text-align:center;font-size:24px;font-family:'helvetica neue';font-weight:100;">
+                                <div class="row">
+                                  <div class="col-md-4">
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="block" style="text-align:center;padding:25px;background:rgba(0,0,0,0.2);margin-top:25px">
+                                      <h2 id="xname"> Portfolio Confirmation </h2>
+                                      <hr>
+                                      <div style="font-size:36px;height:50px;" id="xinvest"> 2,500$</div>
+                                     <div style="font-size:18px;height:50px;" id="xshare"> into 33 Stocks</div>
+
+                                     <div style="font-size:36px;height:50px;" id="xyear"> for 1 Year</div>
+
+                                     <div style="font-size:18px;height:50px;" id="xmonth"> 3 Months</div>
+
+                                    <div style="font-size:36px;height:50px;" id="xmarket"> Dow Jones</div>
+
+                                    <div style="font-size:18px;height:50px;" id="xrisk"> with 10% Risk</div>
+
+                                    <div style="font-size:18px;height:50px;" id="xreturn"> and 25% Return
                                     </div>
-                                   <div class="col-sm-3">
-                                        <input type="text" class="form-control" value="0">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h7>Company P\E Ratio</h7>
-                                    </div>
-                                   <div class="col-sm-3">
-                                        <input type="text" class="form-control" value="0">
-                                    </div>                                
+
+                                    <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="loadDummyData()">Create my Portfolio</button>
                                 </div>
-                               <div class="form-group">
-                                    <div class="col-md-3">
-                                        <h7>Dividend Yield (%)</h7>
-                                    </div>
-                                   <div class="col-sm-3" style="padding-top:15px">
-                                        <input type="text" class="form-control" value="0">
-                                    </div>
-                                   <div class="col-md-3">
-                                        <h7>52 Week Price Change</h7>
-                                    </div>
-                                   <div class="col-sm-3" style="padding-top:15px">
-                                        <input type="text" class="form-control" value="0">
-                                    </div>                                
-                                </div>
-                                <br>
-                               <div class="form-group">
-                               <div class="col-md-3">
-<!--                                 <h7>Stock Filters</h7></div>
-                                  <div class="input-group m-b" style="padding:10px;">
-                                      <select class="form-control m-b" name="StockFilters" id="StockFilters" onchange="showfield()" style="width:165px;padding-left:10px;">
-                                            <option selected="selected">Select filter</option>
-                                            <option value="Last price">Last price</option>
-                                            <option value="EPS">EPS</option>
-                                            <option value="Quote Change(%)">Quote Change(%)</option>
-                                            <option value="52w high">52w high</option>
-                                            <option value="52w low">52w low</option>
-                                            <option value="52w price change(%)">52w price change(%)</option>
-                                            <option value="Div Recent Quarter">Div Recent Quarter</option>
-                                            <option value="Book value/share">Book value/share</option>
-                                            <option value="Cash/Share">Cash/Share</option>
-                                            <option value="Current Ratio">Current Ratio</option>
-                                            <option value="Interest Coverage">Interest Coverage</option>
-                                             <option value="Return on investment(TTM)(%)">Return on investment(TTM)(%)</option>
-                                        </select>
-                                  </div> -->
-                                </div>  
-                                <div class="form-group" id="stockinfo" style="display:none;">
-                                 <div class="col-md-3">
-                                     <h7 id="stockfillername"></h7>
-                                 </div>
-                                 <div class="col-sm-3" id="stockoptiontext">
-                                        <input type="text" class="form-control"  style="width:160px;">
-                                    </div> 
-                                </div>
-                            </div>
-            </fieldset>
-            <fieldset title="Step 6">                            
-                <legend>Add Stocks</legend>
-                           <div class="col-lg-12">
-                            <div class="form-group">
-                               <div class="col-md-3" style="width:150px;">
-                               <h7>Stock Ticker</h7>
-                               </div>
-                               <div class="col-sm-3">
-                                    <input type="text" class="form-control" value="AAPL" placeholder="AAPL">
-                                </div> 
-                                <div class="col-md-3" style="width:150px;">
-                               <h7>Date Bought</h7>
-                               </div>
-                              <div class="col-sm-3">
-                                <div class="input-group m-b">
-                                <span class="input-group-addon">$</span>
-                                  <input type="text" class="form-control" id="datepicker" value="09/12/2016" placeholder="09/12/2016">
-                                </div>                              
-                            </div>
-                            </div>
-                            <div class="form-group">
-                              <div class="col-md-3" style="width:150px;">
-                               <h7>Price Paid($)</h7>
-                               </div>
-                               <div class="col-sm-3">
-                                    <input type="text" class="form-control" value="2000" placeholder="2000">
-                                </div> 
-                              <div class="col-md-3" style="width:150px;">
-                                <h7>Shares Owned</h7>
-                              </div>
-                               <div class="col-sm-3">
-                                <div class="input-group m-b">
-                                  <div class="input-group m-b">
-                                      <input type="number" placeholder="10" value="10" id="shares_owned" name="shares_owned" min="1" class="form-control">
-                                  </div>  
-                                </div> 
-                                </div>
-                            </div> 
-                          </div>  
-                      <div>       
-                        <div class="col-md-3" style="margin-top:15px">
-                            <a href="/" class="btn btn-default btn-block btn-clean" type="submit">Cancel</a>
-                        </div>
-                        <div class="col-md-3" style="margin-top:15px">
-                          <a id="finish" href="#modal_default_1" onclick="loadDummyData()" data-toggle="modal" class="btn btn-default btn-block btn-clean">Optimize</a>
-                        </div>   
-                    </div>
-            </fieldset>                               
+                          </div>
+            </fieldset>                             
             </form><!-- End of Form -->
         </div> <!-- End of Content -->
      </div>

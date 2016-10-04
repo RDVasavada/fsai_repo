@@ -1,12 +1,11 @@
-{% load render_bundle from webpack_loader %}
 <!DOCTYPE html>
 <html>
-
+{% load render_bundle from webpack_loader %}
 <head>
     <title>{% block title %}Vise{% endblock %}</title>    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1 ">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block page_css %}
         <link rel="icon" type="image/ico" href="favicon.ico"/>
         <link href="/static/css2/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +15,8 @@
         <link href="/static/css2/fsai.css" rel="stylesheet">
         <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
         <link href="/static/css2/stylesheet.css" rel="stylesheet" type="text/css"/>   
-        <link href="/static/css2/viseanimations.css" rel="stylesheet" type="text/css"/>   
+        <link href="/static/css2/viseanimations.css" rel="stylesheet" type="text/css"/>  
+        <link rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)" href="/static/css2/small-device.css" /> 
     {% endblock %}
     {% block head %}            
         <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery.min.js'></script>
@@ -27,7 +27,7 @@
         <script type='text/javascript' src='/static/assets/js/plugins/datatables/jquery.dataTables.min.js'></script>
 
         <script type='text/javascript' src='/static/assets/js/plugins/uniform/jquery.uniform.min.js'></script>
-         <script type='text/javascript' src='/static/assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
+       <!--   // <script type='text/javascript' src='/static/assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script> -->
         <script type='text/javascript' src='/static/assets/js/plugins/knob/jquery.knob.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/sparkline/jquery.sparkline.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/flot/jquery.flot.js'></script>     
@@ -36,7 +36,7 @@
 
         <script type='text/javascript' src='/static/assets/js/plugins.js'></script>    
         <script type='text/javascript' src='/static/assets/js/actions.js'></script>
-<!--         // <script type='text/javascript' src='/static/assets/js/settings.js'></script> -->
+        <script type='text/javascript' src='/static/assets/js/settings.js'></script>
         <script type='text/javascript' src='/static/assets/jquery.smoothState.min.js'></script> 
         <script type="text/javascript" src="/static/assets/js1/morris.js"></script>
         <script type="text/javascript" src="/static/assets/js1/raphael.js"></script>
@@ -63,7 +63,7 @@ function del_cookie() {
 <body onunload="del_cookie()">
     <div class="row">
 
-        <div class="col-md-8" style="padding-left:25px;position:relative;left:13vw;width:75.5vw">
+        <div class="col-md-8" id="mainheader" style="padding-left:25px;position:relative;left:13vw;width:75.5vw">
             <div class="btn-group btn-group-justified" style="height:10vh;margin-top:25px;text-align:center">
                 <div class="btn">
                     <h8 style="opacity: 0.4; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 54px;font-family:'Helvetica Neue';display:inline;line-height:75px;text-align:center" id="splash">

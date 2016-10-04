@@ -686,9 +686,15 @@
         this.change = function (v) {
             this.cv = v;
             this.$.val(v);
+            $("#expReturn").val(v)
         };
 
         this.angle = function (v) {
+            if (this.$.attr('id') == "returnR") {
+                $("#expReturn").val(v)
+            } else if(this.$.attr('id') == "riskR") {
+                $("#expRisk").val(v)
+            }
             return (v - this.o.min) * this.angleArc / (this.o.max - this.o.min);
         };
 
