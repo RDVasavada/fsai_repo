@@ -22,7 +22,7 @@ def splash(request):
 def logoutview(request):
     ''' Logout the current user '''
     logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/login')
 
 def loginview(request):
     if request.method == 'GET':

@@ -11,27 +11,27 @@
   </div>
 </div>
 <div class="sceneElement" data-viewport="0">
-<div class="col-lg-12 col-md-12 col-sm-8 col-xs-12" style="margin:0px;height:600px;padding-left:0px;padding-right:0px;margin-left:1vw;margin-right:1vw;">
+<div class="col-lg-12 col-md-12 col-sm-8 col-xs-12" style="margin:0px;height:600px;padding-left:0px;padding-right:0px;margin-left:1vw;margin-right:1vw;" id="ha">
   <div class="row" style="margin:0px">
-    <div class="col-lg-2 col-md-2" style="height:600px;padding-left:0px;padding-right:0px;margin-right:10px">
-        <div class="block" style="height:599px;margin:0px">
+    <div class="col-lg-2 col-md-2" style="height:600px;padding-left:0px;padding-right:0px;margin-right:10px" id="ha">
+        <div class="block" style="height:599px;margin:0px" id="ha">
             <div class="header">
-                <h2 style="font-size:12px;font-weight:100;font-family:'helvetica neue">Your Portfolios</h2>
+                <h2 style="font-size:12px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">Your Portfolios</h2>
             </div>
-            <div class="content list-group ui-sortable" id="sortable_example_1" style="height:559px;background:rgba(0,0,0,0.5);overflow:scroll;letter-spacing:1px;font-weight:100;font-family:'Helvetica Neue'">
+            <div class="content list-group ui-sortable" id="sortable_example_1" style="height:559px;background:rgba(0,0,0,0.5);overflow:scroll;letter-spacing:1px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue'">
                 {% for portfolio in portfolios %}
                 <a href="#" class="list-group-item" style="text-align:center;height:150px">{{portfolio.name}}
                   <br>
-                  <span style="font-size:18px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative" id="currVal">
+                  <span style="font-size:18px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';top:7px;left:7px;position:relative" id="currVal">
                     {{portfolio.value}}
                   </span>
                   <div style="display:none" id="initVal">{{portfolio.investment}}</div>
                   <div style="display:none" id="riskVal">{{portfolio.risk}}</div>
                   <br><br>
-                 <span id="percent" style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
+                 <span id="percent" style="font-size:14px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
                       +33%
                   </span><br>
-                 <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue'">
+                 <span style="font-size:14px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue'">
                     {{portfolio.no_of_tickers}} Tickers
                   </span>                
                 </a>
@@ -39,10 +39,10 @@
             </div>
         </div> 
       </div>
-    <div class="col-lg-7 col-md-5" style="width:61%;margin-left:1vw;margin-right:1vw;padding:0px;height:605px;overflow:hidden;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;">
+    <div class="col-lg-7 col-md-5" style="width:61%;margin-left:1vw;margin-right:1vw;padding:0px;height:605px;overflow:hidden;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';letter-spacing:2px;" id="dashmed">
         <div class="block" style="margin-left:-5px;margin-bottom:10px;height:240px;">
             <div class="header">
-                <h2 style="font-size:12px;letter-spacing:2px;padding-left:2px"> Performance Summary </h2>
+                <h2 style="font-size:12px;letter-spacing:2px;padding-left:2px;font-weight:300;-webkit-font-smoothing: antialiased;"> Performance Summary </h2>
                   <div class="btn-group pull-right">
     <!--                 <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="letter-spacing:2px">
                     Select Analytic <span class="caret"></span>
@@ -76,7 +76,7 @@
                     <!-- <span class="icon-thumbs-up-alt" style="position:absolute;font-size:175px;top:90px;left:75px;color:rgba(255,255,255,0.1)"></span> -->
                       <div class="hp-icon" style="font-size:24px" >
                           <span class="hp-sm">Total Investments</span> <br>   
-                          <span class="icon-usd" style="font-weight:100;position:relative;top:25px"></span>
+                          <span class="icon-usd" style="font-weight:300;-webkit-font-smoothing: antialiased;position:relative;top:25px"></span>
                           <span class="hp-main" id="gains" style="font-size:42px;position:relative;top:25px"></span>                                
                       </div>                                                 
                   </div>
@@ -96,7 +96,7 @@
         </div>  
       <div class="block" style="margin-left:-5px;margin-bottom:20px;margin-top:8px;height:340px">
           <div class="header">
-                <h2 style="font-size:12px">Market Charts</h2> 
+                <h2 style="font-size:12px;font-weight:300;-webkit-font-smoothing: antialiased;">Market Charts</h2> 
                 <div class="side pull-right">
                    <div class="btn-group btn-group-xs">
                         <button type="button" class="btn btn-default btn-clean" onClick="changeTime('1y')">1y</button>
@@ -132,10 +132,10 @@
              </div>   
         </div>          
   </div>
-    <div class="col-lg-2 col-md-2" style="padding-left:0px;padding-right:0px;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;height:600px;margin-left:2.5px">
+    <div class="col-lg-2 col-md-2" style="padding-left:0px;padding-right:0px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';letter-spacing:2px;height:600px;margin-left:2.5px" id="dashlast">
         <div class="block" style="margin:0px;height:599px">
             <div class="header">
-                <h2 style="font-size:12px;letter-spacing:0.25px">Market Headlines</h2>
+                <h2 style="font-size:12px;letter-spacing:0.25px;font-weight:300;-webkit-font-smoothing: antialiased;">Market Headlines</h2>
             </div>
             <div class="content bg-dot30" style="height:560px;overflow:hidden;background:rgba(0,0,0,0.6)">
                 <div class="head-panel nm">
@@ -143,7 +143,7 @@
                         <table class="table table-hover margin bottom">
                             <tbody id="newsPin">
                                 <tr id="incomingNews" style="display:none">
-                                    <td><a href="#" target="_blank" style="width:100%;display:inline-block;color:#428bca;text-decoration: underline;"></a></td> 
+                                    <td><a href="#" target="_blank" style="width:100%;display:inline-block;color:#428bca;text-decoration: underline;font-weight:300;-webkit-font-smoothing: antialiased;"></a></td> 
                                 </tr> 
                                 </tbody>
                             </table>
@@ -190,19 +190,19 @@
     <div class="col-lg-2 col-md-2" style="height:600px;padding-left:0px;padding-right:0px;margin-right:10px">
         <div class="block" style="height:599px;margin:0px">
             <div class="header">
-                <h2 style="font-size:12px;font-weight:100;font-family:'helvetica neue">Your Portfolios</h2>
+                <h2 style="font-size:12px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue">Your Portfolios</h2>
             </div>
             <div class="content list-group ui-sortable" id="sortable_example_1" style="height:559px;background:rgba(0,0,0,0.5);overflow:hidden">
                 {% for portfolio in portfolios %}
                 <a href="#" class="list-group-item" style="text-align:center;height:150px">{{portfolio.name}}
                   <br>
-                  <span style="font-size:18px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
+                  <span style="font-size:18px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
                     ${{portfolio.value}}
                   </span><br><br>
-                 <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
+                 <span style="font-size:14px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
                       +33%
                   </span><br>
-                 <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue'">
+                 <span style="font-size:14px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue'">
                     {{portfolio.no_of_tickers}} Tickers
                   </span>                
                 </a>
@@ -210,7 +210,7 @@
             </div>
         </div> 
       </div>
-    <div class="col-lg-7 col-md-5" style="width:61%;margin-left:1vw;margin-right:1vw;padding:0px;height:605px;overflow:hidden;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;">
+    <div class="col-lg-7 col-md-5" style="width:61%;margin-left:1vw;margin-right:1vw;padding:0px;height:605px;overflow:hidden;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';letter-spacing:2px;">
         <div class="block" style="margin-left:-5px;margin-bottom:10px;height:240px;">
             <div class="header">
                 <h2 style="font-size:12px;letter-spacing:2px;padding-left:2px"> Performance Summary </h2>
@@ -234,7 +234,7 @@
                  </div>
             </div>
             <div class="block content" style="background:rgba(0,0,0,0.6);height:200px;margin-bottom:0px">
-              <label style="font-weight:100;font-family:'helvetica neue'">Unrealized Gains</label>    <br>           
+              <label style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">Unrealized Gains</label>    <br>           
                   <div class="knob" style="margin:10px">
                       <div style="display: block; width: 100px; height: 100px;">
                         <canvas width="100" height="100" style="position: absolute !important; top:-100px !important"></canvas>
@@ -281,7 +281,7 @@
              </div>   
         </div>          
   </div>
-    <div class="col-lg-2 col-md-2" style="padding-left:0px;padding-right:0px;font-weight:100;font-family:'Helvetica Neue';letter-spacing:2px;height:600px;margin-left:2.5px">
+    <div class="col-lg-2 col-md-2" style="padding-left:0px;padding-right:0px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';letter-spacing:2px;height:600px;margin-left:2.5px">
         <div class="block" style="margin:0px;height:599px">
             <div class="header">
                 <h2 style="font-size:12px;letter-spacing:0.25px">Market Headlines</h2>

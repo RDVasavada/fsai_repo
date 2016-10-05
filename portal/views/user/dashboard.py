@@ -34,26 +34,15 @@ def dashboard(request):
       prestock[ticker]['initial_price'] = stock['initial_price']
       prestock[ticker]['number_of_shares'] = stock['number_of_shares']
       timenow = time.strftime("%Y-%m-%d")
-      # historical = Share(str(stock['ticker']))
-      # historical = historical.get_historical(str(stock['buy_date']),timenow)
-      # try:
-      #   for share in historical:
-      #     # print(share)
-      #     prestock[ticker]['data'].append(share['Close'])
-          # prestock['historical'].append(share['Close'])
-      # except IndexError:
-      #   print("e")
-      # stockDict.append(prestock)
-    stocks = []
-    stocks.append(stockDict)
+      stocks = []
+      stocks.append(stockDict)
+      stocks = json.dumps(list(stocks), cls=DjangoJSONEncoder)
+      context_dict['stockDict'] = stocks
 
     # for data in historical:
     #   prestock['historical'].append(data)
     #   print(prestock['historical'])
     # print(historical)
-  stocks = json.dumps(list(stocks), cls=DjangoJSONEncoder)
-  print(stocks)
-  context_dict['stockDict'] = stocks
   context_dict["portfolios"] = portfolios
   context_dict["username"] = username
   t = loader.get_template("user/dashboard.html")

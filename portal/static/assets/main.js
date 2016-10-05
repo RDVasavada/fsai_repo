@@ -34,6 +34,7 @@ function rerun() {
         $("input#risks").knob();
         $.getScript("/static/js/user/my_portfolios.js")
         $.getScript("/static/assets/js/plugins.js")
+        $.getScript("/static/assets/js/actions.js")
     }else if ((url.indexOf("news_portal")) > 0 ) {  
         $.getScript("/static/js/user/news_portal.js")
         $.getScript("/static/assets/js/actions.js")

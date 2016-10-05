@@ -27,7 +27,7 @@
         <script type='text/javascript' src='/static/assets/js/plugins/datatables/jquery.dataTables.min.js'></script>
 
         <script type='text/javascript' src='/static/assets/js/plugins/uniform/jquery.uniform.min.js'></script>
-       <!--   // <script type='text/javascript' src='/static/assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script> -->
+        <script type='text/javascript' src='/static/assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/knob/jquery.knob.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/sparkline/jquery.sparkline.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/flot/jquery.flot.js'></script>     
@@ -64,27 +64,28 @@ function del_cookie() {
     <div class="row">
 
         <div class="col-md-8" id="mainheader" style="padding-left:25px;position:relative;left:13vw;width:75.5vw">
-            <div class="btn-group btn-group-justified" style="height:10vh;margin-top:25px;text-align:center">
-                <div class="btn">
+            <div class="btn-group btn-group-justified" id="navbtn" style="height:10vh;margin-top:25px;text-align:center">
+                <div class="btn" id="navlast">
                     <h8 style="opacity: 0.4; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 54px;font-family:'Helvetica Neue';display:inline;line-height:75px;text-align:center" id="splash">
-                        <span style="letter-spacing:1px;"><i>V</i></span>ise<br>
+                        <span style="letter-spacing:1px;" id="navicon"><i >V</i></span><span id="navicon">ise</span><br>
                     </h8>
                 </div>                
                 <a id="a1" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/dashboard/skip" class="btn btn-default btn-clean stbar transition" id="/user/dashboard">
-                    <span class="icon-home" style="font-size:24px"></span><br>Dashboard
+                    <span class="icon-home" style="font-size:24px"></span><br><span id="navicon"> Dashboard </span>
                 </a>               
                 <a id="a2" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/inbox"class="btn btn-default btn-clean"><span class="icon-comments" style="font-size:24px"></span> 
-                <br>Messages</a>
+                <br><span id="navicon"> Messages</span></span></a>
                 <a id="a3" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/my_portfolios" class="btn btn-default btn-clean"> <span class="icon-folder-open-alt" style="font-size:24px"></span>
-                    <br>My Portfolios</a>
+                    <br><span id="navicon"> My Portfolios</span></a>
                 <a id="a4" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/portfolio_settings" class="btn btn-default btn-clean" id="/user/portfolio_settings"><span class="icon-plus" style="font-size:24px"></span><br>
-                 New Portfolio</a>
+                 <span id="navicon"> New Portfolio</span></a>
                 <a id="a5" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/news_portal" class="btn btn-default btn-clean" id="/user/news_portal"><span class="icon-flag-alt"style="font-size:24px"></span> 
-                <br>News & Sentiment</a>
+                <br><span id="navicon"> News & Sentiment</span></a>
                 <a id="a6" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/support" id="/user/support" class="btn btn-default btn-clean"><span class="icon-cogs" style="font-size:24px"></span> 
-                <br>Support</a>
+                <br><span id="navicon"> Support</span></a>
                 <a id="a" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/logout" id="/logout" class="btn btn-default btn-clean"><span class="icon-share-alt" style="font-size:24px"></span> 
-                <br>Log Out</a>
+                <br><span id="navicon"> Log Out</span></a>
+                              
             </div>            
         </div>
         <div class="col-md-2" style="margin-right:10px">

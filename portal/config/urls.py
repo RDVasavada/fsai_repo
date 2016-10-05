@@ -2,7 +2,7 @@ from portal import views
 from django.conf.urls import patterns, url, include
 from django.conf import settings
 from django.conf.urls import patterns, url
-from wkhtmltopdf.views import PDFTemplateView
+
 
 urlpatterns = patterns('',
 
@@ -22,7 +22,6 @@ urlpatterns = patterns('',
 
     #General User Pages
     (r'^user/dashboard/?$', views.dashboard),
-    (r'^user/pdf/?$', views.pdf),
     (r'^user/dashboard/skip?$', views.dashboardskip),
     (r'^user/portfolio/?$', views.portfolio),
     (r'^user/portfolio_settings/?$', views.portfolio_settings),
@@ -45,14 +44,10 @@ urlpatterns = patterns('',
     (r'^user/accept/?$', views.accept),   
     (r'^user/getconnections/?$', views.getconnections),   
     (r'^user/getmsg/?$', views.getmsg),   
-    # (r'^user/getstarred/?$', views.getstarred),   
-    # (r'^user/getdeleted/?$', views.getdeleted),   
     (r'^user/delmsg/?$', views.delmsg),   
     (r'^user/getsent/?$', views.getsent),   
     (r'^user/sendmsg/?$', views.sendmsg),   
-    # (r'^user/starmsg/?$', views.starmsg),   
     (r'^user/delfriend/?$', views.delfriend),   
-    # (r'^ring/?$', views.ring)
 
 
 
