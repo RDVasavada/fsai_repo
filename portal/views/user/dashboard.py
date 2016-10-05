@@ -19,7 +19,7 @@ def dashboard(request):
   if request.user.is_authenticated():
       username = request.user.username
       portalUser = PortalUser.objects.get(username=username)
-      portfolios = top_portfolios(request,27)
+      portfolios = top_portfolios(request,portalUser.id)
   context_dict = {}
   stockDict = []
   for port in portfolios:

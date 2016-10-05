@@ -1,17 +1,258 @@
 {% extends "base.html" %}
 
 {% block content %}
-             <div class="col-md-12 col-sm-12" style="height:80vh;padding-right:50px;padding-left:50px;">
-                <div class="head bg-dot20">   
-                    <div class="ibox-content" style="height:800px;background-color:inherit;border-style:none">
-                        <h2>Portfolio Optimization Results</h2>    
-                    <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper" role="grid" id="DataTables_Table_2" aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+             <div class="row" style="margin-left:5px;height:750px;background-color:rgba(0,0,0,0.4);">
+                <div class="block" style="box-shadow: 4px 5px 5px 0px rgba(0,0,0,0);">
+                    <div class="head">   
+                        <div class="ibox-content">
+                            <div class="row">
+                                <h2>Portfolio Optimization Results</h2>
+                              <div class="btn-group pull-right">
+                                    <button type="button" class="btn btn-default btn-clean">File</button>
+                                    <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                      <span class="caret"></span>
+                                    </button>
+<script>
+let pdf = function() {
+    $.ajax({
+        url: '/user/renderpdf',
+        data: {'htm':$("#main")[0].outerHTML},
+        dataType: 'json',
+        type: 'GET'
+    }).done(function(a){
+        console.log(a)
+    })
+}
+</script>
+                                    <ul class="dropdown-menu" role="menu">
+                                      <li><a href="#" onClick="pdf()">Export as PDF</a></li>
+                                      <li><a href="#" >Export as CSV</a></li>
+                                      <li class="divider"></li>
+                                      <li><a href="#">Save Portfolio</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <h1 style="font-family:'helvetica neue';letter-spacing:2px;text-align:center;padding:10px">Portfolio : {{portname}}<br>
+                            </h1><hr>
+                            <div style="width:100%;text-align:center;">
+                            <span style="font-family:'helvetica neue';letter-spacing:2px;padding:10px;">
+                            <h3 style="display:inline">{{investingAmount}}$</h3> into the <h3 style="display:inline">{{market}}</h3> at <h3 style="display:inline">{{expectedRisk}}%</h3> expected risk and <h3 style="display:inline">{{expectedReturn}}%</h3> expected return</span><br>
+                              for <h3 style="display:inline">{{Years}}</h3> Years  and  <h3 style="display:inline">{{Months}}</h3> Months</div>
+                            <hr>
+                                <div id="pieChart" style="text-align:center;position:absolute;left:25px;display:inline;top:250px"></div>
+                <script>
+                var colors = ["white","#87CEEB","rgb(79, 155, 43)","color: rgb(255, 152, 6)"," color: rgb(166, 45, 45);"]
+                var pie = new d3pie("pieChart", {
+                    "header": {
+                        "title": {
+                            "text": "Stock Distribution",
+                            "color": "#ffffff",
+                            "fontSize": 24,
+                            "": "helvetica"
+                        },
+                        "subtitle": {
+                            "color": "#999999",
+                            "fontSize": 12,
+                            "font": "open sans"
+                        },
+                        "titleSubtitlePadding": 9
+                    },
+                    "footer": {
+                        "color": "#999999",
+                        "fontSize": 10,
+                        "font": "open sans",
+                        "location": "bottom-left"
+                    },
+                    "size": {
+                        "canvasWidth": 500,
+                        "pieOuterRadius": "90%"
+                    },
+                    "data": {
+                        "sortOrder": "value-desc",
+                        "content": [
+                        {% for stock in newstocks %}
+                            {
+                                "label": "{{stock}}",
+                                "value": 2,
+                                "color": colors[{{ forloop.counter }}]
+                            },
+                        {% endfor %}
+
+                        ]
+                    },
+                    "labels": {
+                        "outer": {
+                            "pieDistance": 32
+                        },
+                        "inner": {
+                            "hideWhenLessThanPercentage": 3
+                        },
+                        "mainLabel": {
+                            "color": "#ffffff",
+                            "fontSize": 11
+                        },
+                        "percentage": {
+                            "color": "#ffffff",
+                            "decimalPlaces": 0
+                        },
+                        "value": {
+                            "color": "#adadad",
+                            "fontSize": 11
+                        },
+                        "lines": {
+                            "enabled": true
+                        },
+                        "truncation": {
+                            "enabled": true
+                        }
+                    },
+                    "effects": {
+                        "pullOutSegmentOnClick": {
+                            "effect": "linear",
+                            "speed": 400,
+                            "size": 8
+                        }
+                    },
+                    "misc": {
+                        "gradient": {
+                            "enabled": false,
+                            "percentage": 100
+                        }
+                    }
+                });
+                </script>
+
+                               <div id="pieChart2" style="text-align:center;position:absolute;right:25px;display:inline;top:250px"></div>
+                <script>
+                var colors = ["white","#87CEEB","rgb(79, 155, 43)","color: rgb(255, 152, 6)"," color: rgb(166, 45, 45);"]
+                var pie = new d3pie("pieChart2", {
+                    "header": {
+                        "title": {
+                            "text": "Sector Breakdown",
+                            "color": "#ffffff",
+                            "fontSize": 24,
+                            "": "helvetica"
+                        },
+                        "subtitle": {
+                            "color": "#999999",
+                            "fontSize": 12,
+                            "font": "open sans"
+                        },
+                        "titleSubtitlePadding": 9
+                    },
+                    "footer": {
+                        "color": "#999999",
+                        "fontSize": 10,
+                        "font": "open sans",
+                        "location": "bottom-left"
+                    },
+                    "size": {
+                        "canvasWidth": 500,
+                        "pieOuterRadius": "90%"
+                    },
+                    "data": {
+                        "sortOrder": "value-desc",
+                        "content": [
+                            {
+                                "label": "Technology",
+                                "value": 232,
+                                "color": colors[1]
+                            },
+                           {
+                                "label": "Health",
+                                "value": 432,
+                                "color": colors[2]
+                            },
+
+                           {
+                                "label": "Agriculture",
+                                "value": 374,
+                                "color": colors[3]
+                            },
+
+
+                        ]
+                    },
+                    "labels": {
+                        "outer": {
+                            "pieDistance": 32
+                        },
+                        "inner": {
+                            "hideWhenLessThanPercentage": 3
+                        },
+                        "mainLabel": {
+                            "color": "#ffffff",
+                            "fontSize": 11
+                        },
+                        "percentage": {
+                            "color": "#ffffff",
+                            "decimalPlaces": 0
+                        },
+                        "value": {
+                            "color": "#adadad",
+                            "fontSize": 11
+                        },
+                        "lines": {
+                            "enabled": true
+                        },
+                        "truncation": {
+                            "enabled": true
+                        }
+                    },
+                    "effects": {
+                        "pullOutSegmentOnClick": {
+                            "effect": "linear",
+                            "speed": 400,
+                            "size": 8
+                        }
+                    },
+                    "misc": {
+                        "gradient": {
+                            "enabled": false,
+                            "percentage": 100
+                        }
+                    }
+                });
+                </script>                
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-left:5px;">
+                  <div class="head bg-dot20">   
+
+                    <table class="table table-hover margin bottom" style="background:rgba(0,0,0,0.2);padding:25px">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Ticker Symbol</th>
+                        <th class="text-center">Number of Shares</th>
+                        <th class="text-center">Buy Date</th>
+                        <th class="text-center">Sell Date</th>
+                        <th class="text-center">Expected Return</th>
+                        <th class="text-center">Expected Risk</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for stock in newstocks %}<tr>
+                        <td class="text-center small">{{stock}}</td>
+                        <td class="text-center">2</td>
+                        <td class="text-center">2016-01-01</td>
+                        <td class="text-center">2015-01-01</td>
+                        <td class="text-center">{{expectedReturn}}</td>
+                        <td class="text-center">{{expectedRisk}}</td>
+</tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+<!-- 
+                    <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper" role="grid" id="DataTables_Table_2" aria-describedby="DataTables_Table_2_info" style="background-color:rgba(0,0,0,0.4);border-style:none;padding:10px">
                         <table class="table table-bordered table-striped sortable dataTable">
                             <thead>
                                 <tr>
                                     <th style="font-weight:100">Company Name</th>
                                     <th style="font-weight:100">Ticker Symbol</th>
-                                    <th style="font-weight:100">Amount of Shares to purchase</th>
+                                    <th style="font-weight:100">Amount of Shares</th>
                                     <th style="font-weight:100">Buy Date</th>
                                     <th style="font-weight:100">Sell Date</th>
                                     <th style="font-weight:100">Expected Return</th>
@@ -19,27 +260,29 @@
                                 </tr>
                             </thead>
                             <tbody id="pin">
-                                {% for result in optimizeSearchResults %}
+                                {% for stock in newstocks %}
                                 <tr id="incoming">
                                     <td id="companyName">
-                                        <p>TELSA</p>
+                                        <p>{{stock}}</p>
                                         <a id="stockLink" href="individual_stock">    <i class="fa fa-line-chart"></i> </a>
                                         <a class="btn btn-primary" href="http://finance.yahoo.com/q?s=" target="_blank"><i class="fa fa-hacker-news"></i></a>
                                     </td>
-                                    <td id="months">{{ result.months }}</td>
-                                    <td id="market">{{ result.market }}</td>
-                                    <td id="investingAmount">{{ result.investingAmount }}</td>
-                                    <td id="numStocks">{{ result.numStocks }}</td>
-                                    <td id="expectedReturn"><b>{{ result.expectedReturn }}</b></td>
-                                    <td id="expectedRisk"><span class="label label-warning-light" >{{ result.expectedRisk }}</span></td>
+                                    <td id="months">{{ stock}}</td>
+                                    <td id="market">2</td>
+                                    <td id="investingAmount">01-01-2015</td>
+                                    <td id="numStocks">01-01-2016</td>
+                                    <td id="expectedReturn"><b>{{ expectedReturn }}</b></td>
+                                    <td id="expectedRisk"><span class="label label-warning-light" >{{expectedRisk }}</span></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
-                        </table>
+                        </table> -->
+    <div class="page-footer" style="margin-top:0px;text-align:center;margin-top:5px">
+        Copy right Vise @ 2015
+    </div>
+        <!-- <button type="button" class="btn btn-success" style="padding:25px;width:200px;letter-spacing:2px;margin:25px">Save Portfolio</button><br> -->
                     </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3" style="position:bottom:0px">
-                            <a href="/user/portfolio_settings" class="btn btn-default btn-block btn-clean">Back</a>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -57,7 +300,6 @@
 {% block scripts %}
  <script src="/static/js/user/portfolio_optimize.js"></script>
 {% endblock %}
-
 
 
 {% endblock %}

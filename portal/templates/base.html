@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html>
 {% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+<html style="overflow:hidden;height: 100%;">
 <head>
     <title>{% block title %}Vise{% endblock %}</title>    
     <meta charset="utf-8">
@@ -36,7 +36,7 @@
 
         <script type='text/javascript' src='/static/assets/js/plugins.js'></script>    
         <script type='text/javascript' src='/static/assets/js/actions.js'></script>
-        <script type='text/javascript' src='/static/assets/js/settings.js'></script>
+        <!-- // <script type='text/javascript' src='/static/assets/js/settings.js'></script> -->
         <script type='text/javascript' src='/static/assets/jquery.smoothState.min.js'></script> 
         <script type="text/javascript" src="/static/assets/js1/morris.js"></script>
         <script type="text/javascript" src="/static/assets/js1/raphael.js"></script>
@@ -60,7 +60,7 @@ function del_cookie() {
             }
 
 </script>
-<body onunload="del_cookie()">
+<body onunload="del_cookie()" style="background-attachment:fixed !important;height:100%;overflow:auto">
     <div class="row">
 
         <div class="col-md-8" id="mainheader" style="padding-left:25px;position:relative;left:13vw;width:75.5vw">

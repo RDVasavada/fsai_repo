@@ -2,6 +2,7 @@ from portal import views
 from django.conf.urls import patterns, url, include
 from django.conf import settings
 from django.conf.urls import patterns, url
+from wkhtmltopdf.views import PDFTemplateView
 
 urlpatterns = patterns('',
 
@@ -19,9 +20,9 @@ urlpatterns = patterns('',
     (r'^chat_portal/?$', views.chat_portal),
     (r'^sms/sms_symbolexchange/?$', views.sms_symbolexchange),
 
-
     #General User Pages
     (r'^user/dashboard/?$', views.dashboard),
+    (r'^user/pdf/?$', views.pdf),
     (r'^user/dashboard/skip?$', views.dashboardskip),
     (r'^user/portfolio/?$', views.portfolio),
     (r'^user/portfolio_settings/?$', views.portfolio_settings),
@@ -38,8 +39,6 @@ urlpatterns = patterns('',
 
     (r'^user/inbox/?$', views.inbox),    
     (r'^user/sent/?$', views.sent), 
-    (r'^user/deleted/?$', views.deleted),
-    (r'^user/starred/?$', views.starred),   
 
     #twilio views
     (r'^user/addconnection/?$', views.addconnection),   

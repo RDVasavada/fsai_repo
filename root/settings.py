@@ -176,7 +176,8 @@ INSTALLED_APPS = (
     'rest_framework',
     'webpack_loader',
     #local apps
-    'portal',    
+    'portal',
+    'wkhtmltopdf' ,
 )
 
 

@@ -22,8 +22,8 @@ def my_portfolios(request):
         # get the portfolios of the user
         # print("Portal User Object :" + str(portalUser) + "|" + str(portalUser.id))
         try:
-            # all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
-            all_portfolios = Portfolio.objects.filter(user__id=27)
+            all_portfolios = Portfolio.objects.filter(user__id=portalUser.id)
+            # all_portfolios = Portfolio.objects.filter(user__id=1)
             #print(all_portfolios)
 
             #all_portfolios = Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id])

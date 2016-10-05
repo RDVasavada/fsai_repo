@@ -19,16 +19,16 @@ from portal.views.user.top_portfolios import *
 def individual_stock(request):
     context_dict = {}
     context_dict["company_symbol"] = request.POST["company_name"]
-    # print(request.POST["company_name"])
+    print(request.POST["company_name"])
     response = requests.get("http://chstocksearch.herokuapp.com/api/"+request.POST['company_name'])
-    print(response.json())
+    # print(response.json())
     try:
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(response.json()[0]['company']) + " stock"
     except IndexError:
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(request.POST["company_name"]) + " stock"
     print(url)
     news = requests.get(url)
-    print(news.json()['response'])
+    # print(news.json()['response'])
     context_dict["newsheadline"] = news.json()['response']['docs']
     try:
         context_dict["company_name"] = response.json()[0]['company']

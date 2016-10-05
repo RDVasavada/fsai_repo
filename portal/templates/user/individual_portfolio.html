@@ -1,67 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
+<script>
+var url = String(window.location.href).slice(-2)
+if (url[0] == '/') {
+  url = url.slice(-1)
+}
+$("li#a" + url).attr('class','active')
+</script>
   <div class="nav">
     <a href="/user/portfolio_settings" data-target="-1" style=";margin-right:50px;float:right">           
       <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:88vw;"></span></h1></a>
-    <a href="/user/my_portfolios" data-target="1" style=";margin-left:50px;float:left">
+    <a href="/user/inbox" data-target="1" style=";margin-left:50px;float:left">
        <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:12vw;"></span></h1>
     </a>
   </div>
 <div class="sceneElement" data-viewport="0">
- <div class="col-lg-3 col-md-3 col-sm-10" style="padding:0px;height:100%;color:black;padding-left:35px">
-    <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.2)">
-        <div class="header">
-            <h2>My Portfolios</h2>
-        </div>
-        <div class="content list-group ui-sortable" id="sortable_example_1" style="background:rgba(0,0,0,0.5);">
-            <a href="/user/my_portfolios" class="list-group-item" style="text-align:center;height:150px">
-              <br>
-              <span style="font-size:24px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative;display:inline;line-height:75px">
-          Portfolios Summary
-              </span><br><br>
-             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:#00ff00">
-              </span><br>           
-            </a>            
-           {% for portfolio in portfolios %}      
-            <a href="/user/individual_portfolio/{{portfolio.id}}" id="/user/individual_portfolio"  class="list-group-item" style="text-align:center;height:auto">{{portfolio.name}}
-              <br>
-              <span style="font-size:24px;font-weight:100;font-family:'Helvetica Neue';top:7px;left:7px;position:relative">
-                ${{portfolio.value}}
-              </span><br><br>
-             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue';position:relative;bottom:7px;color:white">
-                <div class="hp-icon" style="font-size:12px">
-                      <span class="hp-sm"> Risk</span> <br>      
-                <div class="knob">
-                    <div style="display: block; width: 100px; height: 100px;">
-                        <canvas width="100" height="100" style="position:absolute;bottom:0px"></canvas>
-                        <input id="risks" type="text" 
-                            {% if portfolio.risk > 50 %}
-                                 data-fgcolor="red" 
-                            {% else %}
-                                data-fgcolor="green"
-                            {% endif %} data-min="0" data-max="100" data-width="100" data-height="100" value="{{portfolio.risk}}" data-readonly="true" readonly="readonly" style="width: 50px; height: 33px; position: absolute; vertical-align: middle; top: 25%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(255, 0, 0); padding: 0px; -webkit-appearance: none;">
-                        </input>
-                    </div>
-                </div>
-                  <span class="hp-main" id="risks"></span>                                
-              </div>                  
-              </span><br>
-             <span style="font-size:14px;font-weight:100;font-family:'Helvetica Neue'">
-                {{portfolio.no_of_tickers}} Tickers
-              </span>                
-            </a>
+
+                <div class="block" style="position:relative;top:50px">
+                    <ul class="nav nav-tabs" style="position:absolute;top:-40px;left:-5px;width:auto">
+                        <li class=""><a href="/user/my_portfolios" data-toggle="tab" aria-expanded="true">
+                            Portfolio Summary<br>
+                           
+                        </a></li>
+            {% for portfolio in portfolios %}                          
+
+                        <li class=""  id="a{{portfolio.id}}"><a href="/user/individual_portfolio/{{portfolio.id}}" data-toggle="tab" aria-expanded="false">{{ portfolio.name }}
+        
+                        </a></li>
             {% endfor %}
-        </div>        
-    </div>
-</div> 
+ 
+                    </ul>
+                    <div class="content tab-content">
+                        <div class="tab-pane active" id="tab8">
+                            <p>
+
 <form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
     {% csrf_token %}
     <input type="text" class="form-control" id="company_name" value="" name="company_name">    
 </form>
 
- <div class="col-lg-9 col-md-9 col-sm-6">
+
     <!--first portfolio -->
-    <div class="block block-drop-shadow">
+    <div class="block">
     <div class="header">
         <h2 style="text-align:center;">{{ portfolio.name }}</h2>
     </div>
@@ -208,5 +188,6 @@
 {% block scripts %}
 
  <script src="/static/js/user/individual_portfolio.js"></script>
+
 
 {% endblock %}

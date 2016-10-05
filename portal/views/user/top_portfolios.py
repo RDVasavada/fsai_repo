@@ -52,7 +52,7 @@ def top_portfolios(request, user_id):
         cursor.execute("select p.id as id,name,risk,investment, sum(investment) as value, COUNT(DISTINCT(ticker)) as no_of_tickers, "
                        "COUNT(DISTINCT(ticker)) as total_value from "
                        "portal_portfolio p, portal_stock s where p.id=s.show_id "
-                       "and p.user_id=" + str(27) + " group by p.id order by investment desc limit 10") 
+                       "and p.user_id=" + str(user_id) + " group by p.id order by investment desc limit 10") 
         portfolios = dictfetchall(cursor)
         #print "this is all portfolios"
         print(portfolios)
