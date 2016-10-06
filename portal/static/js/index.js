@@ -1,8 +1,6 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var FaTrash = require('react-icons/lib/fa/trash-o')
-var FaStarO = require('react-icons/lib/fa/star-o')
-var FaStar = require('react-icons/lib/fa/star')
 
 var SMSList = React.createClass({
     loadBooksFromServer: function(){
@@ -153,40 +151,12 @@ var MSGList = React.createClass({
                                                 margin: '5px',
                                                 top: '15px',
                                                 position: 'relative',
-                                                right: '37px',
+                                                right: '17px',
                                                 color:'white',
                                             } 
-                                            var iconStar = {
-                                                verticalAlign: 'middle',
-                                                color: 'white',
-                                                margin: '5px',
-                                                top: '15px',
-                                                position: 'relative',
-                                                right: '30px',
-                                                color:'white'
-                                            }
                                             var divStyle = {
                                                 position: 'relative',
                                                 bottom: '23px'
-                                            }
-                                            var starid = "star"+String(x[0].id)                                             
-                                            var starMe = function(id){
-                                                $.ajax({
-                                                    url: '/user/starmsg',
-                                                    type: 'POST',
-                                                    data: {'id': id},
-                                                    datatype: 'json'
-                                                }).done(function(res) {
-                                                    if (String(res.data) == 'star') {
-                                                        var starid = "star"+id
-                                                        ReactDOM.render(<FaStar id={starid} style={iconStar} />,
-                                                            document.getElementById(starid))                          
-                                                    } else {
-                                                        var starid = "star"+id
-                                                        ReactDOM.render(<FaStarO id={starid}  style={iconStar} />,
-                                                            document.getElementById(starid))                          
-                                                    }    
-                                                })
                                             }
                                             var delMe = function(id) {
                                                $.ajax({
@@ -204,10 +174,6 @@ var MSGList = React.createClass({
                                                 <div>
                                                     <span style={spanRight}>{you}
                                                      <FaTrash onClick={() => { delMe(x[0].id) }} style={iconDel} />
-                                                     <myStar />
-                                                     <div id={starid} style={divStyle}>
-                                                     <FaStarO onClick={() => { starMe(x[0].id) }} id={starid} style={iconStar} />
-                                                     </div>
                                                     </span>
                                                     <div style={style}>{str}</div>
                                                 </div>
@@ -233,23 +199,10 @@ var MSGList = React.createClass({
                                                 position: 'relative',
                                                 right: '37px',
                                                 color:'white'
-                                            } 
-                                            var iconStar = {
-                                                verticalAlign: 'middle',
-                                                color: 'white',
-                                                margin: '5px',
-                                                top: '15px',
-                                                position: 'relative',
-                                                right: '30px',
-                                                color:'white'
-                                            }            
-                                            var starMe = function(id){
-                                               $("#"+starid)[0].innerHTML = <FaStar  id={starid} style={iconStar} />
-                                            }                                
+                                            }                        
                                             return( 
                                                 <div>
                                                     <span style={spanLeft}>{writer}
-                                                     <FaStarO onClick={() => { starMe(x[0].id) }} style={iconStar} />
                                                     </span>                                                    
                                                     <div style={style}>{str}</div>
                                                 </div>

@@ -9,6 +9,7 @@ from portal.services import EmailService
 from portal.models.user.portal_user import PortalUser
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.db import connection
 from portal.utils import TokenGenerator
 from django.template import RequestContext
 
@@ -51,7 +52,7 @@ def loginview(request):
 
 def register(request):
     if request.method == 'GET':
-        return render(request, 'public/register.html')
+        return render(request, 'public/login.html')
     else:
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
@@ -75,7 +76,14 @@ def register(request):
 
                 try:
                     new_user.save()
-
+                    toid = new_user.id
+                    cursor = connection.cursor()
+                    cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES "
+                                "('0','" + str(toid) + "','unread','2012-11-25 00:00:00','unread')")
+                    cursor.execute("SELECT LAST_INSERT_ID();")
+                    header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']    
+                    cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
+                                "('" + str(header_id) + "','0','<Hyperchat Bot> : Hi there! Welcome to Vise! Im a simple bot who can answer your questions and carry out simple commands for you. Nice to meet you. Why dont you try creating a portfolio to try things out?')")
                     user = authenticate(username=username, password=password)
                     login(request, user)
                     return HttpResponseRedirect('/')
@@ -139,3 +147,10 @@ def new_password(request, token):
 def email_sent(request):
     if request.method == "GET":
         return render(request, 'public/email_sent.html')
+def dictfetchall(cursor):
+    "Returns all rows from a cursor as a dict"
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ] 

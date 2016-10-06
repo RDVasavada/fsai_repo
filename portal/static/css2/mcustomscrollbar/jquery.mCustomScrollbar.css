@@ -1,5 +1,17 @@
 /* basic scrollbar styling */
 /* vertical scrollbar */
+
+body{
+  scrollbar-base-color: transparent;
+  scrollbar-base-color: transparent;
+  scrollbar-3dlight-color: transparent;
+  scrollbar-highlight-color: transparent;
+  scrollbar-track-color: #EBEBEB;
+  scrollbar-arrow-color: black;
+  scrollbar-shadow-color: transparent;
+  scrollbar-dark-shadow-color: transparent;
+}
+
 .mCSB_container{
 	width:auto;
 	margin-right:20px;

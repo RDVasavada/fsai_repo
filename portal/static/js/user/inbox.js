@@ -1,3 +1,23 @@
+$("input").keypress(function(event) {
+    if (event.which == 13) {
+        event.preventDefault();
+      msg = $("#messageBody")[0].value
+        if ($("#selected")[0].value) {
+            to = $("#selected")[0].value
+        } else {
+            to = "0"
+        }
+        $.ajax({
+            method: "POST",
+            url: "/user/sendmsg",
+            data: {'message': msg, 'to' : to } ,
+        }).done(function() {
+            console.log("done")
+        })
+        $("#messageBody")[0].value = ""
+    }
+});
+
 $("i#emptystar").click(function() {
     if ($(this).attr('class') == 'icon-star-empty pull-right') {
         $(this).attr('class','icon-star pull-right')    
@@ -43,5 +63,6 @@ $("#submitBtn").click(function(x) {
     }).done(function() {
         console.log("done")
     })
+    $("#messageBody")[0].value = ""
     // console.log($("#messageBody")[0].value)
 })

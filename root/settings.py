@@ -177,7 +177,6 @@ INSTALLED_APPS = (
     'webpack_loader',
     #local apps
     'portal',
-    'wkhtmltopdf' ,
 )
 
 

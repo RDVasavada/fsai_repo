@@ -1,6 +1,7 @@
 /* defaults */
-body {
--moz-osx-font-smoothing: grayscale;
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 .tal{text-align: left !important;} .tar{text-align: right !important;} .tac{text-align: center !important;}
 .nm{margin: 0px !important;} .nmt{margin-top: 0px !important;} .nmb{margin-bottom: 0px !important;} .nmr{margin-right: 0px !important;} .nml{margin-left: 0px !important;}

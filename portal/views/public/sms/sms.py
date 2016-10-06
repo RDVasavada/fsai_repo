@@ -26,13 +26,11 @@ def sms(request):
   user_id = 1
   number = request.POST.get('From', '')
   phone_number = number[2:]
-  # phone_number = 9492459949
   cursor = connection.cursor()
   cursor.execute("select * from portal_portaluser where '" + str(phone_number) + "' = phone ")
   user = dictfetchall(cursor)
   user_id = user[0]['id']
   message = request.POST.get('Body', '')
-  # message = "test"
   rtnstring = analyze(message)
   cursor.execute("INSERT INTO `portal_sms` (date_created, phone_number, user_id, message, analysis, resolution) VALUES"
                  "('2016-07-09 12:11:25'," + str(phone_number) + "," + str(user_id) +  ",'" + str(message) + "', '" + str(rtnstring) + "', 'Unresolved')")
@@ -41,6 +39,8 @@ def sms(request):
 
 def analyze(message):
   message = message.lower()
+  if "can you do" in message:
+    return("I can carry out basic commands for you via SMS, or chat. Text me! Some things I can do: provide updates on your portfolios, provide information about stocks, and companies.")
   if "my portfolios" in message:
     if "sp500" in message or "s&p" in message:
       return("compare s&p to my port")
@@ -158,7 +158,7 @@ def hasPortfolio(str):
             if port in str:
               return port
       except IndexError:
-        print('err')
+        return('err')
 
 def findCompany(str):
   string = str.lower()
