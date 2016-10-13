@@ -2,6 +2,7 @@
 <!-- {% load render_bundle from webpack_loader %} -->
 {% block content %}
 <script>
+
 localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
 </script>
   <div class="nav" id="navlast">
@@ -66,11 +67,13 @@ var hyperchat = (function() {
                 <div class="input-group-addon"><span class="icon-search"></span></div>
             </div>
         </div>
-        <div class="content messages npr npt" style="height:562px;overflow:scroll" id="incontent"> 
-            <div style="position: relative; top: -7px;height:90%;overflow:scroll" >
+        <div class="content messages mail-scroll mCustomScrollbar npr npt" style="" id="incontent"> 
+            <div class="email-list-item list-active">
                 <div id="mcontainer">
                      {% render_bundle 'main' %}
                 </div>
+             </div>
+
 <!--                 <div class="messages-item">
                     <img src="/static/img/example/user/dmitry_s.jpg" class="img-circle img-thumbnail">
                     <div class="messages-item-text">Duis eu libero pellentesque, dapibus ante eu, vehicula leo. Nulla gravida rutrum neque</div>
@@ -135,6 +138,17 @@ var hyperchat = (function() {
 {% block scripts %}
 <script src="/static/js/user/inbox.js"></script>
 <script>
+$(".mail-scroll").mCustomScrollbar({scrollInertia: 100}).mCustomScrollbar("scrollTo", "bottom");
+function scroll(){
+    $(".mail-scroll").mCustomScrollbar({scrollInertia: 100}).mCustomScrollbar("scrollTo", "bottom");
+}
+$(window).load(function(){
+    setInterval("scroll()",1000);
+});
+
+
+
+
 // let addfriend = function() {
 //     var username = $("#query")[0].value
 //     console.log(username)

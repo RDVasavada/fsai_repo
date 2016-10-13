@@ -21,14 +21,14 @@ def individual_stock(request):
     context_dict["company_symbol"] = request.POST["company_name"]
     print(request.POST["company_name"])
     response = requests.get("http://chstocksearch.herokuapp.com/api/"+request.POST['company_name'])
-    # print(response.json())
+    print(response)
     try:
-        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(response.json()[0]['company']) + " stock"
+        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(response.json()[0]['company'])
     except IndexError:
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(request.POST["company_name"]) + " stock"
     print(url)
     news = requests.get(url)
-    # print(news.json()['response'])
+    print(news.json()['response'])
     context_dict["newsheadline"] = news.json()['response']['docs']
     try:
         context_dict["company_name"] = response.json()[0]['company']
@@ -41,7 +41,7 @@ def individual_stock(request):
             "t.p": "83856",
             "t.k": "cbW9p5pFQDw",
             "action": "employers",
-            "q": response.json()[0]['company'],
+            "q": 'apple',
             # programmatically get the IP of the machine
             "userip": json.loads(urllib2.urlopen("http://ip.jsontest.com/").read().decode('utf-8'))['ip'],
             "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"

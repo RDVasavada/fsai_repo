@@ -51,7 +51,7 @@
         this.g = null; // deprecated 2D graphics context for 'pre-rendering'
         this.v = null; // value ; mixed array or integer
         this.cv = null; // change value ; not commited value
-        this.x = 0; // canvas x position
+        this.x = -100; // canvas x position
         this.y = 0; // canvas y position
         this.w = 0; // canvas width
         this.h = 0; // canvas height
@@ -190,7 +190,7 @@
             this.relative = (this.relativeWidth || this.relativeHeight);
 
             // wraps all elements in a div
-            this.$div = $('<div style="'
+            this.$div = $('<div style="position:relative;bottom:0%;'
                         + (this.o.inline ? 'display: block;' : '')
                         + '"></div>');
 
@@ -249,13 +249,14 @@
             // finalize div
             this.$div.css({
                 'width': this.w + 'px',
-                'height': this.h + 'px'
+                'height': this.h + 'px',
             });
 
             // finalize canvas with computed width
             this.$c.attr({
                 width: this.w,
-                height: this.h
+                height: this.h,
+                style: 'top:0px',
             });
 
             // scaling
@@ -663,9 +664,9 @@
                 && this.i.css({
                         'width' : ((this.w / 2) >> 0) + 'px'
                         ,'height' : ((this.w / 3) >> 0) + 'px'
-                        ,'position' : 'absolute'
+                        ,'position' : 'relative'
                         ,'vertical-align' : 'middle'
-                        ,'top' : '50%'
+                        ,'top' : '-50%'
                         ,'left': '50%'
                         ,'margin-top' : '-' + ((this.w / 3)/2 >> 0) + 'px'
                         ,'margin-left' : '-' + ((this.w / 2)/2 >> 0) + 'px'

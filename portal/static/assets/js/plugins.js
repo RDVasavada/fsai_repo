@@ -18,8 +18,24 @@ $(document).ready(function(){
         });        
 
     if($(".scroll-mail").length > 0){                
-        $(".scroll-mail").height($(window).height() - 185).mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
+        $(".scroll-mail").height($(window).height() - 100).mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
     }    
+    if($(".scroll-nail").length > 0){                
+        $(".scroll-nail").height(560).mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
+    }     
+   if($(".summary-scroll").length > 0){                
+        $(".summary-scroll").height(250).mCustomScrollbar({autoHideScrollbar: true, axis:'x',advanced:{autoExpandHorizontalScroll:true}})
+    }     
+    if($(".news-scroll").length > 0){                
+        $(".news-scroll").height(250).mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
+    }            
+    if($(".mail-scroll").length > 0){                
+        $(".mail-scroll").height(550).mCustomScrollbar()
+        $(".mail-scroll").mCustomScrollbar("scrollTo", "bottom");
+    }                
+    if($(".scroll-pail").length > 0){                
+        $(".scroll-pail").height(250).mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
+    }            
     /* eof scroll */
     
     //Bootstrap file input    

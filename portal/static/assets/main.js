@@ -29,15 +29,17 @@ function rerun() {
     } else if ((url.indexOf("individual_stock")) > 0 ) {  
         $.getScript("/static/js/user/individual_stock.js")
         $.getScript("/static/assets/js/actions.js") 
+        $.getScript("/static/assets/js/plugins.js")
     }else if ((url.indexOf("my_portfolios")) > 0 ) {  
         $.getScript("/static/assets/js/plugins/knob/jquery.knob.js")
         $("input#risks").knob();
         $.getScript("/static/js/user/my_portfolios.js")
-        $.getScript("/static/assets/js/plugins.js")
         $.getScript("/static/assets/js/actions.js")
+        $.getScript("/static/assets/js/plugins.js")
     }else if ((url.indexOf("news_portal")) > 0 ) {  
         $.getScript("/static/js/user/news_portal.js")
         $.getScript("/static/assets/js/actions.js")
+        $.getScript("/static/assets/js/plugins.js")
     }
     else if ((url.indexOf("support")) > 0 ) {  
         $.getScript("/static/js/user/support.js")

@@ -1,66 +1,185 @@
-// $("body").css('display','none');
-   
-   var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function(){
-                if (xhr.readyState==4 && xhr.status==200)
-                {
-                    var data = JSON.parse(xhr.responseText).items;
-                    var urgent_news = [];
-                    var important_news = [];
-                    var earnings_corner = [];
-                    var stockNames = ["AMOV","AMX","CX","KOF","ICA","FMX","OMAB","PAC","ASR","BSMX","SIM","TV","IBC","ASD","TFSC","TFSCW","PIH","XXII","FCvCY","SRCE","TWOU","CFAD","EGHT","AVHI"];
-                    var portfolioTypes = ["High Risk Portfolio","Tech Portfolio","Safe Portfolio"];
-                    function fillInData(urgent, important, earnings) {
-                        urgent.forEach(function(x){
-                            var newClone = $("#urgent-incoming").clone().removeAttr('id');
-                            console.log(newClone[0])
-                            var newItem = "<td class='col-md-2'>"+x.date+"</td><td  class='col-md-2'>"+x.name+"</td><td class='col-md-2'>"+x.type+"</td><td class='col-md-2'>"+x.sentiment+"</td><td  class='col-md-2'><a href='"+x.link+"' target='_blank'>"+x.title+"</a></td>";
-                            newClone[0].innerHTML = newItem ; 
-                            newClone.appendTo($("#urgent-pin"))
+var d3;
+var margin = {top: 25, right: 25, bottom: 50, left: 50},
+    width = 600 - margin.left - margin.right,
+    height = 265 - margin.top - margin.bottom;
+var parseDate = d3.time.format("%Y-%m-%d").parse;
+var x = d3.time.scale().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(5);
+var    yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5);
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.high); });
+var svg = d3.select(".ibox-content")
+    // .append("svg")
+    //     .attr("width", width + margin.left + margin.right)
+    //     .attr("height", height + margin.top + margin.bottom)
+   .append("div")
+   .classed("svg-container", true) //container class to make it responsive
+   .append("svg")
+   //responsive SVG needs these 2 attributes and no width and height attr
+   .attr("preserveAspectRatio", "xMinYMin meet")
+   .attr("viewBox", "0 0 650 300")
+   //class to make it responsive
+   .classed("svg-content-responsive", true)
+    .style("max-height", "265") 
+    .style("min-height", "265") 
+    .append("g")
+    .attr("transform", "translate(" 
+        + margin.left 
+        + "," + margin.top + ")");
+var stock = document.getElementById('stock').value;
+var start = document.getElementById('start').value;
+var end = document.getElementById('end').value;
 
-                        });
-                        important.forEach(function(x){
-                            var newClone = $("#important-incoming").clone().removeAttr('id');
-                            var newItem = "<td class='col-md-2'>"+x.date+"</td><td  class='col-md-2'>"+x.name+"</td><td class='col-md-2'>"+x.type+"</td><td class='col-md-2'>"+x.sentiment+"</td><td  class='col-md-2'><a href='"+x.link+"' target='_blank'>"+x.title+"</a></td>";
-                            newClone[0].innerHTML = newItem ; 
-                            newClone.appendTo($("#important-pin"))
+var inputURL = "http://query.yahooapis.com/v1/public/yql"+
+    "?q=select%20*%20from%20yahoo.finance.historicaldata%20"+
+    "where%20symbol%20%3D%20%22"
+    +stock+"%22%20and%20startDate%20%3D%20%22"
+    +start+"%22%20and%20endDate%20%3D%20%22"
+    +end+"%22&format=json&env=store%3A%2F%2F"
+    +"datatables.org%2Falltableswithkeys";
 
-                        });
-                        earnings.forEach(function(x){
-                            var newClone = $("#earnings-incoming").clone().removeAttr('id');
-                            var newItem = "<td class='col-md-2'>"+x.date+"</td><td  class='col-md-2'>"+x.name+"</td><td class='col-md-2'>"+x.type+"</td><td class='col-md-2'>"+x.sentiment+"</td><td  class='col-md-2'><a href='"+x.link+"' target='_blank'>"+x.title+"</a></td>";
-                            newClone[0].innerHTML = newItem; 
-                            newClone.appendTo($("#earnings-pin"))
+    // Get the data 
+    d3.json(inputURL, function(error, data){
 
-                        })                                                  
-                    }
-                    data.forEach(function(desc,i){
-                            var sentiment = Math.floor((Math.random() * 100) + 0);
-                            var newItem = {
-                                title: desc.title,
-                                date: desc.pubDate,
-                                link: desc.link,
-                                type: portfolioTypes[(Math.floor((Math.random() * 3) + 0))],
-                                name: stockNames[(Math.floor((Math.random() * 3) + 0))],
-                                sentiment: String(sentiment) + "%"
-                            };
-                            console.log(newItem)
-                            var priority = Math.floor((Math.random() * 3) + 0);
-                            if (priority == 0) {
-                                urgent_news.push(newItem);
-                            } else if (priority == 1) {
-                                important_news.push(newItem)
-                            } else if (priority == 2) {
-                                earnings_corner.push(newItem)
-                            };
-                            if (i === data.length-1) {
-                                console.log(urgent_news)
-                                console.log(important_news)
-                                console.log(earnings_corner)
-                                fillInData(urgent_news, important_news, earnings_corner)
-                            };
-                    })
-                }
-            };
-        xhr.open('GET','http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo',true);
-        xhr.send();   
+    data.query.results.quote.forEach(function(d) {
+        d.date = parseDate(d.Date);
+        d.high = +d.High;
+        d.low = +d.Low;
+    });
+
+    // Scale the range of the data
+    x.domain(d3.extent(data.query.results.quote, function(d) {
+        return d.date; }));
+    y.domain([
+        d3.min(data.query.results.quote, function(d) { return d.low; }), 
+        d3.max(data.query.results.quote, function(d) { return d.high; })
+    ]);
+
+    svg.append("path")        // Add the valueline path.
+        .attr("class", "line")
+        .attr("d", valueline(data.query.results.quote));
+
+    svg.append("g")            // Add the X Axis
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .style("fill", "#fff")
+        .call(xAxis);
+
+    svg.append("g")            // Add the Y Axis
+        .attr("class", "y axis")
+        .style("fill", "#fff")
+        .call(yAxis);
+
+    svg.append("text")          // Add the label
+        .attr("class", "label")
+        .attr("transform", "translate(" + (width+3) + "," 
+            + y(data.query.results.quote[0].high) + ")")
+        .attr("dy", ".35em")
+        .attr("text-anchor", "start")
+        .style("fill", "steelblue")
+        .text("high");
+});
+
+// ** Update data section (Called from the onclick)
+function changeTime(s) {
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    month = String(month)
+    if (month.length == 1) {month = "0"+ month}
+    var endDate = year + "-" + month + "-" + day;
+    console.log(month)
+    document.getElementById('end').value = endDate;
+    if (s === '1y') {
+        year -=1
+    } else if (s == '90d') {
+        month -=3
+        month = String(month)
+        if (month.length == 1) {month = "0"+ month}
+    } else if (s == '30d') {
+        month -=1
+        month = String(month)
+        if (month.length == 1) {month = "0"+ month}
+    }
+    var startDate = year + "-" + month + "-" + day;
+    console.log(startDate)
+    document.getElementById('start').value = startDate;
+    var market = document.getElementById('chosenMarket').innerText
+    console.log(market)
+    if (market == 'Nasdaq Composite') {updateData('^IXIC')}
+    if (market == 'Dow Jones Industrial Average') {updateData('^DJI')}
+    if (market == 'S&P 500') {updateData('^GSPC')}
+}
+function updateData(stock) {
+if (stock == '^IXIC') {document.getElementById('chosenMarket').innerText = "Nasdaq Composite"}
+if (stock == '^DJI') {document.getElementById('chosenMarket').innerText = "Dow Jones Industrial Average"}
+if (stock == '^GSPC') {document.getElementById('chosenMarket').innerText = "S&P 500"}
+var stock = stock;
+var start = document.getElementById('start').value;
+var end = document.getElementById('end').value;
+console.log(start)
+console.log(end)
+console.log(stock)
+
+var inputURL = "http://query.yahooapis.com/v1/public/yql"+
+    "?q=select%20*%20from%20yahoo.finance.historicaldata%20"+
+    "where%20symbol%20%3D%20%22"
+    +stock+"%22%20and%20startDate%20%3D%20%22"
+    +start+"%22%20and%20endDate%20%3D%20%22"
+    +end+"%22&format=json&env=store%3A%2F%2F"
+    +"datatables.org%2Falltableswithkeys";
+
+    // Get the data again
+    d3.json(inputURL, function(error, data){
+        console.log(data.query)
+        data.query.results.quote.forEach(function(d) {
+            d.date = parseDate(d.Date);
+            d.high = +d.High;
+            d.low = +d.Low;
+        });
+
+        // Scale the range of the data
+        x.domain(d3.extent(data.query.results.quote, function(d) {
+            return d.date; }));
+        y.domain([
+            d3.min(data.query.results.quote, function(d) { 
+                return d.low; }), 
+            d3.max(data.query.results.quote, function(d) { 
+                return d.high; })
+        ]);
+
+        // Select the section we want to apply our changes to
+        var svg = d3.select("body").transition();
+
+        // Make the changes
+        svg.select(".line")    // change the line
+            .duration(750) 
+            .attr("d", valueline(data.query.results.quote));
+
+        svg.select(".label")   // change the label text
+            .duration(750)
+            .attr("transform", "translate(" + (width+3) + "," 
+            + y(data.query.results.quote[0].high) + ")");
+ 
+        svg.select(".shadow") // change the title shadow
+            .duration(750)
+            .text(stock);  
+             
+        svg.select(".stock")   // change the title
+            .duration(750)
+            .text(stock);
+     
+        svg.select(".x.axis") // change the x axis
+            .duration(750)
+            .call(xAxis);
+        svg.select(".y.axis") // change the y axis
+            .duration(750)
+            .call(yAxis);
+
+    });
+}

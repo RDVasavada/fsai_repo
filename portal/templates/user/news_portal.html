@@ -9,92 +9,328 @@
   </div>
 <div class="sceneElement" data-viewport="0">
 <div class="col-lg-12 col-lg-12 col-sm-8" style="padding-right:50px;padding-left:50px">
-    <div class="row">
-    <center><h1>News Portal</h1></center>
-</div>    
-    <div class="row" style="height:80vh;overflow-y:scroll">                
-        <div class="block" style="padding:5px">
-            <h3>Urgent News</h3>
-            <div class="header">
-                <table class="table">
-                        <tr>
-                            <th class="col-md-2">Date</th>
-                            <th class="col-md-2">TKR</th>
-                            <th class="col-md-2">Portfolio</th>
-                            <th class="col-md-2">Sentiment</th>
-                            <th class="col-md-2">Links</th>
-                        </tr>
-                </table>                       
-            </div>
-            <div class="content" style="height:175px;overflow:scroll">
-                <table class="table">
-                    <tbody id="urgent-pin">
-                        <tr id="urgent-incoming">
-                        </tr>         
-                    </tbody>
-                </table>                       
-            </div>
-        </div>    
-        <div class="block" style="padding:5px">
-            <h3>Important News</h3>
-            <div class="header">
-                <table class="table">
-                        <tr>
-                            <th class="col-md-2">Date</th>
-                            <th class="col-md-2">TKR</th>
-                            <th class="col-md-2">Portfolio</th>
-                            <th class="col-md-2">Sentiment</th>
-                            <th class="col-md-2">Links</th>
-                        </tr>
-                </table>                       
-            </div>
-            <div class="content" style="height:175px;overflow:scroll">
-                <table class="table">
-                    <tbody id="important-pin">
-                        <tr id="important-incoming">
-                        </tr>         
-                    </tbody>
-                </table>                       
-            </div>
-        </div>  
-        <div class="block" style="padding:5px">
-            <h3>Earnings Corner</h3>
-            <div class="header">
-                <table class="table">
-                        <tr>
-                            <th class="col-md-2">Date</th>
-                            <th class="col-md-2">TKR</th>
-                            <th class="col-md-2">Portfolio</th>
-                            <th class="col-md-2">Sentiment</th>
-                            <th class="col-md-2">Links</th>
-                        </tr>
-                </table>                       
-            </div>
-            <div class="content" style="height:175px;overflow:scroll">
-                <table class="table">
-                    <tbody id="earnings-pin">
-                        <tr id="earnings-incoming">
-                        </tr>         
-                    </tbody>
-                </table>                       
-            </div>
-        </div>  
-        <div class="block" style="padding:5px">
-            <h3>Market Sentiment</h3>
-            <div class="header">                      
-            </div>
-            <div class="content" style="height:250px;text-align:center">
-             <div class="row">
-                <div class="col-md-12" id="myBar">
 
-                    <div id="morris-line-chart" style="position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);height:200px;"><svg height="200" version="1.1" width="670" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: -0.984375px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with RaphaÃ«l 2.1.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="32.515625" y="161" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><path fill="none" stroke="#aaaaaa" d="M45.015625,161H645" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="32.515625" y="127" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">25</tspan></text><path fill="none" stroke="#aaaaaa" d="M45.015625,127H645" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="32.515625" y="93" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">50</tspan></text><path fill="none" stroke="#aaaaaa" d="M45.015625,93H645" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="32.515625" y="58.999999999999986" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="3.999999999999986" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">75</tspan></text><path fill="none" stroke="#aaaaaa" d="M45.015625,58.999999999999986H645" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="32.515625" y="25" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">100</tspan></text><path fill="none" stroke="#aaaaaa" d="M45.015625,25H645" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="645" y="173.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Saturday</tspan></text><text x="545.048244237791" y="173.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2011</tspan></text><text x="445.0964884755819" y="173.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Friday</tspan></text><text x="345.1447327133729" y="173.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Thursday</tspan></text><text x="244.91913652441806" y="173.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Wednesday</tspan></text><text x="144.96738076220902" y="173.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Tuesday</tspan></text><text x="45.015625" y="173.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="white" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Monday</tspan></text><path fill="none" stroke="#157dec" d="M45.015625,38.599999999999994C70.00356394055225,47.099999999999994,119.97944182165676,64.1,144.96738076220902,72.6C169.95531970276127,81.1,219.9311975838658,106.6,244.91913652441806,106.6C269.9755355716568,106.6,320.0883336661342,72.6,345.1447327133729,72.6C370.1326716539252,72.6,420.1085495350296,106.6,445.0964884755819,106.6C470.0844274161342,106.6,520.0603052972388,81.1,545.048244237791,72.6C570.0361831783432,64.1,620.0120610594478,47.099999999999994,645,38.599999999999994" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#ffffff" d="M45.015625,25C70.00356394055225,33.5,119.97944182165676,50.499999999999986,144.96738076220902,58.999999999999986C169.95531970276127,67.49999999999999,219.9311975838658,93,244.91913652441806,93C269.9755355716568,93,320.0883336661342,58.999999999999986,345.1447327133729,58.999999999999986C370.1326716539252,58.999999999999986,420.1085495350296,93,445.0964884755819,93C470.0844274161342,93,520.0603052972388,67.49999999999999,545.048244237791,58.999999999999986C570.0361831783432,50.499999999999986,620.0120610594478,33.5,645,25" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="45.015625" cy="38.599999999999994" r="4" fill="#157dec" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="144.96738076220902" cy="72.6" r="4" fill="#157dec" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="244.91913652441806" cy="106.6" r="4" fill="#157dec" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="345.1447327133729" cy="72.6" r="4" fill="#157dec" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="445.0964884755819" cy="106.6" r="4" fill="#157dec" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="545.048244237791" cy="72.6" r="4" fill="#157dec" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="645" cy="38.599999999999994" r="4" fill="#157dec" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="45.015625" cy="25" r="4" fill="#ffffff" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="144.96738076220902" cy="58.999999999999986" r="4" fill="#ffffff" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="244.91913652441806" cy="93" r="4" fill="#ffffff" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="345.1447327133729" cy="58.999999999999986" r="4" fill="#ffffff" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="445.0964884755819" cy="93" r="4" fill="#ffffff" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="545.048244237791" cy="58.999999999999986" r="4" fill="#ffffff" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="645" cy="25" r="4" fill="#ffffff" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle></svg><div class="morris-hover morris-default-style" style="display: none;"></div></div>
+<div class="col-md-6">
+                <div class="block" style="background:rgba(0,0,0,0.2)">
+                     <h2 style="font-size:24px;text-align:center;padding:25px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">Market Sentiment</h2> 
+                </div>
+                <div class="block block-transparent nm">
+                       
+                    <div class="scroll-nail email-list mCustomScrollbar _mCS_1" style="height: 744px;">
+
+                        <div class="email-list-item">
+                            <div class="item-line">
+                         
+                                <div class="item-line-title">AAPL</div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">+33% Market Sentiment</div>
+                            </div>
+                            <div class="item-line">                                
+                                <div class="item-line-content">
+                                   +2.43% Market Price
+                                </div>
+                            </div>
+                        </div>                        
+                        
+                        <div class="email-list-item list-active">
+                            <div class="item-line">
+                         
+                                <div class="item-line-title">GOOGL</div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">+23% Market Sentiment</div>
+                            </div>
+                            <div class="item-line">                                
+                                <div class="item-line-content">
+                                   +3.43% Market Price
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="email-list-item">
+                           <div class="item-line">
+                         
+                                <div class="item-line-title">TSLA</div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">+23% Market Sentiment</div>
+                            </div>
+                            <div class="item-line">                                
+                                <div class="item-line-content">
+                                   +2.43% Market Price
+                                </div>
+                            </div>
+                        </div>                        
+                        
+                        <div class="email-list-item">
+                           <div class="item-line">
+                                <div class="item-line-title">VAL</div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">+12% Market Sentiment</div>
+                            </div>
+                            <div class="item-line">                                
+                                <div class="item-line-content">
+                                   +1.43% Market Price
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="email-list-item">
+                           <div class="item-line">
+                         
+                                <div class="item-line-title">CBLR</div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">+33% Market Sentiment</div>
+                            </div>
+                            <div class="item-line">                                
+                                <div class="item-line-content">
+                                   +2.43% Market Price
+                                </div>
+                            </div>
+                        </div>
+                      
+                        <div class="email-list-item">
+                            <div class="item-line">
+                         
+                                <div class="item-line-title">AAPL</div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">+33% Market Sentiment</div>
+                            </div>
+                            <div class="item-line">                                
+                                <div class="item-line-content">
+                                   +2.43% Market Price
+                                </div>
+                            </div>
+                        </div>                        
+                        
+                        <div class="email-list-item list-active">
+                            <div class="item-line">
+                         
+                                <div class="item-line-title">GOOGL</div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">+23% Market Sentiment</div>
+                            </div>
+                            <div class="item-line">                                
+                                <div class="item-line-content">
+                                   +3.43% Market Price
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="email-list-item">
+                           <div class="item-line">
+                         
+                                <div class="item-line-title">TSLA</div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">+23% Market Sentiment</div>
+                            </div>
+                            <div class="item-line">                                
+                                <div class="item-line-content">
+                                   +2.43% Market Price
+                                </div>
+                            </div>
+                        </div>                        
+                        
+                        <div class="email-list-item">
+                           <div class="item-line">
+                                <div class="item-line-title">VAL</div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">+12% Market Sentiment</div>
+                            </div>
+                            <div class="item-line">                                
+                                <div class="item-line-content">
+                                   +1.43% Market Price
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="email-list-item">
+                           <div class="item-line">
+                         
+                                <div class="item-line-title">CBLR</div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">+33% Market Sentiment</div>
+                            </div>
+                            <div class="item-line">                                
+                                <div class="item-line-content">
+                                   +2.43% Market Price
+                                </div>
+                            </div>
+                        </div>                    
                     </div>
-                </div>                   
+                </div>
+</div>                                                                
+<div class="col-md-6">
+                <div class="block" style="background:rgba(0,0,0,0.1)">
+                     <h2 style="font-size:18px;text-align:center;padding:25px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px">AAPL</h2> 
+                </div>
+<div class="block" style="margin-top:2px;margin-left:3px;height:290px">
+          <div class="header">
+                <h2 style="font-size:12px;font-weight:300;-webkit-font-smoothing: antialiased;">Sentiment Analysis</h2> 
             </div>
-        </div>                      
-    </div>
+            <div class="content bg-dot30" style="height:250px;background:rgba(0,0,0,0.6);overflow:hidden">
+                  <br><span id="chosenMarket" style="top:-10px;left:85px;position:relative"> 
+                    AAPL
+                  </span>
+
+                  <div class="ibox-content" id="myBar" style="height:150px;position:relative;top:-2vh;left:1vw">
+                      <div class="row" style="overflow:hidden">
+                      </div>
+                  </div> 
+                  <div class="head-panel nm" style="position:absolute;top:310px;left:25px">
+                      <div class="btn-toolbar">
+                          <div id="new_input">
+                           <div class="btn-group btn-group-xs">
+                              <!-- <button type="button" class="btn btn-default btn-clean">Nasdaq</button> -->
+                              <!-- <button type="button" class="btn btn-default btn-clean">Dow Jones</button>                                     -->
+                          </div>
+                        
+                          </div>
+                      </div>
+                 </div>                   
+             </div>   
 </div>
 
- <script src="/static/js/user/news_portal.js"></script>
+<div class="block block-transparent" style="background:rgba(0,0,0,0.2);height:251px">
+                    
+                    <div class="scroll-pail" style="height:auto">
+                        
+                        <div class="list-item">
+                            <div class="list-title">Lorem ipsum dolor sit amet</div>
+                            <div class="list-text">
+                                <p>Aliquam a justo id augue condimentum fringilla nec et elit. Aliquam lacinia molestie odio, at dictum lacus venenatis sit amet. Vivamus rutrum malesuada augue. Nam tristique accumsan orci, nec convallis nisl adipiscing vel. Fusce erat velit, varius nec aliquam sit amet, cursus sed purus. Phasellus mollis at mauris vitae tristique. Duis rhoncus luctus purus sed dictum.</p>                                
+                            </div>
+                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-title">Vestibulum rhoncus pretium quam in blandit.</div>
+                            <div class="list-text">
+                                <img src="img/example/photo/img_2s.jpg" align="left" class="img-thumbnail"> 
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae turpis vel orci vestibulum feugiat. Maecenas lorem est, fermentum non lobortis id, auctor nec ligula. Sed feugiat arcu vel diam ullamcorper tempus. Curabitur non lorem placerat, pretium metus vel.</p>
+                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>
+                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>
+                            </div>
+                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>                            
+                        </div>                                                
+                        <div class="list-item">
+                            <div class="list-title">ivamus sed volutpat neque, non pulvinar sem</div>
+                            <div class="list-text">
+                                <p>Etiam vitae venenatis lectus. Proin auctor mi quam. Nullam tristique semper nisi, egestas ullamcorper turpis sagittis eget. Nunc at fermentum odio. Ut eget arcu luctus, mollis ipsum eu, volutpat nulla. Sed libero tortor, ultrices eget egestas molestie, ullamcorper in magna. Suspendisse vel eros arcu. Maecenas ac fringilla nunc, nec pretium mauris.</p>                                
+                            </div>
+                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
+                        </div>                        
+                        <div class="list-item">
+                            <div class="list-title">Donec aliquam nec ante eget sollicitudin</div>
+                            <div class="list-text">
+                                <img src="img/example/photo/img_3s.jpg" align="left" class="img-thumbnail"> 
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae turpis vel orci vestibulum feugiat. Maecenas lorem est, fermentum non lobortis id, auctor nec ligula. Sed feugiat arcu vel diam ullamcorper tempus. Curabitur non lorem placerat, pretium metus vel.</p>
+                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>
+                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>                                          
+                            </div>
+                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
+                        </div>                                                
+                        <div class="list-item">
+                            <div class="list-title">Praesent dictum porta sollicitudin</div>
+                            <div class="list-text">
+                                <p>Praesent quis ultricies libero. Integer quis convallis purus, eu aliquet justo. Vestibulum pulvinar, elit ac viverra fermentum, neque urna pretium odio, sed faucibus quam mauris ut urna. Phasellus lorem velit, sodales ut quam sit amet, ornare lacinia metus. Mauris condimentum aliquam commodo. Nullam tincidunt magna at risus rhoncus ullamcorper. Pellentesque eu volutpat risus, non venenatis quam.</p>
+                            </div>
+                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
+                        </div>                        
+                        <div class="list-item">
+                            <div class="list-title">Lorem ipsum dolor sit amet</div>
+                            <div class="list-text">
+                                <p>Aliquam a justo id augue condimentum fringilla nec et elit. Aliquam lacinia molestie odio, at dictum lacus venenatis sit amet. Vivamus rutrum malesuada augue. Nam tristique accumsan orci, nec convallis nisl adipiscing vel. Fusce erat velit, varius nec aliquam sit amet, cursus sed purus. Phasellus mollis at mauris vitae tristique. Duis rhoncus luctus purus sed dictum.</p>
+                            </div>
+                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-title">Vestibulum rhoncus pretium quam in blandit.</div>
+                            <div class="list-text">
+                                <img src="img/example/photo/img_4s.jpg" align="left" class="img-thumbnail"> 
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae turpis vel orci vestibulum feugiat. Maecenas lorem est, fermentum non lobortis id, auctor nec ligula. Sed feugiat arcu vel diam ullamcorper tempus. Curabitur non lorem placerat, pretium metus vel.</p>
+                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>
+                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>                                          
+                            </div>
+                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
+                        </div>                                                
+                        <div class="list-item">
+                            <div class="list-title">ivamus sed volutpat neque, non pulvinar sem</div>
+                            <div class="list-text">
+                                <p>Etiam vitae venenatis lectus. Proin auctor mi quam. Nullam tristique semper nisi, egestas ullamcorper turpis sagittis eget. Nunc at fermentum odio. Ut eget arcu luctus, mollis ipsum eu, volutpat nulla. Sed libero tortor, ultrices eget egestas molestie, ullamcorper in magna. Suspendisse vel eros arcu. Maecenas ac fringilla nunc, nec pretium mauris.</p>              
+                            </div>
+                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
+                        </div>                        
+                        <div class="list-item">
+                            <div class="list-title">Donec aliquam nec ante eget sollicitudin</div>
+                            <div class="list-text">
+                                <p>Mauris eleifend nulla ac sapien mattis ullamcorper. Vivamus nec augue vel purus laoreet tristique. Proin aliquet erat metus, ac viverra nunc mattis in. Suspendisse a suscipit justo. Nullam euismod elit mauris, non auctor diam varius nec. Suspendisse ut pretium mi. Aliquam sed congue mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eu elit arcu. Proin non ornare nisl.</p>              
+                            </div>
+                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
+                        </div>                                                
+                        <div class="list-item">
+                            <div class="list-title">Praesent dictum porta sollicitudin</div>
+                            <div class="list-text">
+                                <img src="img/example/photo/img_2s.jpg" align="left" class="img-thumbnail">
+                                <p>Praesent quis ultricies libero. Integer quis convallis purus, eu aliquet justo. Vestibulum pulvinar, elit ac viverra fermentum, neque urna pretium odio, sed faucibus quam mauris ut urna. Phasellus lorem velit, sodales ut quam sit amet, ornare lacinia metus. Mauris condimentum aliquam commodo. Nullam tincidunt magna at risus rhoncus ullamcorper. Pellentesque eu volutpat risus, non venenatis quam.</p>
+                                <p>Mauris eleifend nulla ac sapien mattis ullamcorper. Vivamus nec augue vel purus laoreet tristique. Proin aliquet erat metus, ac viverra nunc mattis in. Suspendisse a suscipit justo. Nullam euismod elit mauris, non auctor diam varius nec. Suspendisse ut pretium mi. Aliquam sed congue mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eu elit arcu. Proin non ornare nisl.</p>
+                                <p>Mauris eleifend nulla ac sapien mattis ullamcorper. Vivamus nec augue vel purus laoreet tristique. Proin aliquet erat metus, ac viverra nunc mattis in. Suspendisse a suscipit justo. Nullam euismod elit mauris, non auctor diam varius nec. Suspendisse ut pretium mi. Aliquam sed congue mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eu elit arcu. Proin non ornare nisl.</p>
+                                <p>Mauris eleifend nulla ac sapien mattis ullamcorper. Vivamus nec augue vel purus laoreet tristique. Proin aliquet erat metus, ac viverra nunc mattis in. Suspendisse a suscipit justo. Nullam euismod elit mauris, non auctor diam varius nec. Suspendisse ut pretium mi. Aliquam sed congue mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eu elit arcu. Proin non ornare nisl.</p>
+                            </div>
+                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
+                        </div>                        
+                        
+                    </div>
+                    
+                </div>
+</div> 
+</div>                                                                
+                                                           
+</div>
+                
+</div>                       
+                 
 
+</div>
+</div>
+</div>
+
+  <div id="new_input" style="display:none">
+    &nbsp &nbsp
+    Stock: <input type="text" name="stock" id="stock" value="AAPL" 
+    style="width: 70px;">
+    &nbsp &nbsp
+    Start: <input type="text" name="start" id="start" value="2015-01-10"
+    style="width: 80px;">
+    &nbsp &nbsp
+    End: <input type="text" name="end" id="end" value="2015-03-10" 
+    style="width: 80px;">
+    &nbsp &nbsp
+    <input name="updateButton" 
+    type="button" 
+    value="Update" 
+    onclick="updateData()" />
+</div>
+{% endblock %}
+
+{% block scripts %}
+<link href="/static/css2/d3chart.css" rel="stylesheet">
+ <script src="/static/js/user/news_portal.js"></script>
 {% endblock %}

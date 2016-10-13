@@ -170,1321 +170,1740 @@
    readers do not read off random characters that represent icons */
 .fa-glass:before {
   content: "\f000";
+  font-family: "inherit";
 }
 .fa-music:before {
   content: "\f001";
+  font-family: "inherit";
 }
 .fa-search:before {
   content: "\f002";
+  font-family: "inherit";
 }
 .fa-envelope-o:before {
   content: "\f003";
+  font-family: "inherit";
 }
 .fa-heart:before {
   content: "\f004";
+  font-family: "inherit";
 }
 .fa-star:before {
   content: "\f005";
+  font-family: "inherit";
 }
 .fa-star-o:before {
   content: "\f006";
+  font-family: "inherit";
 }
 .fa-user:before {
   content: "\f007";
+  font-family: "inherit";
 }
 .fa-film:before {
   content: "\f008";
+  font-family: "inherit";
 }
 .fa-th-large:before {
   content: "\f009";
+  font-family: "inherit";
 }
 .fa-th:before {
   content: "\f00a";
+  font-family: "inherit";
 }
 .fa-th-list:before {
   content: "\f00b";
+  font-family: "inherit";
 }
 .fa-check:before {
   content: "\f00c";
+  font-family: "inherit";
 }
 .fa-remove:before,
 .fa-close:before,
 .fa-times:before {
   content: "\f00d";
+  font-family: "inherit";
 }
 .fa-search-plus:before {
   content: "\f00e";
+  font-family: "inherit";
 }
 .fa-search-minus:before {
   content: "\f010";
+  font-family: "inherit";
 }
 .fa-power-off:before {
   content: "\f011";
+  font-family: "inherit";
 }
 .fa-signal:before {
   content: "\f012";
+  font-family: "inherit";
 }
 .fa-gear:before,
 .fa-cog:before {
   content: "\f013";
+  font-family: "inherit";
 }
 .fa-trash-o:before {
   display:none;
   content: "\f014";
+  font-family: "inherit";
 }
 .fa-home:before {
   content: "\f015";
+  font-family: "inherit";
 }
 .fa-file-o:before {
   content: "\f016";
+  font-family: "inherit";
 }
 .fa-clock-o:before {
   content: "\f017";
+  font-family: "inherit";
 }
 .fa-road:before {
   content: "\f018";
+  font-family: "inherit";
 }
 .fa-download:before {
   content: "\f019";
+  font-family: "inherit";
 }
 .fa-arrow-circle-o-down:before {
   content: "\f01a";
+  font-family: "inherit";
 }
 .fa-arrow-circle-o-up:before {
   content: "\f01b";
+  font-family: "inherit";
 }
 .fa-inbox:before {
   content: "\f01c";
+  font-family: "inherit";
 }
 .fa-play-circle-o:before {
   content: "\f01d";
+  font-family: "inherit";
 }
 .fa-rotate-right:before,
 .fa-repeat:before {
   content: "\f01e";
+  font-family: "inherit";
 }
 .fa-refresh:before {
   content: "\f021";
+  font-family: "inherit";
 }
 .fa-list-alt:before {
   content: "\f022";
+  font-family: "inherit";
 }
 .fa-lock:before {
   content: "\f023";
+  font-family: "inherit";
 }
 .fa-flag:before {
   content: "\f024";
+  font-family: "inherit";
 }
 .fa-headphones:before {
   content: "\f025";
+  font-family: "inherit";
 }
 .fa-volume-off:before {
   content: "\f026";
+  font-family: "inherit";
 }
 .fa-volume-down:before {
   content: "\f027";
+  font-family: "inherit";
 }
 .fa-volume-up:before {
   content: "\f028";
+  font-family: "inherit";
 }
 .fa-qrcode:before {
   content: "\f029";
+  font-family: "inherit";
 }
 .fa-barcode:before {
   content: "\f02a";
+  font-family: "inherit";
 }
 .fa-tag:before {
   content: "\f02b";
+  font-family: "inherit";
 }
 .fa-tags:before {
   content: "\f02c";
+  font-family: "inherit";
 }
 .fa-book:before {
   content: "\f02d";
+  font-family: "inherit";
 }
 .fa-bookmark:before {
   content: "\f02e";
+  font-family: "inherit";
 }
 .fa-print:before {
   content: "\f02f";
+  font-family: "inherit";
 }
 .fa-camera:before {
   content: "\f030";
+  font-family: "inherit";
 }
 .fa-font:before {
   content: "\f031";
+  font-family: "inherit";
 }
 .fa-bold:before {
   content: "\f032";
+  font-family: "inherit";
 }
 .fa-italic:before {
   content: "\f033";
+  font-family: "inherit";
 }
 .fa-text-height:before {
   content: "\f034";
+  font-family: "inherit";
 }
 .fa-text-width:before {
   content: "\f035";
+  font-family: "inherit";
 }
 .fa-align-left:before {
   content: "\f036";
+  font-family: "inherit";
 }
 .fa-align-center:before {
   content: "\f037";
+  font-family: "inherit";
 }
 .fa-align-right:before {
   content: "\f038";
+  font-family: "inherit";
 }
 .fa-align-justify:before {
   content: "\f039";
+  font-family: "inherit";
 }
 .fa-list:before {
   content: "\f03a";
+  font-family: "inherit";
 }
 .fa-dedent:before,
 .fa-outdent:before {
   content: "\f03b";
+  font-family: "inherit";
 }
 .fa-indent:before {
   content: "\f03c";
+  font-family: "inherit";
 }
 .fa-video-camera:before {
   content: "\f03d";
+  font-family: "inherit";
 }
 .fa-photo:before,
 .fa-image:before,
 .fa-picture-o:before {
   content: "\f03e";
+  font-family: "inherit";
 }
 .fa-pencil:before {
   content: "\f040";
+  font-family: "inherit";
 }
 .fa-map-marker:before {
   content: "\f041";
+  font-family: "inherit";
 }
 .fa-adjust:before {
   content: "\f042";
+  font-family: "inherit";
 }
 .fa-tint:before {
   content: "\f043";
+  font-family: "inherit";
 }
 .fa-edit:before,
 .fa-pencil-square-o:before {
   content: "\f044";
+  font-family: "inherit";
 }
 .fa-share-square-o:before {
   content: "\f045";
+  font-family: "inherit";
 }
 .fa-check-square-o:before {
   content: "\f046";
+  font-family: "inherit";
 }
 .fa-arrows:before {
   content: "\f047";
+  font-family: "inherit";
 }
 .fa-step-backward:before {
   content: "\f048";
+  font-family: "inherit";
 }
 .fa-fast-backward:before {
   content: "\f049";
+  font-family: "inherit";
 }
 .fa-backward:before {
   content: "\f04a";
+  font-family: "inherit";
 }
 .fa-play:before {
   content: "\f04b";
+  font-family: "inherit";
 }
 .fa-pause:before {
   content: "\f04c";
+  font-family: "inherit";
 }
 .fa-stop:before {
   content: "\f04d";
+  font-family: "inherit";
 }
 .fa-forward:before {
   content: "\f04e";
+  font-family: "inherit";
 }
 .fa-fast-forward:before {
   content: "\f050";
+  font-family: "inherit";
 }
 .fa-step-forward:before {
   content: "\f051";
+  font-family: "inherit";
 }
 .fa-eject:before {
   content: "\f052";
+  font-family: "inherit";
 }
 .fa-chevron-left:before {
   content: "\f053";
+  font-family: "inherit";
 }
 .fa-chevron-right:before {
   content: "\f054";
+  font-family: "inherit";
 }
 .fa-plus-circle:before {
   content: "\f055";
+  font-family: "inherit";
 }
 .fa-minus-circle:before {
   content: "\f056";
+  font-family: "inherit";
 }
 .fa-times-circle:before {
   content: "\f057";
+  font-family: "inherit";
 }
 .fa-check-circle:before {
   content: "\f058";
+  font-family: "inherit";
 }
 .fa-question-circle:before {
   content: "\f059";
+  font-family: "inherit";
 }
 .fa-info-circle:before {
   content: "\f05a";
+  font-family: "inherit";
 }
 .fa-crosshairs:before {
   content: "\f05b";
+  font-family: "inherit";
 }
 .fa-times-circle-o:before {
   content: "\f05c";
+  font-family: "inherit";
 }
 .fa-check-circle-o:before {
   content: "\f05d";
+  font-family: "inherit";
 }
 .fa-ban:before {
   content: "\f05e";
+  font-family: "inherit";
 }
 .fa-arrow-left:before {
   content: "\f060";
+  font-family: "inherit";
 }
 .fa-arrow-right:before {
   content: "\f061";
+  font-family: "inherit";
 }
 .fa-arrow-up:before {
   content: "\f062";
+  font-family: "inherit";
 }
 .fa-arrow-down:before {
   content: "\f063";
+  font-family: "inherit";
 }
 .fa-mail-forward:before,
 .fa-share:before {
   content: "\f064";
+  font-family: "inherit";
 }
 .fa-expand:before {
   content: "\f065";
+  font-family: "inherit";
 }
 .fa-compress:before {
   content: "\f066";
+  font-family: "inherit";
 }
 .fa-plus:before {
   content: "\f067";
+  font-family: "inherit";
 }
 .fa-minus:before {
   content: "\f068";
+  font-family: "inherit";
 }
 .fa-asterisk:before {
   content: "\f069";
+  font-family: "inherit";
 }
 .fa-exclamation-circle:before {
   content: "\f06a";
+  font-family: "inherit";
 }
 .fa-gift:before {
   content: "\f06b";
+  font-family: "inherit";
 }
 .fa-leaf:before {
   content: "\f06c";
+  font-family: "inherit";
 }
 .fa-fire:before {
   content: "\f06d";
+  font-family: "inherit";
 }
 .fa-eye:before {
   content: "\f06e";
+  font-family: "inherit";
 }
 .fa-eye-slash:before {
   content: "\f070";
+  font-family: "inherit";
 }
 .fa-warning:before,
 .fa-exclamation-triangle:before {
   content: "\f071";
+  font-family: "inherit";
 }
 .fa-plane:before {
   content: "\f072";
+  font-family: "inherit";
 }
 .fa-calendar:before {
   content: "\f073";
+  font-family: "inherit";
 }
 .fa-random:before {
   content: "\f074";
+  font-family: "inherit";
 }
 .fa-comment:before {
   content: "\f075";
+  font-family: "inherit";
 }
 .fa-magnet:before {
   content: "\f076";
+  font-family: "inherit";
 }
 .fa-chevron-up:before {
   content: "\f077";
+  font-family: "inherit";
 }
 .fa-chevron-down:before {
   content: "\f078";
+  font-family: "inherit";
 }
 .fa-retweet:before {
   content: "\f079";
+  font-family: "inherit";
 }
 .fa-shopping-cart:before {
   content: "\f07a";
+  font-family: "inherit";
 }
 .fa-folder:before {
   content: "\f07b";
+  font-family: "inherit";
 }
 .fa-folder-open:before {
   content: "\f07c";
+  font-family: "inherit";
 }
 .fa-arrows-v:before {
   content: "\f07d";
+  font-family: "inherit";
 }
 .fa-arrows-h:before {
   content: "\f07e";
+  font-family: "inherit";
 }
 .fa-bar-chart-o:before,
 .fa-bar-chart:before {
   content: "\f080";
+  font-family: "inherit";
 }
 .fa-twitter-square:before {
   content: "\f081";
+  font-family: "inherit";
 }
 .fa-facebook-square:before {
   content: "\f082";
+  font-family: "inherit";
 }
 .fa-camera-retro:before {
   content: "\f083";
+  font-family: "inherit";
 }
 .fa-key:before {
   content: "\f084";
+  font-family: "inherit";
 }
 .fa-gears:before,
 .fa-cogs:before {
   content: "\f085";
+  font-family: "inherit";
 }
 .fa-comments:before {
   content: "\f086";
+  font-family: "inherit";
 }
 .fa-thumbs-o-up:before {
   content: "\f087";
+  font-family: "inherit";
 }
 .fa-thumbs-o-down:before {
   content: "\f088";
+  font-family: "inherit";
 }
 .fa-star-half:before {
   content: "\f089";
+  font-family: "inherit";
 }
 .fa-heart-o:before {
   content: "\f08a";
+  font-family: "inherit";
 }
 .fa-sign-out:before {
   content: "\f08b";
+  font-family: "inherit";
 }
 .fa-linkedin-square:before {
   content: "\f08c";
+  font-family: "inherit";
 }
 .fa-thumb-tack:before {
   content: "\f08d";
+  font-family: "inherit";
 }
 .fa-external-link:before {
   content: "\f08e";
+  font-family: "inherit";
 }
 .fa-sign-in:before {
   content: "\f090";
+  font-family: "inherit";
 }
 .fa-trophy:before {
   content: "\f091";
+  font-family: "inherit";
 }
 .fa-github-square:before {
   content: "\f092";
+  font-family: "inherit";
 }
 .fa-upload:before {
   content: "\f093";
+  font-family: "inherit";
 }
 .fa-lemon-o:before {
   content: "\f094";
+  font-family: "inherit";
 }
 .fa-phone:before {
   content: "\f095";
+  font-family: "inherit";
 }
 .fa-square-o:before {
   content: "\f096";
+  font-family: "inherit";
 }
 .fa-bookmark-o:before {
   content: "\f097";
+  font-family: "inherit";
 }
 .fa-phone-square:before {
   content: "\f098";
+  font-family: "inherit";
 }
 .fa-twitter:before {
   content: "\f099";
+  font-family: "inherit";
 }
 .fa-facebook-f:before,
 .fa-facebook:before {
   content: "\f09a";
+  font-family: "inherit";
 }
 .fa-github:before {
   content: "\f09b";
+  font-family: "inherit";
 }
 .fa-unlock:before {
   content: "\f09c";
+  font-family: "inherit";
 }
 .fa-credit-card:before {
   content: "\f09d";
+  font-family: "inherit";
 }
 .fa-rss:before {
   content: "\f09e";
+  font-family: "inherit";
 }
 .fa-hdd-o:before {
   content: "\f0a0";
+  font-family: "inherit";
 }
 .fa-bullhorn:before {
   content: "\f0a1";
+  font-family: "inherit";
 }
 .fa-bell:before {
   content: "\f0f3";
+  font-family: "inherit";
 }
 .fa-certificate:before {
   content: "\f0a3";
+  font-family: "inherit";
 }
 .fa-hand-o-right:before {
   content: "\f0a4";
+  font-family: "inherit";
 }
 .fa-hand-o-left:before {
   content: "\f0a5";
+  font-family: "inherit";
 }
 .fa-hand-o-up:before {
   content: "\f0a6";
+  font-family: "inherit";
 }
 .fa-hand-o-down:before {
   content: "\f0a7";
+  font-family: "inherit";
 }
 .fa-arrow-circle-left:before {
   content: "\f0a8";
+  font-family: "inherit";
 }
 .fa-arrow-circle-right:before {
   content: "\f0a9";
+  font-family: "inherit";
 }
 .fa-arrow-circle-up:before {
   content: "\f0aa";
+  font-family: "inherit";
 }
 .fa-arrow-circle-down:before {
   content: "\f0ab";
+  font-family: "inherit";
 }
 .fa-globe:before {
   content: "\f0ac";
+  font-family: "inherit";
 }
 .fa-wrench:before {
   content: "\f0ad";
+  font-family: "inherit";
 }
 .fa-tasks:before {
   content: "\f0ae";
+  font-family: "inherit";
 }
 .fa-filter:before {
   content: "\f0b0";
+  font-family: "inherit";
 }
 .fa-briefcase:before {
   content: "\f0b1";
+  font-family: "inherit";
 }
 .fa-arrows-alt:before {
   content: "\f0b2";
+  font-family: "inherit";
 }
 .fa-group:before,
 .fa-users:before {
   content: "\f0c0";
+  font-family: "inherit";
 }
 .fa-chain:before,
 .fa-link:before {
   content: "\f0c1";
+  font-family: "inherit";
 }
 .fa-cloud:before {
   content: "\f0c2";
+  font-family: "inherit";
 }
 .fa-flask:before {
   content: "\f0c3";
+  font-family: "inherit";
 }
 .fa-cut:before,
 .fa-scissors:before {
   content: "\f0c4";
+  font-family: "inherit";
 }
 .fa-copy:before,
 .fa-files-o:before {
   content: "\f0c5";
+  font-family: "inherit";
 }
 .fa-paperclip:before {
   content: "\f0c6";
+  font-family: "inherit";
 }
 .fa-save:before,
 .fa-floppy-o:before {
   content: "\f0c7";
+  font-family: "inherit";
 }
 .fa-square:before {
   content: "\f0c8";
+  font-family: "inherit";
 }
 .fa-navicon:before,
 .fa-reorder:before,
 .fa-bars:before {
   content: "\f0c9";
+  font-family: "inherit";
 }
 .fa-list-ul:before {
   content: "\f0ca";
+  font-family: "inherit";
 }
 .fa-list-ol:before {
   content: "\f0cb";
+  font-family: "inherit";
 }
 .fa-strikethrough:before {
   content: "\f0cc";
+  font-family: "inherit";
 }
 .fa-underline:before {
   content: "\f0cd";
+  font-family: "inherit";
 }
 .fa-table:before {
   content: "\f0ce";
+  font-family: "inherit";
 }
 .fa-magic:before {
   content: "\f0d0";
+  font-family: "inherit";
 }
 .fa-truck:before {
   content: "\f0d1";
+  font-family: "inherit";
 }
 .fa-pinterest:before {
   content: "\f0d2";
+  font-family: "inherit";
 }
 .fa-pinterest-square:before {
   content: "\f0d3";
+  font-family: "inherit";
 }
 .fa-google-plus-square:before {
   content: "\f0d4";
+  font-family: "inherit";
 }
 .fa-google-plus:before {
   content: "\f0d5";
+  font-family: "inherit";
 }
 .fa-money:before {
   content: "\f0d6";
+  font-family: "inherit";
 }
 .fa-caret-down:before {
   content: "\f0d7";
+  font-family: "inherit";
 }
 .fa-caret-up:before {
   content: "\f0d8";
+  font-family: "inherit";
 }
 .fa-caret-left:before {
   content: "\f0d9";
+  font-family: "inherit";
 }
 .fa-caret-right:before {
   content: "\f0da";
+  font-family: "inherit";
 }
 .fa-columns:before {
   content: "\f0db";
+  font-family: "inherit";
 }
 .fa-unsorted:before,
 .fa-sort:before {
   content: "\f0dc";
+  font-family: "inherit";
 }
 .fa-sort-down:before,
 .fa-sort-desc:before {
   content: "\f0dd";
+  font-family: "inherit";
 }
 .fa-sort-up:before,
 .fa-sort-asc:before {
   content: "\f0de";
+  font-family: "inherit";
 }
 .fa-envelope:before {
   content: "\f0e0";
+  font-family: "inherit";
 }
 .fa-linkedin:before {
   content: "\f0e1";
+  font-family: "inherit";
 }
 .fa-rotate-left:before,
 .fa-undo:before {
   content: "\f0e2";
+  font-family: "inherit";
 }
 .fa-legal:before,
 .fa-gavel:before {
   content: "\f0e3";
+  font-family: "inherit";
 }
 .fa-dashboard:before,
 .fa-tachometer:before {
   content: "\f0e4";
+  font-family: "inherit";
 }
 .fa-comment-o:before {
   content: "\f0e5";
+  font-family: "inherit";
 }
 .fa-comments-o:before {
   content: "\f0e6";
+  font-family: "inherit";
 }
 .fa-flash:before,
 .fa-bolt:before {
   content: "\f0e7";
+  font-family: "inherit";
 }
 .fa-sitemap:before {
   content: "\f0e8";
+  font-family: "inherit";
 }
 .fa-umbrella:before {
   content: "\f0e9";
+  font-family: "inherit";
 }
 .fa-paste:before,
 .fa-clipboard:before {
   content: "\f0ea";
+  font-family: "inherit";
 }
 .fa-lightbulb-o:before {
   content: "\f0eb";
+  font-family: "inherit";
 }
 .fa-exchange:before {
   content: "\f0ec";
+  font-family: "inherit";
 }
 .fa-cloud-download:before {
   content: "\f0ed";
+  font-family: "inherit";
 }
 .fa-cloud-upload:before {
   content: "\f0ee";
+  font-family: "inherit";
 }
 .fa-user-md:before {
   content: "\f0f0";
+  font-family: "inherit";
 }
 .fa-stethoscope:before {
   content: "\f0f1";
+  font-family: "inherit";
 }
 .fa-suitcase:before {
   content: "\f0f2";
+  font-family: "inherit";
 }
 .fa-bell-o:before {
   content: "\f0a2";
+  font-family: "inherit";
 }
 .fa-coffee:before {
   content: "\f0f4";
+  font-family: "inherit";
 }
 .fa-cutlery:before {
   content: "\f0f5";
+  font-family: "inherit";
 }
 .fa-file-text-o:before {
   content: "\f0f6";
+  font-family: "inherit";
 }
 .fa-building-o:before {
   content: "\f0f7";
+  font-family: "inherit";
 }
 .fa-hospital-o:before {
   content: "\f0f8";
+  font-family: "inherit";
 }
 .fa-ambulance:before {
   content: "\f0f9";
+  font-family: "inherit";
 }
 .fa-medkit:before {
   content: "\f0fa";
+  font-family: "inherit";
 }
 .fa-fighter-jet:before {
   content: "\f0fb";
+  font-family: "inherit";
 }
 .fa-beer:before {
   content: "\f0fc";
+  font-family: "inherit";
 }
 .fa-h-square:before {
   content: "\f0fd";
+  font-family: "inherit";
 }
 .fa-plus-square:before {
   content: "\f0fe";
+  font-family: "inherit";
 }
 .fa-angle-double-left:before {
   content: "\f100";
+  font-family: "inherit";
 }
 .fa-angle-double-right:before {
   content: "\f101";
+  font-family: "inherit";
 }
 .fa-angle-double-up:before {
   content: "\f102";
+  font-family: "inherit";
 }
 .fa-angle-double-down:before {
   content: "\f103";
+  font-family: "inherit";
 }
 .fa-angle-left:before {
   content: "\f104";
+  font-family: "inherit";
 }
 .fa-angle-right:before {
   content: "\f105";
+  font-family: "inherit";
 }
 .fa-angle-up:before {
   content: "\f106";
+  font-family: "inherit";
 }
 .fa-angle-down:before {
   content: "\f107";
+  font-family: "inherit";
 }
 .fa-desktop:before {
   content: "\f108";
+  font-family: "inherit";
 }
 .fa-laptop:before {
   content: "\f109";
+  font-family: "inherit";
 }
 .fa-tablet:before {
   content: "\f10a";
+  font-family: "inherit";
 }
 .fa-mobile-phone:before,
 .fa-mobile:before {
   content: "\f10b";
+  font-family: "inherit";
 }
 .fa-circle-o:before {
   content: "\f10c";
+  font-family: "inherit";
 }
 .fa-quote-left:before {
   content: "\f10d";
+  font-family: "inherit";
 }
 .fa-quote-right:before {
   content: "\f10e";
+  font-family: "inherit";
 }
 .fa-spinner:before {
   content: "\f110";
+  font-family: "inherit";
 }
 .fa-circle:before {
   content: "\f111";
+  font-family: "inherit";
 }
 .fa-mail-reply:before,
 .fa-reply:before {
   content: "\f112";
+  font-family: "inherit";
 }
 .fa-github-alt:before {
   content: "\f113";
+  font-family: "inherit";
 }
 .fa-folder-o:before {
   content: "\f114";
+  font-family: "inherit";
 }
 .fa-folder-open-o:before {
   content: "\f115";
+  font-family: "inherit";
 }
 .fa-smile-o:before {
   content: "\f118";
+  font-family: "inherit";
 }
 .fa-frown-o:before {
   content: "\f119";
+  font-family: "inherit";
 }
 .fa-meh-o:before {
   content: "\f11a";
+  font-family: "inherit";
 }
 .fa-gamepad:before {
   content: "\f11b";
+  font-family: "inherit";
 }
 .fa-keyboard-o:before {
   content: "\f11c";
+  font-family: "inherit";
 }
 .fa-flag-o:before {
   content: "\f11d";
+  font-family: "inherit";
 }
 .fa-flag-checkered:before {
   content: "\f11e";
+  font-family: "inherit";
 }
 .fa-terminal:before {
   content: "\f120";
+  font-family: "inherit";
 }
 .fa-code:before {
   content: "\f121";
+  font-family: "inherit";
 }
 .fa-mail-reply-all:before,
 .fa-reply-all:before {
   content: "\f122";
+  font-family: "inherit";
 }
 .fa-star-half-empty:before,
 .fa-star-half-full:before,
 .fa-star-half-o:before {
   content: "\f123";
+  font-family: "inherit";
 }
 .fa-location-arrow:before {
   content: "\f124";
+  font-family: "inherit";
 }
 .fa-crop:before {
   content: "\f125";
+  font-family: "inherit";
 }
 .fa-code-fork:before {
   content: "\f126";
+  font-family: "inherit";
 }
 .fa-unlink:before,
 .fa-chain-broken:before {
   content: "\f127";
+  font-family: "inherit";
 }
 .fa-question:before {
   content: "\f128";
+  font-family: "inherit";
 }
 .fa-info:before {
   content: "\f129";
+  font-family: "inherit";
 }
 .fa-exclamation:before {
   content: "\f12a";
+  font-family: "inherit";
 }
 .fa-superscript:before {
   content: "\f12b";
+  font-family: "inherit";
 }
 .fa-subscript:before {
   content: "\f12c";
+  font-family: "inherit";
 }
 .fa-eraser:before {
   content: "\f12d";
+  font-family: "inherit";
 }
 .fa-puzzle-piece:before {
   content: "\f12e";
+  font-family: "inherit";
 }
 .fa-microphone:before {
   content: "\f130";
+  font-family: "inherit";
 }
 .fa-microphone-slash:before {
   content: "\f131";
+  font-family: "inherit";
 }
 .fa-shield:before {
   content: "\f132";
+  font-family: "inherit";
 }
 .fa-calendar-o:before {
   content: "\f133";
+  font-family: "inherit";
 }
 .fa-fire-extinguisher:before {
   content: "\f134";
+  font-family: "inherit";
 }
 .fa-rocket:before {
   content: "\f135";
+  font-family: "inherit";
 }
 .fa-maxcdn:before {
   content: "\f136";
+  font-family: "inherit";
 }
 .fa-chevron-circle-left:before {
   content: "\f137";
+  font-family: "inherit";
 }
 .fa-chevron-circle-right:before {
   content: "\f138";
+  font-family: "inherit";
 }
 .fa-chevron-circle-up:before {
   content: "\f139";
+  font-family: "inherit";
 }
 .fa-chevron-circle-down:before {
   content: "\f13a";
+  font-family: "inherit";
 }
 .fa-html5:before {
   content: "\f13b";
+  font-family: "inherit";
 }
 .fa-css3:before {
   content: "\f13c";
+  font-family: "inherit";
 }
 .fa-anchor:before {
   content: "\f13d";
+  font-family: "inherit";
 }
 .fa-unlock-alt:before {
   content: "\f13e";
+  font-family: "inherit";
 }
 .fa-bullseye:before {
   content: "\f140";
+  font-family: "inherit";
 }
 .fa-ellipsis-h:before {
   content: "\f141";
+  font-family: "inherit";
 }
 .fa-ellipsis-v:before {
   content: "\f142";
+  font-family: "inherit";
 }
 .fa-rss-square:before {
   content: "\f143";
+  font-family: "inherit";
 }
 .fa-play-circle:before {
   content: "\f144";
+  font-family: "inherit";
 }
 .fa-ticket:before {
   content: "\f145";
+  font-family: "inherit";
 }
 .fa-minus-square:before {
   content: "\f146";
+  font-family: "inherit";
 }
 .fa-minus-square-o:before {
   content: "\f147";
+  font-family: "inherit";
 }
 .fa-level-up:before {
   content: "\f148";
+  font-family: "inherit";
 }
 .fa-level-down:before {
   content: "\f149";
+  font-family: "inherit";
 }
 .fa-check-square:before {
   content: "\f14a";
+  font-family: "inherit";
 }
 .fa-pencil-square:before {
   content: "\f14b";
+  font-family: "inherit";
 }
 .fa-external-link-square:before {
   content: "\f14c";
+  font-family: "inherit";
 }
 .fa-share-square:before {
   content: "\f14d";
+  font-family: "inherit";
 }
 .fa-compass:before {
   content: "\f14e";
+  font-family: "inherit";
 }
 .fa-toggle-down:before,
 .fa-caret-square-o-down:before {
   content: "\f150";
+  font-family: "inherit";
 }
 .fa-toggle-up:before,
 .fa-caret-square-o-up:before {
   content: "\f151";
+  font-family: "inherit";
 }
 .fa-toggle-right:before,
 .fa-caret-square-o-right:before {
   content: "\f152";
+  font-family: "inherit";
 }
 .fa-euro:before,
 .fa-eur:before {
   content: "\f153";
+  font-family: "inherit";
 }
 .fa-gbp:before {
   content: "\f154";
+  font-family: "inherit";
 }
 .fa-dollar:before,
 .fa-usd:before {
   content: "\f155";
+  font-family: "inherit";
 }
 .fa-rupee:before,
 .fa-inr:before {
   content: "\f156";
+  font-family: "inherit";
 }
 .fa-cny:before,
 .fa-rmb:before,
 .fa-yen:before,
 .fa-jpy:before {
   content: "\f157";
+  font-family: "inherit";
 }
 .fa-ruble:before,
 .fa-rouble:before,
 .fa-rub:before {
   content: "\f158";
+  font-family: "inherit";
 }
 .fa-won:before,
 .fa-krw:before {
   content: "\f159";
+  font-family: "inherit";
 }
 .fa-bitcoin:before,
 .fa-btc:before {
   content: "\f15a";
+  font-family: "inherit";
 }
 .fa-file:before {
   content: "\f15b";
+  font-family: "inherit";
 }
 .fa-file-text:before {
   content: "\f15c";
+  font-family: "inherit";
 }
 .fa-sort-alpha-asc:before {
   content: "\f15d";
+  font-family: "inherit";
 }
 .fa-sort-alpha-desc:before {
   content: "\f15e";
+  font-family: "inherit";
 }
 .fa-sort-amount-asc:before {
   content: "\f160";
+  font-family: "inherit";
 }
 .fa-sort-amount-desc:before {
   content: "\f161";
+  font-family: "inherit";
 }
 .fa-sort-numeric-asc:before {
   content: "\f162";
+  font-family: "inherit";
 }
 .fa-sort-numeric-desc:before {
   content: "\f163";
+  font-family: "inherit";
 }
 .fa-thumbs-up:before {
   content: "\f164";
+  font-family: "inherit";
 }
 .fa-thumbs-down:before {
   content: "\f165";
+  font-family: "inherit";
 }
 .fa-youtube-square:before {
   content: "\f166";
+  font-family: "inherit";
 }
 .fa-youtube:before {
   content: "\f167";
+  font-family: "inherit";
 }
 .fa-xing:before {
   content: "\f168";
+  font-family: "inherit";
 }
 .fa-xing-square:before {
   content: "\f169";
+  font-family: "inherit";
 }
 .fa-youtube-play:before {
   content: "\f16a";
+  font-family: "inherit";
 }
 .fa-dropbox:before {
   content: "\f16b";
+  font-family: "inherit";
 }
 .fa-stack-overflow:before {
   content: "\f16c";
+  font-family: "inherit";
 }
 .fa-instagram:before {
   content: "\f16d";
+  font-family: "inherit";
 }
 .fa-flickr:before {
   content: "\f16e";
+  font-family: "inherit";
 }
 .fa-adn:before {
   content: "\f170";
+  font-family: "inherit";
 }
 .fa-bitbucket:before {
   content: "\f171";
+  font-family: "inherit";
 }
 .fa-bitbucket-square:before {
   content: "\f172";
+  font-family: "inherit";
 }
 .fa-tumblr:before {
   content: "\f173";
+  font-family: "inherit";
 }
 .fa-tumblr-square:before {
   content: "\f174";
+  font-family: "inherit";
 }
 .fa-long-arrow-down:before {
   content: "\f175";
+  font-family: "inherit";
 }
 .fa-long-arrow-up:before {
   content: "\f176";
+  font-family: "inherit";
 }
 .fa-long-arrow-left:before {
   content: "\f177";
+  font-family: "inherit";
 }
 .fa-long-arrow-right:before {
   content: "\f178";
+  font-family: "inherit";
 }
 .fa-apple:before {
   content: "\f179";
+  font-family: "inherit";
 }
 .fa-windows:before {
   content: "\f17a";
+  font-family: "inherit";
 }
 .fa-android:before {
   content: "\f17b";
+  font-family: "inherit";
 }
 .fa-linux:before {
   content: "\f17c";
+  font-family: "inherit";
 }
 .fa-dribbble:before {
   content: "\f17d";
+  font-family: "inherit";
 }
 .fa-skype:before {
   content: "\f17e";
+  font-family: "inherit";
 }
 .fa-foursquare:before {
   content: "\f180";
+  font-family: "inherit";
 }
 .fa-trello:before {
   content: "\f181";
+  font-family: "inherit";
 }
 .fa-female:before {
   content: "\f182";
+  font-family: "inherit";
 }
 .fa-male:before {
   content: "\f183";
+  font-family: "inherit";
 }
 .fa-gittip:before,
 .fa-gratipay:before {
   content: "\f184";
+  font-family: "inherit";
 }
 .fa-sun-o:before {
   content: "\f185";
+  font-family: "inherit";
 }
 .fa-moon-o:before {
   content: "\f186";
+  font-family: "inherit";
 }
 .fa-archive:before {
   content: "\f187";
+  font-family: "inherit";
 }
 .fa-bug:before {
   content: "\f188";
+  font-family: "inherit";
 }
 .fa-vk:before {
   content: "\f189";
+  font-family: "inherit";
 }
 .fa-weibo:before {
   content: "\f18a";
+  font-family: "inherit";
 }
 .fa-renren:before {
   content: "\f18b";
+  font-family: "inherit";
 }
 .fa-pagelines:before {
   content: "\f18c";
+  font-family: "inherit";
 }
 .fa-stack-exchange:before {
   content: "\f18d";
+  font-family: "inherit";
 }
 .fa-arrow-circle-o-right:before {
   content: "\f18e";
+  font-family: "inherit";
 }
 .fa-arrow-circle-o-left:before {
   content: "\f190";
+  font-family: "inherit";
 }
 .fa-toggle-left:before,
 .fa-caret-square-o-left:before {
   content: "\f191";
+  font-family: "inherit";
 }
 .fa-dot-circle-o:before {
   content: "\f192";
+  font-family: "inherit";
 }
 .fa-wheelchair:before {
   content: "\f193";
+  font-family: "inherit";
 }
 .fa-vimeo-square:before {
   content: "\f194";
+  font-family: "inherit";
 }
 .fa-turkish-lira:before,
 .fa-try:before {
   content: "\f195";
+  font-family: "inherit";
 }
 .fa-plus-square-o:before {
   content: "\f196";
+  font-family: "inherit";
 }
 .fa-space-shuttle:before {
   content: "\f197";
+  font-family: "inherit";
 }
 .fa-slack:before {
   content: "\f198";
+  font-family: "inherit";
 }
 .fa-envelope-square:before {
   content: "\f199";
+  font-family: "inherit";
 }
 .fa-wordpress:before {
   content: "\f19a";
+  font-family: "inherit";
 }
 .fa-openid:before {
   content: "\f19b";
+  font-family: "inherit";
 }
 .fa-institution:before,
 .fa-bank:before,
 .fa-university:before {
   content: "\f19c";
+  font-family: "inherit";
 }
 .fa-mortar-board:before,
 .fa-graduation-cap:before {
   content: "\f19d";
+  font-family: "inherit";
 }
 .fa-yahoo:before {
   content: "\f19e";
+  font-family: "inherit";
 }
 .fa-google:before {
   content: "\f1a0";
+  font-family: "inherit";
 }
 .fa-reddit:before {
   content: "\f1a1";
+  font-family: "inherit";
 }
 .fa-reddit-square:before {
   content: "\f1a2";
+  font-family: "inherit";
 }
 .fa-stumbleupon-circle:before {
   content: "\f1a3";
+  font-family: "inherit";
 }
 .fa-stumbleupon:before {
   content: "\f1a4";
+  font-family: "inherit";
 }
 .fa-delicious:before {
   content: "\f1a5";
+  font-family: "inherit";
 }
 .fa-digg:before {
   content: "\f1a6";
+  font-family: "inherit";
 }
 .fa-pied-piper:before {
   content: "\f1a7";
+  font-family: "inherit";
 }
 .fa-pied-piper-alt:before {
   content: "\f1a8";
+  font-family: "inherit";
 }
 .fa-drupal:before {
   content: "\f1a9";
+  font-family: "inherit";
 }
 .fa-joomla:before {
   content: "\f1aa";
+  font-family: "inherit";
 }
 .fa-language:before {
   content: "\f1ab";
+  font-family: "inherit";
 }
 .fa-fax:before {
   content: "\f1ac";
+  font-family: "inherit";
 }
 .fa-building:before {
   content: "\f1ad";
+  font-family: "inherit";
 }
 .fa-child:before {
   content: "\f1ae";
+  font-family: "inherit";
 }
 .fa-paw:before {
   content: "\f1b0";
+  font-family: "inherit";
 }
 .fa-spoon:before {
   content: "\f1b1";
+  font-family: "inherit";
 }
 .fa-cube:before {
   content: "\f1b2";
+  font-family: "inherit";
 }
 .fa-cubes:before {
   content: "\f1b3";
+  font-family: "inherit";
 }
 .fa-behance:before {
   content: "\f1b4";
+  font-family: "inherit";
 }
 .fa-behance-square:before {
   content: "\f1b5";
+  font-family: "inherit";
 }
 .fa-steam:before {
   content: "\f1b6";
+  font-family: "inherit";
 }
 .fa-steam-square:before {
   content: "\f1b7";
+  font-family: "inherit";
 }
 .fa-recycle:before {
   content: "\f1b8";
+  font-family: "inherit";
 }
 .fa-automobile:before,
 .fa-car:before {
   content: "\f1b9";
+  font-family: "inherit";
 }
 .fa-cab:before,
 .fa-taxi:before {
   content: "\f1ba";
+  font-family: "inherit";
 }
 .fa-tree:before {
   content: "\f1bb";
+  font-family: "inherit";
 }
 .fa-spotify:before {
   content: "\f1bc";
+  font-family: "inherit";
 }
 .fa-deviantart:before {
   content: "\f1bd";
+  font-family: "inherit";
 }
 .fa-soundcloud:before {
   content: "\f1be";
+  font-family: "inherit";
 }
 .fa-database:before {
   content: "\f1c0";
+  font-family: "inherit";
 }
 .fa-file-pdf-o:before {
   content: "\f1c1";
+  font-family: "inherit";
 }
 .fa-file-word-o:before {
   content: "\f1c2";
+  font-family: "inherit";
 }
 .fa-file-excel-o:before {
   content: "\f1c3";
+  font-family: "inherit";
 }
 .fa-file-powerpoint-o:before {
   content: "\f1c4";
+  font-family: "inherit";
 }
 .fa-file-photo-o:before,
 .fa-file-picture-o:before,
 .fa-file-image-o:before {
   content: "\f1c5";
+  font-family: "inherit";
 }
 .fa-file-zip-o:before,
 .fa-file-archive-o:before {
   content: "\f1c6";
+  font-family: "inherit";
 }
 .fa-file-sound-o:before,
 .fa-file-audio-o:before {
   content: "\f1c7";
+  font-family: "inherit";
 }
 .fa-file-movie-o:before,
 .fa-file-video-o:before {
   content: "\f1c8";
+  font-family: "inherit";
 }
 .fa-file-code-o:before {
   content: "\f1c9";
+  font-family: "inherit";
 }
 .fa-vine:before {
   content: "\f1ca";
+  font-family: "inherit";
 }
 .fa-codepen:before {
   content: "\f1cb";
+  font-family: "inherit";
 }
 .fa-jsfiddle:before {
   content: "\f1cc";
+  font-family: "inherit";
 }
 .fa-life-bouy:before,
 .fa-life-buoy:before,
@@ -1492,312 +1911,412 @@
 .fa-support:before,
 .fa-life-ring:before {
   content: "\f1cd";
+  font-family: "inherit";
 }
 .fa-circle-o-notch:before {
   content: "\f1ce";
+  font-family: "inherit";
 }
 .fa-ra:before,
 .fa-rebel:before {
   content: "\f1d0";
+  font-family: "inherit";
 }
 .fa-ge:before,
 .fa-empire:before {
   content: "\f1d1";
+  font-family: "inherit";
 }
 .fa-git-square:before {
   content: "\f1d2";
+  font-family: "inherit";
 }
 .fa-git:before {
   content: "\f1d3";
+  font-family: "inherit";
 }
 .fa-hacker-news:before {
   content: "\f1d4";
+  font-family: "inherit";
 }
 .fa-tencent-weibo:before {
   content: "\f1d5";
+  font-family: "inherit";
 }
 .fa-qq:before {
   content: "\f1d6";
+  font-family: "inherit";
 }
 .fa-wechat:before,
 .fa-weixin:before {
   content: "\f1d7";
+  font-family: "inherit";
 }
 .fa-send:before,
 .fa-paper-plane:before {
   content: "\f1d8";
+  font-family: "inherit";
 }
 .fa-send-o:before,
 .fa-paper-plane-o:before {
   content: "\f1d9";
+  font-family: "inherit";
 }
 .fa-history:before {
   content: "\f1da";
+  font-family: "inherit";
 }
 .fa-genderless:before,
 .fa-circle-thin:before {
   content: "\f1db";
+  font-family: "inherit";
 }
 .fa-header:before {
   content: "\f1dc";
+  font-family: "inherit";
 }
 .fa-paragraph:before {
   content: "\f1dd";
+  font-family: "inherit";
 }
 .fa-sliders:before {
   content: "\f1de";
+  font-family: "inherit";
 }
 .fa-share-alt:before {
   content: "\f1e0";
+  font-family: "inherit";
 }
 .fa-share-alt-square:before {
   content: "\f1e1";
+  font-family: "inherit";
 }
 .fa-bomb:before {
   content: "\f1e2";
+  font-family: "inherit";
 }
 .fa-soccer-ball-o:before,
 .fa-futbol-o:before {
   content: "\f1e3";
+  font-family: "inherit";
 }
 .fa-tty:before {
   content: "\f1e4";
+  font-family: "inherit";
 }
 .fa-binoculars:before {
   content: "\f1e5";
+  font-family: "inherit";
 }
 .fa-plug:before {
   content: "\f1e6";
+  font-family: "inherit";
 }
 .fa-slideshare:before {
   content: "\f1e7";
+  font-family: "inherit";
 }
 .fa-twitch:before {
   content: "\f1e8";
+  font-family: "inherit";
 }
 .fa-yelp:before {
   content: "\f1e9";
+  font-family: "inherit";
 }
 .fa-newspaper-o:before {
   content: "\f1ea";
+  font-family: "inherit";
 }
 .fa-wifi:before {
   content: "\f1eb";
+  font-family: "inherit";
 }
 .fa-calculator:before {
   content: "\f1ec";
+  font-family: "inherit";
 }
 .fa-paypal:before {
   content: "\f1ed";
+  font-family: "inherit";
 }
 .fa-google-wallet:before {
   content: "\f1ee";
+  font-family: "inherit";
 }
 .fa-cc-visa:before {
   content: "\f1f0";
+  font-family: "inherit";
 }
 .fa-cc-mastercard:before {
   content: "\f1f1";
+  font-family: "inherit";
 }
 .fa-cc-discover:before {
   content: "\f1f2";
+  font-family: "inherit";
 }
 .fa-cc-amex:before {
   content: "\f1f3";
+  font-family: "inherit";
 }
 .fa-cc-paypal:before {
   content: "\f1f4";
+  font-family: "inherit";
 }
 .fa-cc-stripe:before {
   content: "\f1f5";
+  font-family: "inherit";
 }
 .fa-bell-slash:before {
   content: "\f1f6";
+  font-family: "inherit";
 }
 .fa-bell-slash-o:before {
   content: "\f1f7";
+  font-family: "inherit";
 }
 .fa-trash:before {
   display:none;
   content: "\f1f8";
+  font-family: "inherit";
 }
 .fa-copyright:before {
   content: "\f1f9";
+  font-family: "inherit";
 }
 .fa-at:before {
   content: "\f1fa";
+  font-family: "inherit";
 }
 .fa-eyedropper:before {
   content: "\f1fb";
+  font-family: "inherit";
 }
 .fa-paint-brush:before {
   content: "\f1fc";
+  font-family: "inherit";
 }
 .fa-birthday-cake:before {
   content: "\f1fd";
+  font-family: "inherit";
 }
 .fa-area-chart:before {
   content: "\f1fe";
+  font-family: "inherit";
 }
 .fa-pie-chart:before {
   content: "\f200";
+  font-family: "inherit";
 }
 .fa-line-chart:before {
   content: "\f201";
+  font-family: "inherit";
 }
 .fa-lastfm:before {
   content: "\f202";
+  font-family: "inherit";
 }
 .fa-lastfm-square:before {
   content: "\f203";
+  font-family: "inherit";
 }
 .fa-toggle-off:before {
   content: "\f204";
+  font-family: "inherit";
 }
 .fa-toggle-on:before {
   content: "\f205";
+  font-family: "inherit";
 }
 .fa-bicycle:before {
   content: "\f206";
+  font-family: "inherit";
 }
 .fa-bus:before {
   content: "\f207";
+  font-family: "inherit";
 }
 .fa-ioxhost:before {
   content: "\f208";
+  font-family: "inherit";
 }
 .fa-angellist:before {
   content: "\f209";
+  font-family: "inherit";
 }
 .fa-cc:before {
   content: "\f20a";
+  font-family: "inherit";
 }
 .fa-shekel:before,
 .fa-sheqel:before,
 .fa-ils:before {
   content: "\f20b";
+  font-family: "inherit";
 }
 .fa-meanpath:before {
   content: "\f20c";
+  font-family: "inherit";
 }
 .fa-buysellads:before {
   content: "\f20d";
+  font-family: "inherit";
 }
 .fa-connectdevelop:before {
   content: "\f20e";
+  font-family: "inherit";
 }
 .fa-dashcube:before {
   content: "\f210";
+  font-family: "inherit";
 }
 .fa-forumbee:before {
   content: "\f211";
+  font-family: "inherit";
 }
 .fa-leanpub:before {
   content: "\f212";
+  font-family: "inherit";
 }
 .fa-sellsy:before {
   content: "\f213";
+  font-family: "inherit";
 }
 .fa-shirtsinbulk:before {
   content: "\f214";
+  font-family: "inherit";
 }
 .fa-simplybuilt:before {
   content: "\f215";
+  font-family: "inherit";
 }
 .fa-skyatlas:before {
   content: "\f216";
+  font-family: "inherit";
 }
 .fa-cart-plus:before {
   content: "\f217";
+  font-family: "inherit";
 }
 .fa-cart-arrow-down:before {
   content: "\f218";
+  font-family: "inherit";
 }
 .fa-diamond:before {
   content: "\f219";
+  font-family: "inherit";
 }
 .fa-ship:before {
   content: "\f21a";
+  font-family: "inherit";
 }
 .fa-user-secret:before {
   content: "\f21b";
+  font-family: "inherit";
 }
 .fa-motorcycle:before {
   content: "\f21c";
+  font-family: "inherit";
 }
 .fa-street-view:before {
   content: "\f21d";
+  font-family: "inherit";
 }
 .fa-heartbeat:before {
   content: "\f21e";
+  font-family: "inherit";
 }
 .fa-venus:before {
   content: "\f221";
+  font-family: "inherit";
 }
 .fa-mars:before {
   content: "\f222";
+  font-family: "inherit";
 }
 .fa-mercury:before {
   content: "\f223";
+  font-family: "inherit";
 }
 .fa-transgender:before {
   content: "\f224";
+  font-family: "inherit";
 }
 .fa-transgender-alt:before {
   content: "\f225";
+  font-family: "inherit";
 }
 .fa-venus-double:before {
   content: "\f226";
+  font-family: "inherit";
 }
 .fa-mars-double:before {
   content: "\f227";
+  font-family: "inherit";
 }
 .fa-venus-mars:before {
   content: "\f228";
+  font-family: "inherit";
 }
 .fa-mars-stroke:before {
   content: "\f229";
+  font-family: "inherit";
 }
 .fa-mars-stroke-v:before {
   content: "\f22a";
+  font-family: "inherit";
 }
 .fa-mars-stroke-h:before {
   content: "\f22b";
+  font-family: "inherit";
 }
 .fa-neuter:before {
   content: "\f22c";
+  font-family: "inherit";
 }
 .fa-facebook-official:before {
   content: "\f230";
+  font-family: "inherit";
 }
 .fa-pinterest-p:before {
   content: "\f231";
+  font-family: "inherit";
 }
 .fa-whatsapp:before {
   content: "\f232";
+  font-family: "inherit";
 }
 .fa-server:before {
   content: "\f233";
+  font-family: "inherit";
 }
 .fa-user-plus:before {
   content: "\f234";
+  font-family: "inherit";
 }
 .fa-user-times:before {
   content: "\f235";
+  font-family: "inherit";
 }
 .fa-hotel:before,
 .fa-bed:before {
   content: "\f236";
+  font-family: "inherit";
 }
 .fa-viacoin:before {
   content: "\f237";
+  font-family: "inherit";
 }
 .fa-train:before {
   content: "\f238";
+  font-family: "inherit";
 }
 .fa-subway:before {
   content: "\f239";
+  font-family: "inherit";
 }
 .fa-medium:before {
   content: "\f23a";
+  font-family: "inherit";
 }

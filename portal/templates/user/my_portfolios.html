@@ -28,16 +28,18 @@
                         <div class="tab-pane active" id="tab8">
                             <p>
                 <div class="col-md-12">
+
                     <div class="block">
                     <div class="accordion accordion-transparent ui-accordion ui-widget ui-helper-reset" role="tablist">
                         <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-header-active ui-state-active ui-corner-top ui-accordion-icons" role="tab" id="ui-accordion-2-header-0" aria-controls="ui-accordion-2-panel-0" aria-selected="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>Summary</h3>
+
                             <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" id="ui-accordion-2-panel-0" aria-labelledby="ui-accordion-2-header-0" role="tabpanel" aria-expanded="true" aria-hidden="false" style="display: block;padding:0px;margin:10px">
-                                
+                                <div class="btn-group btn-group-justified">
+<div class="summary-scroll mCustomScrollbar">
 
-<div class="btn-group btn-group-justified">
+    {% for portfolio in portfolios %}     
 
-    {% for portfolio in portfolios %}      
- <div class="btn btn-default btn-clean" style="padding:0px;height:100%;color:black;border:0px;box-shadow:0px 0px 0px 0px !important">
+ <div class="btn btn-default btn-clean" style="padding:0px;height:100%;color:black;border:0px;box-shadow:0px 0px 0px 0px !important;width:100%;display:blocks">
           
             <a href="/user/individual_portfolio/{{portfolio.id}}" id="/user/individual_portfolio"  style="text-align:center;height:auto;background:transparent;border:0px">{{portfolio.name}}
               <br>
@@ -68,11 +70,90 @@
             </a>
         </div>
             {% endfor %}
-        </div>        
+        </div>        </div>
+
+<div class="col-lg-6 col-md-6">                                
+<div class="block">
+    <div class="header">
+        <h2>Highest Performing Stocks</h2>
+    </div>
+    <div class="content">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Stock</th>
+                    <th>Portfolio</th>
+                    <th>Gain</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>VAL</td>
+                    <td>Test Portfolio</td>
+                    <td>2.45%</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>NYSE: BA</td>
+                    <td>Test Portfolio</td>
+                    <td>2.33%</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>TSLA</td>
+                    <td>Test Portfolio</td>
+                    <td>2.25%</td>
+                </tr>
+            </tbody>
+        </table>                       
+    </div>
+</div>
+</div>
+<div class="col-lg-6 col-md-6">                                
+<div class="block">
+    <div class="header">
+        <h2>Lowest Performing Stocks</h2>
+    </div>
+    <div class="content">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                     <th>#</th>
+                    <th>Stock</th>
+                    <th>Portfolio</th>
+                    <th>Gain</th>
+                </tr>
+            </thead>
+            <tbody>
+             <tr>
+                    <td>1</td>
+                    <td>VAL</td>
+                    <td>Test Portfolio</td>
+                    <td>2.45%</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>NYSE: BA</td>
+                    <td>Test Portfolio</td>
+                    <td>2.33%</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>TSLA</td>
+                    <td>Test Portfolio</td>
+                    <td>2.25%</td>
+                </tr>
+            </tbody>
+        </table>                       
+    </div>
+</div>
+</div>
 
 
 
-                            </div>
+</div>
 
     {% for portfolio in all_portfolios %}
     {% if portfolio.stocks %}             

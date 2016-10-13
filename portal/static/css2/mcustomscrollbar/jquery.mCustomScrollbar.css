@@ -6,7 +6,7 @@ body{
   scrollbar-base-color: transparent;
   scrollbar-3dlight-color: transparent;
   scrollbar-highlight-color: transparent;
-  scrollbar-track-color: #EBEBEB;
+  scrollbar-track-color: transparent;
   scrollbar-arrow-color: black;
   scrollbar-shadow-color: transparent;
   scrollbar-dark-shadow-color: transparent;
@@ -159,16 +159,16 @@ body{
 }
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
 	background:#fff; /* rgba fallback */
-	background:rgba(255,255,255,0.75);
+	background:rgba(255,255,255,0.1);
 	filter:"alpha(opacity=75)"; -ms-filter:"alpha(opacity=75)"; /* old ie */
 }
 .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
-	background:rgba(255,255,255,0.85);
+	background:rgba(255,255,255,0.1);
 	filter:"alpha(opacity=85)"; -ms-filter:"alpha(opacity=85)"; /* old ie */
 }
 .mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
 .mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
-	background:rgba(255,255,255,0.9);
+	background:rgba(255,255,255,0.1);
 	filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
 }
 .mCSB_scrollTools .mCSB_buttonUp,
@@ -260,7 +260,7 @@ body{
 .mCS-light-2>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
 	width:4px;
 	background:#fff; /* rgba fallback */
-	background:rgba(255,255,255,0.75);
+	background:rgba(255,255,255,0.1);
 	-webkit-border-radius:1px;
 	-moz-border-radius:1px;
 	border-radius:1px;
@@ -276,11 +276,11 @@ body{
 	margin:6px auto;
 }
 .mCS-light-2>.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
-	background:rgba(255,255,255,0.85);
+	background:rgba(255,255,255,0.1);
 }
 .mCS-light-2>.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
 .mCS-light-2>.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
-	background:rgba(255,255,255,0.9);
+	background:rgba(255,255,255,0.1);
 }
 .mCS-light-2>.mCSB_scrollTools .mCSB_buttonUp{
 	background-position:-32px 0;
@@ -352,7 +352,7 @@ body{
 .mCS-light-thick>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
 	width:6px;
 	background:#fff; /* rgba fallback */
-	background:rgba(255,255,255,0.75);
+	background:rgba(255,255,255,0.1);
 	-webkit-border-radius:2px;
 	-moz-border-radius:2px;
 	border-radius:2px;
@@ -368,11 +368,11 @@ body{
 	margin:5px auto;
 }
 .mCS-light-thick>.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
-	background:rgba(255,255,255,0.85);
+	background:rgba(255,255,255,0.1);
 }
 .mCS-light-thick>.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
 .mCS-light-thick>.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
-	background:rgba(255,255,255,0.9);
+	background:rgba(255,255,255,0.1);
 }
 .mCS-light-thick>.mCSB_scrollTools .mCSB_buttonUp{
 	background-position:-16px 0;

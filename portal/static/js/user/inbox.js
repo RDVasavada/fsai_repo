@@ -17,7 +17,13 @@ $("input").keypress(function(event) {
         $("#messageBody")[0].value = ""
     }
 });
-
+$(".mail-scroll").height(400).mCustomScrollbar()
+$(".mail-scroll").height(400).mCustomScrollbar()
+$(".mail-scroll").height(400).mCustomScrollbar()
+$(".mail-scroll").height(400).mCustomScrollbar()
+$(".mail-scroll").height(400).mCustomScrollbar()
+$(".mail-scroll").height(400).mCustomScrollbar()
+console.log("asdf")
 $("i#emptystar").click(function() {
     if ($(this).attr('class') == 'icon-star-empty pull-right') {
         $(this).attr('class','icon-star pull-right')    

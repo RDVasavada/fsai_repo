@@ -511,7 +511,7 @@ def dictfetchall(cursor):
     return [
         dict(zip([col[0] for col in desc], row))
         for row in cursor.fetchall()
-    ]    
+    ]
 def analyze(message, id, username):
   message = message.lower()
   if "can you do" in message:
@@ -670,16 +670,50 @@ def analyze(message, id, username):
   elif "lowest" in message or "worst" in message: 
     return("the lowest stocks today are my d !")
   elif "how" in message and "performing" in message:
-    if (hasPortfolio(message)):
-      return("your portfolio " + hasPortfolio(message) + " is doing well!")
+    if (hasPortfolio(message, id)):
+      name = str(hasPortfolio(message,id))
+      arr = []
+      cursor = connection.cursor()
+      cursor.execute("SELECT investment, id FROM `portal_portfolio` WHERE "
+                    "'" + str(id) + "' = user_id AND '" + name + "' = name ")
+      for item in dictfetchall(cursor):
+        total = 0
+        cursor.execute("select ticker, current_price, initial_price,  number_of_shares, "
+                      "buy_date, sell_date, "
+                      "TRUNCATE(((current_price-initial_price)/initial_price) * 100, 2) "
+                      "as gain from portal_stock where show_id=" + str(item['id']))
+        for value in dictfetchall(cursor):
+          total = total + int(value['gain'])
+          print(total)
+        rtnstr = name + " was bought for " + str(item['investment']) + "$ and since then it has changed " + str(total) + "$ in value and is now worth " + str(int(total) + int(item['investment'])) + "$." 
+        arr.append(rtnstr)
+      a = ' '.join(arr)
+      return("<Hyperchat Bot> : " + a) 
     elif (findCompany(message,username)):
       try:
         return("your stock " + findCompany(message,username)[0] + " is doing quite well")
       except IndexError:
         return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
   elif "how" in message and "doing" in message:
-    if (hasPortfolio(message)):
-      return("your portfolio " + hasPortfolio(message) + " is doing well!")
+    if (hasPortfolio(message, id)):
+      name = str(hasPortfolio(message,id))
+      arr = []
+      cursor = connection.cursor()
+      cursor.execute("SELECT investment, id FROM `portal_portfolio` WHERE "
+                    "'" + str(id) + "' = user_id AND '" + name + "' = name ")
+      for item in dictfetchall(cursor):
+        total = 0
+        cursor.execute("select ticker, current_price, initial_price,  number_of_shares, "
+                      "buy_date, sell_date, "
+                      "TRUNCATE(((current_price-initial_price)/initial_price) * 100, 2) "
+                      "as gain from portal_stock where show_id=" + str(item['id']))
+        for value in dictfetchall(cursor):
+          total = total + int(value['gain'])
+          print(total)
+        rtnstr = name + " was bought for " + str(item['investment']) + "$ and since then it has changed " + str(total) + "$ in value and is now worth " + str(int(total) + int(item['investment'])) + "$." 
+        arr.append(rtnstr)
+      a = ' '.join(arr)
+      return("<Hyperchat Bot> : " + a) 
     elif (findCompany(message,username)):
       try:
         return("your stock " + findCompany(message,username)[0] + " is doing quite well")

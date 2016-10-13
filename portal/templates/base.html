@@ -15,20 +15,23 @@
         <link href="/static/css2/fsai.css" rel="stylesheet">
         <link href="/static/css2/stylesheets.css" rel="stylesheet" type="text/css"/>   
         <link href="/static/css2/stylesheet.css" rel="stylesheet" type="text/css"/>   
-        <link href="/static/css2/viseanimations.css" rel="stylesheet" type="text/css"/>  
-        <link href="/static/css2/mcustomscrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css"/>  
+        <link href="/static/css2/viseanimations.css" rel="stylesheet" type="text/css"/> 
+        <link href="/static/assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css"/>  
         <link rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)" href="/static/css2/small-device.css" /> 
+
+
     {% endblock %}
     {% block head %}            
         <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery-ui.min.js'></script>   
+        <script type='text/javascript' src="/static/assets/js/plugins/formBuilder/dist/form-builder.js"></script>
         <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery-migrate.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/bootstrap/bootstrap.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/uniform/jquery.uniform.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/datatables/jquery.dataTables.min.js'></script>
 
         <script type='text/javascript' src='/static/assets/js/plugins/uniform/jquery.uniform.min.js'></script>
-        <script type='text/javascript' src='/static/assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'></script>
+        <script type='text/javascript' src='/static/assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/knob/jquery.knob.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/sparkline/jquery.sparkline.min.js'></script>
         <script type='text/javascript' src='/static/assets/js/plugins/flot/jquery.flot.js'></script>     
@@ -61,7 +64,7 @@ function del_cookie() {
             }
 
 </script>
-<body onunload="del_cookie()" style="background-attachment:fixed !important;height:100%;overflow:auto">
+<body onunload="del_cookie()" style="background-attachment:fixed !important;height:100%;overflow-x:hidden">
     <div class="row">
 
         <div class="col-md-8" id="mainheader" style="padding-left:25px;position:relative;left:13vw;width:75.5vw">
@@ -71,7 +74,7 @@ function del_cookie() {
                         <span style="letter-spacing:1px;" id="navicon"><i >V</i></span><span id="navicon">ise</span><br>
                     </h8>
                 </div>                
-                <a id="a1" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/dashboard/skip" class="btn btn-default btn-clean stbar transition" id="/user/dashboard">
+                <a id="a1" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/dashboard/" class="btn btn-default btn-clean stbar transition" id="/user/dashboard">
                     <span class="icon-home" style="font-size:24px"></span><br><span id="navicon"> Dashboard </span>
                 </a>               
                 <a id="a2" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/inbox"class="btn btn-default btn-clean"><span class="icon-comments" style="font-size:24px"></span> 

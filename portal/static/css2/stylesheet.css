@@ -739,7 +739,7 @@ dd{padding: 5px 0px;}
 /* eof carousel */
 
 /* jQuery UI */
-.ui-widget-content{background: url('../img/background/bt_cubs.png') left top repeat #222; border-width: 3px; border: 3px solid #1B1B1B; color: #FFF;}
+.ui-widget-content{background: transparent; border-width: 3px; border: 0px solid #1B1B1B; color: #FFF;}
 .ui-widget-header{background: transparent; border: 0px;}
 .ui-widget-content a{color: #FFF;}
 

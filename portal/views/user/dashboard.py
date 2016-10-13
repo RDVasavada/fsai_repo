@@ -4,9 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.middleware.csrf import rotate_token
 from stock import get_stocks_by_portfolio
 import time
+import random
 import requests
 import json 
-import json
+from bs4 import BeautifulSoup
+from urllib2 import urlopen
 from django.core.serializers.json import DjangoJSONEncoder
 from django.template import RequestContext, Context, loader
 from portal.models.user.portal_user import PortalUser
@@ -38,17 +40,28 @@ def dashboard(request):
       stocks.append(stockDict)
       stocks = json.dumps(list(stocks), cls=DjangoJSONEncoder)
       context_dict['stockDict'] = stocks
-
-    # for data in historical:
-    #   prestock['historical'].append(data)
-    #   print(prestock['historical'])
-    # print(historical)
+  picks = find()
+  context_dict['picks'] = picks
   context_dict["portfolios"] = portfolios
   context_dict["username"] = username
   t = loader.get_template("user/dashboard.html")
   c = Context(context_dict)
   html = t.render(context_dict)
   return HttpResponse(html)
+
+def find():
+  chosen = 1
+  guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
+  gurusoup = BeautifulSoup(urlopen(guru))
+  g = gurusoup.p.contents[0]
+  d = json.loads(g)
+  guruarr = []
+  for key in d:
+    for pick in d[key]["port"]:
+      guruarr.append(pick)
+      if len(guruarr) == 4:
+        return guruarr
+  return(guruarr)
 
 @login_required
 def dashboardskip(request):
