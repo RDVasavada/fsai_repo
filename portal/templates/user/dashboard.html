@@ -337,6 +337,10 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
                         </div>                        
                     </div>                  
                     <div class="content" id="content{{portfolio.id}}" style="height:384px;display:none;overflow:hidden">
+                      <div class="loader{{portfolio.id}}" style="height:100%;text-align:center;top:35%;position:relative">
+                        <img src="/static/img/loader.gif"><br><br>
+                        <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px">We are loading your portfolio data! This may take a minute..</h2>
+                      </div>
 <script>
 
 (function() {
@@ -378,7 +382,6 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     .x(function(d) { return x2(d.date); })
     .y0(height2)
     .y1(function(d) { return y2(d.price); });
-
   var svg = d3.select('#content{{portfolio.id}}')
     .append("div")
      .classed("svg-container", true) //container class to make it responsive
@@ -544,13 +547,13 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
         .attr('transform', 'translate(0,' + (height2 - 22) + ')')
         .call(xAxis2);
 
+    $(".loader{{portfolio.id}}").css('display','none')
     context.append('g')
         .attr('class', 'x brush')
         .call(brush)
       .selectAll('rect')
         .attr('y', -6)
         .attr('height', height2 + 7);
-
     function mousemove() {
       var x0 = x.invert(d3.mouse(this)[0]);
       var i = bisectDate(data, x0, 1);
