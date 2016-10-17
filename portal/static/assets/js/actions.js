@@ -144,6 +144,7 @@ $("#nav6").attr('class','icon-circle-blank')
         });
         return false;
     });
+    console.log($("span.icon-chevron-down"))
     $(".block-toggle").click(function(){
         var content = $(this).parents(".block").children('div').not('.header');
         if(content.is(':visible')){

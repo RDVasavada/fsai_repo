@@ -49,6 +49,8 @@
         <script type="text/javascript" src="/static/js/user/dashboard.js"></script>
         <script type="text/javascript" src="/static/js/user/individual_portfolio.js"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+         <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js' charset="utf-8"></script>
+
        <script src="/static/assets/js/d3pie.min.js"></script>
          <script type='text/javascript' src='/static/assets/main.js'></script>    
     {% endblock %}
@@ -65,10 +67,10 @@ function del_cookie() {
 
 </script>
 <body onunload="del_cookie()" style="background-attachment:fixed !important;height:100%;overflow-x:hidden">
-    <div class="row">
+    <div class="row" style="margin:0px">
 
-        <div class="col-md-8" id="mainheader" style="padding-left:25px;position:relative;left:13vw;width:75.5vw">
-            <div class="btn-group btn-group-justified" id="navbtn" style="height:10vh;margin-top:25px;text-align:center">
+        <div class="col-md-12" id="mainheader" style="position:relative;width:102vw;padding:0px">
+            <div class="btn-group btn-group-justified" id="navbtn" style="height:10vh;text-align:center">
                 <div class="btn" id="navlast">
                     <h8 style="opacity: 0.4; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 54px;font-family:'Helvetica Neue';display:inline;line-height:75px;text-align:center" id="splash">
                         <span style="letter-spacing:1px;" id="navicon"><i >V</i></span><span id="navicon">ise</span><br>
@@ -140,7 +142,7 @@ function del_cookie() {
 {% endblock %}
 </div>
 </div>
-    <div class="page-footer" style="margin-top:0px;text-align:center;margin-top:5px">
+    <div class="page-footer" style="margin-top:-25px;text-align:center;margin-bottom:0px;position:fixed;bottom:0px">
         <!-- <div class="page-footer-wrap"> -->
             <i class="icon-circle-blank" id="nav1"></i>
             <i class="icon-circle-blank" id="nav2"></i>

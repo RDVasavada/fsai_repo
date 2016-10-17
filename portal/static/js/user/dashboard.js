@@ -1,6 +1,5 @@
-$("input#risks").knob();
-   
- 
+
+
 
 // ** Update data section (Called from the onclick)
 function changeTime(s) {
@@ -140,10 +139,11 @@ xhr.onreadystatechange = function(){
         {
             var news  = JSON.parse(xhr.responseText).items
             news.forEach(function(x) {
-                var clone = $("#incomingNews").clone()
-                clone[0].children[0].children[0].href = x.link
-                clone[0].children[0].children[0].innerText = x.title
-                clone.removeAttr('id').css('display','initial').appendTo($("#newsPin"))
+                var html = "<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:22px;letter-spacing:3px'>" + x.title + "</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>"
+                var child = document.createElement('div')
+                child.innerHTML = html
+                child.firstChild;
+                document.getElementById('pin').innerHTML += html
             })
         };
     }

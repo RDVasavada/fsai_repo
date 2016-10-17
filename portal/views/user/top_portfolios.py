@@ -34,9 +34,7 @@ def get_top_portfolios(request, html_template):
 def top_portfolios(request, user_id):
     if request.user.is_authenticated():
         username = request.user.username
-        print("Authenticated User is :" + username)
         portalUser = PortalUser.objects.get(username=username)
-        print("getting top portfolios")
     portfolios = {}
     print(user_id)
     try:
@@ -53,8 +51,10 @@ def top_portfolios(request, user_id):
                        "COUNT(DISTINCT(ticker)) as total_value from "
                        "portal_portfolio p, portal_stock s where p.id=s.show_id "
                        "and p.user_id=" + str(user_id) + " group by p.id order by investment desc limit 10") 
+        # investment = cursor[]
         portfolios = dictfetchall(cursor)
-        #print "this is all portfolios"
+        for port in portfolios:
+            port['investment'] = '{:20,.2f}'.format(port['investment'])
         print(portfolios)
     except Exception as e:
         print(e)

@@ -12,9 +12,11 @@ function rerun() {
         $.getScript("/static/assets/js/actions.js")
     } else if ((url.indexOf("inbox")) > 0 ) {
         $.getScript("/static/js/user/inbox.js")
+        $.getScript("/static/assets/js/plugins.js")
         $.getScript("/static/assets/js/actions.js")
     } else if ((url.indexOf("sent")) > 0 ) {
         $.getScript("/static/assets/js/actions.js")
+        $.getScript("/static/assets/js/plugins.js")
     } else if ((url.indexOf("portfolio_settings")) > 0 ) {
         $.getScript("/static/assets/js/plugins.js")
         $.getScript("/static/assets/js/plugins/stepy/jquery.stepy.min.js")

@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     #General User Pages
     (r'^user/dashboard/?$', views.dashboard),
     (r'^user/dashboard/skip?$', views.dashboardskip),
+    (r'^user/portfolio_chart/(?P<portfolio_id>[0-9]+)/?$', views.portfolio_chart), 
     (r'^user/portfolio/?$', views.portfolio),
     (r'^user/portfolio_settings/?$', views.portfolio_settings),
     (r'^user/portfolio_optimize/?$', views.portfolio_optimize),
