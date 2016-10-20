@@ -21,7 +21,6 @@ def individual_stock(request):
     context_dict["company_symbol"] = request.POST["company_name"]
     print(request.POST["company_name"])
     response = requests.get("http://chstocksearch.herokuapp.com/api/"+request.POST['company_name'])
-    print(response)
     try:
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(response.json()[0]['company'])
     except IndexError:
@@ -41,7 +40,7 @@ def individual_stock(request):
             "t.p": "83856",
             "t.k": "cbW9p5pFQDw",
             "action": "employers",
-            "q": 'apple',
+            "q": request.POST["company_name"],
             # programmatically get the IP of the machine
             "userip": json.loads(urllib2.urlopen("http://ip.jsontest.com/").read().decode('utf-8'))['ip'],
             "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
@@ -53,7 +52,7 @@ def individual_stock(request):
             "t.p": "83856",
             "t.k": "cbW9p5pFQDw",
             "action": "employers",
-            "q": request.POST["company_name"],
+            "q": response.json()[0]['company'],
             # programmatically get the IP of the machine
             "userip": json.loads(urllib2.urlopen("http://ip.jsontest.com/").read().decode('utf-8'))['ip'],
             "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
