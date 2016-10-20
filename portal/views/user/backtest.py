@@ -43,7 +43,7 @@ def backtest(request, port_id):
         # backtest = prophet.run_backtest(start=datetime(2010, 1, 1))
         # prophet.register_portfolio_analyzers(default_analyzers)
         # analysis = prophet.analyze_backtest(backtest)
-    return JsonResponse({'display':analysis})
+        return JsonResponse({'display':analysis})
     # portfolio_name = request.GET["portName"]
     # url = "https://www.portfoliovisualizer.com/backtest-portfolio"      
     # soup = BeautifulSoup(urlopen(url))

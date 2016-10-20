@@ -235,7 +235,7 @@ let pdf = function() {
                     <tbody>
 
                     {% for stock in newstocks %}<tr>
-                        <td class="text-center small">{{stock}}</td>
+                        <td class="text-center"><a href="#" target="_blank" onClick=goStock(this) id="stockLink">{{stock}}</a></td>
                         <td class="text-center">2</td>
                         <td class="text-center">2016-01-01</td>
                         <td class="text-center">2015-01-01</td>
@@ -288,6 +288,12 @@ let pdf = function() {
             </div>
 
         </div>
+
+<form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
+    {% csrf_token %}
+    <input type="text" class="form-control" id="company_name" value="" name="company_name">    
+</form>
+
                                 {% csrf_token %}
 <form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
     <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
