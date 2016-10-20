@@ -2,8 +2,8 @@ import argparse
 from time import sleep
 import getpass
 from django.views.decorators.csrf import csrf_exempt
-from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+# from selenium import webdriver
+# from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
 import guru_config as config

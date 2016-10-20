@@ -55,6 +55,7 @@ def top_portfolios(request, user_id):
         portfolios = dictfetchall(cursor)
         for port in portfolios:
             port['investment'] = '{:20,.2f}'.format(port['investment'])
+            port['value'] = '{:20,.2f}'.format(port['value'])
         print(portfolios)
     except Exception as e:
         print(e)

@@ -4,6 +4,7 @@ $("a").click(function() {
   console.log(portname)
   $("#xname")[0].innerText = portname
 })
+
   $("div#vise").hover(function() {
     $("li#selectedOption")[0].innerHTML = "Vise's Portfolio Wizard allows for the highest level of customization and freedom <br>for creaing portfolios. This option is recommended if you have specific preferences for trading, <br>such specific company stocks, restricting your portfolio to certain industries, or basing portfolios off of <br>desired return and risk calculation.Given your individual preferences, Vise will think <br>of a portfolio based on your specs and information derived from algorithms which analyze market movers."
   })
@@ -34,7 +35,9 @@ $("button").click(function(e) {
 
 
 
-
+function pe() {
+    console.log("asdf")
+}
 
  
     function showfield(){

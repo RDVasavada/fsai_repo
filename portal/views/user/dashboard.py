@@ -22,7 +22,7 @@ from portal.views.user.top_portfolios import top_portfolios
 from portal.views.user.top_portfolios import get_top_portfolios
 from yahoo_finance import Share
 from portal.models.data.portfolio import Portfolio
-import numpy as np
+
 
 @login_required
 def dashboard(request):
