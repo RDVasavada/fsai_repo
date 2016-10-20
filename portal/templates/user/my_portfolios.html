@@ -52,7 +52,8 @@
             <tbody>
 {% for portfolio in portfolios %}                     
                 <tr>
-                    <td>{{portfolio.name}}</td>
+                    <td><a href="/user/individual_portfolio/{{portfolio.id}}" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" >{{ portfolio.name }}
+                        </a></td>
                     <td>${{portfolio.value}}</td>
             {% if portfolio.risk > 50 %}
                     <td style="color:rgba(0,255,0,0.8)">{{portfolio.risk}}%</td>
@@ -89,19 +90,22 @@
                 <tr>
                     <td>1</td>
                     <td>VAL</td>
-                    <td>Test Portfolio</td>
+                    <td><a href="/user/individual_portfolio/10" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" >Test Portfolio
+                        </a></td>
                     <td>2.45%</td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>NYSE: BA</td>
-                    <td>Test Portfolio</td>
+                    <td><a href="/user/individual_portfolio/10" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" >Test Portfolio
+                        </a></td>
                     <td>2.33%</td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>TSLA</td>
-                    <td>Test Portfolio</td>
+                    <td><a href="/user/individual_portfolio/10" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" >Test Portfolio
+                        </a></td>
                     <td>2.25%</td>
                 </tr>
             </tbody>
@@ -181,7 +185,7 @@
         </thead>
         <tbody style="font-weight:100;font-family:'helvetica neue';letter-spacing:2px"> 
             {% for stock in portfolio.stocks %}<tr>
-                        <td class="text-center small">{{stock.ticker}}</td>
+                        <td class="text-center small"><a href="#" onClick=goStock(this) id="stockLink">{{stock.ticker}}</a></td>
                         <td class="text-center">2</td>
                         <td class="text-center">2016-01-01</td>
                         <td class="text-center">2015-01-01</td>

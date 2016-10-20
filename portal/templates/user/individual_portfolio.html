@@ -226,13 +226,21 @@ $("li#a" + url).attr('class','active')
                 <div class="blsock" style="width:100%;margin-top:500px">
                     <div class="input-group" style="width:100%;text-align:center">
                         <div class="btn-group btn-group-lg" style="text-align:center">
-                            <button type="button" class="btn btn-default btn-clean">Table View</button>
-                            <button type="button" class="btn btn-default btn-clean">Card View</button>
-                            <button type="button" class="btn btn-default btn-clean">Back Test</button>    
+
                         </div>              
                     </div>  
                 </div>  
-
+                <script>
+                function backtest(id) {
+                    $.ajax({
+                        url:'/user/backtest/' + id,
+                        dataType: 'json',
+                        type: 'GET'
+                    }).done(function(x) {
+                        console.log(x)
+                    })
+                }
+                </script>
                     <table class="table table-hover margin bottom">
                     <thead>
                     <tr>

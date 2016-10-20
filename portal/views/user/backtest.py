@@ -9,78 +9,109 @@ from django.contrib.auth.decorators import login_required
 from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
 from portal.views.user import top_portfolios
+from stock import get_stocks_by_portfolio
+from datetime import datetime
+# from prophet import Prophet
+# from prophet.data import YahooCloseData
+# from prophet.analyze import default_analyzers
+# from prophet.orders import Orders
+
+class OrderGenerator(object):
+    def run(self, prices, timestamp, cash, **kwargs):
+        symbol = "AAPL"
+        orders = Orders()
+        if (prices.loc[timestamp, symbol] * 100) < cash:
+            orders.add_order(symbol, 100)
+        return orders
 
 @csrf_exempt
 @login_required
-def backtest(request):
-    portfolio_name = request.GET["portName"]
-    url = "https://www.portfoliovisualizer.com/backtest-portfolio"      
-    soup = BeautifulSoup(urlopen(url))
-    link = soup.link
-    nextL = link.find_next("link")
-    nextL['href'] = "/static/css2/backtest.css"
-    script = soup.script
-    script = script.find_next("script")
-    script = script.find_next("script")
-    script = script.find_next("script")
-    script = script.find_next("script")
-    script = script.find_next("script")
-    script = script.find_next("script")
-    nScripts = script.find_next("script")
-    nScripts['src'] = "/static/assets/js/backtest.js"
-    form = soup.form
-    form['action'] = "https://www.portfoliovisualizer.com/backtest-portfolio#analysisResults"
-    form['target'] = "_blank"
-    print(nScripts)
-    print(nextL)
+def backtest(request, port_id):
     if request.user.is_authenticated():
-        username = request.user.username
-        portalUser = PortalUser.objects.get(username=username)
-        portfolio_results = Portfolio.objects.filter(name__icontains=portfolio_name).filter(user__id=27)
-        for port in portfolio_results:
-            thisport = port.stock_set.all()
-            portStocks = []
-            i=1
-            for stock in thisport:
-                symbol = "symbol" + str(i)
-                i+=1
-                try:
-                    sim = soup.find('input',id=symbol)
-                    sim['value'] = stock.ticker
-                    portStocks.append(stock.ticker)
-                except TypeError:
-                    portStocks.append(stock.ticker)
-            percentStock = (100.00 / len(portStocks))
-            i=1
-            for stock in thisport:
-                allocation = "allocation" + str(i) + "_1"
-                print(allocation)
-                i+=1
-                try: 
-                    alloc = soup.find('input',id=allocation)
-                    alloc['value'] = percentStock
-                except TypeError:
-                    print("over 15 stocks...")
-            # testing purposes
-            # extras.append({'symbol':'symbol16','number':'16','ticker':'AAPL','percentStock':'5%'})
-            # extras.append({'symbol':'symbol17','number':'17','ticker':'AAPL','percentStock':'5%'})
-            # extras.append({'symbol':'symbol18','number':'18','ticker':'AAPL','percentStock':'5%'})
-            # extras.append({'symbol':'symbol19','number':'19','ticker':'AAPL','percentStock':'5%'})
-            # extras.append({'symbol':'symbol20','number':'20','ticker':'AAPL','percentStock':'5%'})
-            # extras.append({'symbol':'symbol21','number':'21','ticker':'AAPL','percentStock':'5%'})
-            if len(portStocks) > 15:
-                extras = []
-                extra = len(portStocks) - 15
-                extras = []
-                for x in range(0,extra):
-                    sym = "symbol" + str(x)
-                    new_tag = {'symbol':sym, 'number':str(15+int(x)), 'percentStock':str(percentStock), 'ticker':portStocks[15+int(x)]}
-                    extras.append(new_tag)
-                # print(allocation)
-    # print(soup.prettify().encode('ascii', 'ignore'))    # pageReturn = str(soup)
-    # print(pageReturn)
-    try:
-        print(extras)
-        return JsonResponse({'data': soup.prettify().encode('ascii', 'ignore'), 'extras':extras })
-    except UnboundLocalError:
-        return JsonResponse({'data': soup.prettify().encode('ascii', 'ignore') })
+        # username = request.user.username
+        # userid = request.user.id
+        # portalUser = PortalUser.objects.get(username=username)
+        # stocks = get_stocks_by_portfolio(request, port_id)
+        # stockarr = []
+        # for stock in stocks:
+        #     stockarr.append(stock['ticker'])
+        # stockarr.append('AAPL')
+        # prophet = Prophet()
+        # prophet.set_universe(stockarr)
+        # prophet.register_data_generators(YahooCloseData())
+        # prophet.set_order_generator(OrderGenerator())
+        # backtest = prophet.run_backtest(start=datetime(2010, 1, 1))
+        # prophet.register_portfolio_analyzers(default_analyzers)
+        # analysis = prophet.analyze_backtest(backtest)
+    return JsonResponse({'display':analysis})
+    # portfolio_name = request.GET["portName"]
+    # url = "https://www.portfoliovisualizer.com/backtest-portfolio"      
+    # soup = BeautifulSoup(urlopen(url))
+    # link = soup.link
+    # nextL = link.find_next("link")
+    # nextL['href'] = "/static/css2/backtest.css"
+    # script = soup.script
+    # script = script.find_next("script")
+    # script = script.find_next("script")
+    # script = script.find_next("script")
+    # script = script.find_next("script")
+    # script = script.find_next("script")
+    # script = script.find_next("script")
+    # nScripts = script.find_next("script")
+    # nScripts['src'] = "/static/assets/js/backtest.js"
+    # form = soup.form
+    # form['action'] = "https://www.portfoliovisualizer.com/backtest-portfolio#analysisResults"
+    # form['target'] = "_blank"
+    # print(nScripts)
+    # print(nextL)
+    # if request.user.is_authenticated():
+    #     username = request.user.username
+    #     portalUser = PortalUser.objects.get(username=username)
+    #     portfolio_results = Portfolio.objects.filter(name__icontains=portfolio_name).filter(user__id=27)
+    #     for port in portfolio_results:
+    #         thisport = port.stock_set.all()
+    #         portStocks = []
+    #         i=1
+    #         for stock in thisport:
+    #             symbol = "symbol" + str(i)
+    #             i+=1
+    #             try:
+    #                 sim = soup.find('input',id=symbol)
+    #                 sim['value'] = stock.ticker
+    #                 portStocks.append(stock.ticker)
+    #             except TypeError:
+    #                 portStocks.append(stock.ticker)
+    #         percentStock = (100.00 / len(portStocks))
+    #         i=1
+    #         for stock in thisport:
+    #             allocation = "allocation" + str(i) + "_1"
+    #             print(allocation)
+    #             i+=1
+    #             try: 
+    #                 alloc = soup.find('input',id=allocation)
+    #                 alloc['value'] = percentStock
+    #             except TypeError:
+    #                 print("over 15 stocks...")
+    #         # testing purposes
+    #         # extras.append({'symbol':'symbol16','number':'16','ticker':'AAPL','percentStock':'5%'})
+    #         # extras.append({'symbol':'symbol17','number':'17','ticker':'AAPL','percentStock':'5%'})
+    #         # extras.append({'symbol':'symbol18','number':'18','ticker':'AAPL','percentStock':'5%'})
+    #         # extras.append({'symbol':'symbol19','number':'19','ticker':'AAPL','percentStock':'5%'})
+    #         # extras.append({'symbol':'symbol20','number':'20','ticker':'AAPL','percentStock':'5%'})
+    #         # extras.append({'symbol':'symbol21','number':'21','ticker':'AAPL','percentStock':'5%'})
+    #         if len(portStocks) > 15:
+    #             extras = []
+    #             extra = len(portStocks) - 15
+    #             extras = []
+    #             for x in range(0,extra):
+    #                 sym = "symbol" + str(x)
+    #                 new_tag = {'symbol':sym, 'number':str(15+int(x)), 'percentStock':str(percentStock), 'ticker':portStocks[15+int(x)]}
+    #                 extras.append(new_tag)
+    #             # print(allocation)
+    # # print(soup.prettify().encode('ascii', 'ignore'))    # pageReturn = str(soup)
+    # # print(pageReturn)
+    # try:
+    #     print(extras)
+    #     return JsonResponse({'data': soup.prettify().encode('ascii', 'ignore'), 'extras':extras })
+    # except UnboundLocalError:
+    #     return JsonResponse({'data': soup.prettify().encode('ascii', 'ignore') })

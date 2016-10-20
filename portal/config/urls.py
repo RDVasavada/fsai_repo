@@ -37,7 +37,7 @@ urlpatterns = patterns('',
     (r'^user/news_portal/?$', views.news_portal),
     (r'^user/top_portfolios/?$', views.top_portfolios),
     (r'^user/search_portfolio/?$', views.search_portfolio),
-    (r'^user/backtest/?$', views.backtest),
+    (r'^user/backtest/(?P<port_id>[0-9]+)/?$', views.backtest), 
     (r'^user/support/?$', views.support),
 
     (r'^user/inbox/?$', views.inbox),    
