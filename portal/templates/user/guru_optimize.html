@@ -1,0 +1,1114 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="nav">
+    <a href="/user/news_portal" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
+    <a href="/user/my_portfolios" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
+    </a>
+  </div>
+<div class="sceneElement" data-viewport="0">
+<div class="col-lg-12 col-md-12 col-sm-12" id="picker" style="padding-top:2vh;">
+  <div class="row" style="text-align:center">
+    <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;font-size:24px"> Bill Gate's Stock Portfolio </h2>
+
+<div class="block" style="top:0px;width:90vw;margin-left:5vw;margin-right:5vw;margin-bottom:0px">
+                    <div class="content tab-content bg-dot50" style="height:100%;padding:0px">
+                        <div class="pull-left" style="background:rgba(0,0,0,0.2);margin:0px;width:40vw;height:330px">
+                      <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:32px;margin:50px">P/E Ratio Cap : 1.0</h2>
+                      <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:32px;margin:50px">P/B Ratio Cap : 3.0</h2>
+                      <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:32px;margin:50px">Market Cap : $100,000</h2>
+                        </div>
+                        <div class="tab-pane active" id="tab13">
+            <div class="content" style="height:330px;background:rgba(0,0,0,0.6);width:50vw">
+              <div class="ibox-content" id="myBar" style="height:150px;position:relative;top:-2vh;left:1vw">
+                  <div class="row" style="overflow:hidden">
+
+                  </div>
+              </div> 
+<script>
+var d3;
+var margin = {top: 25, right: 25, bottom: 50, left: 15},
+    width = 600 - margin.left - margin.right,
+    height = 265 - margin.top - margin.bottom;
+var parseDate = d3.time.format("%Y-%m-%d").parse;
+var x = d3.time.scale().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(5);
+var    yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5);
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.high); });
+var svg = d3.select(".ibox-content")
+   .append("div")
+   .classed("svg-container", true) //container class to make it responsive
+   .append("svg")
+   .attr("preserveAspectRatio", "none")
+   .attr("viewBox", "0 0 675 250")
+   .classed("svg-content-responsive", true)
+    .style("max-height", "265") 
+    .style("min-height", "265") 
+    .append("g")
+    .attr("transform", "translate(" 
+        + margin.top 
+        + "," + margin.top + ")");
+
+var inputURL = "/user/guru_scrape/1"
+
+    // Get the data 
+    console.log("gettin the data")
+    d3.json(inputURL, function(error, data){
+
+    data.data.forEach(function(d) {
+        d.date = parseDate(d.Date);
+        d.high = d.High;
+    });
+
+    // Scale the range of the data
+    x.domain(d3.extent(data.data, function(d) {
+        return d.date; }));
+    y.domain([
+        d3.min(data.data, function(d) { return d.High; }), 
+        d3.max(data.data, function(d) { return d.High; })
+    ]);
+
+    svg.append("path")        // Add the valueline path.
+        .attr("class", "line")
+        .style("margin-left","25px")
+        .attr("d", valueline(data.data));
+
+    svg.append("g")            // Add the X Axis
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .style("fill", "#fff")
+        .call(xAxis);
+
+    svg.append("g")            // Add the Y Axis
+        .attr("class", "y axis")
+        .attr("transform", "translate(-10 ,0)")
+        .style("fill", "#fff")
+        .call(yAxis);
+
+    svg.append("text")          // Add the label
+        .attr("class", "label")
+        .attr("transform", "translate(" + (width+3) + "," 
+            + y(data.data[0].high) + ")")
+        .attr("dy", ".35em")
+        .attr("text-anchor", "start")
+        .style("fill", "steelblue")
+        .text("high");
+});
+</script>                  
+             
+             </div>   
+        </div>    
+                       <!--       <div style="height:100%;text-align:center;top:35%;position:absolute;top:125px;left:45vw">
+                                <img src="/static/img/loader.gif"><br><br>
+                                <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px">We are loading your portfolio data, applying your filters,<br> and re-allocating your portfolio. This may take up to one minute...</h2>
+
+                              </div>
+                                       -->      
+
+<div class="col-md-12" style="padding:0px;width:90vw">
+                <div class="block">
+                    <ul class="nav nav-tabs nav-justified" style="position:relative;top:0vh">
+                        <li class="active"><a href="#tab8" data-toggle="tab">2006</a></li>
+                        <li><a href="#tab9" data-toggle="tab">2007</a></li>
+                        <li><a href="#tab10" data-toggle="tab" style="color:rgba(0,0,0,0.4)">2008</a></li>
+                        <li><a href="#tab11" data-toggle="tab"  style="color:rgba(0,255,0,0.4)">2009</a></li>
+                        <li><a href="#tab12" data-toggle="tab">2010</a></li>
+                        <li><a href="#tab13" data-toggle="tab" style="color:rgba(0,255,0,0.4)">2011</a></li>
+                        <li><a href="#tab14" data-toggle="tab" style="color:rgba(0,255,0,0.4)">2012</a></li>
+                        <li><a href="#tab15" data-toggle="tab">2013</a></li>
+                        <li><a href="#tab16" data-toggle="tab"  style="color:rgba(255,0,0,0.4)">2014</a></li>
+                        <li><a href="#tab17" data-toggle="tab" style="color:rgba(0,0,0,0.4)">2015</a></li>
+                    </ul>
+                    <div class="content tab-content" style="position:relative;bottom:1px">
+                        <div class="tab-pane active" id="tab8">
+                            <p><div role="tabpanel" class="tab-pane active" id="growthChart">
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Portfolio Allocations After Screening</h2>
+<div class="row" style="margin: 0"> 
+    <table border="1" class="dataframe" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;width: 100%;text-align: center;">
+  <thead style="text-align:center;font-weight:100">
+    <tr style="text-align:center">
+      <th  style="text-align:center"></th  style="text-align:center">
+      <th  style="text-align:center">PortfolioID</th  style="text-align:center">
+      <th  style="text-align:center">Snapshot date</th  style="text-align:center">
+      <th  style="text-align:center">Symbol</th  style="text-align:center">
+      <th  style="text-align:center">Input Weight</th  style="text-align:center">
+      <th  style="text-align:center">Optimized Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>WM</td>
+      <td>11.86</td>
+      <td>8.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>CNI</td>
+      <td>8.33</td>
+      <td>9.47</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>CAT</td>
+      <td>11.92</td>
+      <td>16.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>WMT</td>
+      <td>10.19</td>
+      <td>14.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>CCI</td>
+      <td>6.14</td>
+      <td>4.00</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>ECL</td>
+      <td>6.42</td>
+      <td>9.00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>UPS</td>
+      <td>8.00</td>
+      <td>11.00</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>TV</td>
+      <td>9.30</td>
+      <td>6.00</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>WBA</td>
+      <td>6.00</td>
+      <td>8.00</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>LBTYK</td>
+      <td>4.76</td>
+      <td>3.00</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>LBTYA</td>
+      <td>17.08</td>
+      <td>11.53</td>
+    </tr>
+
+  
+  </tbody>
+</table>
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Screening Results</h2>
+    <table border="1" class="dataframe" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:1px;width: 100%;text-align: center;">
+  <thead style="text-align:center;font-weight:100">
+    <tr style="text-align: right;">
+
+      <th></th>
+      <th>Date</th>
+      <th>PortfolioID</th>
+      <th>Snapshot Date</th>
+      <th>Symbol</th>
+      <th>Position</th>
+      <th>Market Cap</th>
+      <th>P\E Ratio</th>
+      <th>P\B Ratio</th>
+      <th>Screen Out</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>BRK.B</td>
+      <td>4.711442e+09</td>
+      <td>1.56667e+11</td>
+      <td>12.4688</td>
+      <td>1.5323</td>
+      <td  style="background:rgba(255,0,0,1)">1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>WM</td>
+      <td>6.844148e+08</td>
+      <td>1.95868e+10</td>
+      <td>16.8634</td>
+      <td>3.1797</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>CNI</td>
+      <td>3.683134e+08</td>
+      <td>2.52643e+10</td>
+      <td>14.4092</td>
+      <td>3.1192</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>CAT</td>
+      <td>6.904031e+08</td>
+      <td>4.03527e+10</td>
+      <td>12.2549</td>
+      <td>4.4703</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>WMT</td>
+      <td>5.357105e+08</td>
+      <td>1.92146e+11</td>
+      <td>16.4474</td>
+      <td>3.2701</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>ECL</td>
+      <td>1.971005e+08</td>
+      <td>1.11386e+10</td>
+      <td>32.4675</td>
+      <td>6.3171</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>KOF</td>
+      <td>2.360972e+08</td>
+      <td>6.71416e+09</td>
+      <td>15.748</td>
+      <td>1.9562</td>
+      <td  style="background:rgba(255,0,0,1)">1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>UPS</td>
+      <td>3.390376e+08</td>
+      <td>8.36505e+10</td>
+      <td>20.6612</td>
+      <td>4.8709</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>FDX</td>
+      <td>3.282426e+08</td>
+      <td>3.51218e+10</td>
+      <td>18.315</td>
+      <td>2.9214</td>
+      <td  style="background:rgba(255,0,0,1)">1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>TV</td>
+      <td>4.559046e+08</td>
+      <td>1.52712e+10</td>
+      <td>17.7305</td>
+      <td>5.2798</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>AN</td>
+      <td>4.053761e+07</td>
+      <td>4.2819e+09</td>
+      <td>14.881</td>
+      <td>1.1697</td>
+      <td  style="background:rgba(255,0,0,1)">1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2007-12-31</td>
+      <td>WM</td>
+      <td>9.444963e+08</td>
+      <td>1.74464e+10</td>
+      <td>16.6113</td>
+      <td>2.9412</td>
+      <td  style="background:rgba(255,0,0,1)">1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2007-12-31</td>
+      <td>CNI</td>
+      <td>8.158812e+08</td>
+      <td>2.5126e+10</td>
+      <td>13.7552</td>
+      <td>2.6028</td>
+      <td style="background:rgba(255,0,0,1)">1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2007-12-31</td>
+      <td>CAT</td>
+      <td>1.265806e+09</td>
+      <td>4.57255e+10</td>
+      <td>13.8504</td>
+      <td>5.3107</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2007-12-31</td>
+      <td>WMT</td>
+      <td>9.418185e+08</td>
+      <td>1.9183e+11</td>
+      <td>15.4799</td>
+      <td>3.0414</td>
+      <td>0</td>
+    </tr>
+  
+  </tbody>
+</table>
+  </div>
+
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Portfolio Returns</h2>
+<table class="table table-striped table-condensed"><caption class="sr-only">Portfolio performance statistics</caption><thead><tr><th>Portfolio</th><th class="numberCell">Initial Balance</th><th class="numberCell">Final Balance</th><th class="numberCell">CAGR</th><th class="numberCell">Expected Return</th><th class="numberCell">Std.Dev.</th><th class="numberCell">Max. Drawdown</th><th class="numberCell">Sharpe Ratio</th><th class="numberCell">Sortino Ratio</th><th class="numberCell">US Mkt Correlation</th></tr></thead><tbody><tr><td>Provided Portfolio</td><td class="numberCell">$10,000</td><td class="numberCell">$11,744 </td><td class="numberCell">7.42%</td><td class="numberCell">17.44%</td><td class="numberCell">17.44%</td><td class="numberCell">-3.38% </td><td class="numberCell">1.51</td><td class="numberCell">3.06</td><td class="numberCell">0.52</td></tr><tr><td>Optimized Portfolio</td><td class="numberCell">$10,000</td><td class="numberCell">$11,577</td><td class="numberCell">15.77% </td><td class="numberCell">16.00% </td><td class="numberCell">6.28%</td><td class="numberCell">-3.62% </td><td class="numberCell">1.55</td><td class="numberCell">2.51</td><td class="numberCell">0.50</td></tr></tbody></table>
+
+<div id="resultNotes" class="well well-small separateTop">
+Notes on results:
+
+<p>Past performance is not a guarantee of future returns and data and other errors may exist. See <a href="terms-of-service">Disclaimer and Terms of Use</a></p>
+<p>The year range is automatically adjusted based on the selected year range and available return data for the specified assets</p>
+<p>Mean variance optimization is based on the monthly return statistics of the selected assets, and the portfopo return statistics above use the same methodology.</p>
+<p>See <a href="faq#methodology">methodology</a> section of the FAQ for more information on mean variance optimization and its pmitations.</p>
+<p>Expected annual return is based on annualized monthly returns</p>
+<p>CAGR = Compound Annual Growth Rate</p>
+<p>StdDev = Standard Deviation based on annualized standard deviation of monthly arithmetic returns (population standard deviation)</p>
+<p>Sharpe and Sortino ratios are calculated and annualized from monthly excess returns over risk free rate (1-month t-bills)</p>
+<p>Drawdowns are calculated based on monthly returns.</p>
+<p>Volatipty weighted portfopo is based on a simple risk-parity technique that uses inverse volatility weighting for portfopo assets</p>
+<p>The backtested results include monthly rebalancing of portfopo assets to match the specified allocation.</p>
+<p>The results use total return and assume that all dividends and distributions are reinvested. Taxes and transaction fees are not included.</p>
+
+</div>
+
+
+</div></p>
+                        </div>
+                        <div class="tab-pane" id="tab9">
+ <p><div role="tabpanel" class="tab-pane active" id="growthChart">
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Portfolio Allocations After Screening</h2>
+<div class="row" style="margin: 0"> 
+    <table border="1" class="dataframe" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;width: 100%;text-align: center;">
+  <thead style="text-align:center;font-weight:100">
+    <tr style="text-align:center">
+      <th  style="text-align:center"></th  style="text-align:center">
+      <th  style="text-align:center">PortfolioID</th  style="text-align:center">
+      <th  style="text-align:center">Snapshot date</th  style="text-align:center">
+      <th  style="text-align:center">Symbol</th  style="text-align:center">
+      <th  style="text-align:center">Input Weight</th  style="text-align:center">
+      <th  style="text-align:center">Optimized Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>CAT</td>
+      <td>14.40</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>WMT</td>
+      <td>11.09</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>CCI</td>
+      <td>8.75</td>
+      <td>12.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>ECL</td>
+      <td>8.15</td>
+      <td>11.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>UPS</td>
+      <td>8.40</td>
+      <td>11.00</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>TV</td>
+      <td>9</td>
+      <td>6.02</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>WBA</td>
+      <td>6.05</td>
+      <td>8.00</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>LBTYK</td>
+      <td>7.18</td>
+      <td>8.09</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>LBTYA</td>
+      <td>26.98</td>
+      <td>18.00</td>
+    </tr>
+  
+  </tbody>
+</table>
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Screening Results</h2>
+    <table border="1" class="dataframe" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:1px;width: 100%;text-align: center;">
+  <thead style="text-align:center;font-weight:100">
+    <tr style="text-align: right;">
+
+      <th></th>
+      <th  style="text-align:center">Date</th>
+      <th  style="text-align:center">PortfolioID</th>
+      <th  style="text-align:center">Snapshot Date</th>
+      <th  style="text-align:center">Symbol</th>
+      <th  style="text-align:center">Position</th>
+      <th  style="text-align:center">Market Cap</th>
+      <th  style="text-align:center">P\E Ratio</th>
+      <th  style="text-align:center">P\B Ratio</th>
+      <th  style="text-align:center">Screen Out</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <th>0</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2007-12-31</td>
+      <td>WM</td>
+      <td>9,441,818,500,000,000</td>
+      <td>17,446,400,400,000,000</td>
+      <td>16.6113</td>
+      <td>2.9412</td>
+      <td  style="background:rgba(255,0,0,1)">1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>CNI</td>
+      <td>815,881,200,000</td>
+      <td>2,512,600,400,000,000</td>
+      <td>13.7552</td>
+      <td>2.6028</td>
+      <td style="background:rgba(255,0,0,1)">1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>CAT</td>
+      <td>368,313,400,000,000</td>
+      <td>2,512,600,400,000,000</td>
+      <td>13.8504</td>
+      <td>5.3107</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2006-12-29</td>
+      <td>WMT</td>
+      <td>941,818,500,000</td>
+      <td>191,830,000,000,000</td>
+      <td>15.4799</td>
+      <td>3.0414</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>ECL</td>
+      <td>65,338,290,000,000,000</td>
+      <td>1,178,430,000,000,000</td>
+      <td>30.2115</td>
+      <td>6.9252</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>UPS</td>
+      <td>677,712,800,000,000</td>
+      <td>7,742,600,000,000,000</td>
+      <td>18.9753</td>
+      <td>4.9727</td>
+      <td>0</td>
+    </tr>
+    
+  </tbody>
+</table>
+  </div>
+
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Portfolio Returns</h2>
+<table class="table table-striped table-condensed"><caption class="sr-only">Portfolio performance statistics</caption><thead><tr><th>Portfolio</th><th class="numberCell">Initial Balance</th><th class="numberCell">Final Balance</th><th class="numberCell">CAGR</th><th class="numberCell">Expected Return</th><th class="numberCell">Std.Dev.</th><th class="numberCell">Best Year</th><th class="numberCell">Worst Year</th><th class="numberCell">Max. Drawdown</th><th class="numberCell">Sharpe Ratio</th><th class="numberCell">Sortino Ratio</th><th class="numberCell">US Mkt Correlation</th></tr></thead><tbody><tr><td>Provided Portfolio</td><td class="numberCell">$10,000</td><td class="numberCell">$11,744 </td><td class="numberCell">17.44% </td><td class="numberCell">17.76% </td><td class="numberCell">7.42%</td><td class="numberCell">17.44%</td><td class="numberCell">17.44%</td><td class="numberCell">-3.38%</td><td class="numberCell">1.51</td><td class="numberCell">3.06</td><td class="numberCell">0.52</td></tr><tr><td>Optimized Portfolio</td><td class="numberCell">$10,000</td><td class="numberCell">$11,577 </td><td class="numberCell">15.77%</td><td class="numberCell">16.00% </td><td class="numberCell">6.28%</td><td class="numberCell">15.77%</td><td class="numberCell">15.77%</td><td class="numberCell">-3.62%</td><td class="numberCell">1.55</td><td class="numberCell">2.51</td><td class="numberCell">0.50</td></tr></tbody></table>
+
+<div id="resultNotes" class="well well-small separateTop">
+Notes on results:
+
+<p>Past performance is not a guarantee of future returns and data and other errors may exist. See <a href="terms-of-service">Disclaimer and Terms of Use</a></p>
+<p>The year range is automatically adjusted based on the selected year range and available return data for the specified assets</p>
+<p>Mean variance optimization is based on the monthly return statistics of the selected assets, and the portfopo return statistics above use the same methodology.</p>
+<p>See <a href="faq#methodology">methodology</a> section of the FAQ for more information on mean variance optimization and its pmitations.</p>
+<p>Expected annual return is based on annualized monthly returns</p>
+<p>CAGR = Compound Annual Growth Rate</p>
+<p>StdDev = Standard Deviation based on annualized standard deviation of monthly arithmetic returns (population standard deviation)</p>
+<p>Sharpe and Sortino ratios are calculated and annualized from monthly excess returns over risk free rate (1-month t-bills)</p>
+<p>Drawdowns are calculated based on monthly returns.</p>
+<p>Volatipty weighted portfopo is based on a simple risk-parity technique that uses inverse volatility weighting for portfopo assets</p>
+<p>The backtested results include monthly rebalancing of portfopo assets to match the specified allocation.</p>
+<p>The results use total return and assume that all dividends and distributions are reinvested. Taxes and transaction fees are not included.</p>
+
+</div>
+
+
+</div></p>
+                        
+                        </div>
+                          <div class="tab-pane" id="tab10" style="height:20vh">
+                                      <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px;margin-top:100px">Error from Back-Testing in 2008 : <br>Data Unavailable for this Year Range</h2>
+                        </div>                         
+                       <div class="tab-pane" id="tab11" style="height:20vh">
+                                      <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px;margin-top:100px">Every stock passed the filter! No change necessary for growth. </h2>
+                        </div>       
+                        <div class="tab-pane" id="tab12">
+<p><div role="tabpanel" class="tab-pane active" id="growthChart">
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Portfolio Allocations After Screening</h2>
+<div class="row" style="margin: 0"> 
+    <table border="1" class="dataframe" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;width: 100%;text-align: center;">
+  <thead style="text-align:center;font-weight:100">
+    <tr style="text-align:center">
+      <th  style="text-align:center"></th  style="text-align:center">
+      <th  style="text-align:center">PortfolioID</th  style="text-align:center">
+      <th  style="text-align:center">Snapshot date</th  style="text-align:center">
+      <th  style="text-align:center">Symbol</th  style="text-align:center">
+      <th  style="text-align:center">Input Weight</th  style="text-align:center">
+      <th  style="text-align:center">Optimized Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>    
+      <th>0</th>
+      <td>84</td>
+      <td>2010-12-31</td>
+      <td>CCI</td>
+      <td>13.94</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>84</td>
+      <td>2007-12-31</td>
+      <td>ECL</td>
+      <td>11.32</td>
+      <td>14.24</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>84</td>
+      <td>2007-12-31</td>
+      <td>UPS</td>
+      <td>9.75</td>
+      <td>16.00</td>    
+    <tr>
+      <th>2</th>
+      <td>84</td>
+      <td>2007-12-31</td>
+      <td>WBA</td>
+      <td>9.75</td>
+      <td>7.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>LBTYK</td>
+      <td>11.10</td>
+      <td>7.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>LBTYA</td>
+      <td>42.10</td>
+      <td>36.76</td>
+    </tr>
+  
+  </tbody>
+</table>
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Screening Results</h2>
+    <table border="1" class="dataframe" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:1px;width: 100%;text-align: center;">
+  <thead style="text-align:center;font-weight:100">
+    <tr style="text-align: right;">
+
+      <th></th>
+      <th  style="text-align:center">Date</th>
+      <th  style="text-align:center">PortfolioID</th>
+      <th  style="text-align:center">Snapshot Date</th>
+      <th  style="text-align:center">Symbol</th>
+      <th  style="text-align:center">Position</th>
+      <th  style="text-align:center">Market Cap</th>
+      <th  style="text-align:center">P\E Ratio</th>
+      <th  style="text-align:center">P\B Ratio</th>
+      <th  style="text-align:center">Screen Out</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2010-12-31</td>
+      <td>WMT</td>
+      <td>1,374,012,000,000,000</td>
+      <td>19,266,800,000,000,000</td>
+      <td>13.369</td>
+      <td>2.9403</td>
+      <td  style="background:rgba(255,0,0,1)">1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2010-12-29</td>
+      <td>ECL</td>
+      <td>9,937,298,000,000,000</td>
+      <td>1,109,840,000,000,000</td>
+      <td>22.1729</td>
+      <td>5.6497</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2010-12-29</td>
+      <td>UPS</td>
+      <td>1,034,565,000,000</td>
+      <td>693,540,000,000,000</td>
+      <td>22.3714</td>
+      <td>8.1967</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Portfolio Returns</h2>
+ <table class="table table-striped table-condensed"><caption class="sr-only">Portfolio performance statistics</caption><thead><tr><th>Portfolio</th><th class="numberCell">Initial Balance</th><th class="numberCell">Final Balance</th><th class="numberCell">CAGR</th><th class="numberCell">Expected Return</th><th class="numberCell">Std.Dev.</th><th class="numberCell">Best Year</th><th class="numberCell">Worst Year</th><th class="numberCell">Max. Drawdown</th><th class="numberCell">Sharpe Ratio</th><th class="numberCell">Sortino Ratio</th><th class="numberCell">US Mkt Correlation</th></tr></thead><tbody><tr><td>Provided Portfolio</td><td class="numberCell">$10,000</td><td class="numberCell">$13,328 </td><td class="numberCell">33.28% </td><td class="numberCell">35.44%</td><td class="numberCell">18.40%</td><td class="numberCell">33.28%</td><td class="numberCell">33.28%</td><td class="numberCell">-9.45%</td><td class="numberCell">1.59</td><td class="numberCell">3.96</td><td class="numberCell">0.85</td></tr><tr><td>Optimized Portfolio</td><td class="numberCell">$10,000</td><td class="numberCell">$13,691 </td><td class="numberCell">36.91%</td><td class="numberCell">39.20% <td class="numberCell">18.69%</td><td class="numberCell">36.91%</td><td class="numberCell">36.91%</td><td class="numberCell">-8.47% </td><td class="numberCell">1.71</td><td class="numberCell">4.50</td><td class="numberCell">0.79</td></tr></tbody></table>
+<div id="resultNotes" class="well well-small separateTop">
+Notes on results:
+
+<p>Past performance is not a guarantee of future returns and data and other errors may exist. See <a href="terms-of-service">Disclaimer and Terms of Use</a></p>
+<p>The year range is automatically adjusted based on the selected year range and available return data for the specified assets</p>
+<p>Mean variance optimization is based on the monthly return statistics of the selected assets, and the portfopo return statistics above use the same methodology.</p>
+<p>See <a href="faq#methodology">methodology</a> section of the FAQ for more information on mean variance optimization and its pmitations.</p>
+<p>Expected annual return is based on annualized monthly returns</p>
+<p>CAGR = Compound Annual Growth Rate</p>
+<p>StdDev = Standard Deviation based on annualized standard deviation of monthly arithmetic returns (population standard deviation)</p>
+<p>Sharpe and Sortino ratios are calculated and annualized from monthly excess returns over risk free rate (1-month t-bills)</p>
+<p>Drawdowns are calculated based on monthly returns.</p>
+<p>Volatipty weighted portfopo is based on a simple risk-parity technique that uses inverse volatility weighting for portfopo assets</p>
+<p>The backtested results include monthly rebalancing of portfopo assets to match the specified allocation.</p>
+<p>The results use total return and assume that all dividends and distributions are reinvested. Taxes and transaction fees are not included.</p>
+
+</div>
+
+
+</div></p>
+                        </div>
+
+                     <div class="tab-pane" id="tab13">
+                              <div class="tab-pane" id="tab13" style="height:20vh">
+                                      <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px;margin-top:100px">Error from Back-Testing in 2014:<br> The specified annual return 84.20% is outside possible range of expected annual returns, which is 13.30% to 15.40%. </h2>
+                        </div>    
+                        </div>
+                        <div class="tab-pane" id="tab14">
+  <div class="tab-pane" id="tab14" style="height:20vh">
+                           <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px;margin-top:100px">Every stock passed the filter! No change necessary for growth. </h2>
+                        </div>    
+                        </div><div class="tab-pane" id="tab15">
+<p><div role="tabpanel" class="tab-pane active" id="growthChart">
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Portfolio Allocations After Screening</h2>
+<div class="row" style="margin: 0"> 
+    <table border="1" class="dataframe" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;width: 100%;text-align: center;">
+  <thead style="text-align:center;font-weight:100">
+    <tr style="text-align:center">
+      <th  style="text-align:center"></th  style="text-align:center">
+      <th  style="text-align:center">PortfolioID</th  style="text-align:center">
+      <th  style="text-align:center">Snapshot date</th  style="text-align:center">
+      <th  style="text-align:center">Symbol</th  style="text-align:center">
+      <th  style="text-align:center">Input Weight</th  style="text-align:center">
+      <th  style="text-align:center">Optimized Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>    
+      <th>0</th>
+      <td>84</td>
+      <td>2013-12-31</td>
+      <td>CCI</td>
+      <td>12.64</td>
+      <td>16.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>84</td>
+      <td>2013-12-31</td>
+      <td>ECL</td>
+      <td>12.66</td>
+      <td>14.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>84</td>
+      <td>2013-12-31</td>
+      <td>WBA</td>
+      <td>8.40</td>
+      <td>8.40</td>    
+    <tr>
+      <th>3</th>
+      <td>84</td>
+      <td>2013-12-29</td>
+      <td>ARCO</td>
+      <td>5.06</td>
+      <td>5.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>84</td>
+      <td>2007-12-29</td>
+      <td>LBTYA</td>
+      <td>51.61</td>
+      <td>56.25</td>
+    </tr>
+  
+  </tbody>
+</table>
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Screening Results</h2>
+    <table border="1" class="dataframe" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:1px;width: 100%;text-align: center;">
+  <thead style="text-align:center;font-weight:100">
+    <tr style="text-align: right;">
+
+      <th></th>
+      <th  style="text-align:center">Date</th>
+      <th  style="text-align:center">PortfolioID</th>
+      <th  style="text-align:center">Snapshot Date</th>
+      <th  style="text-align:center">Symbol</th>
+      <th  style="text-align:center">Position</th>
+      <th  style="text-align:center">Market Cap</th>
+      <th  style="text-align:center">P\E Ratio</th>
+      <th  style="text-align:center">P\B Ratio</th>
+      <th  style="text-align:center">Screen Out</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2013-12-31</td>
+      <td>CCI</td>
+      <td>2,364,387,000,000,000 </td>
+      <td>2,479,810,000,000,000</td>
+      <td>232.55</td>
+      <td>7.3126</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2013-12-29</td>
+      <td>ECL</td>
+      <td>2,368,904,000,000,000</td>
+      <td>3,229,020,000,000,000</td>
+      <td>22.1729</td>
+      <td>5.6497</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2013-12-29</td>
+      <td>UPS</td>
+      <td>9,460,480,000,000,000 </td>
+      <td>693,540,000,000,000</td>
+      <td>67.1151</td>
+      <td>24.974</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2013-12-29</td>
+      <td>LBTYK</td>
+      <td>2,797,968,000,000,000 </td>
+      <td>2,274,220,000,000,000</td>
+      <td>15.1286</td>
+      <td>1.9113</td>
+      <td style="background:rgba(255,0,0,1)">1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2013-12-29</td>
+      <td>LBTYA</td>
+      <td>2,368,904,000,000,000</td>
+      <td> 24,475,900,000,000 </td>
+      <td>31.6456</td>
+      <td>4.0274</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2016-06-30</td>
+      <td>84</td>
+      <td>2013-12-29</td>
+      <td>ARCO</td>
+      <td>37,093,260,000,000</td>
+      <td>256,038,000,000,000  </td>
+      <td>38.7597</td>
+      <td>3.7594</td>
+      <td>0</td>
+    </tr>            
+  </tbody>
+</table>
+  </div>
+
+ <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px">Portfolio Returns</h2>
+ <table class="table table-striped table-condensed"><caption class="sr-only">Portfolio performance statistics</caption><thead><tr><th>Portfolio</th><th class="numberCell">Initial Balance</th><th class="numberCell">Final Balance</th><th class="numberCell">CAGR</th><th class="numberCell">Expected Return</th><th class="numberCell">Std.Dev.</th><th class="numberCell">Best Year</th><th class="numberCell">Worst Year</th><th class="numberCell">Max. Drawdown</th><th class="numberCell">Sharpe Ratio</th><th class="numberCell">Sortino Ratio</th><th class="numberCell">US Mkt Correlation</th></tr></thead><tbody><tr><td>Provided Portfolio</td><td class="numberCell">$10,000</td><td class="numberCell">$13,328 </td><td class="numberCell">33.28% </td><td class="numberCell">35.44%</td><td class="numberCell">18.40%</td><td class="numberCell">33.28%</td><td class="numberCell">33.28%</td><td class="numberCell">-9.45%</td><td class="numberCell">1.59</td><td class="numberCell">3.96</td><td class="numberCell">0.85</td></tr><tr><td>Optimized Portfolio</td><td class="numberCell">$10,000</td><td class="numberCell">$13,691 </td><td class="numberCell">36.91%</td><td class="numberCell">39.20% <td class="numberCell">18.69%</td><td class="numberCell">36.91%</td><td class="numberCell">36.91%</td><td class="numberCell">-8.47% </td><td class="numberCell">1.71</td><td class="numberCell">4.50</td><td class="numberCell">0.79</td></tr></tbody></table>
+<div id="resultNotes" class="well well-small separateTop">
+Notes on results:
+
+<p>Past performance is not a guarantee of future returns and data and other errors may exist. See <a href="terms-of-service">Disclaimer and Terms of Use</a></p>
+<p>The year range is automatically adjusted based on the selected year range and available return data for the specified assets</p>
+<p>Mean variance optimization is based on the monthly return statistics of the selected assets, and the portfopo return statistics above use the same methodology.</p>
+<p>See <a href="faq#methodology">methodology</a> section of the FAQ for more information on mean variance optimization and its pmitations.</p>
+<p>Expected annual return is based on annualized monthly returns</p>
+<p>CAGR = Compound Annual Growth Rate</p>
+<p>StdDev = Standard Deviation based on annualized standard deviation of monthly arithmetic returns (population standard deviation)</p>
+<p>Sharpe and Sortino ratios are calculated and annualized from monthly excess returns over risk free rate (1-month t-bills)</p>
+<p>Drawdowns are calculated based on monthly returns.</p>
+<p>Volatipty weighted portfopo is based on a simple risk-parity technique that uses inverse volatility weighting for portfopo assets</p>
+<p>The backtested results include monthly rebalancing of portfopo assets to match the specified allocation.</p>
+<p>The results use total return and assume that all dividends and distributions are reinvested. Taxes and transaction fees are not included.</p>
+
+</div>
+
+
+</div></p>
+                        </div>
+                        <div class="tab-pane" id="tab16">
+  <div class="tab-pane" id="tab16" style="height:20vh">
+                                      <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px;margin-top:100px">Error from Back-Testing in 2014:<br> The specified annual return 84.20% is outside possible range of expected annual returns, which is 13.30% to 15.40%. </h2>
+                        </div>    
+                        </div>
+                        <div class="tab-pane" id="tab17">
+  <div class="tab-pane" id="tab17" style="height:20vh">
+                                      <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;padding-bottom:25px;padding-top:25px;margin-top:100px">Error from Back-Testing in 2015:<br>No data for LILAK for the selected time period. Available data range is 2016-2016 </h2>
+                        </div>    
+                        </div>                                                                                                       
+                    </div>
+                </div>
+            </div>
+
+                        </div>
+                   
+                    </div>
+
+
+                </div>    
+                </div>
+                
+    </div>      
+</div>
+
+</div>
+ </div>
+
+
+  <script type="text/javascript" src="/static/js/user/portfolio_settings.js"></script> 
+
+
+
+<div class="col-lg-2"></div>
+
+
+
+
+<div class="modal" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" style="margin-top:10%">
+            <div class="modal-content">
+
+                    <div class="statusbar" id="statusbar_2" style="display: block;margin:0px;padding:0px;height:50px;background:black">
+                        <div class="statusbar-text" style="text-align:center;width:100%;padding:0px">
+                          <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;background:black;padding-bottom:25px;padding-top:25px">Portfolio Settings</h2>
+                            <div class="row" style="background:black;margin-top:5px;border-radius:5px">
+                              <div class="col-md-6">
+                                <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;display:block;line-height:100px">P\E Ratio Filter Cap:</h2>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="knob" style="margin:10px">
+                                        <div style="display: block; width: 100px; height: 100px;">
+                                          <canvas width="100" height="100" style="position: absolute !important; top:-100px !important"></canvas>
+                                          <input type="text" data-fgcolor="#FFFFFF" data-min="0" data-max="100" data-width="100" data-height="100" value="99" style="width: 50px; height: 33px; position: absolute; vertical-align: middle; top: 0px; left: 50%; margin-top: 0px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(255, 255, 255); padding: 0px; -webkit-appearance: none;"></div>
+                                  </div>
+                              </div>
+                          </div>
+                            <div class="row" style="background:black;margin-top:5px;border-radius:5px">
+                              <div class="col-md-6">
+                                <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;display:block;line-height:100px">P\B Ratio Filter Cap:</h2>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="knob" style="margin:10px">
+                                        <div style="display: block; width: 100px; height: 100px;">
+                                          <canvas width="100" height="100" style="position: absolute !important; top:-100px !important"></canvas>
+                                          <input type="text" data-fgcolor="#FFFFFF" data-min="0" data-max="100" data-width="100" data-height="100" value="99" style="width: 50px; height: 33px; position: absolute; vertical-align: middle; top: 0px; left: 50%; margin-top: 0px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(255, 255, 255); padding: 0px; -webkit-appearance: none;"></div>
+                                  </div>
+                              </div>
+                          </div>  
+                            <div class="row" style="background:black;margin-top:5px;border-radius:5px">
+                              <div class="col-md-6">
+                                <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;display:block;line-height:100px">Market Cap:</h2>
+                              </div>
+                              <div class="col-md-6" style="margin-top:35px;padding-right:25px">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">$</span>
+                                            <input type="number" placeholder="100,000" value="100,000" id="investing_amount" name="investing_amount" class="form-control">
+                                        </div>
+                              </div>
+                          </div>                                                
+                    </div>
+
+
+                <div class="modal-footer" style="margin-top:5px">
+                    <button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Cancel</button>              
+                    <button type="button" class="btn btn-default btn-clean pull-left" data-dismiss="modal" onClick="scrape(1)">Filter & Optimize</button>              
+                </div>
+            </div>
+        </div>
+</div>
+
+
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<link href="/static/css2/d3chart.css" rel="stylesheet">
+{% endblock %}

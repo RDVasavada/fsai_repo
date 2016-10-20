@@ -1,0 +1,689 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="nav">
+    <a href="/user/news_portal" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
+    <a href="/user/my_portfolios" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
+    </a>
+  </div>
+<div class="sceneElement" data-viewport="0">
+<div class="col-lg-12 col-md-12 col-sm-12" id="picker" style="padding-top:2vh;background:rgba(0,0,0,0.6)">
+  <div class="row" style="text-align:center">
+    <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;font-size:24px"> Guru Advisor Portfolios </h2>
+<div class="row" style="padding-left:25px;padding-right:25px">
+  <div class="col-md-4">
+                <div class="block">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/bill-gates-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2>Bill gates</h2><br>
+                        <h2>Bill & Melinda Gates Foundation Trust</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>18</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$16.821 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>08-15-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+
+                  <form action="/user/guru_optimize" method="POST" id="guru_portfolio">
+                    <input id="key-pe" style="display:none"  class="form-control" name="key-pe"> 
+                    <input id="key-pb" style="display:none"  class="form-control" name="key-pb"> 
+                    <input id="key-cap" style="display:none"  class="form-control" name="key-cap"> 
+                </form>
+                                   
+                    <script>
+                    function scrape(id){
+                      // window.lkey-ocation.assign('/user/guru_optimize')
+                      var pe = $("#pe-ratio")[0].value
+                      var pb = $("#pb-ratio")[0].value
+                      var cap = $("#market-cap")[0].value
+                      $("#key-pe")[0].value = pe
+                      $("#key-pb")[0].value = pb
+                      $("#key-cap")[0].value = cap
+                      $("#guru_portfolio").submit()
+                    }
+                    </script>
+                    <div class="footer">
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="">Select This Portfolio</button>
+                    </div>                    
+                </div>  
+                <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)" style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/ronald-muhlenkamp-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Ronald MuhlenKamp</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">MuhlenKamp & Co Inc</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>54</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>6</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$256 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>08-11-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div>                               
+                <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/donald-yacktman-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Donald Yacktman</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">Yacktman Asset Management</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>45</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$12,080 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>08-10-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div>
+                <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/bill-gates-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Ronald MuhlenKamp</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">MuhlenKamp & Co Inc</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>54</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>6</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$256 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>08-11-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div>
+                <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/meridian-funds-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Meridian Funds</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">Meridian Fund</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>149</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>15</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$2,681 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-13</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>08-31-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div> 
+</div>
+<div class="col-md-4">                
+                <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/seth-klarman-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Seth Klarman</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">The Baupost Group</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>40</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>9</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$7,328 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>10-07-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div> 
+  <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <!-- <img src='http://static.gurufocus.com/images/gurupics/1/seth-klarman-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;"> -->
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Donald Smith</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">Donald Smith & Co</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>75</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$3,703 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>09-30-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div>                 
+     <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/david-winters-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">David Winters</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">Wintergreen Advisors</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$268 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>08-12-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div>   
+     <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/bruce-berkowitz-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Bruce Berkowitz</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">Fairholme Capital Management</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>12</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$1,451 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>10-11-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div>   
+       <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/mason-hawkins-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Mason Hawkins</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">Southeastern Asset</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>28</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$9,681 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>10-11-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div>     
+ 
+</div>
+<div class="col-md-4">
+ <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/chuck-akre-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Chuck Akre</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">Akre Capital Management LLC</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>34</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$5,204 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>08-12-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div>   
+ <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/bruce-funds-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Robert Bruce</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">Bruce & Co</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>37</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$352 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>08-15-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div> 
+    <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <!-- <img src='http://static.gurufocus.com/images/gurupics/1/bruce-funds-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;"> -->
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Edward Lampert</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">RBS Partners, L.P.</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>11</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$1,018 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>08-15-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div> 
+      <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <!-- <img src='http://static.gurufocus.com/images/gurupics/1/bruce-funds-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;"> -->
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Lou Simpson</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">SQ Advisors, LLC</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>14</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$2,363 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>06-30-16</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>08-15-16</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div> 
+    <div class="block"  style="background:rgba(0,0,0,0.2);color:rgba(0,0,0,0.2)">
+                    <div class="header" style="height:65px">
+                    <div class="pull-left" style="border-radius: 50%;overflow: hidden;width: 150px;height: 50px;width:50px;margin-right:25px;margin-top:8px;margin-left:8px">
+                      <img src='http://static.gurufocus.com/images/gurupics/1/whitney-tilson-small.jpg' style="display: block;height: 100%;width:100%;min-width: 100%;min-height: 100%;">
+                    </div>
+                        <h2 style="color:rgba(0,0,0,0.9)">Whitney Tilson</h2><br>
+                        <h2 style="color:rgba(0,0,0,0.9)">Kase Capital Management</h2>    
+                    </div>
+                    <div class="content" style="height:250px">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Number of Stocks</td>
+                                    <td>16</td>
+                                </tr>
+                                <tr>
+                                    <td>New Stocks</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>$50 Mil</td>
+                                </tr>                   
+                                <tr>
+                                    <td>Portfolio Date</td>
+                                    <td>09-30-15</td>
+                                </tr>                                             
+                                   <tr>
+                                    <td>Latest Update </td>
+                                    <td>11-03-15</td>
+                                </tr>
+                            </tbody>
+                        </table>                                       
+                    </div>
+                    <div class="footer">
+                     <button type="button" style="color:black" class="btn btn-default btn-clean">Select This Porfolio</button>
+                    </div>                    
+                </div>              
+
+                
+            </div>
+          
+        </div>
+
+</div>
+ </div<
+{% block scripts %}
+
+  <script type="text/javascript" src="/static/js/user/portfolio_settings.js"></script> 
+
+{% endblock %}
+
+<div class="col-lg-2"></div>
+
+
+
+
+<div class="modal" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" style="margin-top:10%">
+            <div class="modal-content">
+
+                    <div class="statusbar" id="statusbar_2" style="display: block;margin:0px;padding:0px;height:50px;background:black">
+                        <div class="statusbar-text" style="text-align:center;width:100%;padding:0px">
+                          <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;background:black;padding-bottom:25px;padding-top:25px">Portfolio Settings</h2>
+                            <div class="row" style="background:black;margin-top:5px;border-radius:5px">
+                              <div class="col-md-6">
+                                <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;display:block;line-height:100px">P\E Ratio Filter Cap:</h2>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="knob" style="margin:10px">
+                                        <div style="display: block; width: 100px; height: 100px;">
+                                          <canvas width="100" height="100" style="position: absolute !important; top:-100px !important"></canvas>
+                                          <input type="text" data-fgcolor="#FFFFFF" data-min="0" data-max="100" data-width="100" id="pe-ratio" data-height="100" value="1" style="width: 50px; height: 33px; position: absolute; vertical-align: middle; top: 0px; left: 50%; margin-top: 0px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(255, 255, 255); padding: 0px; -webkit-appearance: none;"></div>
+                                  </div>
+                              </div>
+                          </div>
+                            <div class="row" style="background:black;margin-top:5px;border-radius:5px">
+                              <div class="col-md-6">
+                                <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;display:block;line-height:100px">P\B Ratio Filter Cap:</h2>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="knob" style="margin:10px">
+                                        <div style="display: block; width: 100px; height: 100px;">
+                                          <canvas width="100" height="100" style="position: absolute !important; top:-100px !important"></canvas>
+                                          <input type="text" data-fgcolor="#FFFFFF" data-min="0" data-max="100" data-width="100" id="pb-ratio" data-height="100" value="3" style="width: 50px; height: 33px; position: absolute; vertical-align: middle; top: 0px; left: 50%; margin-top: 0px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(255, 255, 255); padding: 0px; -webkit-appearance: none;"></div>
+                                  </div>
+                              </div>
+                          </div>  
+                            <div class="row" style="background:black;margin-top:5px;border-radius:5px">
+                              <div class="col-md-6">
+                                <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:3px;display:block;line-height:100px">Market Cap:</h2>
+                              </div>
+                              <div class="col-md-6" style="margin-top:35px;padding-right:25px">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">$</span>
+                                            <input type="number" id="market-cap" placeholder="100,000" value="100,000,000" id="investing_amount" name="investing_amount" class="form-control">
+                                        </div>
+                              </div>
+                          </div>                                                
+                    </div>
+
+
+                <div class="modal-footer" style="margin-top:5px">
+                    <button type="button" class="btn btn-default btn-clean" data-dismiss="modal">Cancel</button>              
+                    <button type="button" class="btn btn-default btn-clean pull-left" data-dismiss="modal" onClick="scrape(1)">Filter & Optimize</button>              
+                </div>
+            </div>
+        </div>
+</div>
+
+
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

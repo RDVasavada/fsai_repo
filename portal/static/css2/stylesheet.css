@@ -409,7 +409,7 @@ dd{padding: 5px 0px;}
         .nav-tabs > li > a:hover,.nav-tabs > .dropdown.open > a,.nav-tabs > .dropdown.open > a:hover
         {background: rgba(0,0,0,0.1); border-color: transparent; color: #FFF;}
     
-        .nav-tabs.nav-justified > li > a{border-bottom-color: rgba(0,0,0,0.3);}
+        .nav-tabs.nav-justified > li > a{border-bottom-color: rgba(0,0,0,0.3);width:50px;}
             .nav-tabs.nav-justified > .active > a{border-bottom-color: transparent;}                        
             .nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:hover, .nav-tabs.nav-justified>.active>a:focus{border-color: transparent;}
             

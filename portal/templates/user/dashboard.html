@@ -66,6 +66,7 @@
                 </div>       
       </div>          
     </div>
+
     <div class="row">
 
       <div class="block" style="margin-left:25px;margin-right:25px;width:94%">
@@ -84,20 +85,12 @@
                         <li><button type="button" class="btn btn-default btn-clean" onClick="changeTime('1y')">1y</button></li>
                         <li><button type="button" class="btn btn-default btn-clean" onClick="changeTime('90d')">90d</button></li>
                         <li><button type="button" class="btn btn-default btn-clean" onClick="changeTime('30d')">30d</button></li>
-                        <li>
-                            <a href="#" class="dropdown-toggle tip" title="" data-toggle="dropdown" data-original-title="More"><span class="icon-align-justify"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Portfolio Details</a></li>
-                                <li><a href="#">Export portfolio as .CSV</a></li>
-                                <li><a href="#">Export performance as .CSV</a></li>  
-                            </ul>                                                                            
-                        </li>
                         <li><a href="#" class="block-toggle tip" title="" data-original-title="Show"><span class="icon-chevron-down"></span></a></li>
                         <li><a href="#" class="block-remove tip" title="" data-original-title="Remove"><span class="icon-remove"></span></a></li>
                     </ul>
                 </div>                        
             </div>             
-            <div class="content bg-dot30" style="height:330px;background:rgba(0,0,0,0.6)">
+            <div class="content" style="height:330px;background:rgba(0,0,0,0.6)">
 
               
                   <br><span id="chosenMarket" style="top:-10px;left:85px;position:relative"> 
@@ -390,7 +383,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
      // .attr('class', 'chart')
      //responsive SVG needs these 2 attributes and no width and height attr
      .attr("preserveAspectRatio", "none")
-     .attr("viewBox", "0 0 900 325")
+     .attr("viewBox", "0 0 1100 325")
       .style("max-height", "265") 
       .style("min-height", "265") 
       .append("g")
@@ -436,7 +429,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
   legend.append('text')
     .attr('class', 'chart__symbol')
     .text('{{portfolio.name}}')
-    .attr('style','color:white')
+    .style('fill','white')
 
   var rangeSelection =  legend
     .append('g')
@@ -461,6 +454,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     var range = legend.append('text')
       .text(legendFormat(new Date(xRange[0])) + ' - ' + legendFormat(new Date(xRange[1])))
       .style('text-anchor', 'end')
+      .style('fill','white')
       .attr('transform', 'translate(' + width + ', 0)');
 
     focus.append('g')
@@ -482,6 +476,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     focus.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0 ,' + height + ')')
+        .style('fill','white')
         .call(xAxis);
 
     focus.append('g')
@@ -494,6 +489,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
       .enter().append('rect')
         .attr('class', 'chart__bars')
         .attr('x', function(d, i) { return x(d.date); })
+        .style('fill','white')
         .attr('y', function(d) { return 155 - y3(d.price); })
         .attr('width', 1)
         .attr('height', function(d) { return y3(d.price); });
@@ -501,10 +497,11 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     var helper = focus.append('g')
       .attr('class', 'chart__helper')
       .style('text-anchor', 'end')
+      .style('fill','white')
       .attr('transform', 'translate(' + width + ', 0)');
 
     var helperText = helper.append('text')
-
+        .style('fill','white')
     var priceTooltip = focus.append('g')
       .attr('class', 'chart__tooltip--price')
       .append('circle')
@@ -593,6 +590,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
         .append('text')
         .attr('class', 'chart__range-selection')
         .text(v)
+        .style('fill','white')
         .attr('transform', 'translate(' + (18 * i) + ', 0)')
         .on('click', function(d) { focusOnRange(this.textContent); });
     }
@@ -648,7 +646,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
      
     </div>
 
-<div class="col-md-4" style="background:rgba(0,0,0,0.2);height:100%">
+<div class="col-md-4" style="background:rgba(0,0,0,0.2);height:100%;width:30%;position:relative;margin-left:15px">
                              
   <div class="block" id="toppicks" style="margin-top: 0px; display: initial;">
     <div class="header">
@@ -703,9 +701,9 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
             </div>
   <div class="nav">
     <a href="/user/inbox" data-target="-1" style=";margin-right:50px;float:right">           
-      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:64px"></span></h1></a>
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
     <a href="/user/support" data-target="1" style=";margin-left:50px;float:left">
-       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:64px"></span></h1>
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
     </a>
   </div>
   <div class="row" style="margin:0px;display:none">

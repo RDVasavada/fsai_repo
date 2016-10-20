@@ -22,6 +22,10 @@ function rerun() {
         $.getScript("/static/assets/js/plugins/stepy/jquery.stepy.min.js")
         $.getScript("/static/js/user/portfolio_settings.js")
         $.getScript("/static/assets/js/actions.js")
+    }else if ((url.indexOf("guru_settings")) > 0 ) {
+        $.getScript("/static/assets/js/plugins.js")
+        $.getScript("/static/js/user/guru_settings.js")
+        $.getScript("/static/assets/js/actions.js")
     } else if ((url.indexOf("individual_portfolio")) > 0 ) {  
         $("input#risks").knob();
         $("#pieChart").d3pie();

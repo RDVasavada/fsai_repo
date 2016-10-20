@@ -666,7 +666,7 @@
                         ,'height' : ((this.w / 3) >> 0) + 'px'
                         ,'position' : 'relative'
                         ,'vertical-align' : 'middle'
-                        ,'top' : '-50%'
+                        ,'top' : '-61%'
                         ,'left': '50%'
                         ,'margin-top' : '-' + ((this.w / 3)/2 >> 0) + 'px'
                         ,'margin-left' : '-' + ((this.w / 2)/2 >> 0) + 'px'

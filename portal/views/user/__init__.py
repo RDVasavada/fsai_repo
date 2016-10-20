@@ -12,3 +12,7 @@ from support import *
 from backtest import *
 from top_portfolios import *
 from inbox import *
+from guru_settings import *
+from guru_config import *
+from guru_scrape import *
+from guru_optimize import *
