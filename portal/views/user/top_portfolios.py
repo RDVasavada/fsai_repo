@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 import urllib2
+import re
 import requests
 import json
 from collections import OrderedDict
@@ -56,6 +57,9 @@ def top_portfolios(request, user_id):
         for port in portfolios:
             port['investment'] = '{:20,.2f}'.format(port['investment'])
             port['value'] = '{:20,.2f}'.format(port['value'])
+            s = re.sub(r'[^\w\s]','',port['value'])
+            d = re.sub(r'[^\w\s]','',port['investment'])
+            port['change'] = float(s)/float(d)
         print(portfolios)
     except Exception as e:
         print(e)

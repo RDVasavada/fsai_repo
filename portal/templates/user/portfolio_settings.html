@@ -31,7 +31,7 @@
     <li id="selectedOption"> We offer three different options for portfolio creations: Guru Advisor Portfolios, Vise Wizard Portfolios, and Portfolio Templates. <li>  
   </ol>
 </div>
- <div class="col-md-12" style="padding:50px;display:none;" id="visePicked">
+ <div class="col-md-12" style="padding:50px;display:none;background:rgba(0,0,0,0.6);height:100%;padding-bottom:50px;bottom:0px" id="visePicked" >
            <div class="block">
               <div class="content controls">  
                    <form id="wizard" class="form-horizontal" action="/user/portfolio_optimize" method="post">            
@@ -49,6 +49,26 @@
                                         <input type="text" class="form-control" id="portname" name="portname" placeholder="Your new portfolio . . ."  style="padding:50px;font-size:18px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100">
                                    </div>
                                 </div>
+                             <div class="form-row">
+                              <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;letter-spacing:2px">
+                                  What's your client's name?
+                                </h2>       
+                                    <div class="col-md-2"></div>
+                                    <a href="login.html" onclick="return popitup('/login')"></a>
+                                   <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="clientname" name="clientname" placeholder="Your client's name . . ."  style="padding:50px;font-size:18px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100">
+                                   </div>
+                                </div>
+                             <div class="form-row">
+                              <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;letter-spacing:2px">
+                                  Describe your Portfolio for Indexing Purposes (optional)
+                                </h2>       
+                                    <div class="col-md-2"></div>
+                                    <a href="login.html" onclick="return popitup('/login')"></a>
+                                   <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="description" name="description" placeholder="Your Optional Description . . ."  style="padding:50px;font-size:18px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100">
+                                   </div>
+                                </div>                                                                
                                 <div class="form-row">
                           <!--           <div class="col-md-3">Description</div>
                                     <a href="login.html" onclick="return popitup('/login')">?</a>

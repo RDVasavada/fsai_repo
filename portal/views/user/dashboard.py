@@ -31,37 +31,37 @@ def dashboard(request):
       portalUser = PortalUser.objects.get(username=username)
       portfolios = top_portfolios(request,portalUser.id)
   context_dict = {}
-  stockDict = []
-  stockTotal = 0
-  oldTotal = 0
-  for port in portfolios:
-    stocks = get_stocks_by_portfolio(request, str(port['id']))
-    for stock in stocks:
-      val = stock["current_price"] * stock["number_of_shares"]
-      oldTotal += stock['initial_price'] * stock["number_of_shares"]
-      stockTotal += val
-      prestock = {}
-      ticker = stock['ticker']
-      prestock[ticker] = {}
-      prestock[ticker]['data'] = []
-      prestock[ticker]['buy_date'] = stock['buy_date']
-      prestock[ticker]['current_price'] = stock['current_price']
-      prestock[ticker]['initial_price'] = stock['initial_price']
-      prestock[ticker]['number_of_shares'] = stock['number_of_shares']
-      timenow = time.strftime("%Y-%m-%d")
-      stocks = []
-      stocks.append(stockDict)
-      stocks = json.dumps(list(stocks), cls=DjangoJSONEncoder)
-      context_dict['stockDict'] = stocks
-      print(stockTotal)
-  try:
-    change = stockTotal/oldTotal
-    change = change*100
-  except ZeroDivisionError:
-    change = 0
-  context_dict["change"] = "{0:.2f}".format(round(change,2))
-  print("this is change !!")
-  context_dict["total"] = '{:20,.2f}'.format(stockTotal)
+  # stockDict = []
+  # stockTotal = 0
+  # oldTotal = 0
+  # for port in portfolios:
+  #   stocks = get_stocks_by_portfolio(request, str(port['id']))
+  #   for stock in stocks:
+  #     val = stock["current_price"] * stock["number_of_shares"]
+  #     oldTotal += stock['initial_price'] * stock["number_of_shares"]
+  #     stockTotal += val
+  #     prestock = {}
+  #     ticker = stock['ticker']
+  #     prestock[ticker] = {}
+  #     prestock[ticker]['data'] = []
+  #     prestock[ticker]['buy_date'] = stock['buy_date']
+  #     prestock[ticker]['current_price'] = stock['current_price']
+  #     prestock[ticker]['initial_price'] = stock['initial_price']
+  #     prestock[ticker]['number_of_shares'] = stock['number_of_shares']
+  #     timenow = time.strftime("%Y-%m-%d")
+  #     stocks = []
+  #     stocks.append(stockDict)
+  #     stocks = json.dumps(list(stocks), cls=DjangoJSONEncoder)
+  #     context_dict['stockDict'] = stocks
+  #     print(stockTotal)
+  # try:
+  #   change = stockTotal/oldTotal
+  #   change = change*100
+  # except ZeroDivisionError:
+  #   change = 0
+  # context_dict["change"] = "{0:.2f}".format(round(change,2))
+  # print("this is change !!")
+  # context_dict["total"] = '{:20,.2f}'.format(stockTotal)
   picks = find()
   context_dict['picks'] = picks
   context_dict["portfolios"] = portfolios
@@ -133,6 +133,52 @@ def portfolio_chart(request, portfolio_id):
   portVolume.reverse()
   portClose.reverse()
   portAverage.reverse()      
+  response = HttpResponse(content_type='text/csv')
+  response['Content-Disposition'] = 'attachment; filename="data.csv"'
+  writer = csv.writer(response)
+  writer.writerow(['Date', 'Volume', 'Close', 'Average'])
+  for item in portDate:
+    print(item)
+    writer.writerow([portDate.pop(0),portVolume.pop(0),portClose.pop(0),portAverage.pop(0)])
+  return response
+
+@csrf_exempt
+def stock_chart(request, stock_name):
+  portDate = []
+  portVolume = []
+  portClose = []
+  portAverage = []
+  # for stock in stocks:
+  print(stock_name)
+  share = Share(stock_name)
+  today = date.today()
+  print(today)
+  end = today.replace(year=today.year - 1)
+  print(end)
+  shares = share.get_historical(str(end),str(today))
+  if len(portDate) == 0:
+    for share in shares:
+      print(share)
+      portClose.append(float(share["Close"]))
+      portVolume.append(float(share["Volume"]))
+      portAverage.append(float(share["Low"]))
+      portDate.append(share["Date"])
+  else:
+    incomingClose = []
+    incomingVolume = []
+    incomingAverage = []
+    for share in shares:
+      incomingClose.append(float(share["Close"]))
+      incomingVolume.append(float(share["Volume"]))
+      incomingAverage.append(float(share["Low"]))
+    portClose = map(sum, zip(portClose, incomingClose))
+    portVolume = map(sum, zip(portVolume, incomingVolume))
+    portAverage = map(sum, zip(portAverage, incomingAverage))
+  portDate.reverse()
+  portVolume.reverse()
+  portClose.reverse()
+  portAverage.reverse()      
+  print(portClose)
   response = HttpResponse(content_type='text/csv')
   response['Content-Disposition'] = 'attachment; filename="data.csv"'
   writer = csv.writer(response)

@@ -17,6 +17,7 @@ from stock import get_stocks_by_portfolio
 @csrf_exempt
 @login_required
 def individual_portfolio(request, portfolio_id):
+    print(portfolio_id)
     if request.user.is_authenticated():
         username = request.user.username
         portalUser = PortalUser.objects.get(username=username)

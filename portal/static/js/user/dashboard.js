@@ -107,7 +107,8 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
         // Make the changes
         svg.select(".line")    // change the line
             .duration(750) 
-            .attr("d", valueline(data.query.results.quote));
+            .attr("d", valueline(data.query.results.quote))
+            .style("margin-left","50px");
 
         svg.select(".label")   // change the label text
             .duration(750)
@@ -141,8 +142,8 @@ xhr.onreadystatechange = function(){
             news.forEach(function(x) {
                 var html = "<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:22px;letter-spacing:3px'>" + x.title + "</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>"
                 var child = document.createElement('div')
-                child.innerHTML = html
-                child.firstChild;
+                // child.innerHTML = html
+                // child.firstChild;
                 document.getElementById('pin').innerHTML += html
             })
         };

@@ -44,7 +44,7 @@ def portfolio_optimize(request):
         context_dict['portname'] = request.POST['portname']
     cursor = connection.cursor()
     cursor.execute("INSERT INTO `portal_portfolio` (name,created_date,update_date,description,risk,timeframe,control_market,investment,user_id) VALUES "
-                    "('" + str(context_dict['portname']) + "','2016-07-09 12:11:12','2016-07-09 12:11:12','test','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['Years']) + "','" + str('S') + "','" + str(context_dict['investingAmount']) + "','" + str(userid) + "')")
+                    "('" + str(context_dict['portname']) + "','2016-07-09 12:11:12','2016-07-09 12:11:12','" + str(description) + "','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['Years']) + "','" + str('S') + "','" + str(context_dict['investingAmount']) + "','" + str(userid) + ",'" + str(client_name) + "')")
     cursor.execute("SELECT LAST_INSERT_ID();")
     show_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
     newstocks = []  
