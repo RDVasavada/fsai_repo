@@ -31,7 +31,7 @@ $("i#emptystar").click(function() {
         $(this).attr('class','icon-star-empty pull-right')    
     }
 })
-let addfriend = function() {
+var addfriend = function() {
     var username = $("#query")[0].value
     console.log(username)
     $.ajax({
@@ -39,7 +39,7 @@ let addfriend = function() {
         url: '/user/addconnection',
         data: {'query':username}
     }).done(function(result){
-        if (result.data == 0){`
+        if (result.data == 0){
             $(".stepone").css('display','none')
             $("#statusbar_8").css('height','150px')
             $(".stepone")[0].innerText = "We could not find a user by that name or email. Try Again!"
@@ -68,9 +68,7 @@ $("#submitBtn").click(function(x) {
         data: {'message': msg, 'to' : to } ,
     }).done(function() {
         $(".mail-scroll").mCustomScrollbar("update");
-         setTimeout(function(){
-            $(".mail-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0});
-        },1000);
+        $(".mail-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0});
         console.log("done")
     })
     $("#messageBody")[0].value = ""

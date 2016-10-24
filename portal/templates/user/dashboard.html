@@ -1,6 +1,11 @@
 {% extends "base.html" %}
     {% block content %}
-
+<style>
+svg {
+  font: 10px sans-serif;
+  max-height: 265px !important;
+}
+</style>
 <div class="col-lg-2 col-md-2 col-sm-2" style="padding:0px">
               <div id="new_input" style="display:none">
                     &nbsp &nbsp
@@ -122,7 +127,8 @@ var svg = d3.select(".ibox-content")
     //     .attr("width", width + margin.left + margin.right)
     //     .attr("height", height + margin.top + margin.bottom)
    .append("div")
-   .classed("svg-container", true) //container class to make it responsive
+   .classed("svg-container", true)
+   .style("max-height", "265")
    .append("svg")
    //responsive SVG needs these 2 attributes and no width and height attr
    .attr("preserveAspectRatio", "none")

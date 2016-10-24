@@ -32,6 +32,7 @@ THUMBNAIL_DEBUG = True
 ADMINS = (
     ('', ''),
 )
+USE_THOUSAND_SEPARATOR = True
 
 MANAGERS = ADMINS
 

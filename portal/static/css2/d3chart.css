@@ -29,6 +29,7 @@ text {
 }
 svg {
   font: 10px sans-serif;
+  max-height: 265px !important;
 }
 .area {
   fill: rgba(255,100,100,0.5);
