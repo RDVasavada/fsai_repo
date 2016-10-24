@@ -375,7 +375,7 @@
                         {% endfor %}
                     </div>
                     <div class="content list-group" id="noNews" style="display:none;padding:50px;background:transparent">
-                        <center style="color:white">No Headlines Available</center>
+                        <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white;text-align:center" id="companyName"> No Headlines Available </h2>
                     </div>                    
                 </div>                 
             </div>
@@ -390,8 +390,8 @@
                 <p>
                 <img src='{{company_stats.squareLogo}}' style="display:block;padding-top:50px;margin:auto;width:25%;height:25%" id="logo">
                 </p><br><br>
-                <p>Industry</p>
-                <h4 id="industryName">{{ company_stats.industryName }} </h4>
+                <p>Industry</p>  <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white" id="industryName"> {{ company_stats.industryName }} </h2>
+
              </div>
         </div>
         <div class="block block-drop-shadow">
@@ -432,6 +432,6 @@
 </body>
 {% endblock %}
 {% block scripts %}
-<link href="/static/css2/d3chart.css" rel="stylesheet">
+<link href="/static/css2/d3.pie.css" rel="stylesheet">
  <script src="/static/js/user/individual_stock.js"></script>
  {% endblock %}

@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="nav">
-    <a href="/user/news_portal" data-target="-1" style=";margin-right:50px;float:right">           
-      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
-    <a href="/user/my_portfolios" data-target="1" style=";margin-left:50px;float:left">
-       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
-    </a>
-  </div>  
+  
 <div class="sceneElement" data-viewport="0">
 <div class="col-lg-12 col-md-12 col-sm-12" id="picker" style="padding-top:15vh;background:rgba(0,0,0,0.6);height:90vh">
   <div class="row" style="text-align:center">
@@ -31,7 +25,7 @@
     <li id="selectedOption"> We offer three different options for portfolio creations: Guru Advisor Portfolios, Vise Wizard Portfolios, and Portfolio Templates. <li>  
   </ol>
 </div>
- <div class="col-md-12" style="padding:50px;display:none;background:rgba(0,0,0,0.6);height:100%;padding-bottom:50px;bottom:0px" id="visePicked" >
+ <div class="col-md-12" style="padding:50px;display:none;background:rgba(0,0,0,0.6);height:90vh;padding-bottom:50px;bottom:0px" id="visePicked" >
            <div class="block">
               <div class="content controls">  
                    <form id="wizard" class="form-horizontal" action="/user/portfolio_optimize" method="post">            
@@ -309,6 +303,13 @@
    </div>
 
     </div>
+    <div class="nav">
+    <a href="/user/news_portal" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
+    <a href="/user/my_portfolios" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
+    </a>
+  </div>
 {% block scripts %}
 
   <script type="text/javascript" src="/static/js/user/portfolio_settings.js"></script> 

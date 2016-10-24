@@ -5,33 +5,25 @@
 
 localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
 </script>
-  <div class="nav" id="navlast">
-    <a href="/user/my_portfolios" data-target="-1" style=";margin-right:50px;float:right">           
-      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:88vw;"></span></h1></a>
-    <a href="/user/dashboard/" data-target="1" style=";margin-left:50px;float:left">
-       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:12vw;"></span></h1>
-    </a>
-  </div>
 
+  
 <div class="sceneElement" data-viewport="0">
- <div class="col-lg-3 col-md-3 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:650px;padding-left:35px" id="nopad">
-    <div class="block block-drop-shadow" style="padding-right:25px;height:100%;background-color:rgba(0,0,0,0.4)" id="infirst">
+ <div class="col-lg-3 col-md-3 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:90vh" id="nopad">
+    <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.6);margin-bottom:0px" id="infirst">
         <div class="header">
-            <h2>Inbox</h2>
-            <div class="input-group" style="margin-left:50px;margin-bottom:10px">                        
-            <input type="text" class="form-control" placeholder="Search...">
-            <div class="input-group-addon"><span class="icon-search"></span></div>
-            </div>            
+            <h2>Direct Message</h2>
+                     
         </div>
-            <div style="height:100%;display:inline-block;overflow:scroll;padding-bottom:50px;width:100%" id="innext">
-                <a href="/user/sent" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-upload-alt" style="padding:0px"></span>Sent<i class="icon-angle-right pull-right"></i></a>    
+            <div style="height:100%;display:inline-block;overflow:scroll;width:100%" id="innext">
+   
       <!--           <a href="/user/starred" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-star" style="padding:0px"></span>Starred<i class="icon-angle-right pull-right"></i></a>
                 <a href="/user/deleted" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-trash" style="padding:0px"></span>Deleted<i class="icon-angle-right pull-right"></i></a>      -->   
 <script>
 var hyperchat = (function() {
     $("#selected")[0].value = 0
-    var user = {'id': 0, 'status': 'bot'}
+    var user = {'id': 0, 'status': 'bot', 'user': 'Hyperchat Bot'}
     localStorage.setItem('user',JSON.stringify(user))
+    $("#chosenuser")[0].innerText = ":: Hyperchat Bot"
 })
 </script>
                 <a href="#" onClick="hyperchat()" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-gears" style="padding:0px"></span>Hyperchat<i class="icon-angle-right pull-right"></i></a>
@@ -58,16 +50,13 @@ var hyperchat = (function() {
     </div>    
 </div>
 
-<div class="col-lg-9 col-md-8 col-sm-12" style="height:650px" id="intwo">
-    <div class="block block-drop-shadow" style="height:650px;background-color:rgba(0,0,0,0.4)" id="inb">
+<div class="col-lg-9 col-md-9 col-sm-9" style="height:90vh;padding-left:1px;padding-right:1px" id="intwo">
+    <div class="block block-drop-shadow" style="height:100%;background-color:transparent;margin-bottom:0px" id="inb">
         <div class="header">
-            <h2>Messaging</h2>
-            <div class="input-group" style="margin-left:100px">                        
-                <input type="text" class="form-control" placeholder="Search...">
-                <div class="input-group-addon"><span class="icon-search"></span></div>
-            </div>
+            <h2>Conversation :: </h2>
+            <span id="chosenuser"></span>
         </div>
-        <div class="content messages mail-scroll mCustomScrollbar npr npt" style="" id="incontent"> 
+        <div class="content messages mail-scroll mCustomScrollbar npr npt" style="height:80vh !important" id="incontent"> 
             <div class="email-list-item list-active">
                 <div id="mcontainer">
                      {% render_bundle 'main' %}
@@ -110,7 +99,14 @@ var hyperchat = (function() {
         </div>        
     </div>
 </div>
-<div class="col-lg-2 col-md-2 col-sm-2"></div>
+<div class="col-lg-2 col-md-2 col-sm-2"><div class="nav" id="navlast">
+    <a href="/user/my_portfolios" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
+    <a href="/user/dashboard" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
+    </a>
+  </div>  
+</div>
 </div>
 
 <div class="statusbar center" id="statusbar_8" style="width:45%;height:100px;position:absolute;left:26%;top:45%;background-color:black">
@@ -138,13 +134,7 @@ var hyperchat = (function() {
 {% block scripts %}
 <script src="/static/js/user/inbox.js"></script>
 <script>
-$(".mail-scroll").mCustomScrollbar({scrollInertia: 100}).mCustomScrollbar("scrollTo", "bottom");
-function scroll(){
-    $(".mail-scroll").mCustomScrollbar({scrollInertia: 100}).mCustomScrollbar("scrollTo", "bottom");
-}
-$(window).load(function(){
-    setInterval("scroll()",1000);
-});
+
 
 
 

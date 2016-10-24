@@ -2,13 +2,7 @@
 
 {% block content %}
 
-   <div class="nav">
-    <a href="/user/dashboard" data-target="-1" style=";margin-right:50px;float:right">           
-      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
-    <a href="/user/news_portal" data-target="1" style=";margin-left:50px;float:left">
-       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
-    </a>
-  </div>
+   
 <div class="sceneElement" data-viewport="0">
   <div class="col-lg-12 col-md-12 col-sm-12" style="background:rgba(0,0,0,0.6);padding-top:25px;padding-left:10vw;padding-right:10vw;height:100%;position:relative">
 <!--    
@@ -21,13 +15,20 @@
 <div class="ui-widget">
     <input id="tags" type="text" id="market-cap" placeholder="Search for any stock or portfolio" name="investing_amount" class="form-control" style="margin-top:75px;margin-bottom:100px;width:50vw;left:15vw;position:relative;border:1px solid white;border-radius:12px;padding:25px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">
 </div>
+</div>
+
 <script>
    $('#tags').on('keypress', function (e) {
          if(e.which === 13){
-
-            //Disable textbox to prevent multiple submit
+            var inputval = $("#tags")[0].value
+            splitval = inputval.split('\[')
+            if (splitval.length === 2) {
+               window.location.assign($("h5:contains("+splitval[0].slice(0,-1)+")")[0].parentNode.parentNode.children[2].children[0].href)
+            } else {
+                goStock(splitval[0])
+            }
+                        //Disable textbox to prevent multiple submit
             // $(this).attr("disabled", "disabled");
-            console.log("asdf")
 
             //Do Stuff, submit, etc..
          }
@@ -49,6 +50,7 @@
   </div>
 <div class="col-md-12"> -->
                 <div>
+
                     <ul class="nav nav-tabs nav-justified" style="position:relative;top:0px;position: relative;top: -47px;z-index: 0;height: 100px;">
                         <li class="active"><a href="#tab5" data-toggle="tab" style="width:100%"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Your Stocks</h2>
 <!-- body .ui-autocomplete {
@@ -67,10 +69,13 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
    /* selected <a> */ -->
 <!-- }        -->
                                                  </a></li>
+
                         <li><a href="#tab6" data-toggle="tab" style="width:100%">     <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Your Portfolios</h2>   </a></li>
 
                     </ul>
+
                     <div class="content content-transparent tab-content center" style="padding-top:50px">
+
                         <div class="tab-pane active" id="tab5">
   {% for portfolio in all_portfolios %}
     {% if portfolio.stocks %} 
@@ -115,15 +120,24 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
     {% endfor %}
     {% endif %}
 {% endfor %}
+<div class="nav"> 
+    <a href="/user/portfolio_settings" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
+    <a href="/user/inbox" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
+    </a>
+  </div>
+
                    
                         </div>
+
                         <div class="tab-pane" id="tab6">
 
 {% for portfolio in all_portfolios %}
                                 <div class="col-md-3" style="margin-top:10px">
                                             <div class="block">
                                                 <div class="header">
-                                                   <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.name}}</h2>       
+                                                   <h5 id="pn" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.name}}</h5>       
                                                 </div>                    
                                                 <div class="content" style="height:250px">
                                                 <table class="table table-hover">
@@ -155,201 +169,10 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                     </div>
                 </div>                
             </div>
+
 </div>  
-<div class="col-md-3"></div>
-        
-<!-- 
-                <div class="block" style="position:relative;top:50px">
-                    <ul class="nav nav-tabs" style="position:absolute;top:-40px;left:-5px;width:auto">
-                        <li class="active"><a href="#tab8" data-toggle="tab" aria-expanded="true">
-                            Portfolio Summary<br>
-                           
-                        </a></li>
-            {% for portfolio in portfolios %}                          
-                    
-                        <li class=""><a href="/user/individual_portfolio/{{portfolio.id}}" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" >{{ portfolio.name }}
-        
-                        </a></li>
-            {% endfor %}
-
-                    </ul>
-                    <div class="content tab-content">
-                        <div class="tab-pane active" id="tab8">
-                            <p>
-                <div class="col-md-12" style="background:rgba(0,0,0,0.6);margin-top:25px">
-
-                    <div class="block">
-                    <div class="accordion accordion-transparent ui-accordion ui-widget ui-helper-reset" role="tablist">
-                        <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-header-active ui-state-active ui-corner-top ui-accordion-icons" role="tab" id="ui-accordion-2-header-0" aria-controls="ui-accordion-2-panel-0" aria-selected="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>Summary</h3>
-
-                            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" id="ui-accordion-2-panel-0" aria-labelledby="ui-accordion-2-header-0" role="tabpanel" aria-expanded="true" aria-hidden="false" style="display: block;padding:0px;margin:10px">
-                             
-<div class="block">
-    <div class="header">
-        <h2>Highest Performing Stocks</h2>
-    </div>
-    <div class="content">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Portfolio Name</th>
-                    <th>Value</th>
-                    <th>Risk</th>
-                    <th>Number of Tickers</th>
-                </tr>
-            </thead>
-            <tbody>
-{% for portfolio in portfolios %}                     
-                <tr>
-                    <td><a href="/user/individual_portfolio/{{portfolio.id}}" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" >{{ portfolio.name }}
-                        </a></td>
-                    <td>${{portfolio.value}}</td>
-            {% if portfolio.risk > 50 %}
-                    <td style="color:rgba(0,255,0,0.8)">{{portfolio.risk}}%</td>
-            {% else %}
-                    <td style="color:rgba(255,0,0,0.8)">{{portfolio.risk}}%</td>
-            {% endif %}                 
-                    <td>{{portfolio.no_of_tickers}}</td>
-                </tr>
-{% endfor %}                
-               
-            </tbody>
-        </table>                       
-    </div>
-</div>
- 
 
 
-<div class="col-lg-6 col-md-6">                                
-<div class="block">
-    <div class="header">
-        <h2>Highest Performing Stocks</h2>
-    </div>
-    <div class="content">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Stock</th>
-                    <th>Portfolio</th>
-                    <th>Gain</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>VAL</td>
-                    <td><a href="/user/individual_portfolio/10" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" >Test Portfolio
-                        </a></td>
-                    <td>2.45%</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>NYSE: BA</td>
-                    <td><a href="/user/individual_portfolio/10" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" >Test Portfolio
-                        </a></td>
-                    <td>2.33%</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>TSLA</td>
-                    <td><a href="/user/individual_portfolio/10" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" >Test Portfolio
-                        </a></td>
-                    <td>2.25%</td>
-                </tr>
-            </tbody>
-        </table>                       
-    </div>
-</div>
-</div>
-<div class="col-lg-6 col-md-6">                                
-<div class="block">
-    <div class="header">
-        <h2>Lowest Performing Stocks</h2>
-    </div>
-    <div class="content">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                     <th style="text-align:center">#</th>
-                    <th style="text-align:center">Stock</th>
-                    <th style="text-align:center">Portfolio</th>
-                    <th style="text-align:center">Gain</th>
-                </tr>
-            </thead>
-            <tbody>
-             <tr>
-                    <td>1</td>
-                    <td>VAL</td>
-                    <td>Test Portfolio</td>
-                    <td>2.45%</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>NYSE: BA</td>
-                    <td>Test Portfolio</td>
-                    <td>2.33%</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>TSLA</td>
-                    <td>Test Portfolio</td>
-                    <td>2.25%</td>
-                </tr>
-            </tbody>
-        </table>                       
-    </div>
-</div>
-</div>
-
-
-
-</div>
-
-    {% for portfolio in all_portfolios %}
-    {% if portfolio.stocks %}             
-                            <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-header-active ui-state-active ui-corner-top ui-accordion-icons" role="tab" id="ui-accordion-2-header-0" aria-controls="ui-accordion-2-panel-0" aria-selected="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>{{portfolio.name}}</h3>
-                            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" id="ui-accordion-2-panel-0" aria-labelledby="ui-accordion-2-header-0" role="tabpanel" aria-expanded="true" aria-hidden="false" style="display: block;">
-                                <p>
-                                     <h1 style="font-family:'helvetica neue';letter-spacing:2px;text-align:center;padding:10px">Portfolio : {{portfolio.name}}<br>
-                            </h1><hr>
-  <div style="width:100%;text-align:center;">
-                            <span style="font-family:'helvetica neue';letter-spacing:2px;padding:10px;">
-                            <h3 style="display:inline">{{portfolio.investment}}$</h3> into the <h3 style="display:inline">{%if portfolio.control_market == 'S'%}S&P500{% endif %}{%if portfolio.control_market == 'N'%}NASDAQ{% endif %}{%if portfolio.control_market == 'D'%}DOW JONES{% endif %} </h3> at <h3 style="display:inline">{{portfolio.risk}}%</h3> expected risk<br>
-                              for <h3 style="display:inline">{{portfolio.timeframe}}</h3> Years
-                            <hr>
-                        </span>
-                    </div>
-    {% if portfolio.stocks %}
-        <table class="table table-hover margin bottom" style="background:rgba(0,0,0,0.2);padding:25px">
-        <thead style="background:black;">
-        <tr>
-            <th class="text-center">Ticker Symbol</th>
-            <th class="text-center">Number of Shares</th>
-            <th class="text-center">Buy Date</th>
-            <th class="text-center">Sell Date</th>
-            <th class="text-center">Current Price</th>
-            <th class="text-center">Expected Risk</th>
-        </tr>
-        </thead>
-        <tbody style="font-weight:100;font-family:'helvetica neue';letter-spacing:2px"> 
-            {% for stock in portfolio.stocks %}<tr>
-                        <td class="text-center small"><a href="#" onClick=goStock(this) id="stockLink">{{stock.ticker}}</a></td>
-                        <td class="text-center">2</td>
-                        <td class="text-center">2016-01-01</td>
-                        <td class="text-center">2015-01-01</td>
-                        <td class="text-center">{{stock.current_price}}</td>
-                        <td class="text-center">{{portfolio.risk}}</td> </tr>
-            {% endfor %}
-        </tbody>
-        </table>
-    {% endif %}  
-                                </p>
-                            </div>
-    {% endif %}
-    {% endfor %}
-                
-                    --> 
 <form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
     {% csrf_token %}
     <input type="text" class="form-control" id="company_name" value="company_name" name="company_name">    
@@ -5419,7 +5242,7 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
     "{{portfolio.name}} [Portfolio]",
     {% if portfolio.stocks %} 
     {% for stock in portfolio.stocks %}    
-    "{{stock.ticker}} [Stock][{{portfolio.name}}",
+    "{{stock.ticker}} [Stock][{{portfolio.name}}]",
     {% endfor %}
     {% endif %}
 {% endfor %}

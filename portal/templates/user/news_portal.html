@@ -1,333 +1,89 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="nav">
+<div class="sceneElement" data-viewport="0">
+  <div class="col-lg-12 col-md-12 col-sm-12" style="background:rgba(0,0,0,0.6);padding-top:25px;padding-left:10vw;padding-right:10vw;height:100%;position:relative">
+<!--    
+
+</div>
+</body>
+
+<div class="sceneElement" data-viewport="0" style="position:relative;top:-10vh">
+ -->
+<div class="ui-widget">
+    <input id="tags" type="text" id="market-cap" placeholder="Search for any stock or portfolio" name="investing_amount" class="form-control" style="margin-top:75px;margin-bottom:100px;width:50vw;left:15vw;position:relative;border:1px solid white;border-radius:12px;padding:25px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">
+</div>
+</div>
+<script>
+   $('#tags').on('keypress', function (e) {
+         if(e.which === 13){
+            var inputval = $("#tags")[0].value
+            splitval = inputval.split('\[')
+            if (splitval.length === 2) {
+               window.location.assign($("h5:contains("+splitval[0].slice(0,-1)+")")[0].parentNode.parentNode.children[2].children[0].href)
+            } else {
+                goStock(splitval[0])
+            }
+                        //Disable textbox to prevent multiple submit
+            // $(this).attr("disabled", "disabled");
+
+            //Do Stuff, submit, etc..
+         }
+   });
+
+</script>
+</div>
+
+ <div>
+                    <ul class="nav nav-tabs nav-justified" style="position:relative;top:0px;position: relative;top: -47px;z-index: 0;height: 100px;">
+                        <li class="active"><a href="#tab5" data-toggle="tab" style="width:100%"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Your Portfolio Sentiment</h2>
+                                                 </a></li>
+                        <li><a href="#tab6" data-toggle="tab" style="width:100%">     <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Industry Sentiment</h2>   </a></li>
+
+                    </ul>
+                    <div class="content content-transparent tab-content center" style="padding-top:50px">
+                        <div class="tab-pane active" id="tab5">
+  {% for portfolio in all_portfolios %}                        
+            <div class="col-md-3" style="margin-top:10px">
+                                            <div class="block">
+                                                <div class="header">
+                                                   <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.name}}</h2>       
+                                                </div>                    
+                                                <div class="content" style="height:200px">
+                                                <table class="table table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Investment</td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.investment}}</h2>  </td>
+                                                        </tr>
+                                                      
+                                                        </tr>                                                        
+                                                            <td>Current Sentiment</td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.sentiment}}</h2>  </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Expected Risk</td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.risk}}%</h2>  </td>
+                                                        <tr>
+                                                    </tbody>
+                                                </table>
+                                                </div>                    
+                                                <div class="footer" style="text-align:center">
+                                                    <a href="/user/individual_sentiment/{{portfolio.id}}" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" type="button" class="btn btn-default btn-clean center">See in Detail</a>        
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+{% endfor %}
+</div>
+</div>
+<div class="nav">
     <a href="/user/support" data-target="-1" style=";margin-right:50px;float:right">           
-      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:88vw;"></span></h1></a>
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
     <a href="/user/portfolio_settings" data-target="1" style=";margin-left:50px;float:left">
-       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:12vw;"></span></h1>
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
     </a>
   </div>
-<div class="sceneElement" data-viewport="0">
-<div class="col-lg-12 col-lg-12 col-sm-12" style="padding-right:50px;padding-left:50px;background:rgba(0,0,0,0.6);height:90vh;padding-top:25px">
-
-<div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="block" style="background:rgba(0,0,0,0.2)">
-                     <h2 style="font-size:24px;text-align:center;padding:25px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">Market Sentiment</h2> 
-                </div>
-                <div class="block block-transparent nm">
-                       
-                    <div class="scroll-nail email-list mCustomScrollbar _mCS_1" style="height: 562px;">
-
-                        <div class="email-list-item">
-                            <div class="item-line">
-                         
-                                <div class="item-line-title">AAPL</div>
-                                <div class="item-line-date">Today 11:00 PM</div>
-                            </div>
-                            <div class="item-line">
-                                <div class="item-line-content">+33% Market Sentiment</div>
-                            </div>
-                            <div class="item-line">                                
-                                <div class="item-line-content">
-                                   +2.43% Market Price
-                                </div>
-                            </div>
-                        </div>                        
-                        
-                        <div class="email-list-item list-active">
-                            <div class="item-line">
-                         
-                                <div class="item-line-title">GOOGL</div>
-                                <div class="item-line-date">Today 11:00 PM</div>
-                            </div>
-                            <div class="item-line">
-                                <div class="item-line-content">+23% Market Sentiment</div>
-                            </div>
-                            <div class="item-line">                                
-                                <div class="item-line-content">
-                                   +3.43% Market Price
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="email-list-item">
-                           <div class="item-line">
-                         
-                                <div class="item-line-title">TSLA</div>
-                                <div class="item-line-date">Today 11:00 PM</div>
-                            </div>
-                            <div class="item-line">
-                                <div class="item-line-content">+23% Market Sentiment</div>
-                            </div>
-                            <div class="item-line">                                
-                                <div class="item-line-content">
-                                   +2.43% Market Price
-                                </div>
-                            </div>
-                        </div>                        
-                        
-                        <div class="email-list-item">
-                           <div class="item-line">
-                                <div class="item-line-title">VAL</div>
-                                <div class="item-line-date">Today 11:00 PM</div>
-                            </div>
-                            <div class="item-line">
-                                <div class="item-line-content">+12% Market Sentiment</div>
-                            </div>
-                            <div class="item-line">                                
-                                <div class="item-line-content">
-                                   +1.43% Market Price
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="email-list-item">
-                           <div class="item-line">
-                         
-                                <div class="item-line-title">CBLR</div>
-                                <div class="item-line-date">Today 11:00 PM</div>
-                            </div>
-                            <div class="item-line">
-                                <div class="item-line-content">+33% Market Sentiment</div>
-                            </div>
-                            <div class="item-line">                                
-                                <div class="item-line-content">
-                                   +2.43% Market Price
-                                </div>
-                            </div>
-                        </div>
-                      
-                        <div class="email-list-item">
-                            <div class="item-line">
-                         
-                                <div class="item-line-title">AAPL</div>
-                                <div class="item-line-date">Today 11:00 PM</div>
-                            </div>
-                            <div class="item-line">
-                                <div class="item-line-content">+33% Market Sentiment</div>
-                            </div>
-                            <div class="item-line">                                
-                                <div class="item-line-content">
-                                   +2.43% Market Price
-                                </div>
-                            </div>
-                        </div>                        
-                        
-                        <div class="email-list-item list-active">
-                            <div class="item-line">
-                         
-                                <div class="item-line-title">GOOGL</div>
-                                <div class="item-line-date">Today 11:00 PM</div>
-                            </div>
-                            <div class="item-line">
-                                <div class="item-line-content">+23% Market Sentiment</div>
-                            </div>
-                            <div class="item-line">                                
-                                <div class="item-line-content">
-                                   +3.43% Market Price
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="email-list-item">
-                           <div class="item-line">
-                         
-                                <div class="item-line-title">TSLA</div>
-                                <div class="item-line-date">Today 11:00 PM</div>
-                            </div>
-                            <div class="item-line">
-                                <div class="item-line-content">+23% Market Sentiment</div>
-                            </div>
-                            <div class="item-line">                                
-                                <div class="item-line-content">
-                                   +2.43% Market Price
-                                </div>
-                            </div>
-                        </div>                        
-                        
-                        <div class="email-list-item">
-                           <div class="item-line">
-                                <div class="item-line-title">VAL</div>
-                                <div class="item-line-date">Today 11:00 PM</div>
-                            </div>
-                            <div class="item-line">
-                                <div class="item-line-content">+12% Market Sentiment</div>
-                            </div>
-                            <div class="item-line">                                
-                                <div class="item-line-content">
-                                   +1.43% Market Price
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="email-list-item">
-                           <div class="item-line">
-                         
-                                <div class="item-line-title">CBLR</div>
-                                <div class="item-line-date">Today 11:00 PM</div>
-                            </div>
-                            <div class="item-line">
-                                <div class="item-line-content">+33% Market Sentiment</div>
-                            </div>
-                            <div class="item-line">                                
-                                <div class="item-line-content">
-                                   +2.43% Market Price
-                                </div>
-                            </div>
-                        </div>                    
-                    </div>
-                </div>
-</div>                                                                
-<div class="col-md-6">
-                <div class="block" style="background:rgba(0,0,0,0.1)">
-                     <h2 style="font-size:18px;text-align:center;padding:25px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px">AAPL</h2> 
-                </div>
-<div class="block" style="margin-top:2px;margin-left:3px;height:290px">
-          <div class="header">
-                <h2 style="font-size:12px;font-weight:300;-webkit-font-smoothing: antialiased;">Sentiment Analysis</h2> 
-            </div>
-            <div class="content bg-dot30" style="height:250px;background:rgba(0,0,0,0.6);overflow:hidden">
-                  <br><span id="chosenMarket" style="top:-10px;left:85px;position:relative"> 
-                    AAPL
-                  </span>
-
-                  <div class="ibox-content" id="myBar" style="height:150px;position:relative;top:-2vh;left:1vw">
-                      <div class="row" style="overflow:hidden">
-                      </div>
-                  </div> 
-                  <div class="head-panel nm" style="position:absolute;top:310px;left:25px">
-                      <div class="btn-toolbar">
-                          <div id="new_input">
-                           <div class="btn-group btn-group-xs">
-                              <!-- <button type="button" class="btn btn-default btn-clean">Nasdaq</button> -->
-                              <!-- <button type="button" class="btn btn-default btn-clean">Dow Jones</button>                                     -->
-                          </div>
-                        
-                          </div>
-                      </div>
-                 </div>                   
-             </div>   
-</div>
-
-<div class="block block-transparent" style="background:rgba(0,0,0,0.2);height:251px">
-                    
-                    <div class="scroll-pail" style="height:auto">
-                        
-                        <div class="list-item">
-                            <div class="list-title">Lorem ipsum dolor sit amet</div>
-                            <div class="list-text">
-                                <p>Aliquam a justo id augue condimentum fringilla nec et elit. Aliquam lacinia molestie odio, at dictum lacus venenatis sit amet. Vivamus rutrum malesuada augue. Nam tristique accumsan orci, nec convallis nisl adipiscing vel. Fusce erat velit, varius nec aliquam sit amet, cursus sed purus. Phasellus mollis at mauris vitae tristique. Duis rhoncus luctus purus sed dictum.</p>                                
-                            </div>
-                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-title">Vestibulum rhoncus pretium quam in blandit.</div>
-                            <div class="list-text">
-                                <img src="img/example/photo/img_2s.jpg" align="left" class="img-thumbnail"> 
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae turpis vel orci vestibulum feugiat. Maecenas lorem est, fermentum non lobortis id, auctor nec ligula. Sed feugiat arcu vel diam ullamcorper tempus. Curabitur non lorem placerat, pretium metus vel.</p>
-                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>
-                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>
-                            </div>
-                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>                            
-                        </div>                                                
-                        <div class="list-item">
-                            <div class="list-title">ivamus sed volutpat neque, non pulvinar sem</div>
-                            <div class="list-text">
-                                <p>Etiam vitae venenatis lectus. Proin auctor mi quam. Nullam tristique semper nisi, egestas ullamcorper turpis sagittis eget. Nunc at fermentum odio. Ut eget arcu luctus, mollis ipsum eu, volutpat nulla. Sed libero tortor, ultrices eget egestas molestie, ullamcorper in magna. Suspendisse vel eros arcu. Maecenas ac fringilla nunc, nec pretium mauris.</p>                                
-                            </div>
-                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
-                        </div>                        
-                        <div class="list-item">
-                            <div class="list-title">Donec aliquam nec ante eget sollicitudin</div>
-                            <div class="list-text">
-                                <img src="img/example/photo/img_3s.jpg" align="left" class="img-thumbnail"> 
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae turpis vel orci vestibulum feugiat. Maecenas lorem est, fermentum non lobortis id, auctor nec ligula. Sed feugiat arcu vel diam ullamcorper tempus. Curabitur non lorem placerat, pretium metus vel.</p>
-                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>
-                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>                                          
-                            </div>
-                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
-                        </div>                                                
-                        <div class="list-item">
-                            <div class="list-title">Praesent dictum porta sollicitudin</div>
-                            <div class="list-text">
-                                <p>Praesent quis ultricies libero. Integer quis convallis purus, eu aliquet justo. Vestibulum pulvinar, elit ac viverra fermentum, neque urna pretium odio, sed faucibus quam mauris ut urna. Phasellus lorem velit, sodales ut quam sit amet, ornare lacinia metus. Mauris condimentum aliquam commodo. Nullam tincidunt magna at risus rhoncus ullamcorper. Pellentesque eu volutpat risus, non venenatis quam.</p>
-                            </div>
-                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
-                        </div>                        
-                        <div class="list-item">
-                            <div class="list-title">Lorem ipsum dolor sit amet</div>
-                            <div class="list-text">
-                                <p>Aliquam a justo id augue condimentum fringilla nec et elit. Aliquam lacinia molestie odio, at dictum lacus venenatis sit amet. Vivamus rutrum malesuada augue. Nam tristique accumsan orci, nec convallis nisl adipiscing vel. Fusce erat velit, varius nec aliquam sit amet, cursus sed purus. Phasellus mollis at mauris vitae tristique. Duis rhoncus luctus purus sed dictum.</p>
-                            </div>
-                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-title">Vestibulum rhoncus pretium quam in blandit.</div>
-                            <div class="list-text">
-                                <img src="img/example/photo/img_4s.jpg" align="left" class="img-thumbnail"> 
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae turpis vel orci vestibulum feugiat. Maecenas lorem est, fermentum non lobortis id, auctor nec ligula. Sed feugiat arcu vel diam ullamcorper tempus. Curabitur non lorem placerat, pretium metus vel.</p>
-                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>
-                                <p>Pellentesque fringilla venenatis lectus, eu adipiscing dolor dapibus at. Phasellus vel purus quis lectus malesuada commodo ac ut mi. Cras rhoncus aliquam lectus vitae elementum. Nullam et bibendum nisl. Ut placerat imperdiet bibendum. Donec pharetra dui a sem tempus, vitae eleifend tortor venenatis. Vivamus sodales pharetra turpis, eget vehicula sapien luctus vitae.</p>                                          
-                            </div>
-                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
-                        </div>                                                
-                        <div class="list-item">
-                            <div class="list-title">ivamus sed volutpat neque, non pulvinar sem</div>
-                            <div class="list-text">
-                                <p>Etiam vitae venenatis lectus. Proin auctor mi quam. Nullam tristique semper nisi, egestas ullamcorper turpis sagittis eget. Nunc at fermentum odio. Ut eget arcu luctus, mollis ipsum eu, volutpat nulla. Sed libero tortor, ultrices eget egestas molestie, ullamcorper in magna. Suspendisse vel eros arcu. Maecenas ac fringilla nunc, nec pretium mauris.</p>              
-                            </div>
-                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
-                        </div>                        
-                        <div class="list-item">
-                            <div class="list-title">Donec aliquam nec ante eget sollicitudin</div>
-                            <div class="list-text">
-                                <p>Mauris eleifend nulla ac sapien mattis ullamcorper. Vivamus nec augue vel purus laoreet tristique. Proin aliquet erat metus, ac viverra nunc mattis in. Suspendisse a suscipit justo. Nullam euismod elit mauris, non auctor diam varius nec. Suspendisse ut pretium mi. Aliquam sed congue mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eu elit arcu. Proin non ornare nisl.</p>              
-                            </div>
-                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
-                        </div>                                                
-                        <div class="list-item">
-                            <div class="list-title">Praesent dictum porta sollicitudin</div>
-                            <div class="list-text">
-                                <img src="img/example/photo/img_2s.jpg" align="left" class="img-thumbnail">
-                                <p>Praesent quis ultricies libero. Integer quis convallis purus, eu aliquet justo. Vestibulum pulvinar, elit ac viverra fermentum, neque urna pretium odio, sed faucibus quam mauris ut urna. Phasellus lorem velit, sodales ut quam sit amet, ornare lacinia metus. Mauris condimentum aliquam commodo. Nullam tincidunt magna at risus rhoncus ullamcorper. Pellentesque eu volutpat risus, non venenatis quam.</p>
-                                <p>Mauris eleifend nulla ac sapien mattis ullamcorper. Vivamus nec augue vel purus laoreet tristique. Proin aliquet erat metus, ac viverra nunc mattis in. Suspendisse a suscipit justo. Nullam euismod elit mauris, non auctor diam varius nec. Suspendisse ut pretium mi. Aliquam sed congue mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eu elit arcu. Proin non ornare nisl.</p>
-                                <p>Mauris eleifend nulla ac sapien mattis ullamcorper. Vivamus nec augue vel purus laoreet tristique. Proin aliquet erat metus, ac viverra nunc mattis in. Suspendisse a suscipit justo. Nullam euismod elit mauris, non auctor diam varius nec. Suspendisse ut pretium mi. Aliquam sed congue mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eu elit arcu. Proin non ornare nisl.</p>
-                                <p>Mauris eleifend nulla ac sapien mattis ullamcorper. Vivamus nec augue vel purus laoreet tristique. Proin aliquet erat metus, ac viverra nunc mattis in. Suspendisse a suscipit justo. Nullam euismod elit mauris, non auctor diam varius nec. Suspendisse ut pretium mi. Aliquam sed congue mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eu elit arcu. Proin non ornare nisl.</p>
-                            </div>
-                            <div class="list-text">Tags: <span class="label label-default">Sometag</span> <span class="label label-default">Anothertag</span> <span class="label label-default">Tagname</span></div>
-                        </div>                        
-                        
-                    </div>
-                    
-                </div>
-</div> 
-</div>                                                                
-                                                           
-</div>
-                
-</div>                       
-                 
-
-</div>
-</div>
-</div>
-
-  <div id="new_input" style="display:none">
-    &nbsp &nbsp
-    Stock: <input type="text" name="stock" id="stock" value="AAPL" 
-    style="width: 70px;">
-    &nbsp &nbsp
-    Start: <input type="text" name="start" id="start" value="2015-01-10"
-    style="width: 80px;">
-    &nbsp &nbsp
-    End: <input type="text" name="end" id="end" value="2015-03-10" 
-    style="width: 80px;">
-    &nbsp &nbsp
-    <input name="updateButton" 
-    type="button" 
-    value="Update" 
-    onclick="updateData()" />
-</div>
 {% endblock %}
 
 {% block scripts %}

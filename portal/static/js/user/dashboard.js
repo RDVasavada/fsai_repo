@@ -133,21 +133,4 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     });
 }
 
-// $("body").css('display','none');
-var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function(){
-        if (xhr.readyState==4 && xhr.status==200)
-        {
-            var news  = JSON.parse(xhr.responseText).items
-            news.forEach(function(x) {
-                var html = "<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:22px;letter-spacing:3px'>" + x.title + "</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>"
-                var child = document.createElement('div')
-                // child.innerHTML = html
-                // child.firstChild;
-                document.getElementById('pin').innerHTML += html
-            })
-        };
-    }
-xhr.open('GET','http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo,appl,googl,tsla',true);
-xhr.send();
 

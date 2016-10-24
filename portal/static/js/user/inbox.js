@@ -17,13 +17,13 @@ $("input").keypress(function(event) {
         $("#messageBody")[0].value = ""
     }
 });
-$(".mail-scroll").height(400).mCustomScrollbar()
-$(".mail-scroll").height(400).mCustomScrollbar()
-$(".mail-scroll").height(400).mCustomScrollbar()
-$(".mail-scroll").height(400).mCustomScrollbar()
-$(".mail-scroll").height(400).mCustomScrollbar()
-$(".mail-scroll").height(400).mCustomScrollbar()
-console.log("asdf")
+          
+$(".mail-scroll").height('80vh').mCustomScrollbar()
+$(".mail-scroll").mCustomScrollbar("update");
+setTimeout(function(){
+    $(".mail-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0});
+},1000);
+
 $("i#emptystar").click(function() {
     if ($(this).attr('class') == 'icon-star-empty pull-right') {
         $(this).attr('class','icon-star pull-right')    
@@ -39,7 +39,7 @@ let addfriend = function() {
         url: '/user/addconnection',
         data: {'query':username}
     }).done(function(result){
-        if (result.data == 0){
+        if (result.data == 0){`
             $(".stepone").css('display','none')
             $("#statusbar_8").css('height','150px')
             $(".stepone")[0].innerText = "We could not find a user by that name or email. Try Again!"
@@ -67,6 +67,10 @@ $("#submitBtn").click(function(x) {
         url: "/user/sendmsg",
         data: {'message': msg, 'to' : to } ,
     }).done(function() {
+        $(".mail-scroll").mCustomScrollbar("update");
+         setTimeout(function(){
+            $(".mail-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0});
+        },1000);
         console.log("done")
     })
     $("#messageBody")[0].value = ""

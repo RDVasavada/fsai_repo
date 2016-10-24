@@ -1,6 +1,7 @@
 from dashboard import *
 from news_portal import *
 from individual_portfolio import *
+from individual_sentiment import *
 from individual_stock import *
 from my_portfolios import *
 from portfolio_optimize import *

@@ -2,6 +2,7 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 var FaTrash = require('react-icons/lib/fa/trash-o')
 
+
 var SMSList = React.createClass({
     loadBooksFromServer: function(){
         $.ajax({
@@ -110,6 +111,24 @@ var MSGList = React.createClass({
                     </div>
                 )
             } else {
+                lastmsg = -1
+                if (b.length === 1) {
+                    var chosen = JSON.parse(localStorage.getItem('user')).user;
+                    var style = {
+                        fontWeight: '100',
+                        fontFamily:'helvetica neue',
+                        letterSpacing:'2px',
+                        fontSize:'18px',
+                        marginTop: '25px',
+                        textAlign: 'center',
+                    }
+                    return (
+                        <h2 style={style} >
+                            Please wait for @{chosen} to accept your messages.
+                            <hr />
+                        </h2>
+                    )
+                }
                 var messages = b.map(function(x,i) {
                     if (x.length > 0) {
                         var divStyle = {
@@ -125,25 +144,27 @@ var MSGList = React.createClass({
                             if (x[0].content !== 'newfriend') {
                                 if (x[0].content !== 'blank') {
                                     if (x[0].content) {
+
                                         var you = $("div.name")[0].innerText
+                                        var time = x[0].time
                                         var ct = String(x[0].content)
                                         var trim = x[0].content.indexOf('>')
                                         var str = ct.slice(trim+3)
                                         var writer = ct.slice(1,trim)
                                         if (writer == you) {
                                             var style = {
-                                                marginRight: '75px',
+                                                marginLeft: '100px',
                                                 fontSize: '12px',
-                                                background: 'rgba(0,0,0,0.2)',
                                                 padding: '10px',
                                                 position: 'relative',
-                                                textAlign: 'right',
-                                                marginTop: '10px',
+                                                textAlign: 'left',
                                             }
                                             var spanRight = {
-                                                float: 'right',
+                                                float: 'left',
                                                 position: 'relative',
-                                                left: '15px'
+                                                left:'109px',
+                                                fontWeight:'900',
+                                                top: '-10px',  
                                             }
                                             var iconDel = {
                                                 verticalAlign: 'middle',
@@ -154,9 +175,24 @@ var MSGList = React.createClass({
                                                 right: '17px',
                                                 color:'white',
                                             } 
+                                            var timeLeft = {
+                                                float: 'left',
+                                                position: 'relative',
+                                                left:'109px',
+                                                fontWeight:'400',
+                                                top: '-10px',
+                                                fontSize: '8px',                                                
+                                            }     
                                             var divStyle = {
                                                 position: 'relative',
                                                 bottom: '23px'
+                                            }
+                                            var repeatStyle = {
+                                                marginLeft: '110px',
+                                                fontSize: '12px',
+                                                position: 'relative',
+                                                textAlign: 'left',
+
                                             }
                                             var delMe = function(id) {
                                                $.ajax({
@@ -170,27 +206,49 @@ var MSGList = React.createClass({
                                                 })                                                
                                             }
                                             var myStar = React.createClass
-                                            return(
-                                                <div>
-                                                    <span style={spanRight}>{you}
-                                                     <FaTrash onClick={() => { delMe(x[0].id) }} style={iconDel} />
-                                                    </span>
-                                                    <div style={style}>{str}</div>
-                                                </div>
-                                            )
+                                            if (lastmsg === 0 || lastmsg === -1){
+                                                lastmsg = 1
+                                                return(
+                                                    <div>
+                                                        <hr />
+                                                        <span style={spanRight}>{you}</span>
+                                                        <br />
+                                                        <span style={timeLeft}>{time}</span>
+                                                        <div style={style}>{str}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            } else {
+                                                lastmsg = 1
+                                                return(
+                                                    <div>
+                                                        <div style={repeatStyle}>{str}</div>
+                                                    </div>
+                                                )
+                                            }
                                         } else {
                                             var style = {
-                                                marginLeft: '75px',
+                                                marginLeft: '100px',
                                                 fontSize: '12px',
-                                                background: 'rgba(0,0,0,0.2)',
                                                 padding: '10px',
                                                 position: 'relative',
                                                 textAlign: 'left',
-                                                marginTop: '10px'
                                             }
                                             var spanLeft = {
-                                                float: 'left'
+                                                float: 'left',
+                                                position: 'relative',
+                                                left:'109px',
+                                                fontWeight:'900',
+                                                top: '-10px',                                                
                                             }
+                                           var timeLeft = {
+                                                float: 'left',
+                                                position: 'relative',
+                                                left:'109px',
+                                                fontWeight:'400',
+                                                top: '-10px',
+                                                fontSize: '8px',                                                
+                                            }                                            
                                             var iconDel = {
                                                 verticalAlign: 'middle',
                                                 color: 'white',
@@ -199,14 +257,33 @@ var MSGList = React.createClass({
                                                 position: 'relative',
                                                 right: '37px',
                                                 color:'white'
-                                            }                        
-                                            return( 
-                                                <div>
-                                                    <span style={spanLeft}>{writer}
-                                                    </span>                                                    
-                                                    <div style={style}>{str}</div>
-                                                </div>
-                                            )
+                                            }
+                                            var repeatStyle = {
+                                                marginLeft: '110px',
+                                                fontSize: '12px',
+                                                position: 'relative',
+                                                textAlign: 'left',
+
+                                            }
+                                            if (lastmsg === 1 || lastmsg === -1) {
+                                                lastmsg = 0 
+                                                return(
+                                                    <div>
+                                                        <hr />
+                                                        <span style={spanLeft}>{writer}</span>
+                                                        <br />
+                                                        <span style={timeLeft}>{time}</span>
+                                                        <div style={style}>{str}</div>
+                                                    </div>
+                                                )
+                                            } else {
+                                                lastmsg = 0
+                                                return (
+                                                    <div>
+                                                        <div style={repeatStyle}>{str}</div>
+                                                    </div>
+                                                )
+                                            }
                                         } 
                                     }
                                 }
@@ -549,7 +626,7 @@ var ContactList = React.createClass({
                 return(
                     <div style={divStyle}>
                         <FaTrash onClick={() => { delFriend(x.id) }} style={icon} />
-                        <a href="#" onClick={() => { select(x.id, x.status) }} style={linkStyle}>{x.username}</a>
+                        <a href="#" onClick={() => { select(x.id, x.status, x.username) }} style={linkStyle}>{x.username}</a>
                     </div>
                 )
             })
@@ -571,13 +648,15 @@ var delFriend = (function(id) {
         console.log(res)
     })
 })
-var select = (function(id, status) {
+var select = (function(id, status, username) {
     $("#selected")[0].value = id
     if (status == 'New Friend Request') {
-        var user = {'id': String(id), 'status': 'newfriend'}
+        $("#chosenuser")[0].innerText = " :: " + String(username)
+        var user = {'id': String(id), 'status': 'newfriend', 'user':String(username)}
         localStorage.setItem('user',JSON.stringify(user))
     } else {
-        var user = {'id':String(id), 'status':'friends'}
+        $("#chosenuser")[0].innerText = " :: " + String(username)
+        var user = {'id':String(id), 'status':'friends', 'user':String(username)}
         localStorage.setItem('user',JSON.stringify(user));
     }                
 })

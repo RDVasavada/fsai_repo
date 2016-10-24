@@ -7,6 +7,7 @@ from django.db import connection
 from portal.models.user.portal_user import PortalUser
 import re
 import requests
+from time import gmtime, strftime
 from portal.models.data.portfolio import Portfolio
 import time
 from django.http import JsonResponse
@@ -139,13 +140,14 @@ def accept(request):
     yours = portalUser.connections
     user_id = request.user.id
     yours = str(yours) + "," + str(acceptid)
+    time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     cursor = connection.cursor()
     cursor.execute("UPDATE portal_messageheader SET status "
                     " = 'friends' WHERE from_id = '" + str(acceptid) + "' AND to_id = '" + str(user_id) + "'")
     cursor.execute("UPDATE portal_portaluser SET connections "
                     " = '" + str(yours) + "' WHERE id = '" + str(user_id) + "'")
     cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES "
-                   "('" + str(user_id) + "','" + str(acceptid) + "','newfriend','2012-11-25 00:00:00','friends');")
+                   "('" + str(user_id) + "','" + str(acceptid) + "','newfriend','" + str(time) + "','friends');")
     cursor.execute("SELECT LAST_INSERT_ID();")
     header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']    
     cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
@@ -182,7 +184,7 @@ def getmsg(request):
     pendingInvite = dictfetchall(cursor)
 #if none:
     if len(pendingInvite) == 0:
-        cursor.execute("SELECT id FROM portal_messageheader WHERE "
+        cursor.execute("SELECT id, time FROM portal_messageheader WHERE "
                        "'deleted' != subject AND'" + str(fromid) + "' = to_id AND '" + str(userid) + "' = from_id")
         msgs = dictfetchall(cursor)
         for msg in msgs:
@@ -190,9 +192,12 @@ def getmsg(request):
           cursor.execute("SELECT content, id FROM portal_message WHERE "
                          "'" + str(msg['id']) + "' = header_id")
           returnmsg = dictfetchall(cursor)
-          # print(returnmsg)
+          try:
+            returnmsg[0]['time'] = str(msg['time'])
+          except IndexError:
+            print("none")   
           rtnarray.append(returnmsg)
-        cursor.execute("SELECT id FROM portal_messageheader WHERE "
+        cursor.execute("SELECT id, time FROM portal_messageheader WHERE "
                        "'deleted' != subject AND '" + str(fromid) + "' = from_id AND '" + str(userid) + "' = to_id")
         msgs = dictfetchall(cursor)
         for msg in msgs:
@@ -200,7 +205,10 @@ def getmsg(request):
           cursor.execute("SELECT content, id FROM portal_message WHERE "
                          "'" + str(msg['id']) + "' = header_id")
           returnmsg = dictfetchall(cursor)
-          # print(returnmsg)
+          try:
+            returnmsg[0]['time'] = str(msg['time'])
+          except IndexError:
+            print("none")   
           rtnarray.append(returnmsg)
         sortArr=[]
         for msg in rtnarray:
@@ -235,7 +243,8 @@ def getmsg(request):
           if contents[0]['content'] == 'blank':
             rtnarray.append(contents[0]['content'])
       if len(rtnarray) == 0:
-        cursor.execute("SELECT id FROM portal_messageheader WHERE "
+        # time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        cursor.execute("SELECT id, time FROM portal_messageheader WHERE "
                        "'unread' = subject AND '" + str(fromid) + "' = to_id AND '" + str(userid) + "' = from_id ")
         msgs = dictfetchall(cursor)
         for msg in msgs:
@@ -243,15 +252,22 @@ def getmsg(request):
           cursor.execute("SELECT content, id FROM portal_message WHERE "
                          "'" + str(msg['id']) + "' = header_id")
           returnmsg = dictfetchall(cursor)
-          # print(returnmsg)
+          try:
+            returnmsg[0]['time'] = str(msg['time'])
+          except IndexError:
+            print("none")          
           rtnarray.append(returnmsg)
-        cursor.execute("SELECT id FROM portal_messageheader WHERE "
+        cursor.execute("SELECT id, time FROM portal_messageheader WHERE "
                        "'unread' = subject AND '" + str(fromid) + "' = from_id AND'" + str(userid) + "' = to_id ")
         msgs = dictfetchall(cursor)
         for msg in msgs:
           cursor.execute("SELECT content,id FROM portal_message WHERE "
                          "'" + str(msg['id']) + "' = header_id")
           returnmsg = dictfetchall(cursor)
+          try:
+            returnmsg[0]['time'] = str(msg['time'])
+          except IndexError:
+            print("none")
           rtnarray.append(returnmsg)        
         sortArr=[]
         for msg in rtnarray:
@@ -326,9 +342,10 @@ def sendmsg(request):
   message = "<" + username + "> : " + message
   # print(message)
   recipient = request.POST['to']
+  time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
   cursor = connection.cursor()
   cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
-                 "('" + str(portId) + "','" + str(recipient) + "','unread','2016-07-09 12:11:25','friends');")
+                 "('" + str(portId) + "','" + str(recipient) + "','unread','" + str(time) + "','friends');")
   cursor.execute("SELECT LAST_INSERT_ID();")
   header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
   cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
@@ -336,7 +353,7 @@ def sendmsg(request):
   if recipient == '0':
     botmsg = analyze(message, portId, username)
     cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
-                     "('0','" + str(portId) + "','unread','2016-07-09 12:11:25','friends');")  
+                     "('0','" + str(portId) + "','unread','" + str(time) + "','friends');")  
     cursor.execute("SELECT LAST_INSERT_ID();")
     header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
     cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
@@ -399,6 +416,7 @@ def addconnection(request):
     user_id = request.user.id
   query = request.POST['query']
   connections = searchuser(query)
+  time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
   # print(len(connections))
   if len(connections) == 0:
     return JsonResponse({'data':'0'})
@@ -410,36 +428,13 @@ def addconnection(request):
                       " = '" + str(yours) + "' WHERE id = '" + str(user_id) + "'")
       cursor = connection.cursor()
       cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
-                     "('" + str(user_id) + "','" + str(u.id) + "','friends','12:11:25','notfriends');")
+                     "('" + str(user_id) + "','" + str(u.id) + "','friends','" + str(time) + "','notfriends');")
       cursor.execute("SELECT LAST_INSERT_ID();")
       header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
       cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
                        "('" + str(header_id) + "','" + str(user_id) + "','blank');")
       addusername = u.username
       return JsonResponse({'data':addusername})
-
-@csrf_exempt
-def starmsg(request):
-  if request.user.is_authenticated():
-    username = request.user.username
-    portalUser = PortalUser.objects.get(username=username)
-    yours = portalUser.connections
-    user_id = request.user.id  
-  msgid = request.POST['id']
-  cursor = connection.cursor()
-  cursor.execute("SELECT status from portal_messageheader WHERE "
-                  "to_id = '" +str(msgid) + "' AND subject = 'starred'")
-  stars = dictfetchall(cursor)
-  if len(stars) == 0:
-    cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
-                  "('" + str(user_id) + "','" + str(msgid) + "','starred', '12:11:25','friends');")
-    return JsonResponse({'data':'star'})
-  else:
-    cursor.execute("DELETE FROM portal_messageheader WHERE"
-                    " from_id = '" + str(user_id) + "' AND to_id = '" + str(msgid) + "' AND subject = 'starred'")
-    JsonResponse({'data':'unstar'})
-  msg = "star"
-  return JsonResponse({'data':msg})
 
 @csrf_exempt
 def delmsg(request):

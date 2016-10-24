@@ -22,7 +22,7 @@
 <div class="sceneElement" data-viewport="0">
 <div class="col-lg-12 col-md-12 col-sm-8 col-xs-12" style="margin:0px;height:auto;padding-left:0px;padding-right:0px;background:rgba(0,0,0,0.6);position:relative;bottom:0px" id="ha">
   <div class="col-md-8" style="padding-left:15px;padding-top:10px;padding-right:15px">
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-md-6" style="margin-top:-10px">
         <div class="block">
                     <div class="header">
@@ -35,7 +35,7 @@
                         </div>                        
                     </div>                  
                     <div class="content" style="height:200px">
-                        <div style="text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%"> ${{ total }} </div>
+                        <div style="text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%"> ${{ total }} </div>
                     </div>
                     <div class="footer">
                                       
@@ -65,7 +65,7 @@
                     </div>
                 </div>       
       </div>          
-    </div> -->
+    </div>
 
     <div class="row">
 
@@ -686,14 +686,15 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
       <h2 style="letter-spacing:2px">Market News</h2>
     </div>
     <div class="content list list-default">
-   
-  
       </div>
   </div>
 <div class="block block-transparent nm" >
        
     <div class="scroll-nail email-list mCustomScrollbar _mCS_1" style="height:35vh;">
       <div id="pin">
+{% for x in news %}
+<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:22px;letter-spacing:3px'>{{x.title}}</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>{{x.description}}<br></div><div class='item-line-date'>{{x.pubDate}}</div></div></div></a>
+  {% endfor %}
       </div>
                
                         
@@ -732,13 +733,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     
 </div>  
             </div>
-  <div class="nav">
-    <a href="/user/inbox" data-target="-1" style=";margin-right:50px;float:right">           
-      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
-    <a href="/user/support" data-target="1" style=";margin-left:50px;float:left">
-       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
-    </a>
-  </div>
+ 
   <div class="row" style="margin:0px;display:none">
     <div class="col-lg-0 col-md-2" style="height:600px;padding-left:0px;padding-right:0px;margin-right:10px" id="ha">
         <div class="block" style="height:599px;margin:0px" id="ha">
@@ -890,6 +885,13 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
 
 </div>
 </div>      
+ <div class="nav">
+    <a href="/user/inbox" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
+    <a href="/user/support" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
+    </a>
+  </div>
     {% endblock %}
 {% block scripts %}
     <link href="/static/css2/d3chart.css" rel="stylesheet">

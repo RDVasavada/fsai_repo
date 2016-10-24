@@ -12,6 +12,7 @@ import random
 from django.views.decorators.csrf import csrf_exempt
 import requests
 import json 
+import re
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
 from urllib2 import urlopen
@@ -30,38 +31,46 @@ def dashboard(request):
       username = request.user.username
       portalUser = PortalUser.objects.get(username=username)
       portfolios = top_portfolios(request,portalUser.id)
+  news = requests.get("http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo,appl,googl,tsla")
+  news = news.json()
+  newsarr = []
+  for newsitem in news['items']:
+    newsarr.append(newsitem)
   context_dict = {}
-  # stockDict = []
-  # stockTotal = 0
-  # oldTotal = 0
-  # for port in portfolios:
-  #   stocks = get_stocks_by_portfolio(request, str(port['id']))
-  #   for stock in stocks:
-  #     val = stock["current_price"] * stock["number_of_shares"]
-  #     oldTotal += stock['initial_price'] * stock["number_of_shares"]
-  #     stockTotal += val
-  #     prestock = {}
-  #     ticker = stock['ticker']
-  #     prestock[ticker] = {}
-  #     prestock[ticker]['data'] = []
-  #     prestock[ticker]['buy_date'] = stock['buy_date']
-  #     prestock[ticker]['current_price'] = stock['current_price']
-  #     prestock[ticker]['initial_price'] = stock['initial_price']
-  #     prestock[ticker]['number_of_shares'] = stock['number_of_shares']
-  #     timenow = time.strftime("%Y-%m-%d")
-  #     stocks = []
-  #     stocks.append(stockDict)
-  #     stocks = json.dumps(list(stocks), cls=DjangoJSONEncoder)
-  #     context_dict['stockDict'] = stocks
-  #     print(stockTotal)
-  # try:
-  #   change = stockTotal/oldTotal
-  #   change = change*100
-  # except ZeroDivisionError:
-  #   change = 0
-  # context_dict["change"] = "{0:.2f}".format(round(change,2))
-  # print("this is change !!")
-  # context_dict["total"] = '{:20,.2f}'.format(stockTotal)
+  context_dict['news'] = newsarr
+  stockDict = []
+  stockTotal = 0
+  oldTotal = 0
+  valtotal = 0
+  for port in portfolios:
+    valtotal += int(re.sub(r'[^\w\s]','',port['value']))
+    stocks = get_stocks_by_portfolio(request, str(port['id']))
+    for stock in stocks:
+      val = stock["current_price"] * stock["number_of_shares"]
+      oldTotal += stock['initial_price'] * stock["number_of_shares"]
+      stockTotal += val
+      prestock = {}
+      ticker = stock['ticker']
+      prestock[ticker] = {}
+      prestock[ticker]['data'] = []
+      prestock[ticker]['buy_date'] = stock['buy_date']
+      prestock[ticker]['current_price'] = stock['current_price']
+      prestock[ticker]['initial_price'] = stock['initial_price']
+      prestock[ticker]['number_of_shares'] = stock['number_of_shares']
+      timenow = time.strftime("%Y-%m-%d")
+      stocks = []
+      stocks.append(stockDict)
+      stocks = json.dumps(list(stocks), cls=DjangoJSONEncoder)
+      context_dict['stockDict'] = stocks
+      print(stockTotal)
+  try:
+    change = stockTotal/oldTotal
+    change = change*100
+  except ZeroDivisionError:
+    change = 0
+  context_dict["change"] = "{0:.2f}".format(round(change,2))
+  print("this is change !!")
+  context_dict["total"] = '{:20,.2f}'.format(valtotal)
   picks = find()
   context_dict['picks'] = picks
   context_dict["portfolios"] = portfolios
@@ -78,8 +87,12 @@ def find():
   chosen = 1
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
   gurusoup = BeautifulSoup(urlopen(guru))
-  g = gurusoup.body.contents[0]
-  d = json.loads(g)
+  try:
+    g = gurusoup.p.contents[0]
+    d = json.loads(g)
+  except TypeError:
+    g = gurusoup.body.contents[0]
+    d = json.loads(g)
   guruarr = []
   for key in d:
     for pick in d[key]["port"]:
