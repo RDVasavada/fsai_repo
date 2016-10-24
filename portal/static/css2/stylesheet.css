@@ -6,17 +6,9 @@ html {
 ::-webkit-scrollbar { 
     display: none; 
 }
-::-webkit-input-placeholder { /* WebKit browsers */
-    color: red
-}
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color: red;
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color: red;
-}
+
 body .ui-autocomplete {
-  font-weight:300;
+  font-weight:100;
   -webkit-font-smoothing: 
   antialiased;
   font-family:'helvetica neue';
@@ -28,9 +20,9 @@ body .ui-autocomplete {
 border: 0 none;
 border-radius: 2px;
 box-shadow: 0 1px 2px rgb(139, 139, 139);
-color: rgb(0, 0, 0);
-font-family: Roboto;
-font-weight: 300;
+color: white;
+font-family:'helvetica neue';
+font-weight: 100;
 line-height: 47px;padding-right:100px;
 margin-top: 15px;
 outline: medium none;
