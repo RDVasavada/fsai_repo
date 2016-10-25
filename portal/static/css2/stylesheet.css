@@ -17,7 +17,7 @@ body .ui-autocomplete {
   color:white;
 }
 .search {
-border: 0 none;
+/*border: 0 none;
 border-radius: 2px;
 box-shadow: 0 1px 2px rgb(139, 139, 139);
 color: white;
@@ -28,8 +28,7 @@ margin-top: 15px;
 outline: medium none;
 text-indent: 46px;
 width: 100%;
-letter-spacing:3px;
-
+letter-spacing:3px;*/
 }
 body .ui-autocomplete .ui-menu-item .ui-corner-all {
     background:rgba(0,0,0,0.4);

@@ -510,9 +510,9 @@ def dictfetchall(cursor):
 def analyze(message, id, username):
   message = message.lower()
   if "can you do" in message:
-    return("<Hyperchat Bot> : Hey How you doin. I can carry out basic commands for you via SMS, or chat. Text me at 000000! Some things I can do: provide updates on your portfolios, provide information about stocks, and companies.")
+    return("<Hyperchat Bot> : I can carry out basic commands for you via SMS, or chat. Text me at (205)490 - 7304! Some things I can do: provide updates on your portfolios, provide information about stocks, and companies.")
   elif "what is this website" in message:
-    return("<Hyperchat Bot> : Vise is an online robo-advisement platform for the masses.")
+    return("<Hyperchat Bot> : Vise is an online robo-advisement platform for financial advisors.")
   elif "who are you" in message:
     return("<Hyperchat Bot> : Hello " + str(username) + ". My name is Vise and I was created to serve the masses.")
   elif "who created you" in message:

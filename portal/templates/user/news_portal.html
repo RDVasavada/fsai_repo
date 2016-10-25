@@ -1,92 +1,242 @@
 {% extends "base.html" %}
-{% block content %}
-<div class="sceneElement" data-viewport="0">
-  <div class="col-lg-12 col-md-12 col-sm-12" style="background:rgba(0,0,0,0.6);padding-top:25px;padding-left:10vw;padding-right:10vw;height:100%;position:relative">
-<!--    
+{% block content %}  
+<div class="sceneElement" data-viewport="0" >
+<div class="col-lg-12 col-lg-12 col-sm-12" style="padding-right:50px;padding-left:50px;padding-top:25px;background:rgba(0,0,0,0.4);height:90vh">
 
-</div>
-</body>
-
-<div class="sceneElement" data-viewport="0" style="position:relative;top:-10vh">
- -->
-<div class="ui-widget">
-    <input id="tags" type="text" id="market-cap" placeholder="Search for any stock or portfolio" name="investing_amount" class="form-control" style="margin-top:75px;margin-bottom:100px;width:50vw;left:15vw;position:relative;border:1px solid white;border-radius:12px;padding:25px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">
-</div>
-</div>
+<div class="col-md-6">
+                <div class="block" style="background:rgba(0,0,0,0.2)">
+                     <h2 style="font-size:24px;text-align:center;padding:25px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">Market Sentiment</h2> 
+                </div>
+                <div class="block block-transparent nm">
+<input type="text" class="form-control" id="tags" name="tags" placeholder="Filter by portfolio . . ." style="font-size:12px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;font-family:'helvetica neue';font-weight: 100;line-height: 47px;margin-top: 15px;outline: medium none;margin-left:25px;margin-right:25px;width: 92%;margin-bottom:25px;letter-spacing:3px;height:50px">
+                    <div class="scroll-nail email-list mCustomScrollbar _mCS_1" style="height: 60vh;">
+                        <div class="email-list-item" style="background:rgba(0,255,0,0.1)">
+                            <div class="item-line">
+                                <div class="item-line-title" style="font-size:24px">
+                                   <h2 style="font-size:24px;text-align:center;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'"> 
+                                     <button type="button" class="btn btn-default btn-clean center" style="font-weight:300" onClick="filter('{{portfolio.id}}','{{portfolio.name}}')">AILABs </button> 
+                                     <button type="button" class="btn btn-default btn-clean center" style="font-weight:300">Test Portfolio</button>        
+                                  </h2></div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">
+                                  <h2 style="font-size:18px;text-align:center;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'"> Sentiment Score : 36 <span style="font-size:12px;color:rgba(0,255,0,1)">+24% </span>
+                                  </h2>
+                                </div>
+                            </div>
+                        </div>                       
+                        <div class="email-list-item" style="background:rgba(255,0,0,0.1)">
+                            <div class="item-line">
+                                <div class="item-line-title" style="font-size:24px">
+                                   <h2 style="font-size:24px;text-align:center;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'"> 
+                                     <button type="button" class="btn btn-default btn-clean center" style="font-weight:300" onClick="filter('{{portfolio.id}}','{{portfolio.name}}')">AAPL</button> 
+                                     <button type="button" class="btn btn-default btn-clean center" style="font-weight:300">Test Portfolio</button>        
+                                  </h2></div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">
+                                  <h2 style="font-size:18px;text-align:center;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'"> Sentiment Score : -12 <span style="font-size:12px;color:rgba(255,0,0,1)"> -24% </span>
+                                  </h2>
+                                </div>
+                            </div>
+                        </div>
+<script>
+var filter = function(id,name) {
+    $("#chosenPortfolio")[0].innerText = name + "\'s Sentiment"
+    $("#chosenMarket")[0].innerText = name
+}
+var nocus = function(id,name) {
+  $(".email-list-item").each(function(index) {
+    if ($(this).attr('id') !== "e"+id) {
+      $(this).css('display','none')
+    } else {
+      $("#chosenPortfolio")[0].innerText = name + "\'s Sentiment"
+    $("#chosenMarket")[0].innerText = name
+      console.log('keep')
+    }
+  })
+}
+</script>
 <script>
    $('#tags').on('keypress', function (e) {
          if(e.which === 13){
             var inputval = $("#tags")[0].value
-            splitval = inputval.split('\[')
-            if (splitval.length === 2) {
-               window.location.assign($("h5:contains("+splitval[0].slice(0,-1)+")")[0].parentNode.parentNode.children[2].children[0].href)
-            } else {
-                goStock(splitval[0])
-            }
-                        //Disable textbox to prevent multiple submit
-            // $(this).attr("disabled", "disabled");
-
-            //Do Stuff, submit, etc..
+            $(".email-list-item").each(function(index) {
+              $(this).css('display','none')
+            })
+            $("button:contains('"+inputval+"')").each(function(i,x) {
+              x.parentNode.parentNode.parentNode.parentNode.style += "display:initial"
+            })
          }
    });
 
 </script>
+{% for portfolio in all_portfolios %}
+    {% if portfolio.stocks %} 
+    {% for stock in portfolio.stocks %}    
+                        <div class="email-list-item" id="e{{portfolio.id}}">
+                            <div class="item-line">
+                                <div class="item-line-title" style="font-size:24px">
+                                   <h2 style="font-size:24px;text-align:center;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'"> 
+                                      <button type="button" class="btn btn-default btn-clean center" style="font-weight:300" onClick="nocus('{{portfolio.id}}','{{stock.ticker}}')">{{stock.ticker}}  </button>    
+                                     <button type="button" class="btn btn-default btn-clean center" style="font-weight:300" onClick="filter('{{portfolio.id}}','{{portfolio.name}}')">{{portfolio.name}}</button>        
+                                  </h2></div>
+                                <div class="item-line-date">Today 11:00 PM</div>
+                            </div>
+                            <div class="item-line">
+                                <div class="item-line-content">
+                                  <h2 style="font-size:18px;text-align:center;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'"> Sentiment Score : 33 <span style="font-size:12px;color:rgba(0,255,0,1)"> +2% </span>
+                                  </h2>
+                                </div>
+                            </div>
+                        </div>                        
+    {% endfor %}
+    {% endif %}
+{% endfor %}                      
+                 
+
+                    </div>
+                </div>
+</div>                                                                
+<div class="col-md-6">
+                <div class="block" style="background:rgba(0,0,0,0.1)">
+                     <h2 style="font-size:18px;text-align:center;padding:25px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px" id="chosenPortfolio">Portfolio Sentiment</h2> 
+                </div>
+<div class="block" style="margin-top:2px;margin-left:3px;height:290px">
+          <div class="header">
+                <h2 style="font-size:12px;font-weight:300;-webkit-font-smoothing: antialiased;">Sentiment Score : <span class="label label-default" style="text-align:left;font-weight:500;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';background:rgba(0,255,0,0.6)">
+                                33%</span> </h2> 
+            </div>
+            <div class="content bg-dot30" style="height:250px;background:rgba(0,0,0,0.6);overflow:hidden">
+                  <br><span id="chosenMarket" style="top:-10px;left:85px;position:relative"> 
+                    AAPL
+                  </span>
+
+                  <div class="ibox-content" id="myBar" style="height:150px;position:relative;top:-2vh;left:1vw">
+                      <div class="row" style="overflow:hidden">
+                      </div>
+                  </div> 
+                  <div class="head-panel nm" style="position:absolute;top:310px;left:25px">
+                      <div class="btn-toolbar">
+                          <div id="new_input">
+                           <div class="btn-group btn-group-xs">
+                              <!-- <button type="button" class="btn btn-default btn-clean">Nasdaq</button> -->
+                              <!-- <button type="button" class="btn btn-default btn-clean">Dow Jones</button>                                     -->
+                          </div>
+                        
+                          </div>
+                      </div>
+                 </div>                   
+             </div>   
 </div>
 
- <div>
-                    <ul class="nav nav-tabs nav-justified" style="position:relative;top:0px;position: relative;top: -47px;z-index: 0;height: 100px;">
-                        <li class="active"><a href="#tab5" data-toggle="tab" style="width:100%"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Your Portfolio Sentiment</h2>
-                                                 </a></li>
-                        <li><a href="#tab6" data-toggle="tab" style="width:100%">     <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Industry Sentiment</h2>   </a></li>
+<div class="block block-transparent" style="background:rgba(0,0,0,0.2);height:auto">
+                    
+                    <div class="scroll-pail" style="height:calc(70vh  - 318px)">
+                        
+                        <div class="list-item">
+                            <div class="list-title">
+                              <h2 style="font-size:18px;text-align:left;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px" id="chosenPortfolio">Next.js – A small framework for server-rendered universal JavaScript apps</h2>  </div>
 
-                    </ul>
-                    <div class="content content-transparent tab-content center" style="padding-top:50px">
-                        <div class="tab-pane active" id="tab5">
-  {% for portfolio in all_portfolios %}                        
-            <div class="col-md-3" style="margin-top:10px">
-                                            <div class="block">
-                                                <div class="header">
-                                                   <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.name}}</h2>       
-                                                </div>                    
-                                                <div class="content" style="height:200px">
-                                                <table class="table table-hover">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Investment</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.investment}}</h2>  </td>
-                                                        </tr>
-                                                      
-                                                        </tr>                                                        
-                                                            <td>Current Sentiment</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.sentiment}}</h2>  </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Expected Risk</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.risk}}%</h2>  </td>
-                                                        <tr>
-                                                    </tbody>
-                                                </table>
-                                                </div>                    
-                                                <div class="footer" style="text-align:center">
-                                                    <a href="/user/individual_sentiment/{{portfolio.id}}" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" type="button" class="btn btn-default btn-clean center">See in Detail</a>        
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="list-text" style="font-size:12px;text-align:left;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px">Sentiment Score: 
+                              <span class="label label-default" style="text-align:left;font-weight:500;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';background:rgba(0,255,0,0.6)">
+                                33%</span></div>
+                        </div>
+                        <hr>
+                          <div class="list-item">
+                            <div class="list-title">
+                              <h2 style="font-size:18px;text-align:left;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px" id="chosenPortfolio">ZCash Will Be a Truly Anonymous Blockchain-Based Currency</h2>  </div>
 
+                            <div class="list-text" style="font-size:12px;text-align:left;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px">Sentiment Score: 
+                              <span class="label label-default" style="text-align:left;font-weight:500;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';background:rgba(0,255,0,0.6)">
+                                33%</span></div>
+                        </div>
+                        <hr>  
+       <div class="list-item">
+                            <div class="list-title">
+                              <h2 style="font-size:18px;text-align:left;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px" id="chosenPortfolio">Cognitive Toolkit beta for deep learning advances </h2>  </div>
 
-{% endfor %}
+                            <div class="list-text" style="font-size:12px;text-align:left;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px">Sentiment Score: 
+                              <span class="label label-default" style="text-align:left;font-weight:500;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';background:rgba(255,0,0,0.6)">
+                                -18%</span></div>
+                        </div>
+                        <hr>  
+ <div class="list-item">
+                            <div class="list-title">
+                              <h2 style="font-size:18px;text-align:left;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px" id="chosenPortfolio">Boom Wants to Bring Supersonic Civilian Travel Back </h2>  </div>
+
+                            <div class="list-text" style="font-size:12px;text-align:left;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px">Sentiment Score: 
+                              <span class="label label-default" style="text-align:left;font-weight:500;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';background:rgba(0,255,0,0.6)">
+                                33%</span></div>
+                        </div>
+                        <hr>      
+                        <div class="list-item">
+                            <div class="list-title">
+                              <h2 style="font-size:18px;text-align:left;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px" id="chosenPortfolio">  How Generalised Problems Kill Startups </h2>  </div>
+
+                            <div class="list-text" style="font-size:12px;text-align:left;padding:5px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';line-height:24px">Sentiment Score: 
+                              <span class="label label-default" style="text-align:left;font-weight:500;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';background:rgba(0,255,0,0.6)">
+                                33%</span></div>
+                        </div>
+                        <hr>                                                                    
+                        
+                    </div>
+                    
+                </div>
+
+</div> 
+</div>                                                                
+                                                           
+</div>
+                
+</div>                       
+                 
+
 </div>
 </div>
-<div class="nav">
+</div>
+
+  <div id="new_input" style="display:none">
+    &nbsp &nbsp
+    Stock: <input type="text" name="stock" id="stock" value="AAPL" 
+    style="width: 70px;">
+    &nbsp &nbsp
+    Start: <input type="text" name="start" id="start" value="2015-01-10"
+    style="width: 80px;">
+    &nbsp &nbsp
+    End: <input type="text" name="end" id="end" value="2015-03-10" 
+    style="width: 80px;">
+    &nbsp &nbsp
+    <input name="updateButton" 
+    type="button" 
+    value="Update" 
+    onclick="updateData()" />
+</div>
+
+ <div class="nav">
     <a href="/user/support" data-target="-1" style=";margin-right:50px;float:right">           
       <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
     <a href="/user/portfolio_settings" data-target="1" style=";margin-left:50px;float:left">
        <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
     </a>
-  </div>
+  </div>  
 {% endblock %}
 
 {% block scripts %}
 <link href="/static/css2/d3chart.css" rel="stylesheet">
  <script src="/static/js/user/news_portal.js"></script>
+<script>
+ $( function() {
+    var availableTags = [ 
+ {% for portfolio in all_portfolios %}
+    "{{portfolio.name}}",
+{% endfor %}
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  } );
+</script>
 {% endblock %}

@@ -48,7 +48,7 @@ var container2 = $('.scroll-tail');
     }            
                
     if($(".scroll-pail").length > 0){                
-        $(".scroll-pail").height(250).mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
+        $(".scroll-pail").height('calc(70vh  - 318px)').mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
     }            
     /* eof scroll */
     

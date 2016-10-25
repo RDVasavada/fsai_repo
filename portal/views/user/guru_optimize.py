@@ -10,3 +10,4 @@ def guru_optimize(request):
   # print(request.POST['key-pe'])
   html = get_top_portfolios(request, 'user/guru_optimize.html')
   return HttpResponse(html)
+

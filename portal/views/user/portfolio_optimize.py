@@ -1,3 +1,4 @@
+from time import gmtime, strftime
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
@@ -42,9 +43,12 @@ def portfolio_optimize(request):
         context_dict['portname'] = "Test Portfolio"
     else: 
         context_dict['portname'] = request.POST['portname']
+        time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    client_name = request.POST['clientname']
+    description = request.POST['description']
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO `portal_portfolio` (name,created_date,update_date,description,risk,timeframe,control_market,investment,user_id) VALUES "
-                    "('" + str(context_dict['portname']) + "','2016-07-09 12:11:12','2016-07-09 12:11:12','" + str(description) + "','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['Years']) + "','" + str('S') + "','" + str(context_dict['investingAmount']) + "','" + str(userid) + ",'" + str(client_name) + "')")
+    cursor.execute("INSERT INTO `portal_portfolio` (name,created_date,update_date,description,risk,timeframe,control_market,investment,user_id, client_name) VALUES "
+                    "('" + str(context_dict['portname']) + "','" + str(time) + "','" + str(time) + "','" + str(description) + "','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['Years']) + "','" + str('S') + "','" + str(context_dict['investingAmount']) + "','" + str(userid) + "','" + str(client_name) + "')")
     cursor.execute("SELECT LAST_INSERT_ID();")
     show_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
     newstocks = []  

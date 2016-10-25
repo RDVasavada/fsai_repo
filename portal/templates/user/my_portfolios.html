@@ -147,13 +147,19 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                                                             <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">${{portfolio.investment}}</h2>  </td>
                                                         </tr>
      <tr>
-                                                            <td>Initial Investment</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">${{portfolio.investment}}</h2>  </td>
+                                                            <td>Update Date</td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">
+                                                              {{portfolio.update_date}}
+                                                            </h2>  </td>
                                                         </tr>                                                        
      <tr>
-                                                            <td>Risk</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.risk}}%</h2>  </td>
-                                                        </tr>                                                          
+                                                            <td>Client Name</td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.client_name}}</h2>  </td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td>Description</td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.description}}</h2>  </td>
+                                                        </tr> 
                                                     </tbody>
                                                 </table>
                                                 </div>                    
