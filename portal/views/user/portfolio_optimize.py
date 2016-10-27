@@ -29,7 +29,7 @@ def portfolio_optimize(request):
     eachStockresult['expectedRisk'] = (request.POST['expRisk'])
     eachStockresult['expectedReturn'] = (request.POST['expReturn'])
     optimizeSearchResults.append(eachStockresult)
-    stocks = ['VNET','AGTK','AKAM','BIDU','BCOR','WIFI','BRNW','CARB','JRJC','CCIH','CHIC','CNV ','CCOI','CXDO','CRWG','ELNK','EATR','EDXC','ENV ','FB  ','FZRO','GEGI','GDDY','HIHI','IAC ','IIJI','INAP ','IPAS','JCOM','LOGL','LLNW','MEET','MEET','MOMO','NTES','NEWC','EGOV','NQ  ','OTOW','OPESY','PTOP','PPPI','RAX ','BLNK','NAME','SIFY','SINA','SMCE','SOHU','FCCN','SNST','TCTZF','TCEHY','DIDG','TMMI','TRON','TCX','TWTR','VLTC','WEB','JMU','XNET','YHOO','YAHOY','YNDX','YOOIF','YIPI']
+    stocks = ['VNET','AKAM','BCOR','WIFI','CARB','JRJC','CCIH','CNV ','CCOI','ELNK','ENV ','FB','GDDY','GOOGL','IAC ','IIJI','INAP ','IPAS','JCOM','LOGL','LLNW','MEET','MEET','MOMO','NTES','NEWC','EGOV','NQ  ','OTOW','OPESY','PTOP','PPPI','RAX ','BLNK','NAME','SIFY','SINA','SMCE','SOHU','FCCN','SNST','TCTZF','TCEHY','DIDG','TMMI','TRON','TCX','TWTR','VLTC','WEB','JMU','XNET','YHOO','YAHOY','YNDX','YOOIF','YIPI']
     numshares = int(request.POST['stocks_number'])/2
     context_dict = {}
     context_dict['stock_invest'] = int(request.POST['investing_amount'])/int(request.POST['stocks_number'])

@@ -95,7 +95,7 @@ def find():
   chosen = 1
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
   gurusoup = BeautifulSoup(urlopen(guru))
-  g = gurusoup.body.contents[0]
+  g = gurusoup.p.contents[0]
   d = json.loads(g)
   guruarr = []
   for key in d:

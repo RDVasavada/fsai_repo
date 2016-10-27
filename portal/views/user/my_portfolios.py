@@ -29,10 +29,10 @@ def my_portfolios(request):
             #all_portfolios = Portfolio.objects.raw('SELECT * FROM portal_portfolio WHERE user_id = %s', [portalUser.id])
             #print(all_portfolios)
             for port in all_portfolios:
+                print(str(port))
                 # print(str(port.id) + "|" + port.name)
                 port.stocks = port.stock_set.all()
-                #print(port.stock_set.all())
-                #for stock in port.stock_set:
+                #print(port.stock_set.all())_set:
                     #print(str(stock.id) + " | " + stock.ticker)
 
 

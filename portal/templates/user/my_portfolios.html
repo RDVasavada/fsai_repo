@@ -112,7 +112,7 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                                                 </table>
                                                 </div>                    
                                                 <div class="footer" style="text-align:center">
-
+   
                                                      <button type="button" class="btn btn-default btn-clean center" onClick="goStock('{{stock.ticker}}')">See in Detail</button>             
                                                 </div>
                                             </div>
@@ -137,7 +137,9 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                                 <div class="col-md-3" style="margin-top:10px">
                                             <div class="block">
                                                 <div class="header">
-                                                   <h5 id="pn" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.name}}</h5>       
+                                                   <h5 id="pn" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.name}}</h5>
+                                                                                <a type="button" style="position:relative;bottom:25px;float:right" href="https://www.portfoliovisualizer.com/backtest-portfolio?s=y&timePeriod=4&startYear=1985&firstMonth=1&endYear=2016&lastMonth=12&endDate=10%2F26%2F2016&initialAmount=10000&annualOperation=0&annualAdjustment=0&inflationAdjusted=true&annualPercentage=0.0&frequency=4&rebalanceType=1&showYield=false&reinvestDividends=true{% if portfolio.stocks %}{% for stock in portfolio.stocks %}&symbol{{forloop.counter}}={{stock.ticker}}&allocation{{forloop.counter}}_1={%if forloop.counter < 11%}6.67{%else%}6.666{%endif%}{% endfor %}{% endif %}"
+                                                 target="_blank" class="btn btn-default btn-clean center">Back Test</a>   
                                                 </div>                    
                                                 <div class="content" style="height:250px">
                                                 <table class="table table-hover">
@@ -162,9 +164,9 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                                                         </tr> 
                                                     </tbody>
                                                 </table>
+
                                                 </div>                    
                                                 <div class="footer" style="text-align:center">
-
                                                     <a href="/user/individual_portfolio/{{portfolio.id}}" data-toggle="tab" aria-expanded="false" id="a{{portfolio.id}}" type="button" class="btn btn-default btn-clean center">See in Detail
                                                     </a>         
                                                 </div>
