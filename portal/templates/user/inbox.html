@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 <!-- {% load render_bundle from webpack_loader %} -->
 {% block content %}
-<script>
-
-localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
-</script>
 
   
 <div class="sceneElement" data-viewport="0">
@@ -18,14 +14,7 @@ localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
    
       <!--           <a href="/user/starred" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-star" style="padding:0px"></span>Starred<i class="icon-angle-right pull-right"></i></a>
                 <a href="/user/deleted" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-trash" style="padding:0px"></span>Deleted<i class="icon-angle-right pull-right"></i></a>      -->   
-<script>
-var hyperchat = (function() {
-    $("#selected")[0].value = 0
-    var user = {'id': 0, 'status': 'bot', 'user': 'Hyperchat Bot'}
-    localStorage.setItem('user',JSON.stringify(user))
-    $("#chosenuser")[0].innerText = ":: Hyperchat Bot"
-})
-</script>
+
                 <a href="#" onClick="hyperchat()" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-gears" style="padding:0px"></span>Hyperchat<i class="icon-angle-right pull-right"></i></a>
  <!-- {% render_bundle 'main' %} -->
                 <div id="acontainer">
@@ -119,8 +108,8 @@ var hyperchat = (function() {
                     </div>
                     <div class="stepone" style="display:none;padding-left:25px;margin-bottom:10px"></div>
                     <div class="input-group" id="addfriend" style="padding-left:25px;margin-top:10px">
-                        <input type="text"  class="form-control" id="query" name="query" placeholder="Search by Username or Email ..." style="width:40vw">
-                            <input class="form-control" name="sendId" id="selected" style="display:none"></input>
+                        <input type="text"  class="form-control" id="query" name="query" placeholder="Search by Username or Email ..." style="width:35vw">
+                            <input class="form-control" name="sendId" id="selected" style="display:none" value="0"></input>
                             <input class="form-control" name="sendId" id="selectedId" style="display:none" value="0"></input>
                         <span class="input-group-btn">
                             <button class="btn" onClick="addfriend()"><span class="icon-chevron-right"></span></button>
@@ -134,34 +123,15 @@ var hyperchat = (function() {
 {% block scripts %}
 <script src="/static/js/user/inbox.js"></script>
 <script>
-
-
-
-
-
-// let addfriend = function() {
-//     var username = $("#query")[0].value
-//     console.log(username)
-//     $.ajax({
-//         type: 'POST',
-//         url: '/user/addconnection',
-//         data: {'query':username}
-//     }).done(function(result){
-//         if (result.data == 0){
-//             $(".stepone").css('display','none')
-//             $("#statusbar_8").css('height','150px')
-//             $(".stepone")[0].innerText = "We could not find a user by that name or email. Try Again!"
-//             $(".stepone").css('display','initial')
-//         } else{
-//             $("#addfriend").css('display','none')
-//             $("#statusbar_8").css('height','150px')
-//             $(".stepone")[0].outerHTML = "<img src='/static/img/loader.gif' style='display:block;margin:auto;padding-top:20px'></div>"
-//             setTimeout(function(){ 
-//                 window.location = "/user/inbox";
-//             }, 200);
-            
-//         }
-//     })
-// }
+localStorage.setItem('user',JSON.stringify({'id':0,'status':'none'}))
 </script>
+<script>
+var hyperchat = (function() {
+    $("#selected")[0].value = 0
+    var user = {'id': 0, 'status': 'bot', 'user': 'Hyperchat Bot'}
+    localStorage.setItem('user',JSON.stringify(user))
+    $("#chosenuser")[0].innerText = ":: Hyperchat Bot"
+})
+</script>
+         
 {% endblock %}

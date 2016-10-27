@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="nav">
-    <a href="/user/portfolio_settings" data-target="-1" style=";margin-right:50px;float:right">           
-      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
-    <a href="/user/my_portfolios" data-target="1" style=";margin-left:50px;float:left">
-       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
-    </a>
-  </div>  
+ 
 <div class="sceneElement" data-viewport="0">
     <div class="row" style="background:rgba(0,0,0,0.6)">
  <div class="col-lg-8 col-md-8 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:100%;padding-left:35px;padding-top:50px">
@@ -37,7 +31,7 @@
                     <div class="content" id="content1" style="height:325px;overflow:hidden">                   
                       <div class="loader" style="height:100%;text-align:center;top:35%;position:relative">
                         <img src="/static/img/loader.gif"><br><br>
-                        <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px">We are loading this stock's data! This may take a minute..</h2>
+                        <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px" id="loaderText">We are loading this stock's data! This may take a minute..</h2>
                       </div>
 <script>
 
@@ -139,6 +133,10 @@
     .attr('class', 'chart__range-selection')
     .attr('transform', 'translate(110, 0)');
   d3.csv('/user/stock_chart/{{company_symbol}}', type, function(err, data) {
+    if (data.length < 1) {
+      $("#loaderText").css('color','white')
+      return
+    } 
     var brush = d3.svg.brush()
       .x(x2)
       .on('brush', brushed);
@@ -401,7 +399,7 @@
              <div class="ibox-content" id="workCulture" style="display: block;padding:50px;border:1px solid rgba(0,0,0,0.2)">
                 <p>
                 CEO Name<br>
-                <h4 id="ceoName" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:36px;text-align:center;color:white">{{ company_stats.ceo.name }}</h4>
+                <h4 id="ceoName" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white">{{ company_stats.ceo.name }}</h4>
                 </p><br><br>
                 <p>CEO Approval Rating<br>
                 based on  {{ company_stats.ceo.numberOfRatings }} ratings
@@ -423,7 +421,13 @@
             </div>
         </div>            
     </div>
-
+ <div class="nav">
+    <a href="/user/portfolio_settings" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
+    <a href="/user/my_portfolios" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
+    </a>
+  </div>  
         </div>
         </div>               
        </div>

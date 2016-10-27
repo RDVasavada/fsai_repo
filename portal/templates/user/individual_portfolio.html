@@ -358,7 +358,7 @@ $("li#a" + url).attr('class','active')
         <h2 style="text-align:center;">{{ portfolio.name }}</h2>
     </div>
         <div class="content" style="background-color:rgba(0,0,0,0.6)">
-                    <div id="pieChart" style="text-align:center;position:absolute;left:25px;display:inline;top:50x;width:50%"></div>
+                    <div id="pieChart" style="text-align:center;position:absolute;left:25px;display:inline;top:50x;width:50%;height:500px"></div>
                 <script>
 
 var randomColor = (function(){
@@ -478,7 +478,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                 });
                 </script>
 
-                               <div id="pieChart2" style="text-align:center;position:absolute;right:25px;display:inline;top:50px"></div>
+                               <div id="pieChart2" style="text-align:center;position:absolute;right:25px;display:inline;top:50px;height:500px"></div>
                 <script>
                 
 var randomColor = (function(){
@@ -936,8 +936,8 @@ var piewidth = document.getElementById("pieChart").offsetWidth
 
 {% endblock %}
 {% block scripts %}
-<link href="/static/css2/d3.pie.css" rel="stylesheet">
  <script src="/static/js/user/individual_portfolio.js"></script>
+<link href="/static/css2/d3.pie.css" rel="stylesheet">
 
 
 {% endblock %}

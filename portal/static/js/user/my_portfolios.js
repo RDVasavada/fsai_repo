@@ -149,3 +149,18 @@ function renav(e) {
         console.log("asdf")
     }
 };
+  $('#tags').on('keypress', function (e) {
+         if(e.which === 13){
+            var inputval = $("#tags")[0].value
+            splitval = inputval.split('\[')
+            if (splitval.length === 2) {
+               window.location.assign($("h5:contains("+splitval[0].slice(0,-1)+")")[0].parentNode.parentNode.children[2].children[0].href)
+            } else {
+                goStock(splitval[0])
+            }
+                        //Disable textbox to prevent multiple submit
+            // $(this).attr("disabled", "disabled");
+
+            //Do Stuff, submit, etc..
+         }
+   });

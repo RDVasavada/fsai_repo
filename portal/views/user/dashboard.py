@@ -72,6 +72,14 @@ def dashboard(request):
   print("this is change !!")
   context_dict["total"] = '{:20,.2f}'.format(valtotal)
   picks = find()
+  sentiment = []
+  sentiment.append({'stock':'AAPL [Test Portfolio] ','sentiment':'+33'})
+  sentiment.append({'stock':'GOOGL [Test Portfolio] ','sentiment':'+23'})
+  sentiment.append({'stock':'BAIDU [Test Portfolio] ','sentiment':'-12'})
+  sentiment.append({'stock':'VAL [Test Portfolio] ','sentiment':'+28'})
+  sentiment.append({'stock':'TSLA [Test Portfolio] ','sentiment':'-12'})
+  sentiment.append({'stock':'YHOO [Test Portfolio] ','sentiment':'2'})
+  context_dict['sentiment'] = sentiment
   context_dict['picks'] = picks
   context_dict["portfolios"] = portfolios
   context_dict["username"] = username
@@ -80,9 +88,9 @@ def dashboard(request):
   html = t.render(context_dict)
   return HttpResponse(html)
 
-from bs4 import BeautifulSoup
-from urllib2 import urlopen
-import json
+# from bs4 import BeautifulSoup
+# from urllib2 import urlopen
+# import json
 def find():
   chosen = 1
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
@@ -93,7 +101,7 @@ def find():
   for key in d:
     for pick in d[key]["port"]:
       guruarr.append(pick)
-      if len(guruarr) == 24:
+      if len(guruarr) == 3:
         return guruarr
   return(guruarr)
 

@@ -9,7 +9,7 @@
                 </div>
                 <div class="block block-transparent nm">
 <input type="text" class="form-control" id="tags" name="tags" placeholder="Filter by portfolio . . ." style="font-size:12px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;font-family:'helvetica neue';font-weight: 100;line-height: 47px;margin-top: 15px;outline: medium none;margin-left:25px;margin-right:25px;width: 92%;margin-bottom:25px;letter-spacing:3px;height:50px">
-                    <div class="scroll-nail email-list mCustomScrollbar _mCS_1" style="height: 60vh;">
+                    <div class="scroll-nail email-list mCustomScrollbar _mCS_1" style="height: 60vh; overflow:hidden">
                         <div class="email-list-item" style="background:rgba(0,255,0,0.1)">
                             <div class="item-line">
                                 <div class="item-line-title" style="font-size:24px">
@@ -96,6 +96,13 @@ var nocus = function(id,name) {
     {% endif %}
 {% endfor %}                      
                  
+ <div class="nav">
+    <a href="/user/support" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
+    <a href="/user/portfolio_settings" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
+    </a>
+  </div>  
 
                     </div>
                 </div>
@@ -134,7 +141,7 @@ var nocus = function(id,name) {
 
 <div class="block block-transparent" style="background:rgba(0,0,0,0.2);height:auto">
                     
-                    <div class="scroll-pail" style="height:calc(70vh  - 318px)">
+                    <div class="scroll-pail" style="height:40vh">
                         
                         <div class="list-item">
                             <div class="list-title">
@@ -215,13 +222,6 @@ var nocus = function(id,name) {
     onclick="updateData()" />
 </div>
 
- <div class="nav">
-    <a href="/user/support" data-target="-1" style=";margin-right:50px;float:right">           
-      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
-    <a href="/user/portfolio_settings" data-target="1" style=";margin-left:50px;float:left">
-       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
-    </a>
-  </div>  
 {% endblock %}
 
 {% block scripts %}

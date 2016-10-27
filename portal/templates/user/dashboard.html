@@ -39,10 +39,10 @@ svg {
                             </ul>
                         </div>                        
                     </div>                  
-                    <div class="content" style="height:200px">
+                    <div class="content" style="height:150px">
                         <div style="text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%"> ${{ total }} </div>
                     </div>
-                    <div class="footer">
+                    <div class="footer" style="display:none">
                                       
                     </div>
         </div>
@@ -58,14 +58,14 @@ svg {
                             </ul>
                         </div>                        
                     </div>                  
-                    <div class="content" style="height:200px">
+                    <div class="content" style="height:150px">
                     {% if change < 0 %}
                         <div style="text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%;color:rgba(255,0,0,1)"> <span style="font-size:54px;">&uarr;</span>&nbsp;{{ change }}% </div>
                     {% else %}
                       <div style="text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%;color:rgba(0,255,0,1)"> <span style="font-size:54px;">&uarr;</span>&nbsp;{{ change }}% </div>
                     {% endif %}
                     </div>
-                    <div class="footer" >
+                    <div class="footer"style="display:none" >
                                       
                     </div>
                 </div>       
@@ -319,26 +319,32 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
 
             <div class="block" style="margin-left:25px;margin-right:25px;width:94%">
                 <div class="header">
-                       <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px">Your Top 10 Portfolios</h2>
+                       <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Your Top 10 Portfolios</h2>
                 </div>
-                <div class="content">
+                <div class="content" style="padding:0px">
 <div class="content">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Portfolio</h2> </th>
-                                    <th><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Value</h2> </th>
-                                    <th><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Unrealized Changes</h2> </th>
+                                    <th style="padding:0px;"><h2 style="padding:0px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">Portfolio</h2> </th>
+                                    <th style="padding:0px;"><h2 style="padding:0px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">Value</h2> </th>
+                                    <th style="padding:0px;"><h2 style="padding:0px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">Unrealized Changes</h2> </th>
                                 </tr>
                             </thead>
                             <tbody>
 {% for portfolio in portfolios %}
                                 <tr>
-                                    <td><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{forloop.counter}}</h2> </td>
-                                    <td><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.name}}</h2> </td>
-                                    <td><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.value}}$</h2> </td>
-                                    <td><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.change}}%</h2> </td>
+                                    <td style="padding:2px">
+                                       <a href="/user/individual_portfolio/{{portfolio.id}}">
+                                        <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{forloop.counter}}</h2> 
+                                        </a>
+                                    </td>
+                                    <td style="padding:2px">
+                                           <a href="/user/individual_portfolio/{{portfolio.id}}">
+                                        <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.name}}</h2> </td></a>
+                                    <td style="padding:2px">   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.value}}$</h2> </a></td>
+                                    <td style="padding:2px">   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:cente">{{portfolio.change}}%</h2> </td>
                                 </tr>
 {% endfor %}                    
                             </tbody>
@@ -696,10 +702,10 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
   </div>
 <div class="block block-transparent nm" >
        
-    <div class="scroll-nail email-list mCustomScrollbar _mCS_1" style="height:35vh;">
+    <div class="scroll-nail email-list mCustomScrollbar _mCS_1" style="height:30vh;overflow:hidden">
       <div id="pin">
 {% for x in news %}
-<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:22px;letter-spacing:3px'>{{x.title}}</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>{{x.description}}<br></div><div class='item-line-date'>{{x.pubDate}}</div></div></div></a>
+<a href={{x.link}} target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>{{x.title}}</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>{{x.description}}<br></div><div class='item-line-date'>{{x.pubDate}}</div></div></div></a>
   {% endfor %}
       </div>
                
@@ -707,7 +713,36 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     </div>
 
 </div> 
-  <div class="block" id="toppicks" style="margin-top:25px !important; display: initial;">
+ <div class="block" id="toppicks" style="margin-top:10px !important; display: initial;">
+    <div class="header">
+      <h2 style="letter-spacing:2px">Sentiment Updates</h2>
+    </div>
+    <div class="content list list-default">
+   
+  
+      </div>
+  </div> 
+<div class="block block-transparent nm">
+       
+    <div class="scroll-tail email-list" style="height:25vh;">
+ 
+{% for pick in sentiment %}
+       <div class="email-list-item" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';">
+            <div class="item-line-content" >
+
+            </div>
+            <div class="item-line">
+                <div class="item-line-content" style="font-size:22px">{{pick.stock}}: {{pick.sentiment}}</div>
+            </div>
+        </div>               
+{% endfor %}    
+<script type="text/javascript">
+  $(".scroll-tail").height('25vh').mCustomScrollbar();
+</script>          
+    </div>
+    
+</div>
+  <div class="block" id="toppicks" style="margin-top:5px !important; display: initial;">
     <div class="header">
       <h2 style="letter-spacing:2px">Top Picks</h2>
     </div>
@@ -718,7 +753,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
   </div> 
 <div class="block block-transparent nm">
        
-    <div class="scroll-tail email-list" style="height:40vh;">
+    <div class="scroll-jail email-list mCustomScrollbar _mCS_1" style="height:25vh;">
  
 {% for pick in picks %}
        <div class="email-list-item" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';">
@@ -732,9 +767,11 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
             </div>
         </div>               
 {% endfor %}    
+     
+   
 <script type="text/javascript">
-  $(".scroll-tail").height('40vh').mCustomScrollbar({theme:"dark-3", advanced: {autoScrollOnFocus: false}});
-</script>          
+  $(".scroll-tail").height('25vh').mCustomScrollbar({theme:"dark-3", advanced: {autoScrollOnFocus: false}});
+</script>     
     </div>
     
 </div>  

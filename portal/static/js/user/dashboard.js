@@ -1,4 +1,6 @@
 
+  $(".scroll-jail").mCustomScrollbar();
+
 
 
 // ** Update data section (Called from the onclick)

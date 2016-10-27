@@ -3,7 +3,6 @@ from django.conf.urls import patterns, url, include
 from django.conf import settings
 from django.conf.urls import patterns, url
 
-
 urlpatterns = patterns('',
 
     #User Authentication based views
@@ -30,6 +29,7 @@ urlpatterns = patterns('',
     (r'^user/guru_settings/?$', views.guru_settings),
     (r'^user/guru_scrape/(?P<guru_id>[0-9]+)/?$', views.guru_scrape), 
     (r'^user/guru_optimize/?$', views.guru_optimize),
+    (r'^user/guru_portfolio/(?P<guru_id>[0-9]+)/?$', views.guru_portfolio), 
     (r'^user/portfolio_optimize/?$', views.portfolio_optimize),
     (r'^user/save_portfolio/?$', views.save_portfolio),
     (r'^user/my_portfolios/?$', views.my_portfolios),

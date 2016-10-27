@@ -1,8 +1,8 @@
 function rerun() {
     url = String(window.location.href)
     if ((url.indexOf("dashboard")) > 0 ){
-        $.getScript("/static/assets/js/plugins/knob/jquery.knob.js")
-        $("input#risks").knob();
+        window.location.reload()
+        $.getScript("/static/assets/js/plugins.js")
         $('<link/>', {
            rel: 'stylesheet',
            type: 'text/css',
@@ -12,8 +12,9 @@ function rerun() {
         $.getScript("/static/assets/js/actions.js")
         $.getScript("/static/assets/js/plugins.js")
     } else if ((url.indexOf("inbox")) > 0 ) {
+        window.location.reload()
         $.getScript("/static/assets/js/actions.js")
-        // $.getScript("/static/js/user/inbox.js")
+        $.getScript("/static/js/user/inbox.js")
         $.getScript("/static/assets/js/plugins.js")
     } else if ((url.indexOf("sent")) > 0 ) {
         $.getScript("/static/assets/js/actions.js")
@@ -46,6 +47,7 @@ function rerun() {
         $.getScript("/static/assets/js/actions.js") 
         $.getScript("/static/assets/js/plugins.js")
     }else if ((url.indexOf("my_portfolios")) > 0 ) {  
+        window.location.reload()
         $.getScript("/static/assets/js/actions.js")
         $.getScript("/static/assets/js/plugins.js")
         $.getScript("/static/js/user/my_portfolios.js")
@@ -53,6 +55,7 @@ function rerun() {
         $.getScript("/static/js/user/news_portal.js")
         $.getScript("/static/assets/js/actions.js")
         $.getScript("/static/assets/js/plugins.js")
+        window.location.reload()
     }
     else if ((url.indexOf("support")) > 0 ) {  
         $.getScript("/static/js/user/support.js")
