@@ -4,6 +4,7 @@ from portal.models.base import BaseModel
 
 class Portfolio(BaseModel):
     name = models.TextField()
+    client_name = models.TextField()
     description = models.TextField()
     risk = models.IntegerField()
 
@@ -20,7 +21,7 @@ class Portfolio(BaseModel):
 
     '''
     def __init__(self, name=name, description=description, risk=risk, timeframe=timeframe, control_market=control_market,
-                 investment=investment, user=user):
+                 inv destment=investment, user=user):
         super(Portfolio, self).__init__(name=name, description=description, risk=risk, timeframe=timeframe, control_market=control_market,
                  investment=investment, user=user)
         self.name = name
