@@ -1,7 +1,23 @@
 {% extends "base.html" %}
 <!-- {% load render_bundle from webpack_loader %} -->
 {% block content %}
-
+<script>
+window.onbeforeunload = confirmExit;
+$.ajax({
+    url: '/user/addconnection',
+    type: 'POST',
+}).done(function(x) {
+    console.log(x)
+})
+function confirmExit(){
+$.ajax({
+    url: '/user/removeconnection',
+    type: 'POST',
+}).done(function(x) {
+    console.log(x)
+})
+}
+</script>
   
 <div class="sceneElement" data-viewport="0">
  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px;height:100%;color:black;overflow:hidden;height:90vh;min-width:200px" id="nopad">
@@ -10,7 +26,7 @@
             <h2>Direct Message</h2>
                      
         </div>
-            <div style="height:100%;display:inline-block;overflow:scroll;width:100%" id="innext">
+            <div style="height:91vh;display:inline-block;overflow:scroll;width:100%" id="innext">
    
       <!--           <a href="/user/starred" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-star" style="padding:0px"></span>Starred<i class="icon-angle-right pull-right"></i></a>
                 <a href="/user/deleted" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-trash" style="padding:0px"></span>Deleted<i class="icon-angle-right pull-right"></i></a>      -->   
@@ -18,8 +34,7 @@
                 <a href="#" onClick="hyperchat()" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-gears" style="padding:0px"></span>Hyperchat<i class="icon-angle-right pull-right"></i></a>
  <!-- {% render_bundle 'main' %} -->
                 <div id="acontainer">
-                </div>
-                <a href="#statusbar_8" class="list-group-item stbar" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-plus" style="padding:5px"></span>Add New Friend<i class="icon-angle-right pull-right"></i></a>
+                </div>  
             </div>
 <!-- 
         <div class="content list-group list-group-icons" style="height:100%;display:inline-block;overflow:scroll;padding-bottom:50px">
@@ -40,12 +55,12 @@
 </div>
 
 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7" style="height:90vh;padding-left:1px;padding-right:1px" id="intwo">
-    <div class="block block-drop-shadow" style="height:100%;background-color:transparent;margin-bottom:0px" id="inb">
+    <div class="block block-drop-shadow" style="height:100%;background-color:transparent;margin-bottom:0px;padding-bottom:100px" id="inb">
         <div class="header">
             <h2>Conversation :: </h2>
             <span id="chosenuser"></span>
         </div>
-        <div class="content messages mail-scroll mCustomScrollbar npr npt" style="height:80vh !important" id="incontent"> 
+        <div class="content messages mail-scroll mCustomScrollbar" style="height:90vh !important;" id="incontent"> 
             <div class="email-list-item list-active">
                 <div id="mcontainer">
                      {% render_bundle 'main' %}
@@ -74,9 +89,8 @@
                 </div>
               -->
             </div>
-        </div>
-        <div class="footer">
-            <div class="input-group">
+        <div class="footer" id="hooter" style="position:fixed;left:25vw;width:75vw;bottom:0px;height:50px;background:rgba(0,0,0,0.8);">
+            <div class="input-group" style="position:fixed;bottom:0px;padding-bottom:1vh">
                 <span class="input-group-addon"><i class="icon-comment"></i></span>
                 <!-- <input type="text" class="form-control" placeholder="message.."> -->
                 <input id="messageBody" type="text" name="message" class="form-control" placeholder="message..">
@@ -86,6 +100,7 @@
                 </span>
             </div>                        
         </div>        
+        </div>
     </div>
 </div>
 <div class="col-lg-2 col-md-2 col-sm-2"><div class="nav" id="navlast">

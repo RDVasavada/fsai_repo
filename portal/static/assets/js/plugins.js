@@ -24,7 +24,7 @@ $(document).ready(function(){
         });
     }    
     if($(".mail-scroll").length > 0){                
-        $(".mail-scroll").height('70vh').mCustomScrollbar()
+        $(".mail-scroll").mCustomScrollbar()
         $(".mail-scroll").mCustomScrollbar("update");
         setTimeout(function(){
             $(".mail-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia: 0});
@@ -35,9 +35,9 @@ $(document).ready(function(){
     // }
 var container1 = $('.scroll-nail');
 var container2 = $('.scroll-tail');
+var container3 = $('.scroll-sail')
 
-
-
+$(".scroll-sail").height('25vh').mCustomScrollbar();
 
 
    if($(".summary-scroll").length > 0){                

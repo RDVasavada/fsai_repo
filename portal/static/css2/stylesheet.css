@@ -42,7 +42,7 @@ body .ui-autocomplete .ui-menu-item .ui-corner-all {
 .bpl{background-position: left top;} .bpr{background-position: right top;} .bpc{background-position: center top;}
 
 html{height: 100%; min-height: 100%;}
-body{background: url('../img/background/bg_num1.jpg') left top repeat-x #082648 !important; font-family: 'Helvetica Neue Ultra Light', 'Helvetica', Arial, sans-serif; color: #FFF; height: 100%; font-weight:100 ; min-height: 100%; font-size: 12px;}
+body{background: url('../img/bg-11.jpg') left top repeat-x #082648 !important; font-family: 'Helvetica Neue Ultra Light', 'Helvetica', Arial, sans-serif; color: #FFF; height: 100%; font-weight:100 ; min-height: 100%; font-size: 12px;}
 form{margin: 0px;}
 
 a{color: #FFF; outline: 0 !important;}

@@ -1,7 +1,7 @@
 Filter_factor;condition;Filter_value
-DIVYIELD;;
+DIVYIELD;<=;6
 MARKETCAP;;
 NETMARGIN;;
-PE;;
+PE;<=;7
 PB;;
 EPUSD;;

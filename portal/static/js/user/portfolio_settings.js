@@ -203,7 +203,6 @@ function pe() {
 
     var mouseisdown = false;
     $("#theslider").mousedown(function(event) {
-        mouseisdown = true;
       change()
     }).mouseup(function(event) {
       change()
@@ -212,9 +211,9 @@ function pe() {
     function change() {
         var percent = String($("#theslider").css('left')).slice(0,-2)
         if (percent < 600) {
-          $("#investing_amount")[0].value = (1000 * (percent/400)).toFixed(2)
+          $("#investing_amount")[0].value = (25000 * (percent/400)).toFixed(2)
         } else {
-          $("#investing_amount")[0].value = (3000 * (percent/100)).toFixed(2)
+          $("#investing_amount")[0].value = (2500000 * (percent/100)).toFixed(2)
         }
     }
 

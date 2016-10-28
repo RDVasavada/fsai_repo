@@ -1,3 +1,4 @@
+$(".scroll-nail").height('60vh').mCustomScrollbar()
 var d3;
 var margin = {top: 25, right: 25, bottom: 50, left: 50},
     width = 600 - margin.left - margin.right,
@@ -183,3 +184,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
 
     });
 }
+
+
+
+

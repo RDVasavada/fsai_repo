@@ -43,15 +43,13 @@ urlpatterns = patterns('',
     (r'^user/support/?$', views.support),
 
     (r'^user/inbox/?$', views.inbox),    
-    (r'^user/sent/?$', views.sent), 
 
     #twilio views
     (r'^user/addconnection/?$', views.addconnection),   
-    (r'^user/accept/?$', views.accept),   
+    (r'^user/removeconnection/?$', views.removeconnection),   
     (r'^user/getconnections/?$', views.getconnections),   
     (r'^user/getmsg/?$', views.getmsg),   
     (r'^user/delmsg/?$', views.delmsg),   
-    (r'^user/getsent/?$', views.getsent),   
     (r'^user/sendmsg/?$', views.sendmsg),   
     (r'^user/delfriend/?$', views.delfriend),   
 

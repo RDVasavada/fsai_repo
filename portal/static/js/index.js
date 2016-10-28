@@ -45,17 +45,17 @@ var SMSList = React.createClass({
 var MSGList = React.createClass({
     loadMessagesFromServer: function() {
         var chosen = JSON.parse(localStorage.getItem('user')).id;
-        var status = JSON.parse(localStorage.getItem('user')).status;
         $.ajax({
             url: "/user/getmsg",
             datatype: 'json',
-            data: {'selected' : chosen, 'status': status},
+            type: 'GET',
+            data: {'selected' : chosen},
             cache: false,
             success: function(data) {
                 if (status == "newfriend") {
-                    this.setState({data: data.data, status:-1, chosen_id: String(chosen)})
+                    this.setState({data: data.data})
                 } else {
-                    this.setState({data: data.data, status: 'friend'})
+                    this.setState({data: data.data})
                 }
             }.bind(this)
         })
@@ -625,7 +625,6 @@ var ContactList = React.createClass({
             var texts = a.map(function(x,i){
                 return(
                     <div style={divStyle}>
-                        <FaTrash onClick={() => { delFriend(x.id) }} style={icon} />
                         <a href="#" onClick={() => { select(x.id, x.status, x.username) }} style={linkStyle}>{x.username}</a>
                     </div>
                 )
@@ -651,11 +650,11 @@ var delFriend = (function(id) {
 var select = (function(id, status, username) {
     $("#selected")[0].value = id
     if (status == 'New Friend Request') {
-        $("#chosenuser")[0].innerText = " :: " + String(username)
+        $("#chosenuser")[0].innerText = " " + String(username)
         var user = {'id': String(id), 'status': 'newfriend', 'user':String(username)}
         localStorage.setItem('user',JSON.stringify(user))
     } else {
-        $("#chosenuser")[0].innerText = " :: " + String(username)
+        $("#chosenuser")[0].innerText = " " + String(username)
         var user = {'id':String(id), 'status':'friends', 'user':String(username)}
         localStorage.setItem('user',JSON.stringify(user));
     }                

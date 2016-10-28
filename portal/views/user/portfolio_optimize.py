@@ -29,16 +29,17 @@ def portfolio_optimize(request):
     eachStockresult['expectedRisk'] = (request.POST['expRisk'])
     eachStockresult['expectedReturn'] = (request.POST['expReturn'])
     optimizeSearchResults.append(eachStockresult)
-    stocks = ['VNET','AKAM','BCOR','WIFI','CARB','JRJC','CCIH','CNV ','CCOI','ELNK','ENV ','FB','GDDY','GOOGL','IAC ','IIJI','INAP ','IPAS','JCOM','LOGL','LLNW','MEET','MEET','MOMO','NTES','NEWC','EGOV','NQ  ','OTOW','OPESY','PTOP','PPPI','RAX ','BLNK','NAME','SIFY','SINA','SMCE','SOHU','FCCN','SNST','TCTZF','TCEHY','DIDG','TMMI','TRON','TCX','TWTR','VLTC','WEB','JMU','XNET','YHOO','YAHOY','YNDX','YOOIF','YIPI']
+    stocks = ['VNET','AKAM','BCOR','WIFI','CARB','JRJC','CCIH','CNV','CCOI','ELNK','ENV','FB','GDDY','GOOGL','IAC','IIJI','INAP','IPAS','JCOM','LOGL','LLNW','MEET','MEET','MOMO','NTES','NEWC','EGOV','NQ','OTOW','OPESY','PTOP','PPPI','RAX','BLNK','NAME','SIFY','SINA','SMCE','SOHU','FCCN','SNST','TCTZF','TCEHY','DIDG','TMMI','TRON','TCX','TWTR','VLTC','WEB','JMU','XNET','YHOO','YAHOY','YNDX','YOOIF','YIPI']
     numshares = int(request.POST['stocks_number'])/2
     context_dict = {}
-    context_dict['stock_invest'] = int(request.POST['investing_amount'])/int(request.POST['stocks_number'])
+    context_dict['stock_invest'] = float(request.POST['investing_amount'])/float(request.POST['stocks_number'])
     context_dict['investingAmount'] = (request.POST['investing_amount'])
     context_dict['market'] = (request.POST['Market'])
     context_dict['Months'] = (request.POST['Months'])
     context_dict['Years'] = (request.POST['Years'])
     context_dict['expectedReturn'] = (request.POST['expReturn'])
     context_dict['expectedRisk'] = (request.POST['expRisk'])
+    time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     if request.POST['portname'] == "":
         context_dict['portname'] = "Test Portfolio"
     else: 
@@ -51,6 +52,7 @@ def portfolio_optimize(request):
                     "('" + str(context_dict['portname']) + "','" + str(time) + "','" + str(time) + "','" + str(description) + "','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['Years']) + "','" + str('S') + "','" + str(context_dict['investingAmount']) + "','" + str(userid) + "','" + str(client_name) + "')")
     cursor.execute("SELECT LAST_INSERT_ID();")
     show_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
+    context_dict['portfolio_id']  = show_id
     newstocks = []  
     for num in range(numshares):
         cursor = connection.cursor()

@@ -13,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 import json 
 import re
+import quandl
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
 from urllib2 import urlopen
@@ -95,13 +96,13 @@ def find():
   chosen = 1
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
   gurusoup = BeautifulSoup(urlopen(guru))
-  g = gurusoup.p.contents[0]
+  g = gurusoup.body.contents[0]
   d = json.loads(g)
   guruarr = []
   for key in d:
     for pick in d[key]["port"]:
       guruarr.append(pick)
-      if len(guruarr) == 3:
+      if len(guruarr) == 24:
         return guruarr
   return(guruarr)
 
@@ -123,33 +124,32 @@ def portfolio_chart(request, portfolio_id):
   portClose = []
   portAverage = []
   for stock in stocks:
-    share = Share(str(stock['ticker']))
     today = date.today()
     print(today)
     end = today.replace(year=today.year - 1)
     print(end)
-    shares = share.get_historical(str(end),str(today))
+    u = "EOD/" + str(stock['ticker'])
+    mydata = quandl.get(u, start_date=end, end_date=today)
     if len(portDate) == 0:
-      for share in shares:
-        portClose.append(float(share["Close"]))
-        portVolume.append(float(share["Volume"]))
-        portAverage.append(float(share["Low"]))
-        portDate.append(share["Date"])
+      for item in mydata.index:
+        portDate.append(str(item)[0:10])
+      for item in mydata['Close']:
+        portClose.append(float(item))
+        portAverage.append(float(item))
+      for item in mydata['Volume']:
+        portVolume.append(float(item))
     else:
       incomingClose = []
       incomingVolume = []
       incomingAverage = []
-      for share in shares:
-        incomingClose.append(float(share["Close"]))
-        incomingVolume.append(float(share["Volume"]))
-        incomingAverage.append(float(share["Low"]))
+      for item in mydata['Close']:
+        incomingClose.append(float(item))
+        incomingAverage.append(float(item))
+      for item in mydata['Volume']:
+        incomingVolume.append(float(item))
       portClose = map(sum, zip(portClose, incomingClose))
       portVolume = map(sum, zip(portVolume, incomingVolume))
-      portAverage = map(sum, zip(portAverage, incomingAverage))
-  portDate.reverse()
-  portVolume.reverse()
-  portClose.reverse()
-  portAverage.reverse()      
+      portAverage = map(sum, zip(portAverage, incomingAverage))    
   response = HttpResponse(content_type='text/csv')
   response['Content-Disposition'] = 'attachment; filename="data.csv"'
   writer = csv.writer(response)
@@ -165,42 +165,25 @@ def stock_chart(request, stock_name):
   portVolume = []
   portClose = []
   portAverage = []
-  # for stock in stocks:
-  print(stock_name)
-  share = Share(stock_name)
   today = date.today()
   print(today)
   end = today.replace(year=today.year - 1)
-  print(end)
-  shares = share.get_historical(str(end),str(today))
-  if len(portDate) == 0:
-    for share in shares:
-      print(share)
-      portClose.append(float(share["Close"]))
-      portVolume.append(float(share["Volume"]))
-      portAverage.append(float(share["Low"]))
-      portDate.append(share["Date"])
-  else:
-    incomingClose = []
-    incomingVolume = []
-    incomingAverage = []
-    for share in shares:
-      incomingClose.append(float(share["Close"]))
-      incomingVolume.append(float(share["Volume"]))
-      incomingAverage.append(float(share["Low"]))
-    portClose = map(sum, zip(portClose, incomingClose))
-    portVolume = map(sum, zip(portVolume, incomingVolume))
-    portAverage = map(sum, zip(portAverage, incomingAverage))
-  portDate.reverse()
-  portVolume.reverse()
-  portClose.reverse()
-  portAverage.reverse()      
-  print(portClose)
+  u = "EOD/" + str(stock_name)
+  mydata = quandl.get(u, start_date=end, end_date=today)
+  print(mydata)
+  for item in mydata.index:
+    print(str(item)[0:10])
+    portDate.append(str(item)[0:10])
+  for item in mydata['Close']:
+    portClose.append(float(item))
+    portAverage.append(float(item))
+  for item in mydata['Volume']:
+    portVolume.append(float(item))
   response = HttpResponse(content_type='text/csv')
   response['Content-Disposition'] = 'attachment; filename="data.csv"'
   writer = csv.writer(response)
   writer.writerow(['Date', 'Volume', 'Close', 'Average'])
-  for item in portDate:
-    print(item)
+  for item in mydata.index:
     writer.writerow([portDate.pop(0),portVolume.pop(0),portClose.pop(0),portAverage.pop(0)])
+  print(response)
   return response
