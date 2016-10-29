@@ -16,15 +16,15 @@ from portal.views.user.top_portfolios import *
 
 @csrf_exempt
 @login_required
-def individual_stock(request):
+def individual_stock(request, stock_name):
     context_dict = {}
-    context_dict["company_symbol"] = request.POST["company_name"]
-    print(request.POST["company_name"])
-    response = requests.get("http://chstocksearch.herokuapp.com/api/"+request.POST['company_name'])
+    context_dict["company_symbol"] = str(stock_name)
+    print(stock_name)
+    response = requests.get("http://chstocksearch.herokuapp.com/api/"+str(stock_name))
     try:
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(response.json()[0]['company'])
     except IndexError:
-        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(request.POST["company_name"]) + " stock"
+        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(stock_name) + " stock"
     print(url)
     news = requests.get(url)
     print(news.json()['response'])
@@ -40,7 +40,7 @@ def individual_stock(request):
             "t.p": "83856",
             "t.k": "cbW9p5pFQDw",
             "action": "employers",
-            "q": request.POST["company_name"],
+            "q": stock_name,
             # programmatically get the IP of the machine
             "userip": json.loads(urllib2.urlopen("http://ip.jsontest.com/").read().decode('utf-8'))['ip'],
             "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
@@ -73,6 +73,16 @@ def individual_stock(request):
     #     numStocks = jsonResponse['numStocks']
     # company_stats = jsonResponseresponse_gd.content
     # print(company_stats[0])
+    stats = requests.get("https://www.quandl.com/api/v3/datatables/SHARADAR/SF1.json?ticker=" + str(stock_name) + "&qopts.columns=ticker,ASSETTURNOVER,ASSETSAVG,BVPS,CURRENTRATIO,DE,DIVYIELD,EBITDA,EBITDAUSD,EBITDAMARGIN,EBT,EQUITYAVG,EV,EVEBIT,EVEBITDA,FCF,FCFPS,FXUSD,GROSSMARGIN,INVCAP,MARKETCAP,NETMARGIN,PE,PE1,PS1,PS,PB,ROIC,SPS,PAYOUTRATIO,ROA,ROE,ROS,TANGIBLES,TBVPS,WORKINGCAPITAL,ASSETS,ASSETSC,ASSETSNC,CASHNEQ,CASHNEQUSD,RECEIVABLES,INTANGIBLES,INVENTORY,LIABILITIES,LIABILITIESC,LIABILITIESNC,DEBT,DEBTUSD,DEBTC,DEBTNC,DEFERREDREV,DEPOSITS,INVESTMENTS,INVESTMENTSC,INVESTMENTSNC,PAYABLES,PPNENET,TAXASSETS,TAXLIABILITIES,EQUITY,EQUITYUSD,RETEARN,ACCOCI,NCFO,DEPAMOR,SBCOMP,NCFI,CAPEX,NCFBUS,NCFINV,NCFF,NCFDEBT,NCFCOMMON,NCFDIV,NCF,REVENUE,REVENUEUSD,COR,GP,RND,SGNA,OPEX,OPINC,EBIT,EBITUSD,INTEXP,TAXEXP,CONSOLINC,NETINCNCI,NETINC,PREFDIVIS,NETINCCMN,NETINCCMNUSD,NETINCDIS,EPS,EPSUSD,EPSDIL,SHARESWA,SHARESWADIL,DPS&calendardate.gte=2013-12-31&api_key=X8CjGKTPEqTuto2v_Q94")
+    stats = stats.json()['datatable']['data'][len(stats.json()['datatable']['data'])-1]
+    metrics = []
+    balance = []
+    for x in range(1,37):
+        metrics.append(stats[x])
+    for x in range(37,(37+28)):
+        balance.append(stats[x])
+    context_dict['metrics']=metrics
+    context_dict['balance']=balance
     context_dict["company_stats"] = company_stats
     if request.user.is_authenticated():
         username = request.user.username

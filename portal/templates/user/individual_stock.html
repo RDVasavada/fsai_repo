@@ -3,14 +3,14 @@
  
 <div class="sceneElement" data-viewport="0">
     <div class="row" style="background:rgba(0,0,0,0.6)">
- <div class="col-lg-8 col-md-8 col-sm-10" style="padding:0px;height:100%;color:black;overflow:hidden;height:100%;padding-left:35px;padding-top:50px">
+ <div class="col-lg-12 col-md-12 col-sm-12" style="background:rgba(0,0,0,0.6);padding-top:25px;padding-left:10vw;padding-right:10vw;height:100%;position:relative">
      <!-- <div class="col-lg-8 col-md-8 col-sm-8"> -->
 
         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:36px;text-align:center;color:white" id="companyName">{{company_symbol}} </h2>
         <span style="display:none" id="companySymbol">{{company_symbol}}</span>
         <div class="col-md-12 col-sm-12">
 
-        <div class="block" style="margin-right:25px;margin-left:25px;width:94%">
+        <div class="block" style="margin-right:25px;margin-left:25px;width:94%;-webkit-box-shadow:initial">
                     <div class="header">
                         <h2>{{portfolio.name}} </h2>
                         <div class="side pull-right">                            
@@ -18,17 +18,30 @@
                                 <li class="btn-group">                                    
                                     <a href="#" class="dropdown-toggle tip" title="" data-toggle="dropdown" data-original-title="More"><span class="icon-align-justify"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Portfolio Details</a></li>
-                                        <li><a href="#">Export portfolio as .CSV</a></li>
-                                        <li><a href="#">Export performance as .CSV</a></li>  
+                                        <li><a href="#">Export Stock Data as .CSV</a></li>  
                                     </ul>                                                                            
                                 </li>
-                                <li><a href="#" class="block-toggle tip" title="" data-original-title="Show"><span class="icon-chevron-down"></span></a></li>
-                                <li><a href="#" class="block-remove tip" title="" data-original-title="Remove"><span class="icon-remove"></span></a></li>
                             </ul>
-                        </div>                        
-                    </div>                  
-                    <div class="content" id="content1" style="height:325px;overflow:hidden">                   
+                        </div>     
+                                           <ul class="nav nav-tabs" style="position: initial;width: initial;left: initial;top: initial;margin: initial;padding: initial;list-style: initial;">
+                        <li><a href="#tab5" data-toggle="tab">Historical Graph</a></li>
+                        <li class="active"><a href="#tab6" data-toggle="tab">Company Related News</a></li>
+                        <li><a href="#tab7" data-toggle="tab">Income Statement</a></li>
+                        <li><a href="#tab8" data-toggle="tab">Cashflow Statement</a></li>
+                        <li><a href="#tab9" data-toggle="tab">Balance Sheet</a></li>
+                        <li><a href="#tab10" data-toggle="tab">Metrics</a></li>
+                        <li><a href="#tab11" data-toggle="tab">Work Culture</a></li>
+                        <li><a href="#tab12" data-toggle="tab">Future Sentiment</a></li>
+                    </ul>                   
+                    </div>   
+
+
+
+ 
+                    <div class="content content-transparent tab-content" style="color:white">
+                        <div class="tab-pane" id="tab5">
+                            <p>
+                                                  <div class="content" id="content1" style="height:325px;overflow:hidden">                   
                       <div class="loader" style="height:100%;text-align:center;top:35%;position:relative">
                         <img src="/static/img/loader.gif"><br><br>
                         <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px" id="loaderText">We are loading this stock's data! This may take a minute..</h2>
@@ -340,10 +353,305 @@
 </script>
               
                     </div>
-                    <div class="footer" style="width:95%;display:none;margin-right:25px;margin-left:25px">
-<h2 style="font-size:18px;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">{{portfolio.risk}}% Expected Risk on a {{portfolio.investment}}$ investment into {{portfolio.no_of_tickers}} shares.</h2>
+                  
+                            </p>
+                        </div>
+                        <div class="tab-pane active" id="tab6">
+                            <p>            
+                <div class="content np" style="background:transparent">
+                    <div class="content list-group" id="newsfeed">
+                      <!-- <div class="row"> -->
+                        {% for news in newsheadline %}
+  <a href="{{news.web_url}}" target="_blank" >
+                        <div class="col-lg-3">
+                          <div class="block">
+                              <div class="header" style="height:75px">
+                                 <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:1px;font-size:10px;text-align:center;color:white" id="companyName">{{news.headline.main}}
+                                 </h2>
+                              
+                              </div>
+                          <div class="content" style="height:125p;font-size:12px">
+                                {{news.snippet}}
+                            </div>
+                          </div>
+                        </div>
+</a>
+                        {% endfor %}
+                      <!-- </div> -->
                     </div>
-                </div>      
+                    <div class="content list-group" id="noNews" style="display:none;padding:50px;background:transparent">
+                        <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white;text-align:center" id="companyName"> No Headlines Available </h2>
+                    </div>                    
+                </div>                 
+            </div></p>
+
+                        <div class="tab-pane" id="tab7">
+                            <p>Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</p>
+                        </div>      
+
+                        <div class="tab-pane" id="tab8">
+                            <p>Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</p>
+                        </div>      
+
+
+                        <div class="tab-pane" id="tab9">
+                            <p>
+                              <table class="table table-hover">
+                                <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Total Assets</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Current Assets
+</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Assets Non-Current
+</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Cash and Equivalents
+</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Cash and Equivalents (USD)
+</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Trade and Non-Trade Receivables
+</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Goodwill and Intangible Assets
+</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Inventory</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Total Liabilities
+</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Current Liabilities
+</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Liabilities Non-Current
+</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Total Debt
+</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
+                                        <td style="text-align:left">{{balance.0}}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </p>
+                        </div>      
+
+
+                        <div class="tab-pane" id="tab10">
+                            <p>
+  <table class="table table-hover">
+                            <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Asset Turnover</td>
+                                    <td style="text-align:left">{{metrics.1}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Average Assets</td>
+                                    <td style="text-align:left">{{metrics.2}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Book Value per Share</td>
+                                    <td style="text-align:left">{{metrics.3}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Current Ratio</td>
+                                    <td style="text-align:left">{{metrics.4}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Debt to Equity Ratio</td>
+                                    <td style="text-align:left">{{metrics.5}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Dividend Yield</td>
+                                    <td style="text-align:left">{{metrics.6}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Earnings Before Interest and Taxes</td>
+                                    <td style="text-align:left">{{metrics.7}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Earnings Before Interest (USD)</td>
+                                    <td style="text-align:left">{{metrics.8}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">EBITDA Margin</td>
+                                    <td style="text-align:left">{{metrics.9}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Earnings beore Tax</td>
+                                    <td style="text-align:left">{{metrics.10}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Average Equity</td>
+                                    <td style="text-align:left">{{metrics.11}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Enterprice Value over EBIT</td>
+                                    <td style="text-align:left">{{metrics.12}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Enterprise Value over EBITDA</td>
+                                    <td style="text-align:left">{{metrics.13}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Free Cash Flow</td>
+                                    <td style="text-align:left">{{metrics.14}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Free Cash Flow per Share</td>
+                                    <td style="text-align:left">{{metrics.15}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Foreign Currency to USD Exchange Rate</td>
+                                    <td style="text-align:left">{{metrics.16}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Gross Margin</td>
+                                    <td style="text-align:left">{{metrics.17}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Invested Capital</td>
+                                    <td style="text-align:left">{{metrics.18}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Invested Capital Average</td>
+                                    <td style="text-align:left">{{metrics.19}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Market Cap</td>
+                                    <td style="text-align:left">{{metrics.20}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Profit Margin</td>
+                                    <td style="text-align:left">{{metrics.21}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Price Earnings Damodaran Method (PE)</td>
+                                    <td style="text-align:left">{{metrics.22}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Price to Earnings Ratio (PE1)</td>
+                                    <td style="text-align:left">{{metrics.23}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Price to Sales Ratio (PS1)</td>
+                                    <td style="text-align:left">{{metrics.24}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Price Sales Damodaran Method (PS)</td>
+                                    <td style="text-align:left">{{metrics.25}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Price to Book Value (PB)</td>
+                                    <td style="text-align:left">{{metrics.26}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Return on Invested Capital</td>
+                                    <td style="text-align:left">{{metrics.27}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Sales per Share</td>
+                                    <td style="text-align:left">{{metrics.28}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Payout Ratio</td>
+                                    <td style="text-align:left">{{metrics.29}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Return on Average Assets</td>
+                                    <td style="text-align:left">{{metrics.30}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Return on Average Equity</td>
+                                    <td style="text-align:left">{{metrics.31}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Return on Sales</td>
+                                    <td style="text-align:left">{{metrics.32}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Tangibles</td>
+                                    <td style="text-align:left">{{metrics.33}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Tangible Asset Book Value per Share</td>
+                                    <td style="text-align:left">{{metrics.34}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;width:50%;border-right:1px solid white">Working Capital</td>
+                                    <td style="text-align:left">{{metrics.35}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                            </p>
+                        </div>      
+
+
+                        <div class="tab-pane" id="tab12">
+                            <p>    
             <div class="block block-drop-shadow" style="width:94%;margin-left:25px;margin-right:25px">
             <div class="header">   
                          <h2>Future of Stock</h2>
@@ -362,22 +670,16 @@
                        </h2>
                    
                  </div>
-            </div>         
-            <div class="block block-drop-shadow" style="width:94%;margin-left:25px;margin-right:25px">
-            <div class="header">   
-                     <h2>Company Related News Articles</h2>
-                </div>
-                <div class="content np" style="background:transparent">
-                    <div class="content list-group" id="newsfeed">
-                        {% for news in newsheadline %}
-                        <a href="{{news.web_url}}" target="_blank" class="list-group-item">{{news.headline.main}}</a>
-                        {% endfor %}
+            </div>   </p>
+                        </div>  
+
+            <div class="tab-pane" id="tab11">
+                            <p>Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</p>
+                        </div>      
+                      
                     </div>
-                    <div class="content list-group" id="noNews" style="display:none;padding:50px;background:transparent">
-                        <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white;text-align:center" id="companyName"> No Headlines Available </h2>
-                    </div>                    
-                </div>                 
-            </div>
+           
+      
         </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12" style="padding-top:100px">

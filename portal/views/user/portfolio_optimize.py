@@ -11,8 +11,41 @@ from django.contrib.auth.decorators import login_required
 from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
 from django.db import connection
+from django.http import JsonResponse
 from portal.models.data.stock import Stock
 from portal.views.user import top_portfolios
+
+@login_required
+@csrf_exempt
+def removeportfolio(request, portfolio_id):
+    if request.user.is_authenticated():
+        username = request.user.username
+        userid = request.user.id
+        cursor = connection.cursor()
+        cursor.execute("DELETE from `portal_stock`"
+                        " WHERE show_id = " + str(portfolio_id) + "")
+        cursor.execute("DELETE from `portal_portfolio`"
+                    " WHERE id = " + str(portfolio_id) + " AND user_id = " + str(userid) + "")
+        return JsonResponse({'data':'complete'})
+@login_required
+@csrf_exempt
+def saveportfolio(request, portfolio_id):
+    if request.user.is_authenticated():
+        username = request.user.username
+        userid = request.user.id
+        cursor = connection.cursor()
+        # cursor.execute("CREATE TEMPORARY TABLE `tmp_stock` SELECT * FROM `portal_stock` WHERE show_id = " + str(portfolio_id) + ";"
+        #                 "UPDATE `tmp_stock` SET id = NULL;"
+        #                 "INSERT INTO `portal_stock` SELECT * FROM `tmp_stock`;"
+        #                 "DROP TEMPORARY TABLE IF EXISTS `tmp_stock`;")
+        cursor.execute("CREATE TEMPORARY TABLE `tmp_portfolio` SELECT * FROM `portal_portfolio` WHERE id = " + str(portfolio_id) + " AND user_id = " + str(userid) + ";"
+                "UPDATE `tmp_portfolio` SET id = " + str(int(portfolio_id) + 1) + ";"
+                "INSERT INTO `portal_portfolio` SELECT * FROM `tmp_portfolio`;"
+                "DROP TEMPORARY TABLE IF EXISTS `tmp_portfolio`;")
+        cursor.close()
+        cursor = connection.cursor()
+        cursor.execute("UPDATE portal_stock SET show_id = " + str(int(portfolio_id) + 1) + " WHERE show_id = " + str(portfolio_id) + ";")
+        return JsonResponse({'data':'complete'})
 
 @login_required
 @csrf_exempt
@@ -135,3 +168,4 @@ def dictfetchall(cursor):
         dict(zip([col[0] for col in desc], row))
         for row in cursor.fetchall()
     ]    
+

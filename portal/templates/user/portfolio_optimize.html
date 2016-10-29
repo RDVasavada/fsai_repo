@@ -12,23 +12,11 @@
                                     <button type="button" class="btn btn-default btn-clean dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                       <span class="caret"></span>
                                     </button>
-<script>
-let pdf = function() {
-    $.ajax({
-        url: '/user/renderpdf',
-        data: {'htm':$("#main")[0].outerHTML},
-        dataType: 'json',
-        type: 'GET'
-    }).done(function(a){
-        console.log(a)
-    })
-}
-</script>
                                     <ul class="dropdown-menu" role="menu">
-                                      <li><a href="#" onClick="pdf()">Export as PDF</a></li>
-                                      <li><a href="#" >Export as CSV</a></li>
+                                     <li><a href="/user/backtest/{{portfolio_id}}" target="_blank">Back-Test Portfolio</a></li>
+                                      <li><a href="#" onClick="downloadCsv()">Export as CSV</a></li>
                                       <li class="divider"></li>
-                                      <li><a href="#">Save Portfolio</a></li>
+                                      <li><a href="#" onClick="savePortfolio()">Save Portfolio</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -93,7 +81,7 @@ let pdf = function() {
      // .attr('class', 'chart')
      //responsive SVG needs these 2 attributes and no width and height attr
      .attr("preserveAspectRatio", "none")
-     .attr("viewBox", "0 0 1100 325")
+     .attr("viewBox", "0 0 1200 325")
       .style("max-height", "265") 
       .style("min-height", "265") 
       .append("g")
@@ -554,7 +542,7 @@ let pdf = function() {
                         <th class="text-center">Expected Risk</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="optimizedPortfolio">
 
                     {% for stock in newstocks %}<tr>
                         <td class="text-center"><a href="#" onClick=goStock(this) id="stockLink">{{stock}}</a></td>
@@ -628,6 +616,27 @@ let pdf = function() {
 {% block scripts %}
  <script src="/static/js/user/portfolio_optimize.js"></script>
  <link href="/static/css2/d3.pie.css" rel="stylesheet">
+ <script> 
+
+window.onbeforeunload = confirmExit;
+function confirmExit(){
+$.ajax({
+    url: '/user/removeportfolio/{{portfolio_id}}',
+    type: 'POST',
+}).done(function(x) {
+    console.log(x)
+})
+}
+
+var savePortfolio = function(){
+$.ajax({
+    url: '/user/saveportfolio/{{portfolio_id}}',
+    type: 'POST',
+}).done(function(x) {
+    console.log(x)
+})
+}
+</script>
 {% endblock %}
 
 
