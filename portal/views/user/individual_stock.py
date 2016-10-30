@@ -9,7 +9,9 @@ from django.template import RequestContext, Context, loader
 from django.contrib.auth.decorators import login_required
 from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
+from urllib2 import urlopen
 from django.db import connection
+import csv
 from portal.models.data.stock import Stock
 from portal.views.user.top_portfolios import *
 
@@ -19,20 +21,20 @@ from portal.views.user.top_portfolios import *
 def individual_stock(request, stock_name):
     context_dict = {}
     context_dict["company_symbol"] = str(stock_name)
-    print(stock_name)
-    response = requests.get("http://chstocksearch.herokuapp.com/api/"+str(stock_name))
+    url = "http://finance.yahoo.com/d/quotes.csv?s="+str(stock_name)+"&f=sn"
+    response = urlopen(url)
+    cr = csv.reader(response)
+    for row in cr:
+        CompanyName = row[1]
+        context_dict['company_name'] = CompanyName
     try:
-        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(response.json()[0]['company'])
+        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(CompanyName)
     except IndexError:
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(stock_name) + " stock"
     print(url)
     news = requests.get(url)
     print(news.json()['response'])
     context_dict["newsheadline"] = news.json()['response']['docs']
-    try:
-        context_dict["company_name"] = response.json()[0]['company']
-    except IndexError:
-        context_dict["company_name"] = response.json()
     try: 
         params_gd = OrderedDict({
             "v": "1",
@@ -77,12 +79,20 @@ def individual_stock(request, stock_name):
     stats = stats.json()['datatable']['data'][len(stats.json()['datatable']['data'])-1]
     metrics = []
     balance = []
-    for x in range(1,37):
+    cash = []
+    income = []
+    for x in range(0,36):
         metrics.append(stats[x])
-    for x in range(37,(37+28)):
+    for x in range(36,(36+27)):
         balance.append(stats[x])
+    for x in range((36+27),(36+28+12)):
+        cash.append(stats[x])
+    for x in range((36+28+12),(36+28+13+24)):
+        income.append(stats[x])
     context_dict['metrics']=metrics
     context_dict['balance']=balance
+    context_dict['cash']=cash
+    context_dict['income']=income
     context_dict["company_stats"] = company_stats
     if request.user.is_authenticated():
         username = request.user.username

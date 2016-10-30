@@ -6,7 +6,7 @@
  <div class="col-lg-12 col-md-12 col-sm-12" style="background:rgba(0,0,0,0.6);padding-top:25px;padding-left:10vw;padding-right:10vw;height:100%;position:relative">
      <!-- <div class="col-lg-8 col-md-8 col-sm-8"> -->
 
-        <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:36px;text-align:center;color:white" id="companyName">{{company_symbol}} </h2>
+        <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:36px;text-align:center;color:white" id="companyName">{{company_name}} </h2>
         <span style="display:none" id="companySymbol">{{company_symbol}}</span>
         <div class="col-md-12 col-sm-12">
 
@@ -386,11 +386,184 @@
             </div></p>
 
                         <div class="tab-pane" id="tab7">
-                            <p>Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</p>
+                          <p>
+                             <table class="table table-hover">
+                                <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Revenues</td>
+                                        <td style="text-align:left">{{income.0}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Revenues (USD)</td>
+                                        <td style="text-align:left">{{income.1}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Cost of Revenue
+</td>
+                                        <td style="text-align:left">{{income.2}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Gross Profit
+</td>
+                                        <td style="text-align:left">{{income.3}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Research and Development Expense
+</td>
+                                        <td style="text-align:left">{{income.4}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Selling, General and Administrative Expense
+</td>
+                                        <td style="text-align:left">{{income.5}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Operating Expenses
+</td>
+                                        <td style="text-align:left">{{income.6}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Operating Income
+</td>
+                                        <td style="text-align:left">{{income.7}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Earning Before Interest & Taxes (EBIT)
+</td>
+                                        <td style="text-align:left">{{income.8}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Earning Before Interest & Taxes (USD)
+</td>
+                                        <td style="text-align:left">{{income.9}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Interest Expense</td>
+                                        <td style="text-align:left">{{income.10}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Income Tax Expense
+</td>
+                                        <td style="text-align:left">{{income.11}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Consolidated Income
+</td>
+                                        <td style="text-align:left">{{income.12}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Income to Non-Controlling Interests
+</td>
+                                        <td style="text-align:left">{{income.13}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Income
+</td>
+                                        <td style="text-align:left">{{income.14}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Preferred Dividends Income Statement Impact
+</td>
+                                        <td style="text-align:left">{{income.15}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Income Common Stock
+</td>
+                                        <td style="text-align:left">{{income.16}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Income Common Stock (USD)
+</td>
+                                        <td style="text-align:left">{{income.17}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Income from Discontinued Operations</td>
+                                        <td style="text-align:left">{{income.18}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Earnings per Basic Share
+</td>
+                                        <td style="text-align:left">{{income.19}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Earnings per Basic Share (USD)
+</td>
+                                        <td style="text-align:left">{{income.20}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Earnings per Diluted Share
+</td>
+                                        <td style="text-align:left">{{income.21}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Weighted Average Shares
+</td>
+                                        <td style="text-align:left">{{income.22}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Weighted Average Shares Diluted
+</td>
+                                        <td style="text-align:left">{{income.23}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Dividends per Basic Common Share
+</td>
+                                        <td style="text-align:left">{{income.24}}</td>
+                                    </tr>    
+                                  </tbody>
+                                </table>
+
+                           </p>
                         </div>      
 
                         <div class="tab-pane" id="tab8">
-                            <p>Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</p>
+                            <p>
+                                   <table class="table table-hover">
+                                <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Cash Flow from Operations</td>
+                                        <td style="text-align:left">{{cash.0}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Depreciation, Amortizzation, Accretion</td>
+                                        <td style="text-align:left">{{cash.1}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Share Based Compensation</td>
+                                        <td style="text-align:left">{{cash.2}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Cash Flow from Investing</td>
+                                        <td style="text-align:left">{{cash.3}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Capital Expenditure</td>
+                                        <td style="text-align:left">{{cash.4}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Cash Flow - Business Acquisitions and Disposals</td>
+                                        <td style="text-align:left">{{cash.5}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Cash Flow - Investments Acquisitions and Disposals</td>
+                                        <td style="text-align:left">{{cash.6}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Cash Flow - Financing</td>
+                                        <td style="text-align:left">{{cash.7}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Issuance (Repayment) of Debt Securities</td>
+                                        <td style="text-align:left">{{cash.8}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Issuance (Purchase) of Equity Shares</td>
+                                        <td style="text-align:left">{{cash.9}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Payment of Dividends & Other Cash Distributions</td>
+                                        <td style="text-align:left">{{cash.10}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Effect of Exchange Rate Changes on Cash</td>
+                                        <td style="text-align:left">{{cash.11}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Net Cash Flow /
+                                         Change in Cash </td>
+                                        <td style="text-align:left">{{cash.12}}</td>
+                                    </tr> 
+                                  </tbody>
+                                </table>
+                            </p>
                         </div>      
 
 
@@ -404,95 +577,92 @@
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Current Assets
 </td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:left">{{balance.1}}</td>
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Assets Non-Current
 </td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:left">{{balance.2}}</td>
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Cash and Equivalents
 </td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:left">{{balance.3}}</td>
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Cash and Equivalents (USD)
 </td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:left">{{balance.4}}</td>
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Trade and Non-Trade Receivables
 </td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:left">{{balance.5}}</td>
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Goodwill and Intangible Assets
 </td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:left">{{balance.6}}</td>
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Inventory</td>
                                         <td style="text-align:left">{{balance.0}}</td>
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Total Liabilities
 </td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:left">{{balance.7}}</td>
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Current Liabilities
 </td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:left">{{balance.8}}</td>
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Liabilities Non-Current
 </td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:left">{{balance.9}}</td>
                                     </tr>                                    <tr>
                                         <td style="text-align:right;width:50%;border-right:1px solid white">Total Debt
 </td>
                                         <td style="text-align:left">{{balance.0}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Total Debt (USD)</td>
+                                        <td style="text-align:left">{{balance.10}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Debt Current</td>
+                                        <td style="text-align:left">{{balance.11}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Deferred Revenue</td>
+                                        <td style="text-align:left">{{balance.12}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Deposit Liabilities</td>
+                                        <td style="text-align:left">{{balance.13}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Investments</td>
+                                        <td style="text-align:left">{{balance.14}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Investments Current</td>
+                                        <td style="text-align:left">{{balance.15}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Investments Non-Current</td>
+                                        <td style="text-align:left">{{balance.16}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Trade and Non-Trade Payables</td>
+                                        <td style="text-align:left">{{balance.17}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Property, Plant & Equipment Net</td>
+                                        <td style="text-align:left">{{balance.18}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Tax Assets</td>
+                                        <td style="text-align:left">{{balance.19}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Tax Liabilities</td>
+                                        <td style="text-align:left">{{balance.20}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Shareholders Equity</td>
+                                        <td style="text-align:left">{{balance.21}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Shareholders Equity (USD)</td>
+                                        <td style="text-align:left">{{balance.22}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Accumulated Retained Earnings (Deficit)</td>
+                                        <td style="text-align:left">{{balance.23}}</td>
                                     </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
-                                    </tr>                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">xxxxxxxxxxx</td>
-                                        <td style="text-align:left">{{balance.0}}</td>
-                                    </tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Accumulated Other Comprehensive Income</td>
+                                        <td style="text-align:left">{{balance.24}}</td>
+                                    </tr>                                    
                                   </tbody>
                                 </table>
                             </p>
