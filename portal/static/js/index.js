@@ -111,6 +111,7 @@ var MSGList = React.createClass({
                     </div>
                 )
             } else {
+                lastmsg = -1
                 var messages = b.map(function(x,i) {
                     if (x.length > 0) {
                         var divStyle = {
