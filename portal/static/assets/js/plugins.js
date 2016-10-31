@@ -36,9 +36,12 @@ $(document).ready(function(){
 var container1 = $('.scroll-nail');
 var container2 = $('.scroll-tail');
 var container3 = $('.scroll-sail')
-
+if($(".scroll-sail").length > 0){      
 $(".scroll-sail").height('25vh').mCustomScrollbar();
-
+}
+if($(".scroll-stock").length > 0){      
+$(".scroll-stock").height('90vh').mCustomScrollbar();
+}
 
    if($(".summary-scroll").length > 0){                
         $(".summary-scroll").height(250).mCustomScrollbar({autoHideScrollbar: true, autoDraggerLength:false, axis:'x',advanced:{autoExpandHorizontalScroll:true}})

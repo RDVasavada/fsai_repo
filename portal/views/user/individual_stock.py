@@ -42,7 +42,7 @@ def individual_stock(request, stock_name):
             "t.p": "83856",
             "t.k": "cbW9p5pFQDw",
             "action": "employers",
-            "q": stock_name,
+            "q": CompanyName,
             # programmatically get the IP of the machine
             "userip": json.loads(urllib2.urlopen("http://ip.jsontest.com/").read().decode('utf-8'))['ip'],
             "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
@@ -54,7 +54,7 @@ def individual_stock(request, stock_name):
             "t.p": "83856",
             "t.k": "cbW9p5pFQDw",
             "action": "employers",
-            "q": response.json()[0]['company'],
+            "q": stock_name,
             # programmatically get the IP of the machine
             "userip": json.loads(urllib2.urlopen("http://ip.jsontest.com/").read().decode('utf-8'))['ip'],
             "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"

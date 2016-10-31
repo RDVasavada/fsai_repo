@@ -114,7 +114,7 @@ def sendmsg(request):
   message = "<" + username + "> : " + message
   # print(message)
   recipient = request.POST['to']
-    
+  time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
   cursor = connection.cursor()
   cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
                  "('" + str(portId) + "','" + str(recipient) + "','unread','" + str(time) + "','friends');")
@@ -277,7 +277,7 @@ def analyze(message, id, username):
         for value in dictfetchall(cursor):
           total = total + int(value['gain'])
         startdate = str(item['created_date'])[0:10]
-        today = time.strftime("%Y-%m-%d")
+        time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         sp = Share('^GSPC').get_historical(startdate, today)
         gspreturn = float(sp[0]['Close']) - float(sp[len(sp)-1]['Close'])
         rtnstr = "Since " + str(startdate) + ", the S&P500 has changed " + str(gspreturn) + "$, while your portfolio " + str(item['name']) + " has changed " + str(total) + "$. "

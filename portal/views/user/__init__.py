@@ -17,3 +17,4 @@ from guru_settings import *
 from guru_config import *
 from guru_scrape import *
 from guru_optimize import *
+from upload import *

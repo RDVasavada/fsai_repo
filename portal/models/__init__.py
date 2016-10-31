@@ -8,3 +8,4 @@ from user.portal_user import PortalUser
 from data.portfolio import Portfolio
 from data.stock import Stock
 from data.sms import Sms
+from user.UploadFile import UploadFile

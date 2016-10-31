@@ -3,9 +3,9 @@ from django.conf.urls import patterns, url, include
 from django.conf import settings
 from django.conf.urls import patterns, url
 
-urlpatterns = patterns('',
 
-    #User Authentication based views
+urlpatterns = patterns('',
+    url(r'^upload/$', 'portal.views.upload', name='upload'),
     (r'^/?$', views.main),
     (r'^splash/?$', views.splash),
     (r'^login/?$', views.loginview),
@@ -53,10 +53,7 @@ urlpatterns = patterns('',
     (r'^user/getmsg/?$', views.getmsg),   
     (r'^user/delmsg/?$', views.delmsg),   
     (r'^user/sendmsg/?$', views.sendmsg),   
-    (r'^user/delfriend/?$', views.delfriend),   
-
-
-
+    (r'^user/delfriend/?$', views.delfriend),  
 )
 
 # lets us serve our media
@@ -70,3 +67,7 @@ if settings.DEBUG:
                                 serve,
                                 {'document_root': settings.MEDIA_ROOT}))
     del(_media_url, serve)
+if settings.DEBUG:
+    urlpatterns += patterns('django.views.static',
+        (r'media/(?P<path>.*)', 'serve', {'document_root': settings.MEDIA_ROOT}),
+    )

@@ -9,40 +9,8 @@
         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:36px;text-align:center;color:white" id="companyName">{{company_name}} </h2>
         <span style="display:none" id="companySymbol">{{company_symbol}}</span>
         <div class="col-md-12 col-sm-12">
-
-        <div class="block" style="margin-right:25px;margin-left:25px;width:94%;-webkit-box-shadow:initial">
-                    <div class="header">
-                        <h2>{{portfolio.name}} </h2>
-                        <div class="side pull-right">                            
-                            <ul class="buttons">
-                                <li class="btn-group">                                    
-                                    <a href="#" class="dropdown-toggle tip" title="" data-toggle="dropdown" data-original-title="More"><span class="icon-align-justify"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Export Stock Data as .CSV</a></li>  
-                                    </ul>                                                                            
-                                </li>
-                            </ul>
-                        </div>     
-                                           <ul class="nav nav-tabs" style="position: initial;width: initial;left: initial;top: initial;margin: initial;padding: initial;list-style: initial;">
-                        <li><a href="#tab5" data-toggle="tab">Historical Graph</a></li>
-                        <li class="active"><a href="#tab6" data-toggle="tab">Company Related News</a></li>
-                        <li><a href="#tab7" data-toggle="tab">Income Statement</a></li>
-                        <li><a href="#tab8" data-toggle="tab">Cashflow Statement</a></li>
-                        <li><a href="#tab9" data-toggle="tab">Balance Sheet</a></li>
-                        <li><a href="#tab10" data-toggle="tab">Metrics</a></li>
-                        <li><a href="#tab11" data-toggle="tab">Work Culture</a></li>
-                        <li><a href="#tab12" data-toggle="tab">Future Sentiment</a></li>
-                    </ul>                   
-                    </div>   
-
-
-
- 
-                    <div class="content content-transparent tab-content" style="color:white">
-                        <div class="tab-pane" id="tab5">
-                            <p>
-                                                  <div class="content" id="content1" style="height:325px;overflow:hidden">                   
-                      <div class="loader" style="height:100%;text-align:center;top:35%;position:relative">
+    <div class="content" id="content1" style="height:325px;overflow:hidden">                   
+                      <div class="loader" style="height:100%;text-align:center;top:35%;position:relative;background:transparent">
                         <img src="/static/img/loader.gif"><br><br>
                         <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px" id="loaderText">We are loading this stock's data! This may take a minute..</h2>
                       </div>
@@ -354,9 +322,26 @@
               
                     </div>
                   
-                            </p>
-                        </div>
-                        <div class="tab-pane active" id="tab6">
+        <div class="block" style="margin-right:25px;margin-left:25px;width:94%;-webkit-box-shadow:initial">
+                    <div class="header" style="height:auto">
+                        <h2>{{portfolio.name}} </h2>
+
+                     <ul class="nav nav-justified nav-tabs" style="position: initial;width: initial;left: initial;top: initial;margin: initial;padding: initial;list-style: initial;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:1px;font-size:10px;text-align:center;color:white">
+                        <li class="active"><a href="#tab6" data-toggle="tab">Company Related News</a></li>
+                        <li><a href="#tab7" data-toggle="tab">Income Statement</a></li>
+                        <li><a href="#tab8" data-toggle="tab">Cashflow Statement</a></li>
+                        <li><a href="#tab9" data-toggle="tab">Balance Sheet</a></li>
+                        <li><a href="#tab10" data-toggle="tab">Metrics</a></li>
+                        <li><a href="#tab11" data-toggle="tab">Work Culture</a></li>
+                        <li><a href="#tab12" data-toggle="tab">Future Sentiment</a></li>
+                    </ul>                   
+                    </div>   
+
+
+
+ 
+                    <div class="content content-transparent tab-content" style="color:white;padding-top:25px;">
+                        <div class="tab-pane active" id="tab6" style="height:60vh">
                             <p>            
                 <div class="content np" style="background:transparent">
                     <div class="content list-group" id="newsfeed">
@@ -365,12 +350,13 @@
   <a href="{{news.web_url}}" target="_blank" >
                         <div class="col-lg-3">
                           <div class="block">
+
                               <div class="header" style="height:75px">
                                  <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:1px;font-size:10px;text-align:center;color:white" id="companyName">{{news.headline.main}}
                                  </h2>
                               
                               </div>
-                          <div class="content" style="height:125p;font-size:12px">
+                          <div class="content" style="height:125px;font-size:12px">
                                 {{news.snippet}}
                             </div>
                           </div>
@@ -516,7 +502,7 @@
                            </p>
                         </div>      
 
-                        <div class="tab-pane" id="tab8">
+                        <div class="tab-pane" id="tab8" style="height:60vh">
                             <p>
                                    <table class="table table-hover">
                                 <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
@@ -820,7 +806,7 @@
                         </div>      
 
 
-                        <div class="tab-pane" id="tab12">
+                        <div class="tab-pane" id="tab12" style="height:60vh">
                             <p>    
             <div class="block block-drop-shadow" style="width:94%;margin-left:25px;margin-right:25px">
             <div class="header">   
@@ -843,8 +829,56 @@
             </div>   </p>
                         </div>  
 
-            <div class="tab-pane" id="tab11">
-                            <p>Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</p>
+            <div class="tab-pane" id="tab11" style="height:60vh">
+                            <p>
+                              
+     <table class="table table-hover">
+                                <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
+                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Industry Name</td>
+                                        <td style="text-align:left">{{company_stats.industryName}}</td>
+                                   </tr>
+                                  <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Sector Name</td>
+                                        <td style="text-align:left">{{company_stats.sectorName}}</td>
+                                 </tr>
+                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">CEO Name</td>
+                                        <td style="text-align:left">{{company_stats.ceo.name}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Number of Ratings</td>
+                                        <td style="text-align:left">{{company_stats.ceo.numberOfRatings}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">CEO Approval Ratings</td>
+                                        <td style="text-align:left">{{company_stats.ceo.pctApprove}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">CEO Disapproval Ratings</td>
+                                        <td style="text-align:left">{{company_stats.ceo.pctDisapprove}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Work Life Balance Rating</td>
+                                        <td style="text-align:left">{{company_stats.workLifeBalanceRating}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Recommendation to Friend Rating</td>
+                                        <td style="text-align:left">{{company_stats.recommendToFriendRating}}</td>
+                                    </tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Senior Leadership Rating</td>
+                                        <td style="text-align:left">{{company_stats.seniorLeadershipRating}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Career Opportunities Rating</td>
+                                        <td style="text-align:left">{{company_stats.careerOpportunitiesRating}}</td>
+                                    </tr> 
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Compensation and Benefits Rating</td>
+                                        <td style="text-align:left">{{company_stats.compensationAndBenefitsRating}}</td>
+                                    </tr>                                    
+                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Culture And Values Rating</td>
+                                        <td style="text-align:left">{{company_stats.cultureAndValuesRating}}</td>
+                                    </tr> 
+                                  </tbody>
+                                </table>
+
+                            </p>
                         </div>      
                       
                     </div>
@@ -852,21 +886,19 @@
       
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-12" style="padding-top:100px">
-        <div class="block block-drop-shadow">
+    <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top:100px">
+      <!--   <div class="block block-drop-shadow">
             <div class="header">   
                  <h2>Overview of Company</h2>
              </div>
              <div class="ibox-content" style="display: block;border:1px solid rgba(0,0,0,0.2);">
-                <p>
-                <img src='{{company_stats.squareLogo}}' style="display:block;padding-top:50px;margin:auto;width:25%;height:25%" id="logo">
-                </p><br><br>
-                <p>Industry</p>  <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white" id="industryName"> {{ company_stats.industryName }} </h2>
+
+                <p>Industry</p>  <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white" id="industryName"> {{ company_stats }} </h2>
 
              </div>
-        </div>
-        <div class="block block-drop-shadow">
-            <div class="header">   
+        </div> -->
+        <!-- <div class="block block-drop-shadow"> -->
+           <!--  <div class="header">   
                  <h2>Work Culture</h2>
              </div>
              <div class="ibox-content" id="workCulture" style="display: block;padding:50px;border:1px solid rgba(0,0,0,0.2)">
@@ -891,8 +923,8 @@
              <div class="ibox-content" id="noWorkCulture" style="padding-top:50px;margin:50px; display: none; background:transparent !important;">
                 <div style="padding:50px">
                 <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white" id="companyName"> No Work Culture Available </h2> </div>
-            </div>
-        </div>            
+            </div> -->
+        <!-- </div>             -->
     </div>
  <div class="nav">
     <a href="/user/portfolio_settings" data-target="-1" style=";margin-right:50px;float:right">           
