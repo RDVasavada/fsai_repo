@@ -111,24 +111,6 @@ var MSGList = React.createClass({
                     </div>
                 )
             } else {
-                lastmsg = -1
-                if (b.length === 1) {
-                    var chosen = JSON.parse(localStorage.getItem('user')).user;
-                    var style = {
-                        fontWeight: '100',
-                        fontFamily:'helvetica neue',
-                        letterSpacing:'2px',
-                        fontSize:'18px',
-                        marginTop: '25px',
-                        textAlign: 'center',
-                    }
-                    return (
-                        <h2 style={style} >
-                            Please wait for @{chosen} to accept your messages.
-                            <hr />
-                        </h2>
-                    )
-                }
                 var messages = b.map(function(x,i) {
                     if (x.length > 0) {
                         var divStyle = {
