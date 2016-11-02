@@ -61,13 +61,14 @@ def register(request):
         email = request.POST.get('email', None)
         address = request.POST.get('address', None)
         reason = request.POST.get('reason', None)
+        picture_url = "/static/img/profile.svg"
         connections = 0
         errors = []
 
         if password == password_repeat:
             if len(password) > 8:
 
-                new_user = PortalUser.objects.create_user(username=username, email=email, password=password, connections=0)
+                new_user = PortalUser.objects.create_user(username=username, email=email, password=password, connections=0, picture_url=picture_url)
 
                 new_user.phone=phone
                 new_user.email=email
