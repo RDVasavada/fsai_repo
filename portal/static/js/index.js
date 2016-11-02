@@ -136,7 +136,7 @@ var MSGList = React.createClass({
                                         var writer = ct.slice(1,trim)
                                         if (writer == you) {
                                             var boxStyle = {
-                                                height: '50px',
+                                                height: 'auto',
                                                 marginTop: '50px',
                                             }
                                             var style = {
@@ -227,7 +227,7 @@ var MSGList = React.createClass({
                                             }
                                         } else {
                                             var boxStyle = {
-                                                height: '50px',
+                                                height: 'auto',
                                                 marginTop: '50px'
                                             }
                                             var imgUrl = JSON.parse(localStorage.getItem('user')).picture_url;
