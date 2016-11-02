@@ -1,14 +1,15 @@
 var goStock = function(e) {
     console.log(e)
-    $(".statusbar")[0].innerText = "Loading " + e + "'s Stock Information ..."
-    $(".statusbar").show()
-    $("#company_name")[0].value = e;
+    window.location.href = '/user/individual_stock/' + e
+    // $(".statusbar")[0].innerText = "Loading " + e + "'s Stock Information ..."
+    // $(".statusbar").show()
+    // $("#company_name")[0].value = e;
     // // console.log($("#company_name"))
-    if ($("#company_name")[0].value){
-      document.forms["myForm"].submit();
-    } else {
-      document.forms["myForm"].submit();
-    }
+    // if ($("#company_name")[0].value){
+    //   document.forms["myForm"].submit();
+    // } else {
+    //   document.forms["myForm"].submit();
+    // }
 }
 //portfolio search functions
 let availableTags, portDict, stockDict

@@ -149,7 +149,6 @@ var MSGList = React.createClass({
                                                 WebkitFontSmoothing: 'antialiased',
                                                 fontFamily:'Helvetica Neue',
                                                 letterSpacing: '2px',
-                                                bottom: '60px'
                                             }
                                             var spanRight = {
                                                 float: 'left',
