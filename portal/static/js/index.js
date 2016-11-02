@@ -75,7 +75,7 @@ var MSGList = React.createClass({
             var a = this.state.status
             var b = this.state.data
             var c = this.state.chosen_id
-            if (a=='-1'){
+            if (a=='-1'){   
                 var accept = function() {
                     console.log(c)
                     $.ajax({
@@ -127,7 +127,7 @@ var MSGList = React.createClass({
                             if (x[0].content !== 'newfriend') {
                                 if (x[0].content !== 'blank') {
                                     if (x[0].content) {
-
+                                        console.log(x[0].content)
                                         var you = $("div.name")[0].innerText
                                         var time = x[0].time
                                         var ct = String(x[0].content)
@@ -135,19 +135,27 @@ var MSGList = React.createClass({
                                         var str = ct.slice(trim+3)
                                         var writer = ct.slice(1,trim)
                                         if (writer == you) {
+                                            var boxStyle = {
+                                                height: '50px',
+                                                marginTop: '50px',
+                                            }
                                             var style = {
                                                 marginLeft: '100px',
-                                                fontSize: '12px',
+                                                fontSize: '16px',
                                                 padding: '10px',
                                                 position: 'relative',
                                                 textAlign: 'left',
+                                                fontWeight: '300',
+                                                WebkitFontSmoothing: 'antialiased',
+                                                fontFamily:'Helvetica Neue',
+                                                letterSpacing: '2px',
+                                                bottom: '60px'
                                             }
                                             var spanRight = {
                                                 float: 'left',
                                                 position: 'relative',
                                                 left:'109px',
                                                 fontWeight:'900',
-                                                top: '-10px',  
                                             }
                                             var iconDel = {
                                                 verticalAlign: 'middle',
@@ -159,12 +167,11 @@ var MSGList = React.createClass({
                                                 color:'white',
                                             } 
                                             var timeLeft = {
-                                                float: 'left',
+                                                float: 'right',
                                                 position: 'relative',
-                                                left:'109px',
+                                                right:'100px',
                                                 fontWeight:'400',
-                                                top: '-10px',
-                                                fontSize: '8px',                                                
+                                                fontSize: '8px',                                       
                                             }     
                                             var divStyle = {
                                                 position: 'relative',
@@ -172,10 +179,19 @@ var MSGList = React.createClass({
                                             }
                                             var repeatStyle = {
                                                 marginLeft: '110px',
-                                                fontSize: '12px',
+                                                fontSize: '18px',
                                                 position: 'relative',
                                                 textAlign: 'left',
+                                                fontWeight: '300',
+                                                WebkitFontSmoothing: 'antialiased',
+                                                fontFamily:'Helvetica Neue',
+                                                letterSpacing: '2px',
 
+                                            }
+                                            var imgStyle = {
+                                                width: '73px',
+                                                position: 'relative',
+                                                right: '25px'
                                             }
                                             var delMe = function(id) {
                                                $.ajax({
@@ -188,14 +204,14 @@ var MSGList = React.createClass({
                                                    this.forceUpdate()
                                                 })                                                
                                             }
+                                            var YourPictureUrl = JSON.parse(localStorage.getItem('YourPictureUrl')).url;
                                             var myStar = React.createClass
                                             if (lastmsg === 0 || lastmsg === -1){
                                                 lastmsg = 1
                                                 return(
-                                                    <div>
-                                                        <hr />
+                                                    <div style={boxStyle}>
+                                                        <img src={YourPictureUrl} style={imgStyle} />
                                                         <span style={spanRight}>{you}</span>
-                                                        <br />
                                                         <span style={timeLeft}>{time}</span>
                                                         <div style={style}>{str}
                                                         </div>
@@ -210,26 +226,34 @@ var MSGList = React.createClass({
                                                 )
                                             }
                                         } else {
+                                            var boxStyle = {
+                                                height: '50px',
+                                                marginTop: '50px'
+                                            }
+                                            var imgUrl = JSON.parse(localStorage.getItem('user')).picture_url;
                                             var style = {
                                                 marginLeft: '100px',
-                                                fontSize: '12px',
+                                                fontSize: '16px',
                                                 padding: '10px',
                                                 position: 'relative',
                                                 textAlign: 'left',
+                                                bottom: '60px',
+                                                fontWeight: '300',
+                                                WebkitFontSmoothing: 'antialiased',
+                                                fontFamily:'Helvetica Neue',
+                                                letterSpacing: '2px',
                                             }
                                             var spanLeft = {
                                                 float: 'left',
                                                 position: 'relative',
                                                 left:'109px',
-                                                fontWeight:'900',
-                                                top: '-10px',                                                
+                                                fontWeight:'900',                                             
                                             }
                                            var timeLeft = {
-                                                float: 'left',
+                                                float: 'right',
                                                 position: 'relative',
-                                                left:'109px',
+                                                right:'100px',
                                                 fontWeight:'400',
-                                                top: '-10px',
                                                 fontSize: '8px',                                                
                                             }                                            
                                             var iconDel = {
@@ -242,19 +266,26 @@ var MSGList = React.createClass({
                                                 color:'white'
                                             }
                                             var repeatStyle = {
+                                                fontSize: '18px',
                                                 marginLeft: '110px',
-                                                fontSize: '12px',
                                                 position: 'relative',
                                                 textAlign: 'left',
-
+                                                fontWeight: '300',
+                                                WebkitFontSmoothing: 'antialiased',
+                                                fontFamily:'Helvetica Neue',
+                                                letterSpacing: '2px',
+                                            }
+                                            var imgStyle = {
+                                                width: '75px',
+                                                position: 'relative',
+                                                right: '35px'
                                             }
                                             if (lastmsg === 1 || lastmsg === -1) {
                                                 lastmsg = 0 
                                                 return(
-                                                    <div>
-                                                        <hr />
+                                                    <div style={boxStyle}>
+                                                        <img src={imgUrl} style={imgStyle} />
                                                         <span style={spanLeft}>{writer}</span>
-                                                        <br />
                                                         <span style={timeLeft}>{time}</span>
                                                         <div style={style}>{str}</div>
                                                     </div>
@@ -604,11 +635,18 @@ var ContactList = React.createClass({
             }
             var icon = {color:'white',
                         float:'right'}
+            var imgStyle = {width:'50px'}
             var a = (this.state.data)
+            if (a[0]) {
+                url = a[0].picture_url
+                localStorage.setItem('YourPictureUrl',JSON.stringify({'url':url}))
+            }
             var texts = a.map(function(x,i){
+                console.log(x.picture_url)
                 return(
                     <div style={divStyle}>
-                        <a href="#" onClick={() => { select(x.id, x.status, x.username) }} style={linkStyle}>{x.username}</a>
+                        <img src={x.picture_url} style={imgStyle} /> 
+                        <a href="#" onClick={() => { select(x.id, x.status, x.username, x.picture_url) }} style={linkStyle}>{x.username}</a>
                     </div>
                 )
             })
@@ -630,15 +668,15 @@ var delFriend = (function(id) {
         console.log(res)
     })
 })
-var select = (function(id, status, username) {
+var select = (function(id, status, username, url) {
     $("#selected")[0].value = id
     if (status == 'New Friend Request') {
-        $("#chosenuser")[0].innerText = " " + String(username)
+        $("#chosenuser")[0].innerText = String(" " )+ String(username)
         var user = {'id': String(id), 'status': 'newfriend', 'user':String(username)}
         localStorage.setItem('user',JSON.stringify(user))
     } else {
-        $("#chosenuser")[0].innerText = " " + String(username)
-        var user = {'id':String(id), 'status':'friends', 'user':String(username)}
+        $("#chosenuser")[0].innerText = String(" " ) + String(username)
+        var user = {'id':String(id), 'status':'friends', 'user':String(username), 'picture_url': url }
         localStorage.setItem('user',JSON.stringify(user));
     }                
 })

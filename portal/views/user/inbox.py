@@ -24,6 +24,8 @@ def inbox(request):
     username = request.user.username
     portId = request.user.id
     portalUser = PortalUser.objects.get(username=username)
+    picture_url = portalUser.picture_url
+    context_dict['picture_url'] = picture_url
     try:
         arr = getconnections(request)
         # print(arr)
@@ -142,19 +144,26 @@ def getconnections(request):
     userid = request.user.id
     username = request.user.username
     portalUser = PortalUser.objects.get(username=username)
+    picture_url = portalUser.picture_url
     arr = []
+    arr.append({
+      'username' : username,
+      'id' : userid,
+      'picture_url' : picture_url,
+    })
     cursor = connection.cursor()
-    cursor.execute("SELECT username, id FROM portal_portaluser WHERE "
-                    "1 = connections")
+    cursor.execute("SELECT username, id, picture_url FROM portal_portaluser WHERE "
+                    "1 = connections AND id != '" + str(userid) + "'")
     users = dictfetchall(cursor)
     for user in users:
-      try:
-        arr.append({
-          'username' : user['username'],
-          'id': user['id'],
-        })
-      except IndexError:
-        print(user)
+        try:
+          arr.append({
+            'username' : user['username'],
+            'id': user['id'],
+            'picture_url': user['picture_url']
+          })
+        except IndexError:
+          print(user)
   return JsonResponse({'data':arr})
 
 @csrf_exempt

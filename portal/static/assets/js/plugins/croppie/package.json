@@ -1,0 +1,90 @@
+{
+  "_args": [
+    [
+      "croppie",
+      "/Users/ta/Desktop/ailabs/reacttest"
+    ]
+  ],
+  "_from": "croppie@*",
+  "_id": "croppie@2.4.0",
+  "_inCache": true,
+  "_location": "/croppie",
+  "_nodeVersion": "6.2.1",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/croppie-2.4.0.tgz_1477078087102_0.9437372270040214"
+  },
+  "_npmUser": {
+    "email": "thedustinsmith@gmail.com",
+    "name": "dbsy9d"
+  },
+  "_npmVersion": "3.9.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "croppie",
+    "raw": "croppie",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "*",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/croppie/-/croppie-2.4.0.tgz",
+  "_shasum": "7f1bb64330ea851611eb6a1572c0903a16defd6f",
+  "_shrinkwrap": null,
+  "_spec": "croppie",
+  "_where": "/Users/ta/Desktop/ailabs/reacttest",
+  "authors": [
+    "Dustin Smith <thedustinsmith@gmail.com>",
+    "Ethan Calvert <calvert1591@gmail.com>"
+  ],
+  "bugs": {
+    "url": "https://github.com/Foliotek/Croppie/issues"
+  },
+  "dependencies": {},
+  "description": "A simple javascript image cropper",
+  "devDependencies": {
+    "gh-pages": "^0.11.0",
+    "mocha": "2.4.5"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "7f1bb64330ea851611eb6a1572c0903a16defd6f",
+    "tarball": "https://registry.npmjs.org/croppie/-/croppie-2.4.0.tgz"
+  },
+  "files": [
+    "croppie.css",
+    "croppie.js",
+    "croppie.min.js"
+  ],
+  "gitHead": "289e213b616a35a87f75d9d65a618f1308ac9932",
+  "homepage": "http://foliotek.github.io/Croppie",
+  "installable": true,
+  "keywords": [
+    "crop",
+    "cropper",
+    "cropping",
+    "image"
+  ],
+  "license": "ISC",
+  "main": "croppie.js",
+  "maintainers": [
+    {
+      "name": "dbsy9d",
+      "email": "thedustinsmith@gmail.com"
+    }
+  ],
+  "name": "croppie",
+  "optionalDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Foliotek/Croppie.git"
+  },
+  "scripts": {
+    "deploy": "node deploy.js",
+    "test": "mocha test/unit"
+  },
+  "version": "2.4.0"
+}

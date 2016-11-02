@@ -55,34 +55,37 @@ def portfolio_optimize(request):
         userid = request.user.id
     optimizeSearchResults = []
     eachStockresult = {}
-    eachStockresult['months'] = (request.POST['Months'])
-    eachStockresult['market'] = (request.POST['Market'])
-    eachStockresult['investingAmount'] = (request.POST['investing_amount'])
-    eachStockresult['numStocks'] = (request.POST['stocks_number'])
-    eachStockresult['expectedRisk'] = (request.POST['expRisk'])
-    eachStockresult['expectedReturn'] = (request.POST['expReturn'])
+    eachStockresult['months'] = "12"
+    eachStockresult['market'] = "S"
+    eachStockresult['investingAmount'] = "2,500"
+    eachStockresult['numStocks'] = "15"
+    eachStockresult['expectedRisk'] = "20"
+    eachStockresult['expectedReturn'] = "25"
     optimizeSearchResults.append(eachStockresult)
     stocks = ['VNET','AKAM','BCOR','WIFI','CARB','JRJC','CCIH','CNV','CCOI','ELNK','ENV','FB','GDDY','GOOGL','IAC','IIJI','INAP','IPAS','JCOM','LOGL','LLNW','MEET','MEET','MOMO','NTES','NEWC','EGOV','NQ','OTOW','OPESY','PTOP','PPPI','RAX','BLNK','NAME','SIFY','SINA','SMCE','SOHU','FCCN','SNST','TCTZF','TCEHY','DIDG','TMMI','TRON','TCX','TWTR','VLTC','WEB','JMU','XNET','YHOO','YAHOY','YNDX','YOOIF','YIPI']
-    numshares = int(request.POST['stocks_number'])/2
+    numshares = int(15)/2
     context_dict = {}
-    context_dict['stock_invest'] = float(request.POST['investing_amount'])/float(request.POST['stocks_number'])
-    context_dict['investingAmount'] = (request.POST['investing_amount'])
-    context_dict['market'] = (request.POST['Market'])
-    context_dict['Months'] = (request.POST['Months'])
-    context_dict['Years'] = (request.POST['Years'])
-    context_dict['expectedReturn'] = (request.POST['expReturn'])
-    context_dict['expectedRisk'] = (request.POST['expRisk'])
+    context_dict['stock_invest'] = float(25000)/float(15.00)
+    context_dict['investingAmount'] = ('25,000')
+    context_dict['market'] = "US Markets"
+    context_dict['Months'] = "12"
+    context_dict['Years'] = "12"
+    context_dict['expectedReturn'] = 25
+    context_dict['expectedRisk'] = "20"
     time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    if request.POST['portname'] == "":
+    try: 
+        if request.POST['portname'] == "":
+            context_dict['portname'] = "Test Portfolio"
+        else: 
+            context_dict['portname'] = request.POST['portname']
+    except:
         context_dict['portname'] = "Test Portfolio"
-    else: 
-        context_dict['portname'] = request.POST['portname']
         time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    client_name = request.POST['clientname']
-    description = request.POST['description']
+    client_name = "Client Name"
+    description = "Decsription"
     cursor = connection.cursor()
     cursor.execute("INSERT INTO `portal_portfolio` (name,created_date,update_date,description,risk,timeframe,control_market,investment,user_id, client_name) VALUES "
-                    "('" + str(context_dict['portname']) + "','" + str(time) + "','" + str(time) + "','" + str(description) + "','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['Years']) + "','" + str('S') + "','" + str(context_dict['investingAmount']) + "','" + str(userid) + "','" + str(client_name) + "')")
+                    "('" + str(context_dict['portname']) + "','" + str(time) + "','" + str(time) + "','" + str(description) + "','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['Years']) + "','" + str('S') + "','" + str(25000) + "','" + str(userid) + "','" + str(client_name) + "')")
     cursor.execute("SELECT LAST_INSERT_ID();")
     show_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
     context_dict['portfolio_id']  = show_id
@@ -109,7 +112,7 @@ def portfolio_optimize(request):
     # socket.create_connection(('52.28.177.9', '8888'), timeout=2)
     # response = requests.get("http://52.77.239.179:8080/api-auth/portfolioOptimizer?format=json" + "&expRisk=20" +
     #                             "&timeFrame=" + request.POST['Months'] + "&expRet=30&investingAmount=" +
-    #                             str(request.POST['investing_amount']) + "&noOfStocks=" + str(request.POST['stocks_number']),
+    #                             str('25,000') + "&noOfStocks=" + str(request.POST['stocks_number']),
     #         headers= {
     #             'FSAIAUTHENTICATION': 'Basic ZnNhaV91c2VyOmZzYWlAMTIz'
     # })

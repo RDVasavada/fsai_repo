@@ -6,6 +6,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns('',
     url(r'^upload/$', 'portal.views.upload', name='upload'),
+    url(r'^cropload/$', 'portal.views.cropload', name='cropload'),
     (r'^/?$', views.main),
     (r'^splash/?$', views.splash),
     (r'^login/?$', views.loginview),

@@ -24,24 +24,24 @@ response = requests.get("http://finance.yahoo.com/d/quotes.csv?s=VNET&f=sn")
 def guru_optimize(request):
   pe = request.POST['key-pe']
   if str(pe) == str(0):
-    pe = "PE;;"
+    pe = "PE;>=;"
   else: 
-    pe = "PE;<=;"+ str(request.POST['key-pe'])
+    pe = "PE;>=;"+ str(request.POST['key-pe'])
   pb = request.POST['key-pb']
   if str(pb) == str(0):
     pb = "PB;;"
   else:
-    pb = "PB;<=;"+ str(request.POST['key-pb'])
+    pb = "PB;>=;"+ str(request.POST['key-pb'])
   mkt = request.POST['key-mkt']
   if str(mkt) == str(0):
     mkt = "MARKETCAP;;"
   else:
-    mkt = "MARKETCAP;<=;"+ str(request.POST['key-mkt'])
+    mkt = "MARKETCAP;>=;"+ str(request.POST['key-mkt'])
   divy = request.POST['key-divy']
   if str(divy) == str(0):
     divy = "DIVYIELD;;"
   else: 
-    divy = "DIVYIELD;<=;" + str(request.POST['key-divy'])
+    divy = "DIVYIELD;>=;" + str(request.POST['key-divy'])
   epusd = request.POST['key-epusd']
   if str(epusd) == str(0):
     epusd = "EPUSD;;"
@@ -68,7 +68,7 @@ def guru_optimize(request):
   wr = csv.writer(resultFile, delimiter=' ',
                             quotechar=' ', quoting=csv.QUOTE_MINIMAL)
   wr.writerow(['PortfolioID;Screen_frequency;Initial_capital'])
-  wr.writerow(['2;BA;10000000'])
+  wr.writerow(['156;BA;1000000000'])
   resultFile.close()
 
   filename = 'Screen_parameters.csv'
@@ -133,7 +133,6 @@ def guru_optimize(request):
   screen_file = 'Screen_criteria.csv'
   screener = pd.read_csv(screen_file,delimiter = ';')
   screener = screener.dropna().reset_index(drop=True)
-  print(screener)  
   screen_list = filter_list(screener)
   quandl.ApiConfig.api_key = 'X8CjGKTPEqTuto2v_Q94'
   for i in range(len(portfolio['symbol'])):
@@ -161,12 +160,11 @@ def guru_optimize(request):
       
   for k in range(len(screener)):
       if k == 0:
-          txt = "np.where(((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + screener['Filter_value'][k].astype(str) + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))" 
+          txt = "np.where(((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + screener['Filter_value'][k].astype(str) + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))"
           txt_ct = txt
       else:
           txt = txt + " & ((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + screener['Filter_value'][k].astype(str) + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))" 
           txt_ct = txt
-
   txt = txt_ct + ",0,1) "
   p_fundamentals.sort_index(inplace=True)
   p_fundamentals['screen_out'] = eval(txt)
@@ -174,9 +172,7 @@ def guru_optimize(request):
   p_fundamentals['date'] = p_fundamentals.index
 
   pf_input = portfolio.copy()
-      
   for m in range(len(snapshots)):
-      
       pf, screen, pf_ret = Portfolio_Reallocation(pf_input, m,min_factor,max_factor, snapshots, p_fundamentals, screener, screen_list, m)
           
       # returns portfolio if stocks got filtered out. If no filter triggered, returns string  
@@ -185,58 +181,72 @@ def guru_optimize(request):
           startYear=pf_ret['Start_year'].iloc[0]
           endYear= pf_ret['End_year'].iloc[0]
           expReturn=np.round(pf_ret['Portfolio_return'].iloc[0],2)
-
           # run MV
           if expReturn > 0:
-              pf_optimal = MV(pf,startYear ,endYear,expReturn)
-              pf_optimal['weight_optimal'] = pf_optimal['weight_optimal'].astype(float)
-              pf_optimal['Number of Shares bef MV'] = pf_optimal['Number of Shares'].astype(int)
-              portfolio_size = np.round(pf_optimal['Position'].sum(),0)
-              pf_optimal['Number of Shares'] = np.floor((((pf_optimal['weight_optimal']/100).multiply
-                                                (portfolio_size, axis="index"))/pf_optimal['Price']).astype(float))
-              pf_optimal['Position'] = np.round((pf_optimal['Number of Shares'].multiply(pf_optimal['Price'])).astype(float,2))
-              portfolio_size = np.round(pf_optimal['Position'].sum(),0)
-              pf_optimal['weight'] = np.round(100*(pf_optimal['Position'].divide(portfolio_size, axis="index")).astype(float),2)
+              try:
+                print(pf)
+                print("pf")
+                pf_optimal = MV(pf,startYear ,endYear,expReturn)
+                print(pf_optimal)
+                print("optimal")
+                pf_optimal['weight_optimal'] = pf_optimal['weight_optimal'].astype(float)
+                pf_optimal['Number of Shares bef MV'] = pf_optimal['Number of Shares'].astype(int)
+                portfolio_size = np.round(pf_optimal['Position'].sum(),0)
+                pf_optimal['Number of Shares'] = np.floor((((pf_optimal['weight_optimal']/100).multiply
+                                                  (portfolio_size, axis="index"))/pf_optimal['Price']).astype(float))
+                pf_optimal['Position'] = np.round((pf_optimal['Number of Shares'].multiply(pf_optimal['Price'])).astype(float,2))
+                portfolio_size = np.round(pf_optimal['Position'].sum(),0)
+                pf_optimal['weight'] = np.round(100*(pf_optimal['Position'].divide(portfolio_size, axis="index")).astype(float),2)
+                pf_optimal = pf_optimal[['PortfolioID','Snapshot_date','symbol','Price','Number of Shares','Position','weight']]                
 
-              # Reduce to necessary columns
-              pf_optimal = pf_optimal[['PortfolioID','Snapshot_date','symbol','Price','Number of Shares','Position','weight']]                
+                pf_input = pf_optimal.drop('weight',axis=1).copy()
+                if m == 0 :
+                    portfolio_overview = pf_optimal.copy()
+                    return_overview = pf_ret.copy()
 
-              pf_input = pf_optimal.drop('weight',axis=1).copy()
-
-              if m == 0 :
-                  portfolio_overview = pf_optimal.copy()
-                  return_overview = pf_ret.copy()
-
-              else: 
+                else: 
                   portfolio_overview = portfolio_overview.append(pf_optimal)
                   return_overview = return_overview.append(pf_ret)
+              except:
+                pf_input = pf[['PortfolioID','Snapshot_date','symbol','Price','Number of Shares','Position','weight']].copy()                
+                if m == 0 :    
+                   portfolio_overview = pf_input.copy()
+                   return_overview = pf_ret.copy()
+                else :
+                   portfolio_overview = portfolio_overview.append(pf_input)
+                   return_overview = return_overview.append(pf_ret)
+               #drop weight column for next run   
+                pf_input =pf[['PortfolioID','Snapshot_date','symbol','Price','Number of Shares','Position']].copy()
+                    # return_overview = pf_ret.copy()
+              # Reduce to necessary column
           
-          elif m == range(len(snapshots))[-1]:
-              # Append most recent snapshot
-              save0 = pf.copy()
-              pf.drop(['weight','Position'],axis=1,inplace=True)
-              pf = pf.rename(columns={'weight_bef_screen_pct' : 'weight', 'Position_bef_screen' : 'Position'})
-              pf = pf[['PortfolioID','Snapshot_date','symbol','Price','Number of Shares','Position','weight']]                              
-              save1 = pf.copy()
-              save_overview = portfolio_overview.copy()
-              portfolio_overview = portfolio_overview.append(pf)
-              return_overview = return_overview.append(pf_ret)
-
-
-              
-              
+          else:
+              #equal weighting due to negative returns
+             print("ExpReturn smaller than zero,equal weighting instead")
+             pf_input = pf[['PortfolioID','Snapshot_date','symbol','Price','Number of Shares','Position','weight']].copy()
+             if m==0:                        
+                 portfolio_overview = pf_input.copy()
+                 return_overview = pf_ret.copy()
+             else :
+                 portfolio_overview = portfolio_overview.append(pf_input)
+                 return_overview = return_overview.append(pf_ret)
+             #drop weight column for next run
+             pf_input =pf[['PortfolioID','Snapshot_date','symbol','Price','Number of Shares','Position']].copy()
       
       if m == 0 :
           screen_overview = screen.copy()
       else:
           screen_overview = screen_overview.append(screen)
+  portfolio_client, portfolio_overview
+
+
 
 
   filename = 'Screen_parameters.csv'
   screen_params = pd.read_csv(filename,delimiter = ' ',
                                 quotechar=' ', quoting=csv.QUOTE_MINIMAL)
   Screen_freq = 'BA'
-  PortfolioID = '3'
+  PortfolioID = '156'
   capital = '10000000'
   start = '2006-01-01'
   end = (datetime.date.today()-BDay(1))
@@ -278,16 +288,18 @@ def guru_optimize(request):
       prices = quandl.get(stocks,start_date=snapshots[0] - BDay(4), end_date=snapshots[0],collapse='daily')
   portfolio_imported['Price'] = prices.iloc[-1].T.values
   portfolio_imported = portfolio_imported.dropna(subset=['Price']) .reset_index(drop=True) 
-
+  print(portfolio_overview)
   html = get_top_portfolios(request, 'user/guru_optimize.html')
   return HttpResponse(html)
 
 
 def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots, p_fundamentals, screener, screen_list, m):
-    print eval(screen_list)
 
     portfolio = portfolio_input.copy()
-
+    print("THIS IS YOUR PORTFOLIO")
+    print(portfolio)
+    print("THIS IS YOUR PORTFOLIO INPUT")
+    print(portfolio_input)
     cash_total = 0
 
     end = snapshots[j]
@@ -339,7 +351,7 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
     for k in range(len(screener)):
 
         if k ==0:
-            cols = "['symbol', '" + screener['Filter_factor'][k] + "','screen_out']"
+            cols = "['symbol', '" + screener['Filter_factor'][k] + "',"
 
         if k > 0 and k < max(range(len(screener))):
             cols = cols + "'" + screener['Filter_factor'][k] + "',"
@@ -365,13 +377,10 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
         ################################################################################################    
         #Portfolio Reallocation: Distribute cash to other portfolio holdings (Equal Weighting)
         ################################################################################################
-
-
         #Calculate cash position
         cash_total = portfolio[portfolio['screen_out']==1]['Position'].sum()
         cash_per_position = cash_total / len(portfolio[(portfolio['screen_out']==0) 
                                                        & (pd.isnull(portfolio['Price'])==False)]['Position'])
-
         #Set positions which are filtered out to 0 
         portfolio['Position_bef_screen'] = portfolio['Position']
         portfolio['Number of Shares before'] = portfolio['Number of Shares']
@@ -389,7 +398,6 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
 
         # If some cash left, buy the stock with the lowest price
         cash_left = cash_total - portfolio['Position_delta'].sum()
-
         if cash_left > 0: 
             df = portfolio[portfolio['screen_out']==0].sort(['Price'], ascending = [1]).iloc[0]
             No_Shares_to_buy = np.floor(cash_left / df['Price'])
@@ -400,7 +408,6 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
             portfolio.loc[(portfolio['symbol'] == df['symbol']),('Position')] += Pos_delta
             del df           
         cash_left = cash_total - portfolio['Position_delta'].sum()  
-
         # After screening, recalculate portfolio weights
         portfolio_size = portfolio['Position'].sum(axis=0)
 
@@ -413,24 +420,25 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
         ################################################################################################
 
         portfolio = portfolio[portfolio.screen_out ==0].reset_index(drop=True)
-        
+
         #Remove stocks with NaN weight (Nan weight due to missing price data)
         portfolio = portfolio[portfolio.weight_aft_screen_pct != 0.0].reset_index(drop=True)
-        
+
         ################################################################################################    
         # Add minimum and maximum weights for Portfoliovisualizer
         ################################################################################################
         
         # Add minimum and maximum weight
         portfolio['Min_weight'] = np.round(np.maximum(np.minimum(min_factor*portfolio['weight_aft_screen_pct'],
-                                            portfolio['weight_aft_screen_pct'] - 1.0),0.0),0)
+                                            portfolio['weight_aft_screen_pct'] - 1.0),1.0),0)
         
         portfolio['Max_weight'] = np.round(np.minimum(np.maximum(max_factor*portfolio['weight_aft_screen_pct'],
                                             portfolio['weight_aft_screen_pct'] + 1.0),100.0),0)
 
         portfolio = portfolio.rename(columns={'weight_aft_screen_pct' : 'weight'})
         #drop unnecessary columns
-        portfolio = portfolio.drop(['Number of Shares to buy','Position_delta'], 1).drop([eval(screen_list)],1)
+        portfolio = portfolio.drop(['Number of Shares to buy','Position_delta'], 1).drop(eval(screen_list),axis=1)
+      
 
         #portf_pv = portfolio_overview[['PortfolioID','Snapshot_date','symbol','Number of Shares','Price','Position','weight_aft_screen_pct',
         #                               'return']].copy()
@@ -457,11 +465,11 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
         else:
             start = date(end.year-2,12,31) 
 
-
         stocks = qu_EOD_trsf('EOD',list_stocks=portfolio['symbol'],field='.11')
-
+        # print(stocks)
         monthly_returns = quandl.get(stocks,start_date=start, end_date=end,collapse='monthly',transform='rdiff')
 
+        # print(len(monthly_returns))
         portfolio['return'] = np.round(((monthly_returns +1).prod(axis=0)**(12/len(monthly_returns)) -1),3).T.values
 
 
@@ -474,7 +482,7 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
                'Portfolio_return' : portfolio_return}
 
         pf_return = pd.DataFrame(df1, columns=['PortfolioID','Snapshot_date','Start_year','End_year','Portfolio_return'])
-        
+        print(portfolio)
         return portfolio, df_screen, pf_return
     
     else :
@@ -515,23 +523,21 @@ def qu_SF1_trsf(db=None,ticker=None,field=None,start=None,end=None,dimension=Non
 
 
 def filter_list(screener):
-    print(screener)
-    
-    index=0
-    for index in range(0,len(screener)):
-        print(index)
-        print(screener['Filter_factor'])
-        if index ==0:
-            cols = "['" + screener['Filter_factor'][index] + "\',"
-            return cols
-
-        if index > 0 and index < max(range(len(screener))):
-            cols = cols + "'" + screener['Filter_factor'][index] + "',"
-            return cols
-
-        if index  == max(range(len(screener))):
-            cols = cols + "'" + screener['Filter_factor'][index] + "', 'screen_out']"
-            return cols
+  cols = ""
+  for index in range(len(screener)):
+    if index ==0:
+        print("one")
+        cols = "['" + screener['Filter_factor'][index] + "\',"
+        print cols
+    elif index > 0 and index < max(range(len(screener))):
+        print("two")
+        cols = cols + "'" + screener['Filter_factor'][index] + "',"
+        print cols
+    elif index  == max(range(0,len(screener))):
+        print("three")
+        cols = cols + "'" + screener['Filter_factor'][index] + "', 'screen_out']"
+        print cols
+  return cols
 
 
 
@@ -578,23 +584,27 @@ def MV(pf_input, startYear,endYear,expReturn):
         count += int(1)
         urlArr.append(rtnStr)
         tail = "".join(urlArr)
-        url += tail
+        url += tail 
 
     #Open URL and Scrape
     soup = BeautifulSoup(urlopen(url), "html.parser")
-    soup = soup.find_all("tbody")[2]
-    soup = soup.find_all("td", class_="numberCell")
-    weightArr = []
-    for item in soup:
-        newitem = (str(item))
-        weightArr.append(re.sub("[^0-9.]", "", newitem))
+    try:
+      soup = soup.find_all("tbody")[2]
+      soup = soup.find_all("td", class_="numberCell")
+      weightArr = []
+      for item in soup:
+          newitem = (str(item))
+          x = float(newitem)
+          if math.isnan(x):
+            weightArr.append(re.sub("[^0-9.]", "", "0.1"))
+          else:
+            weightArr.append(re.sub("[^0-9.]", "", newitem))
+      df2 = pd.DataFrame({'weight_optimal': weightArr })
+      return pf_input.join(df2)
+    except:
+      return("error")
 
     #Append weightArr to Dataframe
-    df2 = pd.DataFrame({'weight_optimal': weightArr })
-    
-    return pf_input.join(df2)
-
-
 
 
 

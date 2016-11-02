@@ -32,6 +32,7 @@ def dashboard(request):
       username = request.user.username
       portalUser = PortalUser.objects.get(username=username)
       portfolios = top_portfolios(request,portalUser.id)
+      picture_url = portalUser.picture_url
   news = requests.get("http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo,appl,googl,tsla")
   news = news.json()
   newsarr = []
@@ -39,6 +40,10 @@ def dashboard(request):
     newsarr.append(newsitem)
   context_dict = {}
   context_dict['news'] = newsarr
+  if picture_url == 'NULL':
+    context_dict['picture_url'] = "asdf"
+  else:
+    context_dict['picture_url'] = picture_url
   stockDict = []
   stockTotal = 0
   oldTotal = 0

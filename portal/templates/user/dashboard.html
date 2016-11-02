@@ -44,7 +44,14 @@ svg {
                     </div>                  
                     <div class="content" style="height:150px">
                         <div class="row" style="height:100%">
-                            <div class="col-lg-4" style="text-align:center;padding-right:0px;margin-left:25px;background:rgba(0,0,0,0.2);height:100%"><span class="icon-user" style="font-size:75px;position:relative;top:50px"></span></div>
+                            <div class="col-lg-4" style="text-align:center;padding-right:0px;margin-left:25px;height:100%">
+                            {% if picture_url %}
+                                   <img src="{{picture_url}}"  style="width: 100px;height: 100px;position: relative;top: 15px;">
+                            {% else %}
+                                <img src="/static/img/profile.svg"  style="width: 100px;height: 100px;position: relative;top: 15px;">
+                            {% endif %}
+
+                            </div>
                             <div class="col-lg-7" style="padding-left:0px">
                                 <div style="position:relative;top:20px;text-align:center;width:100%;font-size:32px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%">Hello, {{username}}</div>
                             </div>
@@ -67,8 +74,11 @@ svg {
                         </div>                        
                     </div>                  
                     <div class="content" style="height:150px">
+                        <div class="row">
+                            
+                        </div>
 
-                               <div id="pieChart" style="position:relative;top:-25px;left:15%"></div>
+                               <div id="pieChart" style="position:relative;top:-25px;left:calc(15px + 15%)"></div>
 <link href="/static/css2/d3.pie.css" rel="stylesheet">
          <script>
 var pie = new d3pie("pieChart", {
@@ -1095,7 +1105,10 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
   </div>
     {% endblock %}
 {% block scripts %}
-  
+    <script>
+        var user = {'id': 0, 'status': 'bot', 'user': 'Hyperchat Bot','picture_url':'/static/img/robot.jpg'}
+    localStorage.setItem('user',JSON.stringify(user))
+    </script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript">
   $(".scroll-sail").height('25vh').mCustomScrollbar();

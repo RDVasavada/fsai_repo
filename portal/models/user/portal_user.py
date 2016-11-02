@@ -10,6 +10,7 @@ class PortalUser(auth.models.AbstractUser):
     reason = models.CharField(max_length=255, null=True, blank=True)
     resetToken = models.CharField(max_length=255, null=True, blank=True)
     connections = models.CharField(max_length=255, null=True, blank=True)
+    picture_url = models.CharField(max_length=255, null=True, blank=True)
     tokenCreateDate = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
 
     def __str__(self):
