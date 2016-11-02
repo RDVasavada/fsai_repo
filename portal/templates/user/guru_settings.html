@@ -608,10 +608,10 @@
 
 
 <div class="modal" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog" style="width:80vw">
+        <div class="modal-dialog" style="width:80vw;height:auto;background:black">
             <div class="modal-content" style="margin-top:15vh">
 
-                <div class="block" style="margin-bottom:0px">
+                <div class="block" style="margin-bottom:0px;height:auto">
                     <div class="header" style="height:20vh;min-height:200px">
                         <h2>Stock Filters</h2>
 
@@ -742,7 +742,7 @@ function scrape(){
                             </div>
                         </div>                            
                     </div>
-                    <div class="content" style="height:50vh">
+                    <div class="content" style="height:auto">
                  <form action="/user/guru_optimize" class="form-horizontal"  method="post" id="guru_portfolio" >
                      {% csrf_token %}
                      <input style="display:none" class="form-control" name="chosenGuru" id="chosenGuru">
@@ -769,7 +769,7 @@ function scrape(){
 
 
                 </form> 
-                            <divgi style="height:auto">
+                            <div style="height:auto">
                         <table class="table table-hover" style="font-size:10px">
                             <thead>
                                 <tr>
