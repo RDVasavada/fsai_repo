@@ -204,7 +204,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(17)">Select This Portfolio</button>
                     </div>                 
                 </div> 
 </div>
@@ -282,7 +282,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(139)">Select This Portfolio</button>
                     </div>                 
                 </div>                 
      <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -618,7 +618,7 @@
                         <div class="form-row">
                             <div class="col-md-12">                   
 <script>
-function scrape(id){
+function scrape(){
     if ($("#DIVY").attr('checked')) {
         $("#key-divy")[0].value = $("#DIVYx")[0].value
     }
@@ -636,7 +636,7 @@ function scrape(id){
     }        
     if ($("#epusd").attr('checked')) {
         $("#key-epusd")[0].value = $("#epusdx")[0].value
-    }        
+    }
    $("#guru_portfolio").submit()
 
 }
@@ -650,7 +650,7 @@ function scrape(id){
                                         Dividend Yield<br>
                                         <div class="btn-group btn-group-xs" style="margin-top:5px;margin-bottom:5px">
                                           <div class="radiobox-inline">
-                                            <label><div class="radio" ><span class=""><input type="radio" name="radio_ex1" checked></span></div><br> ></label>
+                                            <label><div class="radio checked" ><span class=""><input type="radio" name="radio_ex1" checked></span></div><br> ></label>
                                             <label><div class="radio"><span class=""><input type="radio" name="radio_ex1"></span></div><br> >=</label>
                                             <label><div class="radio"><span class=""><input type="radio" name="radio_ex1"></span></div><br> <=</label>
                                             <label><div class="radio"><span class=""><input type="radio" name="radio_ex1"></span></div><br> <</label>
@@ -745,6 +745,7 @@ function scrape(id){
                     <div class="content" style="height:50vh">
                  <form action="/user/guru_optimize" class="form-horizontal"  method="post" id="guru_portfolio" >
                      {% csrf_token %}
+                     <input style="display:none" class="form-control" name="chosenGuru" id="chosenGuru">
                  <input id="key-divy" style="display:none"  class="form-control" name="key-divy" value="0"> 
                     <input id="key-mkt" style="display:none"  class="form-control" name="key-mkt" value="0"> 
                     <input id="key-nm" style="display:none"  class="form-control" name="key-nm" value="0"> 
@@ -814,13 +815,12 @@ function scrape(id){
                         </table>                       
                     </div>
                 </div>                            
-
                                                                  
                     <button type="button" class="btn btn-default btn-clean pull-right" data-dismiss="modal">Cancel</button>              
-                    <button type="button" class="btn btn-default btn-clean pull-left" data-dismiss="modal" onClick="scrape(1)">Filter & Optimize</button>              
+                    <button type="button" class="btn btn-default btn-clean pull-left" data-dismiss="modal" onClick="scrape()">Filter & Optimize</button>              
                     </div>
 
-
+        
                 <div class="modal-footer" style="margin-top:5px;padding:0px">
                 </div>
             </div>

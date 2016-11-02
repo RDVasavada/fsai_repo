@@ -189,7 +189,7 @@ var MSGList = React.createClass({
 
                                             }
                                             var imgStyle = {
-                                                width: '73px',
+                                                width: '60px',
                                                 position: 'relative',
                                                 right: '25px'
                                             }
@@ -276,9 +276,9 @@ var MSGList = React.createClass({
                                                 letterSpacing: '2px',
                                             }
                                             var imgStyle = {
-                                                width: '75px',
+                                                width: '60px',
                                                 position: 'relative',
-                                                right: '35px'
+                                                right: '67px'
                                             }
                                             if (lastmsg === 1 || lastmsg === -1) {
                                                 lastmsg = 0 

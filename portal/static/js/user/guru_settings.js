@@ -1,4 +1,5 @@
 var get_guru = function(id) {
+  $("#chosenGuru")[0].value = id
   $("#pickPin").empty()
   $.ajax({
     url: '/user/guru_portfolio/'+id,

@@ -287,7 +287,8 @@ def guru_optimize(request):
   except:
       prices = quandl.get(stocks,start_date=snapshots[0] - BDay(4), end_date=snapshots[0],collapse='daily')
   portfolio_imported['Price'] = prices.iloc[-1].T.values
-  portfolio_imported = portfolio_imported.dropna(subset=['Price']) .reset_index(drop=True) 
+  portfolio_imported = portfolio_imported.dropna(subset=['Price']) .reset_index(drop=True)
+  print("THIS IS PORTFOLIO OVERVIEW YOU ARE LOOKING FOR")
   print(portfolio_overview)
   html = get_top_portfolios(request, 'user/guru_optimize.html')
   return HttpResponse(html)

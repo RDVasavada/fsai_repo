@@ -43,7 +43,7 @@ svg {
                         </div>                        
                     </div>                  
                     <div class="content" style="height:150px">
-                        <div class="row" style="height:100%">
+                        <div class="row" style="height:100%;overflow:hidden">
                             <div class="col-lg-4" style="text-align:center;padding-right:0px;margin-left:25px;height:100%">
                             {% if picture_url %}
                                    <img src="{{picture_url}}"  style="width: 100px;height: 100px;position: relative;top: 15px;">
@@ -53,7 +53,7 @@ svg {
 
                             </div>
                             <div class="col-lg-7" style="padding-left:0px">
-                                <div style="position:relative;top:20px;text-align:center;width:100%;font-size:32px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%">Hello, {{username}}</div>
+                                <div style="position:relative;top:20px;text-align:center;width:100%;font-size:26px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%">Hello, {{username}}</div>
                             </div>
                         </div>
                     </div>
@@ -490,7 +490,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
                        <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Your Top 10 Portfolios</h2>
                 </div>
                 <div class="content" style="padding:0px">
-<div class="content">
+<div class="content" style="background:transparent">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -503,16 +503,16 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
                             <tbody>
 {% for portfolio in portfolios %}
                                 <tr>
-                                    <td style="padding:2px">
+                                    <td >
                                        <a href="/user/individual_portfolio/{{portfolio.id}}">
                                         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{forloop.counter}}</h2> 
                                         </a>
                                     </td>
-                                    <td style="padding:2px">
+                                    <td >
                                            <a href="/user/individual_portfolio/{{portfolio.id}}">
                                         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.name}}</h2> </td></a>
-                                    <td style="padding:2px">   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.value}}$</h2> </a></td>
-                                    <td style="padding:2px">   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:cente">{{portfolio.change}}%</h2> </td>
+                                    <td >   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.value}}$</h2> </a></td>
+                                    <td >   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:cente">{{portfolio.change}}%</h2> </td>
                                 </tr>
 {% endfor %}                    
                             </tbody>
