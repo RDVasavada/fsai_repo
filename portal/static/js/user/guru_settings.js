@@ -17,10 +17,10 @@ var get_guru = function(id) {
    var div = document.getElementById('loadingImg');
    if (div.style.display == 'none') {
      div.style.display = '';
-     $("#picker").style.display = 'none'
+     document.getElementById('picker').style.display = 'none'
    }
    else {
      div.style.display = 'none';
-      $("#picker").style.display = 'none'
+     document.getElementById('picker').style.display = 'none'
    }
  }
