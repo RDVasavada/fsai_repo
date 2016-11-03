@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys
 # sys.path.append(IMPORT_ROOT)
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True
 
@@ -173,6 +173,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_extensions',
+    'django.contrib.humanize',
     #third party apps
     'rest_framework',
     'webpack_loader',
