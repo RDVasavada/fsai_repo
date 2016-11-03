@@ -328,19 +328,26 @@ $("a#wizard-next-3.btn").click(function() {
   } else {
     $("#xname")[0].innerText = "Test Portfolio"
   }
-  $("#xinvest")[0].innerText = "$" + $("#investing_amount")[0].value
-  $("#xshare")[0].innerText = $("#stocks_number")[0].value + " shares"
-  $("#xyear")[0].innerText = "for " + $("#Years")[0].value + " Years"
-  $("#xmonth")[0].innerText = $("#Months")[0].value + " Months"
-  if ($("#Market")[0].value == "Nasdaq") {
-    $("#xmarket")[0].innerText = "NASDAQ"
-  } else if ($("#Market")[0].value == "S&P500") {
-    $("#xmarket")[0].innerText = "S&P500"
-  } else if ($("#Market")[0].value == "Dow Jones") {
-    $("#xmarket")[0].innerText = "Dow Jones"
-  }
-  $("#xrisk")[0].innerText = "with " + $("#expRisk")[0].value + "% Risk"
-  $("#xreturn")[0].innerText = "and " + $("#expReturn")[0].value + "% Return"
+  if (!($("#investing_amount")[0].value)){
+    $("#xinvest")[0].innerText = "$ 1,000"
+  } else {
+    var num = $("#investing_amount")[0].value
+    num = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    $("#xinvest")[0].innerText = "$" + num 
+ }
+  // $("#xinvest")[0].innerText = "$" + $("#investing_amount").value
+  // $("#xshare")[0].innerText = $("#stocks_number")[0].value + " shares"
+  // $("#xyear")[0].innerText = "for " + $("#Years")[0].value + " Years"
+  // $("#xmonth")[0].innerText = $("#Months")[0].value + " Months"
+  // if ($("#Market")[0].value == "Nasdaq") {
+  //   $("#xmarket")[0].innerText = "NASDAQ"
+  // } else if ($("#Market")[0].value == "S&P500") {
+  //   $("#xmarket")[0].innerText = "S&P500"
+  // } else if ($("#Market")[0].value == "Dow Jones") {
+  //   $("#xmarket")[0].innerText = "Dow Jones"
+  // }
+  // $("#xrisk")[0].innerText = "with " + $("#expRisk")[0].value + "% Risk"
+  // $("#xreturn")[0].innerText = "and " + $("#expReturn")[0].value + "% Return"
 })
 
     /* eof button state(demo)*/    
