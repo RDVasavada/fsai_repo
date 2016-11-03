@@ -12,3 +12,13 @@ var get_guru = function(id) {
       })
   })
 }
+
+ var showHide = function(){
+   var div = document.getElementById('loadingImg');
+   if (div.style.display == 'none') {
+     div.style.display = '';
+   }
+   else {
+     div.style.display = 'none';
+   }
+ }
