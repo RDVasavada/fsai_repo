@@ -104,7 +104,7 @@ def find():
   try:
     g = gurusoup.body.contents[0]
     d = json.loads(g)
-  except TypeError:
+  except AttributeError:
     g = gurusoup.p.contents[0]
     d = json.loads(g)   
   guruarr = []
