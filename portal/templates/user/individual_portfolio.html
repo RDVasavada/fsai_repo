@@ -27,9 +27,7 @@ $("li#a" + url).attr('class','active')
                                 <li class="btn-group">                                    
                                     <a href="#" class="dropdown-toggle tip" title="" data-toggle="dropdown" data-original-title="More"><span class="icon-align-justify"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Portfolio Details</a></li>
-                                        <li><a href="#">Export portfolio as .CSV</a></li>
-                                        <li><a href="#">Export performance as .CSV</a></li>  
+                                        <li><a href="#" onClick="downloadCsv()">Export portfolio as .CSV</a></li>
                                     </ul>                                                                            
                                 </li>
                                 <li><a href="#" class="block-toggle tip" title="" data-original-title="Show"><span class="icon-chevron-down"></span></a></li>
@@ -638,7 +636,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                         <th class="text-center">Percent gains</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="optimizedPortfolio">
                     {% for stock in stocks %}
                         <td><a href="/user/individual_stock/{{stock.ticker}}" id="stockLink">{{stock.ticker}}</a></td>
                         <td class="text-center small">{{stock.ticker}}</td>

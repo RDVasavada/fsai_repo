@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+<div id="loadingImg" style="width:100%;height:100%;display:none;text-align:center;padding-top:15vh">
+    <img id="loadingImg" src="/static/img/loader.gif" style="width:50px">
+     <h2 style="font-size:16px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;margin-bottom:5px;padding-top:25px">We are creating your personalized portfolio . . . <br>
+        <span style="position:relative;top:25px">This whole process may take up to 5 minutes.</span>
+    </h2>
+</div>
   <div class="nav">
     <a href="/user/news_portal" data-target="-1" style=";margin-right:50px;float:right">           
       <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
@@ -660,7 +666,7 @@ function scrape(){
                                     </a>                                                                      
                                     <a href="#" class="btn btn-default btn-clean">
                                        <label class="switch">
-                                        <input id="MKT" type="checkbox" class="skip" value="0">
+                                        <input id="MKT" type="checkbox" class="skip" value="0" checked>
                                         <span></span>
                                         </label><br>
                                         Market Cap<br>
@@ -672,7 +678,7 @@ function scrape(){
                                             <label><div class="radio"><span class=""><input type="radio" name="radio_ex2"></span></div><br> <</label>
                                             </div>
                                         </div> 
-                                       <input type="number" id="MKTx" name="tags"style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
+                                       <input type="number" id="MKTx" name="tags" value="1000000000" style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
                                     </a> 
                                     <a href="#" class="btn btn-default btn-clean">
                                        <label class="switch">
@@ -692,7 +698,7 @@ function scrape(){
                                     </a> 
                                     <a href="#" class="btn btn-default btn-clean">
                                        <label class="switch">
-                                        <input id="pe"  type="checkbox" class="skip" value="0">
+                                        <input id="pe"  type="checkbox" class="skip" value="0" checked>
                                         <span></span>
                                         </label><br>
                                         P\E Ratio<br>
@@ -704,15 +710,15 @@ function scrape(){
                                             <label><div class="radio"><span class=""><input type="radio" name="radio_ex4"></span></div><br> <</label>
                                             </div>
                                         </div> 
-                                       <input type="number" id="pex" name="tags"style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
+                                       <input type="number" id="pex" name="tags" value="0.8" style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
                                     </a> 
                                     <a href="#" class="btn btn-default btn-clean">
                                        <label class="switch">
-                                        <input id="pb" type="checkbox" class="skip" value="0">
+                                        <input id="pb" type="checkbox" class="skip" value="0" checked>
                                         <span></span>
                                         </label><br>
                                         P\B Ratio<br>
-                                        <div class="btn-group btn-group-xs" style="margin-top:5px;margin-bottom:5px">
+                                        <div class="btn-group btn-group-xs" style="margin-top:5px;margin-bottom:5px" checked>
                                           <div class="radiobox-inline">
                                             <label><div class="radio" ><span class=""><input type="radio" name="radio_ex5" checked></span></div><br> ></label>
                                             <label><div class="radio"><span class=""><input type="radio" name="radio_ex5"></span></div><br> >=</label>
@@ -720,7 +726,7 @@ function scrape(){
                                             <label><div class="radio"><span class=""><input type="radio" name="radio_ex5"></span></div><br> <</label>
                                             </div>
                                         </div> 
-                                       <input type="number" id="pbx" name="tags"style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
+                                       <input type="number" id="pbx" name="tags" value="0.5" style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
                                     </a> 
                                     <a href="#" class="btn btn-default btn-clean">
                                        <label class="switch">
@@ -743,7 +749,7 @@ function scrape(){
                         </div>                            
                     </div>
                     <div class="content" style="height:auto">
-                 <form action="/user/guru_optimize" class="form-horizontal"  method="post" id="guru_portfolio" >
+                 <form action="/user/guru_optimize" class="form-horizontal"  method="post" id="guru_portfolio" onsubmit="showHide(); return false;">
                      {% csrf_token %}
                      <input style="display:none" class="form-control" name="chosenGuru" id="chosenGuru">
                  <input id="key-divy" style="display:none"  class="form-control" name="key-divy" value="0"> 
@@ -836,4 +842,18 @@ function scrape(){
 {% endblock %}
 {% block scripts %}
 <script src="/static/js/user/guru_settings.js"></script>
+
+<script type="text/javascript">
+ function showHide() {
+   var div = document.getElementById('loadingImg');
+   if (div.style.display == 'none') {
+     div.style.display = '';
+   }
+   else {
+     div.style.display = 'none';
+   }
+ }
+</script>
+
+
 {% endblock %}
