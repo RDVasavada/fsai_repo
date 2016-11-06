@@ -638,7 +638,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                     </thead>
                     <tbody id="optimizedPortfolio">
                     {% for stock in stocks %}
-                        <td><a href="/user/individual_stock/{{stock.ticker}}" id="stockLink">{{stock.ticker}}</a></td>
+                        <td><a href="/user/individual_stock/{{stock.ticker}}/" id="stockLink">{{stock.ticker}}</a></td>
                         <td class="text-center small">{{stock.ticker}}</td>
                         <td class="text-center">{{stock.buy_date}}</td>
                         <td class="text-center">{{stock.sell_date}}</td>

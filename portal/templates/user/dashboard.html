@@ -504,15 +504,15 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
 {% for portfolio in portfolios|slice:":3"  %}
                                 <tr>
                                     <td >
-                                       <a href="/user/individual_portfolio/{{portfolio.id}}">
+                                       <a href="/user/individual_portfolio/{{portfolio.id}}/">
                                         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{forloop.counter}}</h2> 
                                         </a>
                                     </td>
                                     <td >
-                                           <a href="/user/individual_portfolio/{{portfolio.id}}">
+                                           <a href="/user/individual_portfolio/{{portfolio.id}}/">
                                         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.name}}</h2> </td></a>
-                                    <td >   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.value}}$</h2> </a></td>
-                                    <td >   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:cente">{{portfolio.change}}%</h2> </td>
+                                    <td >   <a href="/user/individual_portfolio/{{portfolio.id}}/"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.value}}$</h2> </a></td>
+                                    <td >   <a href="/user/individual_portfolio/{{portfolio.id}}/"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:cente">{{portfolio.change}}%</h2> </td>
                                 </tr>
 {% endfor %}                    
                             </tbody>
