@@ -38,7 +38,7 @@ def guru_optimize(request):
   wr = csv.writer(resultFile, delimiter=' ',
                             quotechar=' ', quoting=csv.QUOTE_MINIMAL)
   wr.writerow(['PortfolioID;Screen_frequency;Initial_capital'])
-  wr.writerow(['156;BA;1000000000'])
+  wr.writerow(['84;BA;1000000000'])
   resultFile.close()
   print
   filename = 'Screen_parameters.csv'

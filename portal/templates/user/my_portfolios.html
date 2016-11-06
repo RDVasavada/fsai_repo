@@ -23,7 +23,7 @@
             var inputval = $("#tags")[0].value
             splitval = inputval.split('\[')
             if (splitval.length === 2) {
-               window.location.assign($("h5:contains("+splitval[0].slice(0,-1)+")")[0].parentNode.parentNode.children[2].children[0].href)
+               window.location.assign($("h5:contains("+splitval[0].slice(0,-1)+")")[0].parentNode.parentNode.children[2].children[0].href + "/")
             } else {
                 goStock(splitval[0])
             }

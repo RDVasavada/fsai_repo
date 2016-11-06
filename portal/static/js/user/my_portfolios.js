@@ -1,6 +1,6 @@
 var goStock = function(e) {
     console.log(e)
-    window.location.href = '/user/individual_stock/' + e
+    window.location.href = '/user/individual_stock/' + e 
     // $(".statusbar")[0].innerText = "Loading " + e + "'s Stock Information ..."
     // $(".statusbar").show()
     // $("#company_name")[0].value = e;
