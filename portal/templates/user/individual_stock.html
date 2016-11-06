@@ -113,7 +113,7 @@
     .append('g')
     .attr('class', 'chart__range-selection')
     .attr('transform', 'translate(110, 0)');
-  d3.csv('/user/stock_chart/{{company_symbol}}', type, function(err, data) {
+  d3.csv('/user/stock_chart/{{company_symbol}}/', type, function(err, data) {
     console.log(data)
     if (data.length < 1) {
       $("#loaderText").css('color','white')
