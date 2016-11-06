@@ -5257,9 +5257,19 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
 {% endfor %}
     ];
     $( "#tags" ).autocomplete({
-      source: availableTags
+      source: availableTags,
+  select: function( event, ui ) { 
+            var searchTerm = JSON.stringify(ui.item.value)
+            n = searchTerm.indexOf("[")
+            if (n >= 0) {
+              searchTerm = searchTerm.slice(1,n)
+            }
+            window.location.href = "/user/individual_stock/" + searchTerm
+        }      
     });
   } );
+
+
 </script>
 {% endblock %}
 

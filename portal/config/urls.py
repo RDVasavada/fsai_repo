@@ -57,6 +57,8 @@ urlpatterns = patterns('',
     (r'^user/delfriend/?$', views.delfriend),  
 )
 
+
+
 # lets us serve our media
 if settings.DEBUG:
     from django.views.static import serve

@@ -6,6 +6,379 @@
         <span style="position:relative;top:25px">This whole process may take up to 5 minutes.</span>
     </h2>
 </div>
+<form id="finalcriteria" class="form-horizontal" action="/user/guru_optimize" method="post" style="display:none">
+    <input id="xdivy" name="xdivy" class="form-control" type="text" />
+    <input id="xmktcap" name="xmktcap" class="form-control" type="text" />
+    <input id="xnm" name="xnm" class="form-control" type="text" />
+    <input id="xpe" name="xpe" class="form-control" type="text" />
+    <input id="xpb" name="xpb" class="form-control" type="text" />
+    <input id="xepusd" name="xepusd" class="form-control" type="text" />
+</form>
+
+<div id="mySidenav" class="sidenav" style="width:75vw x">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <div style="width:100%;height:100%">
+    
+    <h2 id="chosenGuruName" style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;text-align:center;padding:0px;font-family:'helvetica neue';font-size:24px"> </h2>
+<hr>
+    <div style="width:100%;text-align:center;margin:25px"><span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> Automate your portfolio's performance <br> by allowing us to filter your stocks for you. <span></div>
+<hr>
+        <div class="row">
+            <div class="block" style="height:200px;text-align:center">
+                <div class="header" style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> Filter Criteria : </div>
+                    <div class="checkbox-inline">
+                        <label>
+                            <div class="checker"><span style="border:1px solid white"><input type="checkbox" class="validate[required] form-control" name="vcheck" value="1" id="cdivy"></span></div> Dividend Yield 
+                        </label>
+                    </div>      
+                    <div class="checkbox-inline">
+                        <label>
+                            <div class="checker"><span style="border:1px solid white"><input type="checkbox" class="validate[required] form-control" name="vcheck" value="1" id="cmktcap"></span></div> Market Cap 
+                        </label>
+                    </div>      
+                    <div class="checkbox-inline">
+                        <label>
+                            <div class="checker"><span style="border:1px solid white"><input type="checkbox" class="validate[required] form-control" name="vcheck" value="1" id="cnm"></span></div> Net Margin 
+                        </label>
+                    </div>      
+                    <div class="checkbox-inline">
+                        <label>
+                            <div class="checker"><span style="border:1px solid white"><input type="checkbox" class="validate[required] form-control" name="vcheck" value="1" id="cpe"></span></div> P\E Ratio 
+                        </label>
+                    </div>      
+                    <div class="checkbox-inline">
+                        <label>
+                            <div class="checker"><span style="border:1px solid white"><input type="checkbox" class="validate[required] form-control" name="vcheck" value="1" id="cpb"></span></div> P\B Ratio 
+                        </label>
+                    </div>      
+                    <div class="checkbox-inline">
+                        <label>
+                            <div class="checker"><span style="border:1px solid white"><input type="checkbox" class="validate[required] form-control" name="vcheck" value="1" id="cepusd"></span></div> EPSUSD 
+                        </label>
+                    </div>      
+
+                <br>
+
+                <div class="header" style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px;margin-top:50px"> Filter Frequency : </div>
+                    <div class="checkbox-inline">
+                        <label>
+                            <div class="checker"><span style="border:1px solid white"><input type="checkbox" class="validate[required] form-control" name="vcheck" value="1"></span></div> Annually 
+                        </label>
+                    </div>      
+                    <div class="checkbox-inline">
+                        <label>
+                            <div class="checker"><span style="border:1px solid white"><input type="checkbox" class="validate[required] form-control" name="vcheck" value="1"></span></div> Monthly 
+                        </label>
+                    </div>      
+                    <div class="checkbox-inline">
+                        <label>
+                            <div class="checker"><span style="border:1px solid white"><input type="checkbox" class="validate[required] form-control" name="vcheck" value="1"></span></div> Weekly 
+                        </label>
+                    </div>      
+                                                                 
+
+            </div>
+       <div class="row">
+     
+                <div class="col-md-3" style="margin-left:50px;display:none" id="fdivy">
+                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                                   
+                             <div style="width:100%;margin:25px">
+
+                                <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px" id="filterName"> 
+                                Dividend Yield <span>
+                                <div style="width:100%;margin-top:25px;margin-bottom:25px">
+                                        <select class="form-control" style="width:300px;text-align:center" id="odivy">
+                                            <option value="1" >Less than ( < )</option>
+                                            <option value="2">Less than or Equal To ( <= )</option>
+                                            <option value="3">Greater than or Equal To ( >= )</option>
+                                            <option value="4">Greater than ( > )</option>
+                                          </select>
+                                </div>
+                            <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> 
+                                        <div class="input-group m-b" style="position:relative;width:50%">
+                                                <div class="input-group m-b" style="width:100%">
+                                                    <input type="number" placeholder="1,000" value="1,000" class="form-control" style="font-size:14px;font-family:'Helvetica Neue';font-weight:100;letter-spacing:2px" id="vdivy">
+                                                    <span class="input-group-addon" style="font-size:12px;font-weight:100;font-family:'Helvetica Neue'">%</span>
+                                                </div>  
+                                                </div>
+                            <span>
+
+
+                               </div>          
+                            </div>                  
+                </div>       
+
+     
+                <div class="col-md-3" style="margin-left:50px;display:none" id="fmktcap">
+                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                                   
+                             <div style="width:100%;margin:25px">
+
+                                <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px" id="filterName"> 
+                                Market Cap <span>
+                                <div style="width:100%;margin-top:25px;margin-bottom:25px">
+                                        <select class="form-control" id="omktcap" style="width:300px;text-align:center">
+                                            <option value="1" >Less than ( < )</option>
+                                            <option value="2">Less than or Equal To ( <= )</option>
+                                            <option value="3">Greater than or Equal To ( >= )</option>
+                                            <option value="4">Greater than</option>
+                                          </select>
+                                </div>
+                            <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> 
+                                        <div class="input-group m-b" style="position:relative;width:50%">
+                                                <div class="input-group m-b" style="width:100%">
+                                                    <input type="number" placeholder="1,000" id="vmktcap" value="1,000" class="form-control" style="font-size:14px;font-family:'Helvetica Neue';font-weight:100;letter-spacing:2px">
+                                                    <span class="input-group-addon" style="font-size:12px;font-weight:100;font-family:'Helvetica Neue'">%</span>
+                                                </div>  
+                                                </div>
+                            <span>
+
+
+                               </div>          
+                            </div>                  
+                </div>       
+
+                             
+                <div class="col-md-3" style="margin-left:50px;display:none" id="fnm">
+                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                                   
+                             <div style="width:100%;margin:25px">
+
+                                <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px" id="filterName"> 
+                                Net Margin <span>
+                                <div style="width:100%;margin-top:25px;margin-bottom:25px">
+                                        <select class="form-control" id="onm" style="width:300px;text-align:center">
+                                            <option value="1" >Less than ( < )</option>
+                                            <option value="2">Less than or Equal To ( <= )</option>
+                                            <option value="3">Greater than or Equal To ( >= )</option>
+                                            <option value="4">Greater than</option>
+                                          </select>
+                                </div>
+                            <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> 
+                                        <div class="input-group m-b" style="position:relative;width:50%">
+                                                <div class="input-group m-b" style="width:100%">
+                                                    <input id="vnm" type="number" placeholder="1,000" value="1,000" class="form-control" style="font-size:14px;font-family:'Helvetica Neue';font-weight:100;letter-spacing:2px">
+                                                    <span class="input-group-addon" style="font-size:12px;font-weight:100;font-family:'Helvetica Neue'">%</span>
+                                                </div>  
+                                                </div>
+                            <span>
+
+
+                               </div>          
+                            </div>                  
+                </div>       
+
+     
+                <div class="col-md-3" style="margin-left:50px;display:none" id="fpe">
+                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                                   
+                             <div style="width:100%;margin:25px">
+
+                                <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px" id="filterName"> 
+                                P\E Ratio <span>
+                                <div style="width:100%;margin-top:25px;margin-bottom:25px">
+                                        <select class="form-control" id="ope" style="width:300px;text-align:center">
+                                            <option value="1" >Less than ( < )</option>
+                                            <option value="2">Less than or Equal To ( <= )</option>
+                                            <option value="3">Greater than or Equal To ( >= )</option>
+                                            <option value="4">Greater than</option>
+                                          </select>
+                                </div>
+                            <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> 
+                                        <div class="input-group m-b" style="position:relative;width:50%">
+                                                <div class="input-group m-b" style="width:100%">
+                                                    <input id="vpe" type="number" placeholder="1,000" value="1,000" class="form-control" style="font-size:14px;font-family:'Helvetica Neue';font-weight:100;letter-spacing:2px">
+                                                    <span class="input-group-addon" style="font-size:12px;font-weight:100;font-family:'Helvetica Neue'">%</span>
+                                                </div>  
+                                                </div>
+                            <span>
+
+
+                               </div>          
+                            </div>                  
+                </div>       
+
+
+                <div class="col-md-3" style="margin-left:50px;display:none" id="fpb">
+                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                                   
+                             <div style="width:100%;margin:25px">
+
+                                <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px" id="filterName"> 
+                                P\B Ratio<span>
+                                <div style="width:100%;margin-top:25px;margin-bottom:25px">
+                                        <select class="form-control" id="opb" style="width:300px;text-align:center">
+                                            <option value="1" >Less than ( < )</option>
+                                            <option value="2">Less than or Equal To ( <= )</option>
+                                            <option value="3">Greater than or Equal To ( >= )</option>
+                                            <option value="4">Greater than</option>
+                                          </select>
+                                </div>
+                            <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> 
+                                        <div class="input-group m-b" style="position:relative;width:50%">
+                                                <div class="input-group m-b" style="width:100%">
+                                                    <input type="number" id="vpb" placeholder="1,000" value="1,000" class="form-control" style="font-size:14px;font-family:'Helvetica Neue';font-weight:100;letter-spacing:2px">
+                                                    <span class="input-group-addon" style="font-size:12px;font-weight:100;font-family:'Helvetica Neue'">%</span>
+                                                </div>  
+                                                </div>
+                            <span>
+
+
+                               </div>          
+                            </div>                  
+                </div>       
+
+
+                <div class="col-md-3" style="margin-left:50px;display:none" id="fepusd">
+                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                                   
+                             <div style="width:100%;margin:25px">
+
+                                <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px" id="filterName"> 
+                                EPUSD <span>
+                                <div style="width:100%;margin-top:25px;margin-bottom:25px">
+                                        <select class="form-control" id="oepusd" style="width:300px;text-align:center">
+                                            <option value="1" >Less than ( < )</option>
+                                            <option value="2">Less than or Equal To ( <= )</option>
+                                            <option value="3">Greater than or Equal To ( >= )</option>
+                                            <option value="4">Greater than</option>
+                                          </select>
+                                </div>
+                            <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> 
+                                        <div class="input-group m-b" style="position:relative;width:50%">
+                                                <div class="input-group m-b" style="width:100%">
+                                                    <input type="number" id="vepusd" placeholder="1,000" value="1,000" class="form-control" style="font-size:14px;font-family:'Helvetica Neue';font-weight:100;letter-spacing:2px">
+                                                    <span class="input-group-addon" style="font-size:12px;font-weight:100;font-family:'Helvetica Neue'">%</span>
+                                                </div>  
+                                                </div>
+                            <span>
+
+
+                               </div>          
+                            </div>                  
+                </div>       
+
+
+
+
+
+        
+            </div>
+            
+        </div>
+
+        <div class="row" style="text-align:center">
+            <button type="button" class="btn btn-default btn-clean">
+                 <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px" id="filterName" onClick="filterPortfolios()"> 
+                                Filter & Optimize Portfolio <span>
+            </button>
+
+        </div>
+
+
+<div class="col-md-12">
+                <div class="block">
+                    <ul class="nav nav-tabs nav-justified" style="display:none;position:relative;top:0px" id="portNav">
+                        <li class="active" ><a href="#tab5" data-toggle="tab" style="width:100%">Portfolio Before Screening</a></li>
+                        <li style="display:none" id="activeLink"><a href="#tab6" data-toggle="tab" style="width:100%;color:rgba(0,255,0,0.4)">Portfolio After Screening</a></li>
+                        <li id="muteLink"><a href="#" style="width:100%;color:rgba(255,255,255,0.2)" >Portfolio After Screening</a></li>
+                    </ul>
+                    <div class="content content-transparent tab-content">
+                        <div class="tab-pane active" id="tab5">
+
+                         <div style="height:auto">
+                                        <table class="table table-hover" style="font-size:14px">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Stock Ticker</th>
+                                                    <th>Company Name</th>
+                                                    <th>Value</th>
+                                                    <th>Change</th>
+                                                    <th>Exchange</th>
+                                                    <th>Buy Date</th>
+                                                    <th>Impact</th>
+                                                    <th>Share</th>
+                                                    <th>Expected Yield</th>
+                                                    <th>Industry</th>
+                                                    <th>Sector</th>
+                                                    <th>Position</th>
+                                                    <th>PCT</th>
+                                                    <th>Market Cap</th>
+                                                </tr>
+                                                <hr>
+                                            </thead>
+                                            <tbody id="pickPin">
+                                            {% for pick in picks %}
+                                                <tr>
+                                                    <td>{{forloop.counter}}</td>
+                                                    <td>{{pick.symbol}}</td>
+                                                    <td>{{pick.company}}</td>
+                                                    <td>${{pick.value}}</td>
+                                                    <td>%{{pick.change}}</td>
+                                                    <td>{{pick.exchange}}</td>
+                                                    <td>{{pick.13f_date}}</td>
+                                                    <td>{{pick.impact}}</td>
+                                                    <td>{{pick.share}}</td>
+                                                    <td>{{pick.yield}}</td>
+                                                    <td>{{pick.industry}}</td>
+                                                    <td>{{pick.sector}}</td>
+                                                    <td>{{pick.position}}</td>
+                                                    <td>{{pick.pct}}</td>
+                                                    <td>{{pick.mktcap}}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>                       
+                                    </div>
+
+                        </div>
+                        <div class="tab-pane" id="tab6">
+                         <div style="height:auto">
+                                        <table class="table table-hover" style="font-size:14px">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Stock Ticker</th>
+                                                    <th>Price</th>
+                                                    <th>Number of Shares</th>
+                                                </tr>
+                                                <hr>
+                                            </thead>
+                                            <tbody id="optimizePin">
+
+                                            </tbody>
+                                        </table>                       
+                                    </div>
+
+                            <p>
+<div id="filterLoader">
+  <div style="width:100%;text-align:center;" >
+                <img src="/static/img/loader.gif" style="width:50px;text-align:center;display:block;margin:auto;margin-top:50px"><br><br>
+                                </div>
+                                   <div style="width:100%;text-align:center;margin:25px"><span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px">      We are currently back-testing your portfolio against historical data to filter out stocks that do not meet your criteria. <br>These stocks will then be automatically optimized and reallocated.
+
+                                    <br><br><br>
+                                    This whole process may take up to 5 minutes. 
+
+
+                                    <span></div>
+</div
+                   
+
+                            </p>
+                        </div>        
+                    </div>
+                </div>                
+            </div>
+
+
+
+                           
+            
+    </div>
+</div>
   <div class="nav">
     <a href="/user/news_portal" data-target="-1" style=";margin-right:50px;float:right">           
       <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
@@ -54,9 +427,12 @@
                             </tbody>
                         </table>                                       
                     </div>
-                    <div class="footer">
+                 <!--    <div class="footer">
                         <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(84)">Select This Portfolio</button>
-                    </div>                    
+                    </div>      -->               
+                   <div class="footer">
+                        <button type="button" href="#" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(84,'Bill Gates')">Select This Portfolio</button>
+                    </div>     
                 </div>  
                 <div class="block"  style="background:rgba(0,0,0,0.2);">
                     <div class="header" style="height:65px">
@@ -96,7 +472,7 @@
             
                     </script>
                     <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(10)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(10, 'Ronald MuhlenKamp')">Select This Portfolio</button>
                     </div>                    
                 </div>                               
                 <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -134,8 +510,8 @@
                         </table>                                       
                     </div>
                     <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(91)">Select This Portfolio</button>
-                    </div>            
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(91, 'Donald Yacktman')">Select This Portfolio</button>
+                    </div>         
                 </div>
                 <div class="block"  style="background:rgba(0,0,0,0.2);">
                     <div class="header" style="height:65px">
@@ -172,7 +548,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(6)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(6,'FPA Capital')">Select This Portfolio</button>
                     </div>                 
                 </div>
                 <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -210,7 +586,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(17)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(17,'Meridian Funds')">Select This Portfolio</button>
                     </div>                 
                 </div> 
 </div>
@@ -250,7 +626,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(28)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(28,'Seth Klarman')">Select This Portfolio</button>
                     </div>                 
                 </div> 
   <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -288,7 +664,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(139)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(139,'Donald Smith')">Select This Portfolio</button>
                     </div>                 
                 </div>                 
      <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -326,7 +702,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(56)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(56,'David Winters')">Select This Portfolio</button>
                     </div>                 
                 </div>   
      <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -364,7 +740,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(22)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(22,'Bruce Berkowitz')">Select This Portfolio</button>
                     </div>                 
                 </div>   
        <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -402,7 +778,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(2)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(2,'Mason Hawkins')">Select This Portfolio</button>
                     </div>                 
                 </div>     
  
@@ -443,7 +819,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(64)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(64,'Chuck Akre')">Select This Portfolio</button>
                     </div>                 
                 </div>   
  <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -481,7 +857,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(62)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(62,'Robert Bruce')">Select This Portfolio</button>
                     </div>                 
                 </div> 
     <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -519,7 +895,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(15)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(15,'Edward Lampert')">Select This Portfolio</button>
                     </div>                 
                 </div> 
       <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -557,7 +933,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(156)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(156,'Lou Simpson')">Select This Portfolio</button>
                     </div>                 
                 </div> 
     <div class="block"  style="background:rgba(0,0,0,0.2);">
@@ -595,7 +971,7 @@
                         </table>                                       
                     </div>
                      <div class="footer">
-                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="get_guru(55)">Select This Portfolio</button>
+                        <button type="button" href="#modal_default_1" data-toggle="modal" class="btn btn-primary btn-clean" style="letter-spacing:3px;font-size:16px" onClick="openNav(55,'Whiteney Tilson')">Select This Portfolio</button>
                     </div>                 
                 </div>              
 
@@ -605,232 +981,13 @@
         </div>
 
 </div>
- </div<
+ </div
 
 
 <div class="col-lg-2"></div>
 
 
-
-
-<div class="modal" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog" style="width:80vw;height:auto;background:black">
-            <div class="modal-content" style="margin-top:15vh">
-
-                <div class="block" style="margin-bottom:0px;height:auto">
-                    <div class="header" style="height:20vh;min-height:200px">
-                        <h2>Stock Filters</h2>
-
-                        <div class="form-row">
-                            <div class="col-md-12">                   
-<script>
-function scrape(){
-    if ($("#DIVY").attr('checked')) {
-        $("#key-divy")[0].value = $("#DIVYx")[0].value
-    }
-    if ($("#MKT").attr('checked')) {
-        $("#key-mkt")[0].value = $("#MKTx")[0].value
-    }    
-    if ($("#nm").attr('checked')) {
-        $("#key-nm")[0].value = $("#nmx")[0].value
-    }    
-    if ($("#pe").attr('checked')) {
-        $("#key-pe")[0].value = $("#pex")[0].value
-    }    
-    if ($("#pb").attr('checked')) {
-        $("#key-pb")[0].value = $("#pbx")[0].value
-    }        
-    if ($("#epusd").attr('checked')) {
-        $("#key-epusd")[0].value = $("#epusdx")[0].value
-    }
-   $("#guru_portfolio").submit()
-
-}
-</script>                                
-                                <div class="btn-group btn-group-justified">
-                                    <a href="#" class="btn btn-default btn-clean">
-                                       <label class="switch">
-                                        <input id="DIVY" type="checkbox" class="skip" value="0">
-                                        <span></span>
-                                        </label><br>
-                                        Dividend Yield<br>
-                                        <div class="btn-group btn-group-xs" style="margin-top:5px;margin-bottom:5px">
-                                          <div class="radiobox-inline">
-                                            <label><div class="radio checked" ><span class=""><input type="radio" name="radio_ex1" checked></span></div><br> ></label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex1"></span></div><br> >=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex1"></span></div><br> <=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex1"></span></div><br> <</label>
-                                            </div>
-                                        </div> 
-                                       <input type="number" id="DIVYx" name="tags"style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
-                                    </a>                                                                      
-                                    <a href="#" class="btn btn-default btn-clean">
-                                       <label class="switch">
-                                        <input id="MKT" type="checkbox" class="skip" value="0" checked>
-                                        <span></span>
-                                        </label><br>
-                                        Market Cap<br>
-                                        <div class="btn-group btn-group-xs" style="margin-top:5px;margin-bottom:5px">
-                                          <div class="radiobox-inline">
-                                            <label><div class="radio" ><span class=""><input type="radio" name="radio_ex2" checked></span></div><br> ></label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex2"></span></div><br> >=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex2"></span></div><br> <=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex2"></span></div><br> <</label>
-                                            </div>
-                                        </div> 
-                                       <input type="number" id="MKTx" name="tags" value="1000000000" style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
-                                    </a> 
-                                    <a href="#" class="btn btn-default btn-clean">
-                                       <label class="switch">
-                                        <input id="nm" type="checkbox" class="skip" value="0">
-                                        <span></span>
-                                        </label><br>
-                                        Net Margin<br>
-                                        <div class="btn-group btn-group-xs" style="margin-top:5px;margin-bottom:5px">
-                                          <div class="radiobox-inline">
-                                            <label><div class="radio" ><span class=""><input type="radio" name="radio_ex3" checked></span></div><br> ></label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex3"></span></div><br> >=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex3"></span></div><br> <=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex3"></span></div><br> <</label>
-                                            </div>
-                                        </div> 
-                                       <input type="number" id="nmx" name="tags"style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
-                                    </a> 
-                                    <a href="#" class="btn btn-default btn-clean">
-                                       <label class="switch">
-                                        <input id="pe"  type="checkbox" class="skip" value="0" checked>
-                                        <span></span>
-                                        </label><br>
-                                        P\E Ratio<br>
-                                        <div class="btn-group btn-group-xs" style="margin-top:5px;margin-bottom:5px">
-                                          <div class="radiobox-inline">
-                                            <label><div class="radio" ><span class=""><input type="radio" name="radio_ex4" checked></span></div><br> ></label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex4"></span></div><br> >=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex4"></span></div><br> <=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex4"></span></div><br> <</label>
-                                            </div>
-                                        </div> 
-                                       <input type="number" id="pex" name="tags" value="0.8" style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
-                                    </a> 
-                                    <a href="#" class="btn btn-default btn-clean">
-                                       <label class="switch">
-                                        <input id="pb" type="checkbox" class="skip" value="0" checked>
-                                        <span></span>
-                                        </label><br>
-                                        P\B Ratio<br>
-                                        <div class="btn-group btn-group-xs" style="margin-top:5px;margin-bottom:5px" checked>
-                                          <div class="radiobox-inline">
-                                            <label><div class="radio" ><span class=""><input type="radio" name="radio_ex5" checked></span></div><br> ></label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex5"></span></div><br> >=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex5"></span></div><br> <=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex5"></span></div><br> <</label>
-                                            </div>
-                                        </div> 
-                                       <input type="number" id="pbx" name="tags" value="0.5" style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
-                                    </a> 
-                                    <a href="#" class="btn btn-default btn-clean">
-                                       <label class="switch">
-                                        <input id="epusd" type="checkbox" class="skip" value="0">
-                                        <span></span>
-                                        </label><br>
-                                        EPSUSD<br>
-                                        <div class="btn-group btn-group-xs" style="margin-top:5px;margin-bottom:5px">
-                                          <div class="radiobox-inline">
-                                            <label><div class="radio" ><span class=""><input type="radio" name="radio_ex6" checked></span></div><br> ></label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex6"></span></div><br> >=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex6"></span></div><br> <=</label>
-                                            <label><div class="radio"><span class=""><input type="radio" name="radio_ex6"></span></div><br> <</label>
-                                            </div>
-                                        </div> 
-                                       <input type="number" id="epusdx" name="tags"style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;height:50px;padding-left:13px;width:75px;margin-left:calc(50% - 34px);text-align:center" value="0.0" autocomplete="off">
-                                    </a> 
-                                </div>                                                                  
-                            </div>
-                        </div>                            
-                    </div>
-                    <div class="content" style="height:auto">
-                 <form action="/user/guru_optimize" class="form-horizontal"  method="post" id="guru_portfolio" onsubmit="showHide(); return false;">
-                     {% csrf_token %}
-                     <input style="display:none" class="form-control" name="chosenGuru" id="chosenGuru">
-                 <input id="key-divy" style="display:none"  class="form-control" name="key-divy" value="0"> 
-                    <input id="key-mkt" style="display:none"  class="form-control" name="key-mkt" value="0"> 
-                    <input id="key-nm" style="display:none"  class="form-control" name="key-nm" value="0"> 
-                    <input id="key-pe" style="display:none"  class="form-control" name="key-pe" value="0"> 
-                    <input id="key-pb" style="display:none"  class="form-control" name="key-pb" value="0"> 
-                    <input id="key-epusd" style="display:none"  class="form-control" name="key-epusd" value="0"> 
-                    <div class="row">
-                        <div class="col-md-6" style="text-align:center">
-                            <h2 style="font-size:16px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;margin-bottom:5px">Initial Capital</2>
-                             <input type="number" id="capital" class="form-control" name="capital" style="font-size:10px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;border:1px solid white;padding:0px;font-family:'helvetica neue';font-weight: 100;line-height: 18px;outline: medium none;letter-spacing:3px;margin-left:calc(50% - 150px);height:50px;padding-left:13px;width:300px;text-align:center" value="100000.0" autocomplete="off">
-                        </div>
-                        <div class="col-md-6" style="text-align:center">
-                             <h2 style="font-size:16px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;margin-bottom:5px">Filter Frequency</2>
-                            <div class="radiobox-inline" style="font-size:16px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;margin-bottom:5px">
-                                <label style="margin-left:10px;margin-right:10px"><div class="radio" ><span class=""><input type="radio" name="radio_ex6" checked></span></div><br>Annually</label>
-                                <label style="margin-left:10px;margin-right:10px;color:rgba(0,0,0,0.2)"><div class="radio disabled"><span class=""><input type="radio disabled" name="radio_ex6"></span></div><br>Monthly</label>
-                                <label style="margin-left:10px;margin-right:10px;color:rgba(0,0,0,0.2)"><div class="radio disabled"><span class=""><input type="radio disabled" name="radio_ex6"></span></div><br>Weekly</label>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </form> 
-                            <div style="height:auto">
-                        <table class="table table-hover" style="font-size:10px">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Stock Ticker</th>
-                                    <th>Company Name</th>
-                                    <th>Value</th>
-                                    <th>Change</th>
-                                    <th>Exchange</th>
-                                    <th>Buy Date</th>
-                                    <th>Impact</th>
-                                    <th>Share</th>
-                                    <th>Expected Yield</th>
-                                    <th>Industry</th>
-                                    <th>Sector</th>
-                                    <th>Position</th>
-                                    <th>PCT</th>
-                                    <th>Market Cap</th>
-                                </tr>
-                                <hr>
-                            </thead>
-                            <tbody id="pickPin">
-                            {% for pick in picks %}
-                                <tr>
-                                    <td>{{forloop.counter}}</td>
-                                    <td>{{pick.symbol}}</td>
-                                    <td>{{pick.company}}</td>
-                                    <td>${{pick.value}}</td>
-                                    <td>%{{pick.change}}</td>
-                                    <td>{{pick.exchange}}</td>
-                                    <td>{{pick.13f_date}}</td>
-                                    <td>{{pick.impact}}</td>
-                                    <td>{{pick.share}}</td>
-                                    <td>{{pick.yield}}</td>
-                                    <td>{{pick.industry}}</td>
-                                    <td>{{pick.sector}}</td>
-                                    <td>{{pick.position}}</td>
-                                    <td>{{pick.pct}}</td>
-                                    <td>{{pick.mktcap}}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>                       
-                    </div>
-                </div>                            
-                                                                 
-                    <button type="button" class="btn btn-default btn-clean pull-right" data-dismiss="modal">Cancel</button>              
-                    <button type="button" class="btn btn-default btn-clean pull-left" data-dismiss="modal" onClick="scrape()">Filter & Optimize</button>              
-                    </div>
-
-        
-                <div class="modal-footer" style="margin-top:5px;padding:0px">
-                </div>
-            </div>
-        </div>
+</div>
 </div>
 
 
@@ -842,12 +999,13 @@ function scrape(){
 {% endblock %}
 {% block scripts %}
 <script src="/static/js/user/guru_settings.js"></script>
-
+<script src="http://malsup.github.com/jquery.form.js"></script> 
 <script type="text/javascript">
 var showHide = function(){
    var div = document.getElementById('loadingImg');
    if (div.style.display == 'none') {
      div.style.display = '';
+     $("#chosenGuruName")[0].innerText = "chosenGuruName"
      document.getElementById('picker').style.display = 'none'
    }
    else {

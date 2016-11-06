@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from portal.views.user.top_portfolios import get_top_portfolios
@@ -22,47 +23,16 @@ response = requests.get("http://finance.yahoo.com/d/quotes.csv?s=VNET&f=sn")
 @csrf_exempt
 @login_required
 def guru_optimize(request):
-  pe = request.POST['key-pe']
-  if str(pe) == str(0):
-    pe = "PE;>=;"
-  else: 
-    pe = "PE;>=;"+ str(request.POST['key-pe'])
-  pb = request.POST['key-pb']
-  if str(pb) == str(0):
-    pb = "PB;;"
-  else:
-    pb = "PB;>=;"+ str(request.POST['key-pb'])
-  mkt = request.POST['key-mkt']
-  if str(mkt) == str(0):
-    mkt = "MARKETCAP;;"
-  else:
-    mkt = "MARKETCAP;>=;"+ str(request.POST['key-mkt'])
-  divy = request.POST['key-divy']
-  if str(divy) == str(0):
-    divy = "DIVYIELD;;"
-  else: 
-    divy = "DIVYIELD;>=;" + str(request.POST['key-divy'])
-  epusd = request.POST['key-epusd']
-  if str(epusd) == str(0):
-    epusd = "EPUSD;;"
-  else:
-    epusd = "EPUSD;<=;" + str(request.POST['key-epusd'])
-  nm = request.POST['key-nm']
-  if str(nm) == str(0):
-    nm = "NETMARGIN;;"
-  else:
-    nm = "NETMARGIN;<=;" + str(request.POST['key-nm'])
   resultFile = open("Screen_criteria.csv",'w')
   wr = csv.writer(resultFile, delimiter=' ',
                             quotechar=' ', quoting=csv.QUOTE_MINIMAL)
   wr.writerow(['Filter_factor;condition;Filter_value'])
-  wr.writerow([str(divy)])
-  wr.writerow([str(mkt)])
-  wr.writerow([str(nm)])
-  wr.writerow([str(pe)])
-  wr.writerow([str(pb)])
-  wr.writerow([str(epusd)])
-    # ,divy,mkt,nm,pe,pb,epusd])
+  wr.writerow([str(request.POST['xdivy'])])
+  wr.writerow([str(request.POST['xmktcap'])])
+  wr.writerow([str(request.POST['xnm'])])
+  wr.writerow([str(request.POST['xpe'])])
+  wr.writerow([str(request.POST['xpb'])])
+  wr.writerow([str(request.POST['xepusd'])])
   resultFile.close()
   resultFile = open("Screen_parameters.csv",'w')
   wr = csv.writer(resultFile, delimiter=' ',
@@ -70,7 +40,7 @@ def guru_optimize(request):
   wr.writerow(['PortfolioID;Screen_frequency;Initial_capital'])
   wr.writerow(['156;BA;1000000000'])
   resultFile.close()
-
+  print
   filename = 'Screen_parameters.csv'
   screen_params = pd.read_csv(filename,delimiter = ';')
   Screen_freq = screen_params.loc[0,'Screen_frequency']
@@ -288,19 +258,26 @@ def guru_optimize(request):
       prices = quandl.get(stocks,start_date=snapshots[0] - BDay(4), end_date=snapshots[0],collapse='daily')
   portfolio_imported['Price'] = prices.iloc[-1].T.values
   portfolio_imported = portfolio_imported.dropna(subset=['Price']) .reset_index(drop=True)
-  print("THIS IS PORTFOLIO OVERVIEW YOU ARE LOOKING FOR")
+  print(screen_overview)
   print(portfolio_overview)
-  html = get_top_portfolios(request, 'user/guru_optimize.html')
-  return HttpResponse(html)
+  stocks = portfolio_overview['symbol'].tolist()
+  Snapshot_date = portfolio_overview['Snapshot_date'].tolist()
+  price = portfolio_overview['Price'].tolist()
+  no_of_shares = portfolio_overview['Number of Shares'].tolist()
+  _screenedOut = screen_overview['screen_out'].to_dict()
+  screenedPortfolio = {}
+  rtnportfolio = {}
+  rtnportfolio['stocks'] = stocks
+  rtnportfolio['price'] = price
+  rtnportfolio['no_of_shares'] = no_of_shares
+  rtnportfolio['Snapshot_date'] = Snapshot_date
+  oldportfolio = {}
+  return JsonResponse({'post':rtnportfolio,'pre':_screenedOut})
 
 
 def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots, p_fundamentals, screener, screen_list, m):
 
     portfolio = portfolio_input.copy()
-    print("THIS IS YOUR PORTFOLIO")
-    print(portfolio)
-    print("THIS IS YOUR PORTFOLIO INPUT")
-    print(portfolio_input)
     cash_total = 0
 
     end = snapshots[j]

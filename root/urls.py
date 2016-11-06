@@ -1,4 +1,4 @@
-"""drf_react URL Configuration
+u"""drf_react URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.8/topics/http/urls/
@@ -26,6 +26,6 @@ urlpatterns = [
 ]
 urlpatterns += staticfiles_urlpatterns()
 
-handler404 = 'portal.views.handle_404'
-handler500 = 'portal.views.handle_500'
-handler403 = 'portal.views.handle_403'
+handler404 = 'portal.views.error404'
+handler500 = 'portal.views.handler_500'
+handler403 = 'portal.views.handler_403'
