@@ -1,27 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
-<script>
 
-var openNav = function(id, chosenGuruName) {
-  $("#pickPin").empty()
-  $("#chosenGuruName")[0].innerText = chosenGuruName + "'s Portfolio"
-  localStorage.setItem('togglePortfolio',JSON.stringify({'open':1}))
-  $.ajax({
-    url: '/user/guru_portfolio/'+id,
-    type: 'POST',
-    data: {'data':'adata'}
-  }).done(function(data) {
-    // console.log(data)
-      data.data.forEach(function(stock,i=1) {
-        var rtnstr = ("<tr><td>"+(i+1)+"</td><td>"+stock.symbol+"</td><td>"+stock.company+"</td><td>"+stock.value+"</td><td>"+stock.change+"</td><td>"+stock.exchange+"</td><td>"+stock['13f_date']+"</td><td>"+stock.impact+"</td><td>"+stock.share+"</td><td>"+stock.yield+"</td><td>"+stock.industry+"</td><td>"+stock.sector+"</td><td>"+stock.position+"</td><td>"+stock.pct+"</td><td>"+stock.mktcap+"</td></tr>")
-        $("#pickPin").append(rtnstr)
-      })
-  })
-    document.getElementById("mySidenav").style.width = "100vw";
-    $("#portNav").fadeIn(250)
-}
+{% block scripts %}
+<script src="/static/js/user/guru_settings.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script> 
+<script type="text/javascript">
+var showHide = function(){
+   var div = document.getElementById('loadingImg');
+   if (div.style.display == 'none') {
+     div.style.display = '';
+     $("#chosenGuruName")[0].innerText = "chosenGuruName"
+     document.getElementById('picker').style.display = 'none'
+   }
+   else {
+     div.style.display = 'none';
+     document.getElementById('picker').style.display = 'none'
+   }
+ }
 
-</script> 
+</script>
+
+
+{% endblock %} 
 <div id="loadingImg" style="width:100%;height:100%;display:none;text-align:center;padding-top:15vh">
     <img id="loadingImg" src="/static/img/loader.gif" style="width:50px">
      <h2 style="font-size:16px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;margin-bottom:5px;padding-top:25px">We are creating your personalized portfolio . . . <br>
@@ -1019,24 +1019,4 @@ var openNav = function(id, chosenGuruName) {
     </div>
 </div>
 {% endblock %}
-{% block scripts %}
-<script src="/static/js/user/guru_settings.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script> 
-<script type="text/javascript">
-var showHide = function(){
-   var div = document.getElementById('loadingImg');
-   if (div.style.display == 'none') {
-     div.style.display = '';
-     $("#chosenGuruName")[0].innerText = "chosenGuruName"
-     document.getElementById('picker').style.display = 'none'
-   }
-   else {
-     div.style.display = 'none';
-     document.getElementById('picker').style.display = 'none'
-   }
- }
 
-</script>
-
-
-{% endblock %}
