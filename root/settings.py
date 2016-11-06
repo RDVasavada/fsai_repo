@@ -28,7 +28,7 @@ import sys
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True
-
+APPEND_SLASH = True
 ADMINS = (
     ('', ''),
 )
