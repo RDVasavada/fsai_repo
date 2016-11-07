@@ -19,7 +19,7 @@ from urllib2 import urlopen
 import re
 import pandas as pd
 quandl.ApiConfig.api_key = 'X8CjGKTPEqTuto2v_Q94'
-response = requests.get("http://finance.yahoo.com/d/quotes.csv?s=VNET&f=sn")
+# response = requests.get("http://finance.yahoo.com/d/quotes.csv?s=VNET&f=sn")
 @csrf_exempt
 @login_required
 def guru_optimize(request):

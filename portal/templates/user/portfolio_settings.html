@@ -3,7 +3,7 @@
 <script>
   function handleChange(input) {
     if (input.value < 0) input.value = 0;
-    if (input.value > 100) input.value = 100;
+    // if (input.value > 100) input.value = 100;
   }
 </script>
 <div class="sceneElement" data-viewport="0">
@@ -250,7 +250,7 @@
 
                               <div class="form-group" id="saved" style="display:none">
                                      <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;padding-bottom:50px;letter-spacing:2px">
-                                      What are your Target Returns?
+                                      What are your Target Portfolio Value?
                                     </h2>
                                 <div class="col-md-4"></div>
                                 <div class="col-md-4">
@@ -266,7 +266,7 @@
 
                        <script>
   $( function() {
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({defaultDate : 5000});
   } );
                       </script>
                                                      
@@ -389,7 +389,7 @@
                                 <div class="input-group m-b" style="padding-top:10px;width:200px;margin:auto">
                                      <div class="input-group m-b">
                                         <span class="input-group-addon">%</span>
-                                        <input id="expRisk" name="expRisk" type="number" value="10" placeholder="1" min="1" max="20" class="form-control" onchange="riskChecker()">
+                                        <input id="expRisk" name="expRisk" type="number" value="10" placeholder="1" min="1" max="60" class="form-control" onchange="riskChecker()">
                                     </div>
                                 </div>
                                <div class="knob">
@@ -404,7 +404,7 @@
                                         <td style="text-align:left"> <input type="checkbox" style="outline:1px solid white"> </td>
                                     </tr>   
                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">"In the Money" Hedge Portfolio </td>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Hedge Portfolio </td>
                                         <td style="text-align:left"> <input type="checkbox" style="outline:1px solid white"> </td>
                                     </tr>   
                                     <tr>
@@ -437,23 +437,22 @@
                      <hr>
                          <div class="form-row" style="text-align:center">
                                 <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;letter-spacing:2px">
-                                  What volume of shares would you like?
+                                  What number of shares would you like?
                                 </h2>                              <br>
-                                <div style="width:400px;margin:auto">
+ <!--                                <div style="width:400px;margin:auto">
                                   <button type="button"  id="lowrisk" class="btn btn-default btn-clean" onclick="riskreturn('low')">Low</button>
                                   <button type="button"  class="btn btn-default btn-clean" onclick="riskreturn('med')">Medium</button>
                                   <button type="button"  class="btn btn-default btn-clean" onclick="riskreturn('high')">High</button>
-                                </div>
+                                </div> -->
                                 <div class="input-group m-b" style="padding-top:10px;width:200px;margin:auto">
                                      <div class="input-group m-b">
-                                        <span class="input-group-addon">%</span>
-                                        <input id="expRisk" name="expRisk" type="number" value="10" placeholder="1" min="1" max="20" class="form-control" onchange="riskChecker()">
+                                        <input id="expRisk" name="expRisk" type="number" value="10" placeholder="1" min="1" max="60" class="form-control" onchange="riskChecker()" style="width:33vw;height:200px;text-align:center;font-size:48px;font-family:'Helvetica Neue';font-weight:100;letter-spacing:2px">
                                     </div>
                                 </div>
-                               <div class="knob">
+     <!--                           <div class="knob">
                                   <div style="display: block; width: 100px; height: 100px;"><input type="text" data-fgcolor="#3F97FE" data-min="0" data-max="100" data-width="100" data-height="100" id="riskR" value="30" data-linecap="round" style="width: 50px; height: 33px; position: relative; vertical-align: middle; top: -50%; left: 50%; margin-top: -16px; margin-left: -25px; border: 0px; background: none; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(63, 151, 254); padding: 0px; -webkit-appearance: none;">
                                 </div>                                
-                              </div>
+                              </div> -->
 
 
                          </div>
@@ -468,14 +467,14 @@
                                     <div class="block" style="text-align:center;padding:25px;background:rgba(0,0,0,0.2);margin-top:25px">
                                       <h2 id="xname"> Portfolio Confirmation </h2>
                                       <hr>
-                                      <div style="font-size:36px;height:50px;" id="xinvest"> 2,500$</div>
-                                     <div style="font-size:18px;height:50px;" id="xshare"> into 33 Stocks</div>
+                                      <div style="font-size:36px;height:50px;" id="xinvest"> 250,000 $</div>
+                                     <div style="font-size:18px;height:50px;" id="xshare"> into 45 Stocks</div>
 
                                      <div style="font-size:36px;height:50px;" id="xyear"> for 1 Year</div>
 
                                      <div style="font-size:18px;height:50px;" id="xmonth"> 3 Months</div>
 
-                                    <div style="font-size:36px;height:50px;" id="xmarket"> Dow Jones</div>
+                                    <div style="font-size:36px;height:50px;" id="xmarket"> US Markets</div>
 
                                     <div style="font-size:18px;height:50px;" id="xrisk"> with 10% Risk</div>
 

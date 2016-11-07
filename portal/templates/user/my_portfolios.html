@@ -5251,7 +5251,7 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
     "{{portfolio.name}} [Portfolio]",
     {% if portfolio.stocks %} 
     {% for stock in portfolio.stocks %}    
-    "{{stock.ticker}} [Stock][{{portfolio.name}}]",
+    "{{stock.ticker}}[Stock][{{portfolio.name}}]",
     {% endfor %}
     {% endif %}
 {% endfor %}

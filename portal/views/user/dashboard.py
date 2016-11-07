@@ -138,27 +138,30 @@ def portfolio_chart(request, portfolio_id):
     end = today.replace(year=today.year - 1)
     print(end)
     u = "EOD/" + str(stock['ticker'])
-    mydata = quandl.get(u, start_date=end, end_date=today)
-    if len(portDate) == 0:
-      for item in mydata.index:
-        portDate.append(str(item)[0:10])
-      for item in mydata['Close']:
-        portClose.append(float(item))
-        portAverage.append(float(item))
-      for item in mydata['Volume']:
-        portVolume.append(float(item))
-    else:
-      incomingClose = []
-      incomingVolume = []
-      incomingAverage = []
-      for item in mydata['Close']:
-        incomingClose.append(float(item))
-        incomingAverage.append(float(item))
-      for item in mydata['Volume']:
-        incomingVolume.append(float(item))
-      portClose = map(sum, zip(portClose, incomingClose))
-      portVolume = map(sum, zip(portVolume, incomingVolume))
-      portAverage = map(sum, zip(portAverage, incomingAverage))    
+    try:
+      mydata = quandl.get(u, start_date=end, end_date=today)
+      if len(portDate) == 0:
+        for item in mydata.index:
+          portDate.append(str(item)[0:10])
+        for item in mydata['Close']:
+          portClose.append(float(item))
+          portAverage.append(float(item))
+        for item in mydata['Volume']:
+          portVolume.append(float(item))
+      else:
+        incomingClose = []
+        incomingVolume = []
+        incomingAverage = []
+        for item in mydata['Close']:
+          incomingClose.append(float(item))
+          incomingAverage.append(float(item))
+        for item in mydata['Volume']:
+          incomingVolume.append(float(item))
+        portClose = map(sum, zip(portClose, incomingClose))
+        portVolume = map(sum, zip(portVolume, incomingVolume))
+        portAverage = map(sum, zip(portAverage, incomingAverage))
+    except:
+      print ""
   response = HttpResponse(content_type='text/csv')
   response['Content-Disposition'] = 'attachment; filename="data.csv"'
   writer = csv.writer(response)

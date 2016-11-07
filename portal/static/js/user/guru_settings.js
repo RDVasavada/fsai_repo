@@ -205,10 +205,10 @@ var filterPortfolios = function() {
       }
     }
   })
-  var criteria = [DIVY,MKTCAP,NM,PE,PB,EPUSD]
+  var criteria = [DIVY,MKTCAP,NETMARGIN,PE,PB,EPUSD]
   $("#xdivy")[0].value = DIVY
   $("#xmktcap")[0].value = MKTCAP
-  $("#xnm")[0].value = NM
+  $("#xnm")[0].value = NETMARGIN
   $("#xpe")[0].value = PE
   $("#xpb")[0].value = PB
   $("#xepusd")[0].value = EPUSD
@@ -218,7 +218,7 @@ var filterPortfolios = function() {
     url: "/user/guru_optimize/",
     data: {"xdivy":DIVY,
             "xmktcap":MKTCAP,
-            "xnm":NM,
+            "xnm":NETMARGIN,
             "xpe":PE,
             "xpb":PB,
             "xepusd":EPUSD}

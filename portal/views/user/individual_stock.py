@@ -75,24 +75,27 @@ def individual_stock(request, stock_name):
     #     numStocks = jsonResponse['numStocks']
     # company_stats = jsonResponseresponse_gd.content
     # print(company_stats[0])
-    stats = requests.get("https://www.quandl.com/api/v3/datatables/SHARADAR/SF1.json?ticker=" + str(stock_name) + "&qopts.columns=ticker,ASSETTURNOVER,ASSETSAVG,BVPS,CURRENTRATIO,DE,DIVYIELD,EBITDA,EBITDAUSD,EBITDAMARGIN,EBT,EQUITYAVG,EV,EVEBIT,EVEBITDA,FCF,FCFPS,FXUSD,GROSSMARGIN,INVCAP,MARKETCAP,NETMARGIN,PE,PE1,PS1,PS,PB,ROIC,SPS,PAYOUTRATIO,ROA,ROE,ROS,TANGIBLES,TBVPS,WORKINGCAPITAL,ASSETS,ASSETSC,ASSETSNC,CASHNEQ,CASHNEQUSD,RECEIVABLES,INTANGIBLES,INVENTORY,LIABILITIES,LIABILITIESC,LIABILITIESNC,DEBT,DEBTUSD,DEBTC,DEBTNC,DEFERREDREV,DEPOSITS,INVESTMENTS,INVESTMENTSC,INVESTMENTSNC,PAYABLES,PPNENET,TAXASSETS,TAXLIABILITIES,EQUITY,EQUITYUSD,RETEARN,ACCOCI,NCFO,DEPAMOR,SBCOMP,NCFI,CAPEX,NCFBUS,NCFINV,NCFF,NCFDEBT,NCFCOMMON,NCFDIV,NCF,REVENUE,REVENUEUSD,COR,GP,RND,SGNA,OPEX,OPINC,EBIT,EBITUSD,INTEXP,TAXEXP,CONSOLINC,NETINCNCI,NETINC,PREFDIVIS,NETINCCMN,NETINCCMNUSD,NETINCDIS,EPS,EPSUSD,EPSDIL,SHARESWA,SHARESWADIL,DPS&calendardate.gte=2013-12-31&api_key=X8CjGKTPEqTuto2v_Q94")
-    stats = stats.json()['datatable']['data'][len(stats.json()['datatable']['data'])-1]
-    metrics = []
-    balance = []
-    cash = []
-    income = []
-    for x in range(0,36):
-        metrics.append(stats[x])
-    for x in range(36,(36+27)):
-        balance.append(stats[x])
-    for x in range((36+27),(36+28+12)):
-        cash.append(stats[x])
-    for x in range((36+28+12),(36+28+13+24)):
-        income.append(stats[x])
-    context_dict['metrics']=metrics
-    context_dict['balance']=balance
-    context_dict['cash']=cash
-    context_dict['income']=income
+    try:
+        stats = requests.get("https://www.quandl.com/api/v3/datatables/SHARADAR/SF1.json?ticker=" + str(stock_name) + "&qopts.columns=ticker,ASSETTURNOVER,ASSETSAVG,BVPS,CURRENTRATIO,DE,DIVYIELD,EBITDA,EBITDAUSD,EBITDAMARGIN,EBT,EQUITYAVG,EV,EVEBIT,EVEBITDA,FCF,FCFPS,FXUSD,GROSSMARGIN,INVCAP,MARKETCAP,NETMARGIN,PE,PE1,PS1,PS,PB,ROIC,SPS,PAYOUTRATIO,ROA,ROE,ROS,TANGIBLES,TBVPS,WORKINGCAPITAL,ASSETS,ASSETSC,ASSETSNC,CASHNEQ,CASHNEQUSD,RECEIVABLES,INTANGIBLES,INVENTORY,LIABILITIES,LIABILITIESC,LIABILITIESNC,DEBT,DEBTUSD,DEBTC,DEBTNC,DEFERREDREV,DEPOSITS,INVESTMENTS,INVESTMENTSC,INVESTMENTSNC,PAYABLES,PPNENET,TAXASSETS,TAXLIABILITIES,EQUITY,EQUITYUSD,RETEARN,ACCOCI,NCFO,DEPAMOR,SBCOMP,NCFI,CAPEX,NCFBUS,NCFINV,NCFF,NCFDEBT,NCFCOMMON,NCFDIV,NCF,REVENUE,REVENUEUSD,COR,GP,RND,SGNA,OPEX,OPINC,EBIT,EBITUSD,INTEXP,TAXEXP,CONSOLINC,NETINCNCI,NETINC,PREFDIVIS,NETINCCMN,NETINCCMNUSD,NETINCDIS,EPS,EPSUSD,EPSDIL,SHARESWA,SHARESWADIL,DPS&calendardate.gte=2013-12-31&api_key=X8CjGKTPEqTuto2v_Q94")
+        stats = stats.json()['datatable']['data'][len(stats.json()['datatable']['data'])-1]
+        metrics = []
+        balance = []
+        cash = []
+        income = []
+        for x in range(0,36):
+            metrics.append(stats[x])
+        for x in range(36,(36+27)):
+            balance.append(stats[x])
+        for x in range((36+27),(36+28+12)):
+            cash.append(stats[x])
+        for x in range((36+28+12),(36+28+13+24)):
+            income.append(stats[x])
+        context_dict['metrics']=metrics
+        context_dict['balance']=balance
+        context_dict['cash']=cash
+        context_dict['income']=income
+    except:
+        stats = []  
     context_dict["company_stats"] = company_stats
     if request.user.is_authenticated():
         username = request.user.username

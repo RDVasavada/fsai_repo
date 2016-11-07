@@ -169,16 +169,16 @@ function pe() {
     }
   function riskreturn(str){
       if (str == 'low') {
-        $("#expRisk")[0].value = 25
-        $("#riskR")[0].value = 25
+        $("#expRisk")[0].value = 5
+        $("#riskR")[0].value = 5
          $("#riskR").trigger('change');
       } else if (str == 'med') {
-        $("#expRisk")[0].value = 50
-        $("#riskR")[0].value = 50
+        $("#expRisk")[0].value = 15
+        $("#riskR")[0].value = 15
          $("#riskR").trigger('change');
       } else if (str == 'high') {
-        $("#expRisk")[0].value = 75
-        $("#riskR")[0].value = 75
+        $("#expRisk")[0].value = 20
+        $("#riskR")[0].value = 20
          $("#riskR").trigger('change');
       }
     }

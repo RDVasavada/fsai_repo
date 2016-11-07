@@ -81,7 +81,7 @@
      // .attr('class', 'chart')
      //responsive SVG needs these 2 attributes and no width and height attr
      .attr("preserveAspectRatio", "none")
-     .attr("viewBox", "0 0 1200 325")
+     .attr("viewBox", "0 0 1400 325")
       .style("max-height", "265") 
       .style("min-height", "265") 
       .append("g")
@@ -545,7 +545,7 @@
                     <tbody id="optimizedPortfolio">
 
                     {% for stock in newstocks %}<tr>
-                        <td class="text-center"><a href="/user/individual_stock/{{stock}}" id="stockLink">{{stock}}</a></td>
+                        <td class="text-center"><a href="/user/individual_stock/{{stock}}/" id="stockLink">{{stock}}</a></td>
                         <td class="text-center">2</td>
                         <td class="text-center">2016-01-01</td>
                         <td class="text-center">2015-01-01</td>
