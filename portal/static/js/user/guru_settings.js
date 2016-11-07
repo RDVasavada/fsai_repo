@@ -3,7 +3,7 @@ var MKTCAP = "MARKETCAP;;"
 var PE = "PE;;"
 var PB = "PB;;"
 var EPUSD = "EPUSD;;"
-var NM = "NM;;"
+var NETMARGIN = "NETMARGIN;;"
 var filters = [0,0,0,0,0,0,]
 var get_guru = function(id) {
   $("#chosenGuru")[0].value = id
@@ -14,7 +14,9 @@ var get_guru = function(id) {
     data: {'data':'adata'}
   }).done(function(portfolio) {
       portfolio.data.forEach(function(stock,i) {
-        var rtnstr = ("<tr><td>"+(i+1)+"</td><td>"+stock.symbol+"</td><td>"+stock.company+"</td><td>"+stock.value+"</td><td>"+stock.change+"</td><td>"+stock.exchange+"</td><td>"+stock['13f_date']+"</td><td>"+stock.impact+"</td><td>"+stock.share+"</td><td>"+stock.yield+"</td><td>"+stock.industry+"</td><td>"+stock.sector+"</td><td>"+stock.position+"</td><td>"+stock.pct+"</td><td>"+stock.mktcap+"</td></tr>")
+        console.log(stock)
+        var rtnstr = ("<tr><td>"+(i+1)+"</td><td><a href='/user/individual_stock/"+stock.symbol+"/\'>" + stock.symbol + "</a></td><td>"+stock.company+"</td><td>"+stock.value+"</td><td>"+stock.change+"</td><td>"+stock.exchange+"</td><td>"+stock['13f_date']+"</td><td>"+stock.impact+"</td><td>"+stock.share+"</td><td>"+stock.yield+"</td><td>"+stock.industry+"</td><td>"+stock.sector+"</td><td>"+stock.position+"</td><td>"+stock.pct+"</td><td>"+stock.mktcap+"</td></tr>")
+        console.log(rtnstr)
         $("#pickPin").append(rtnstr)
       })
   })
@@ -51,7 +53,8 @@ var openNav = function(id, chosenGuruName) {
   }).done(function(data) {
     // console.log(data)
       data.data.forEach(function(stock,i) {
-        var rtnstr = ("<tr><td>"+(i+1)+"</td><td>"+stock.symbol+"</td><td>"+stock.company+"</td><td>"+stock.value+"</td><td>"+stock.change+"</td><td>"+stock.exchange+"</td><td>"+stock['13f_date']+"</td><td>"+stock.impact+"</td><td>"+stock.share+"</td><td>"+stock.yield+"</td><td>"+stock.industry+"</td><td>"+stock.sector+"</td><td>"+stock.position+"</td><td>"+stock.pct+"</td><td>"+stock.mktcap+"</td></tr>")
+        var rtnstr = ("<tr><td>"+(i+1)+"</td><td><a href='/user/individual_stock/"+stock.symbol+"/\'>" + stock.symbol + "</a></td><td>"+stock.company+"</td><td>"+stock.value+"</td><td>"+stock.change+"</td><td>"+stock.exchange+"</td><td>"+stock['13f_date']+"</td><td>"+stock.impact+"</td><td>"+stock.share+"</td><td>"+stock.yield+"</td><td>"+stock.industry+"</td><td>"+stock.sector+"</td><td>"+stock.position+"</td><td>"+stock.pct+"</td><td>"+stock.mktcap+"</td></tr>")
+        console.log(rtnstr)
         $("#pickPin").append(rtnstr)
       })
   })
@@ -132,7 +135,7 @@ var filterPortfolios = function() {
         } else {
           eval = 1000
         }
-        NM = "NM;" + operator + ";" + eval
+        NETMARGIN = "NETMARGIN;" + operator + ";" + eval
       }
 
       if (i == 3) {

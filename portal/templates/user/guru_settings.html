@@ -335,7 +335,7 @@ var showHide = function(){
                                             {% for pick in picks %}
                                                 <tr>
                                                     <td>{{forloop.counter}}</td>
-                                                    <td>{{pick.symbol}}</td>
+                                                    <td><a href="/user/individual_stock/{{pick.symbol}}/">{{pick.symbol}}</a></td>
                                                     <td>{{pick.company}}</td>
                                                     <td>${{pick.value}}</td>
                                                     <td>%{{pick.change}}</td>
