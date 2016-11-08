@@ -5,6 +5,7 @@ from portal.models.data.portfolio import Portfolio
 
 class Stock(BaseModel):
     ticker = models.TextField()
+    company_name = models.TextField()
     show = models.ForeignKey(Portfolio)
     buy_date = models.DateField(null=True)
     sell_date = models.DateField(null=True)

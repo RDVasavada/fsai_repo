@@ -382,8 +382,8 @@
                         "content": [
                         {% for stock in newstocks %}
                             {
-                                "label": "{{stock}}",
-                                "value": 2,
+                                "label": "{{stock.ticker}}",
+                                "value": {{stock.allocation}},
                                 "color": colors[{{ forloop.counter }}]
                             },
                         {% endfor %}
@@ -465,18 +465,18 @@
                         "content": [
                             {
                                 "label": "Technology",
-                                "value": 232,
+                                "value": 1111,
                                 "color": colors[1]
                             },
                            {
                                 "label": "Health",
-                                "value": 432,
+                                "value": 666,
                                 "color": colors[2]
                             },
 
                            {
                                 "label": "Agriculture",
-                                "value": 374,
+                                "value": 222,
                                 "color": colors[3]
                             },
 
@@ -535,22 +535,20 @@
                     <thead>
                     <tr>
                         <th class="text-center">Ticker Symbol</th>
+                        <th class="text-center">Company Name</th>
                         <th class="text-center">Number of Shares</th>
-                        <th class="text-center">Buy Date</th>
-                        <th class="text-center">Sell Date</th>
-                        <th class="text-center">Expected Return</th>
-                        <th class="text-center">Expected Risk</th>
+                        <th class="text-center">Target Price</th>
+                        <th class="text-center">Allocation</th>
                     </tr>
                     </thead>
                     <tbody id="optimizedPortfolio">
 
                     {% for stock in newstocks %}<tr>
-                        <td class="text-center"><a href="/user/individual_stock/{{stock}}/" id="stockLink">{{stock}}</a></td>
-                        <td class="text-center">2</td>
-                        <td class="text-center">2016-01-01</td>
-                        <td class="text-center">2015-01-01</td>
-                        <td class="text-center">{{expectedReturn}}</td>
-                        <td class="text-center">{{expectedRisk}}</td>
+                        <td class="text-center"><a href="/user/individual_stock/{{stock.ticker}}/" id="stockLink">{{stock.ticker}}</a></td>
+                        <td class="text-center">{{stock.cname}}</td>
+                        <td class="text-center">{{stock.shares}}</td>
+                        <td class="text-center">${{stock.price}}</td>
+                        <td class="text-center">{{stock.allocation}}</td>
 </tr>
                     {% endfor %}
                     </tbody>

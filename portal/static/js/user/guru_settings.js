@@ -230,6 +230,7 @@ var filterPortfolios = function() {
     dateRealArr = payload.Snapshot_date
     stockArr = payload.stocks
     priceArr = payload.price
+    weightArr = payload.weight
     no_of_shares = payload.no_of_shares
     lastdate = ""
     dateArr.forEach(function(date, index) {
@@ -246,6 +247,7 @@ var filterPortfolios = function() {
     newStockArr = []
     newPriceArr = []
     newShares = []
+    newWeightArr = []
     dateArr.forEach(function(date,index) {
       newdate = Number(String(date).slice(0,4))
       if (newdate == lastdate) {
@@ -253,15 +255,17 @@ var filterPortfolios = function() {
         newStockArr.push(stockArr[index])
         newPriceArr.push(priceArr[index])
         newShares.push(no_of_shares[index])
+        newWeightArr.push(weightArr[index])
       }
     })
     newStockArr.forEach(function(x, index) {
-      $("#optimizePin").append("<tr><td>" + (index + 1) + "</td><td>" + x + "</td><td>$" + String(newPriceArr[index]).slice(0,2) + "." + String(newPriceArr[index]).slice(3,5) + "</td><td>" + newShares[index] + "</td></tr>")
+      $("#optimizePin").append("<tr><td>" + (index + 1) + "</td><td>" + x + "</td><td>$" + String(newPriceArr[index]).slice(0,2) + "." + String(newPriceArr[index]).slice(3,5) + "</td><td>" + newShares[index] + "</td><td>" + newWeightArr[index] + "</td></tr>")
     })
     $("#filterLoader").fadeOut(250)
     console.log(newDateArr)
     console.log(newStockArr)
     console.log(newPriceArr)
+    console.log(newWeightArr)
     console.log(newDateArr)
   })
 }

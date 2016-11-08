@@ -263,12 +263,14 @@ def guru_optimize(request):
   stocks = portfolio_overview['symbol'].tolist()
   Snapshot_date = portfolio_overview['Snapshot_date'].tolist()
   price = portfolio_overview['Price'].tolist()
+  weight = portfolio_overview['weight'].tolist()
   no_of_shares = portfolio_overview['Number of Shares'].tolist()
   _screenedOut = screen_overview['screen_out'].to_dict()
   screenedPortfolio = {}
   rtnportfolio = {}
   rtnportfolio['stocks'] = stocks
   rtnportfolio['price'] = price
+  rtnportfolio['weight'] = weight
   rtnportfolio['no_of_shares'] = no_of_shares
   rtnportfolio['Snapshot_date'] = Snapshot_date
   oldportfolio = {}

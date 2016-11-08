@@ -32,6 +32,7 @@ def my_portfolios(request):
                 print(str(port))
                 # print(str(port.id) + "|" + port.name)
                 port.stocks = port.stock_set.all()
+                print(port.client_name)
                 #print(port.stock_set.all())_set:
                     #print(str(stock.id) + " | " + stock.ticker)
 
