@@ -85,15 +85,15 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                                                 <div class="header">
                                                    <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.ticker}}</h2>       
                                                 </div>                    
-                                                <div class="content" style="height:275px">
+                                                <div class="content" style="height:400px">
                                                 <table class="table table-hover">
                                                     <tbody>
                                                         <tr>
                                                             <td>Current Price</td>
                                                             <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">${{stock.current_price}}</h2>  </td>
-                                                        </tr>
+                                                        </tr>                                                     
                                                         <tr>
-                                                            <td>Initial Price</td>
+                                                            <td>Buy Price</td>
                                                             <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">${{stock.initial_price}}</h2>  </td>
                                                         </tr>                                                        
                                                         <tr>
@@ -104,9 +104,21 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                                                             <td>Buy Date</td>
                                                             <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.buy_date}}</h2>  </td>
                                                         </tr>
+                                                        <td>Number of Shares</td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.number_of_shares}}</h2>  </td>
+                                                        </tr>   
+                                                        <td>Allocation</td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.allocation}}</h2>  </td>
+                                                        </tr>                                                           
                                                         <td>Sell Date</td>
                                                             <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.sell_date}}</h2>  </td>
-                                                        </tr>   
+                                                        </tr>  
+                                                        <td>Total Gains</td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.current_price|add:stock.initial_price}}</h2>  </td>
+                                                        </tr>
+                                                        <td>Sentiment</td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.current_price|add:18}}</h2>  </td>
+                                                        </tr>                                                           
 
                                                     </tbody>
                                                 </table>
