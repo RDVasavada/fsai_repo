@@ -155,27 +155,30 @@ def portfolio_chart(request, portfolio_id):
     today = str(today) + " 00:00:00"
     end = str(end) + " 00:00:00"
     cursor = connection.cursor()
-    cursor.execute("SELECT last_date, Adj_Close, Adj_High, Adj_Low from stock_" + str(stock['ticker']) + " "
-                  "WHERE DATE(last_date) > '%s'" %(end))
-    if len(portDate) == 0:
-      for item in dictfetchall(cursor):
-        portDate.append(str(item['last_date'])[0:10])
-        portVolume.append(float(str(item['Adj_Low'])[:10]))
-        portClose.append(float(str(item['Adj_Close'])[:10]))
-        portAverage.append(float(str(item['Adj_High'])[:10]))
-    else:
-      incomingClose = []
-      incomingVolume = []
-      incomingAverage = []
-      for item in dictfetchall(cursor):
-        incomingClose.append(float(str(item['Adj_Close'])))
-        incomingAverage.append(float(str(item['Adj_High'])))
-        incomingVolume.append(float(str(item['Adj_Low'])))
-      if len(incomingClose) > 0:
-        portClose = map(sum, zip(portClose, incomingClose))
-        portVolume = map(sum, zip(portVolume, incomingVolume))
-        portAverage = map(sum, zip(portAverage, incomingAverage))
-      print(incomingClose)
+    try:
+      cursor.execute("SELECT last_date, Adj_Close, Adj_High, Adj_Low from stock_" + str(stock['ticker']) + " "
+                    "WHERE DATE(last_date) > '%s'" %(end))
+      if len(portDate) == 0:
+        for item in dictfetchall(cursor):
+          portDate.append(str(item['last_date'])[0:10])
+          portVolume.append(float(str(item['Adj_Low'])[:10]))
+          portClose.append(float(str(item['Adj_Close'])[:10]))
+          portAverage.append(float(str(item['Adj_High'])[:10]))
+      else:
+        incomingClose = []
+        incomingVolume = []
+        incomingAverage = []
+        for item in dictfetchall(cursor):
+          incomingClose.append(float(str(item['Adj_Close'])))
+          incomingAverage.append(float(str(item['Adj_High'])))
+          incomingVolume.append(float(str(item['Adj_Low'])))
+        if len(incomingClose) > 0:
+          portClose = map(sum, zip(portClose, incomingClose))
+          portVolume = map(sum, zip(portVolume, incomingVolume))
+          portAverage = map(sum, zip(portAverage, incomingAverage))
+        print(incomingClose)
+    except:
+      print("err")
   response = HttpResponse(content_type='text/csv')
   response['Content-Disposition'] = 'attachment; filename="data.csv"'
   writer = csv.writer(response)

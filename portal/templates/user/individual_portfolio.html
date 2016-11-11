@@ -428,7 +428,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                         {% for stock in stocks %}
                             {
                                 "label": "{{stock.ticker}}",
-                                "value": {{stock.allocation}},
+                                "value": {{stock.number_of_shares}},
                                 "color": randomColor()
                             },
                         {% endfor %}
