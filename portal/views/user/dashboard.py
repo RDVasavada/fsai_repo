@@ -6,6 +6,8 @@ from stock import get_stocks_by_portfolio
 from portal.models.data.stock import Stock
 from django.db import connection
 from datetime import date
+import time
+import datetime
 import csv
 from decimal import Decimal
 import time
@@ -15,6 +17,7 @@ import requests
 import json 
 import re
 import quandl
+import pandas as pd
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
 from urllib2 import urlopen
