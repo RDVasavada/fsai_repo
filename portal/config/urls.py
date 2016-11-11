@@ -123,7 +123,7 @@ def dictfetchall(cursor):
         dict(zip([col[0] for col in desc], row))
         for row in cursor.fetchall()
     ]
-# BuildStockDatabase()
+BuildStockDatabase()
 
 # lets us serve our media
 if settings.DEBUG:
