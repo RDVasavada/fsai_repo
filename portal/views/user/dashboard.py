@@ -32,7 +32,9 @@ def BuildStockDatabase():
     cursor = connection.cursor();
     cursor.execute("select distinct ticker from portal_stock")
     for item in dictfetchall(cursor):
+      try:
         cursor.execute("DROP TABLE stock_" + str(item['ticker']) + "")
+      except:
         cursor.execute("CREATE TABLE IF NOT EXISTS stock_" + str(item['ticker']) + " ("
                         "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
                         "`last_date` DATETIME,"
