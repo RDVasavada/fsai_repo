@@ -235,7 +235,7 @@ def guru_optimize(request):
 
   portfolio_imported['Position_orig'] = portfolio_imported['Price'].multiply(portfolio_imported['Number of Shares'], axis="index")
   portfolio_size = portfolio_imported['Position_orig'].sum(axis=0)
-  portfolio_imported['weight_orig_pct'] = np.round(100*(portfolio_imported['Position_orig'].divide(portfolio_size, axis="index")).astype(float),3)
+  portfolio_imported['weight_orig_pct'] = np.round(100*(portfolio_importeted['Position_orig'].divide(portfolio_size, axis="index")).astype(float),3)
 
   # Add current prices. If no price available, exclude stock.
   stocks = qu_EOD_trsf('EOD',portfolio_imported['symbol'],field='.11')

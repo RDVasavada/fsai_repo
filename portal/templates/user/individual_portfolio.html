@@ -143,6 +143,7 @@ $("li#a" + url).attr('class','active')
     .attr('class', 'chart__range-selection')
     .attr('transform', 'translate(110, 0)');
   d3.csv('/user/portfolio_chart/{{portfolio.id}}', type, function(err, data) {
+    console.log(data)
     var brush = d3.svg.brush()
       .x(x2)
       .on('brush', brushed);

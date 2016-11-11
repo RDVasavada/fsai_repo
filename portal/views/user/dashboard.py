@@ -7,6 +7,7 @@ from portal.models.data.stock import Stock
 from django.db import connection
 from datetime import date
 import csv
+from decimal import Decimal
 import time
 import random
 from django.views.decorators.csrf import csrf_exempt
@@ -48,11 +49,13 @@ def dashboard(request):
   stockTotal = 0
   oldTotal = 0
   valtotal = 0
+  performanceval = 0
   for port in portfolios:
     valtotal += int(re.sub(r'[^\w\s]','',port['value']))
     stocks = get_stocks_by_portfolio(request, str(port['id']))
     for stock in stocks:
       val = stock["current_price"] * stock["number_of_shares"]
+      performanceval += stock['current_price']
       oldTotal += stock['initial_price'] * stock["number_of_shares"]
       stockTotal += val
       prestock = {}
@@ -77,6 +80,7 @@ def dashboard(request):
   context_dict["change"] = "{0:.2f}".format(round(change,2))
   print("this is change !!")
   context_dict["total"] = '{:20,.2f}'.format(valtotal)
+  context_dict["performanceval"] = '{:20,.2f}'.format(performanceval)
   picks = find()
   sentiment = []
   sentiment.append({'stock':'AAPL [Test Portfolio] ','sentiment':'+33'})
@@ -102,7 +106,7 @@ def find():
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
   gurusoup = BeautifulSoup(urlopen(guru))
   try:
-    g = gurusoup.body.contents[0]
+    g = gurusoup.p.contents[0]
     d = json.loads(g)
   except TypeError:
     g = gurusoup.p.contents[0]
@@ -114,6 +118,14 @@ def find():
       if len(guruarr) == 24:
         return guruarr
   return(guruarr)
+
+def getListOfStocks(request,user_id):
+  if request.user.is_authenticated():
+    username = request.user.username
+    portalUser = PortalUser.objects.get(username=username)
+    portfolios = top_portfolios(request, portalUser.id)
+
+# def get_portfolio_Data(request,  x /d )
 
 @login_required
 def dashboardskip(request):
@@ -134,42 +146,46 @@ def portfolio_chart(request, portfolio_id):
   portAverage = []
   for stock in stocks:
     today = date.today()
-    print(today)
     end = today.replace(year=today.year - 1)
-    print(end)
-    u = "EOD/" + str(stock['ticker'])
-    try:
-      mydata = quandl.get(u, start_date=end, end_date=today)
-      if len(portDate) == 0:
-        for item in mydata.index:
-          portDate.append(str(item)[0:10])
-        for item in mydata['Close']:
-          portClose.append(float(item))
-          portAverage.append(float(item))
-        for item in mydata['Volume']:
-          portVolume.append(float(item))
-      else:
-        incomingClose = []
-        incomingVolume = []
-        incomingAverage = []
-        for item in mydata['Close']:
-          incomingClose.append(float(item))
-          incomingAverage.append(float(item))
-        for item in mydata['Volume']:
-          incomingVolume.append(float(item))
+    today = str(today) + " 00:00:00"
+    end = str(end) + " 00:00:00"
+    cursor = connection.cursor()
+    cursor.execute("SELECT last_date, Adj_Close, Adj_High, Adj_Low from stock_" + str(stock['ticker']) + " "
+                  "WHERE DATE(last_date) > '%s'" %(end))
+    if len(portDate) == 0:
+      for item in dictfetchall(cursor):
+        portDate.append(str(item['last_date'])[0:10])
+        portVolume.append(float(str(item['Adj_Low'])[:10]))
+        portClose.append(float(str(item['Adj_Close'])[:10]))
+        portAverage.append(float(str(item['Adj_High'])[:10]))
+    else:
+      incomingClose = []
+      incomingVolume = []
+      incomingAverage = []
+      for item in dictfetchall(cursor):
+        incomingClose.append(float(str(item['Adj_Close'])))
+        incomingAverage.append(float(str(item['Adj_High'])))
+        incomingVolume.append(float(str(item['Adj_Low'])))
+      if len(incomingClose) > 0:
         portClose = map(sum, zip(portClose, incomingClose))
         portVolume = map(sum, zip(portVolume, incomingVolume))
         portAverage = map(sum, zip(portAverage, incomingAverage))
-    except:
-      print ""
+      print(incomingClose)
   response = HttpResponse(content_type='text/csv')
   response['Content-Disposition'] = 'attachment; filename="data.csv"'
   writer = csv.writer(response)
   writer.writerow(['Date', 'Volume', 'Close', 'Average'])
   for item in portDate:
-    print(item)
     writer.writerow([portDate.pop(0),portVolume.pop(0),portClose.pop(0),portAverage.pop(0)])
   return response
+
+def dictfetchall(cursor):
+    "Returns all rows from a cursor as a dict"
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]    
 
 @csrf_exempt
 def stock_chart(request, stock_name):
@@ -178,24 +194,23 @@ def stock_chart(request, stock_name):
   portClose = []
   portAverage = []
   today = date.today()
-  print(today)
   end = today.replace(year=today.year - 1)
-  u = "EOD/" + str(stock_name)
-  mydata = quandl.get(u, start_date=end, end_date=today)
-  print(mydata)
-  for item in mydata.index:
-    print(str(item)[0:10])
-    portDate.append(str(item)[0:10])
-  for item in mydata['Close']:
-    portClose.append(float(item))
-    portAverage.append(float(item))
-  for item in mydata['Volume']:
-    portVolume.append(float(item))
+  today = str(today) + " 00:00:00"
+  end = str(end) + " 00:00:00"
+  cursor = connection.cursor()
+  cursor.execute("SELECT last_date, Adj_Close, Adj_High, Adj_Low from stock_" + str(stock_name) + " "
+                "WHERE DATE(last_date) > '%s'" %(end))
+  for item in dictfetchall(cursor):
+    print(item['last_date'])
+    portDate.append(str(item['last_date'])[:10])
+    portVolume.append(item['Adj_Low'])
+    portClose.append(item['Adj_Close'])
+    portAverage.append(item['Adj_High'])
   response = HttpResponse(content_type='text/csv')
   response['Content-Disposition'] = 'attachment; filename="data.csv"'
   writer = csv.writer(response)
   writer.writerow(['Date', 'Volume', 'Close', 'Average'])
-  for item in mydata.index:
+  for item in portDate:
     writer.writerow([portDate.pop(0),portVolume.pop(0),portClose.pop(0),portAverage.pop(0)])
-  print(response)
+  # print(response)
   return response

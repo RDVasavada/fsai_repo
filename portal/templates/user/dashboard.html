@@ -990,7 +990,92 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
      
     </div>
     
+</div> 
+  <div class="block" id="toppicks" style="margin-top:15px !important; display: initial;">
+    <div class="header">
+      <h2 style="letter-spacing:2px">Performance Graph</h2>
+    </div>
+    <div class="content list list-default">
+   
+  
+      </div>
+    </div> 
+    <div class="block block-transparent nm">
+       
+        <svg id="p-chart"></svg>
+     <script>
+     // var pdata = [{pid: 145, p: 'SHIPSLOG', minutes: 54},
+     //        {pid: 245, p: 'D2L-HELP', minutes: 143},
+     //        {pid: 345, p: 'ANGEL-HELP', minutes: 41},
+     //        {pid: 445, p: 'SWF101', minutes: 44},
+     //        {pid: 545, p: 'TPL800', minutes: 35}];
+            
+var pdata = [{{performanceval}},250];
+pdata.sort(function(a, b){return a-b});
+//data.sort(d3.descending());
+var pwidth = "100%",
+    pheight = 20,
+    goal = 600,
+    perc_so_far = 0;
+
+
+console.log(d3.sum(pdata));
+var total_time = d3.sum(pdata);
+var bar_x = 0;
+var chart = d3.select("#p-chart")
+    .attr("pwidth", "100%")
+    .attr("pheight", height);
+    bar_x = 0;
+    //var chart_width = chart.style("width").replace("px", "");
+var chart_width = parseInt(d3.select("#p-chart").style("width"));
+console.log(chart_width);
+
+var color = d3.scale.category20c();
+    //d3.scale.ordinal()
+    //.domain(["6TH", "7TH", "5TH", "4TH"])
+    //.range(colorbrewer.RdBu[12]);
+var bar = chart.selectAll("g")
+    .data(pdata)
+    .enter().append("g");
+    console.log(bar);
+bar.append("rect")
+    .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+        return prev_perc + "%";
+    })
+    .attr("height", pheight)
+    .attr("fill",  function(d) { return (color(d)) } );
+
+perc_so_far = 0;
+bar.append("text")
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+        return prev_perc + "%";
+    })
+    //.attr("y", 11)
+    .attr("dy", "1.35em")
+    .text(function(d) { return d; });
+        
+// d3.select(window).on('resize', resize);
+
+// function resize () {
+//     var width = parseInt(d3.select("#p-chart").style("width"));
+//     //console.log(width);
+//     //console.log(bar);
+// }
+
+</script>
+    </div>
+    
 </div>  
+
             </div>
  
   <div class="row" style="margin:0px;display:none">

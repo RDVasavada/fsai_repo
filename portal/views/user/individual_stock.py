@@ -4,6 +4,7 @@ from django.shortcuts import render
 import urllib2
 import requests
 import json
+from django.db import connection
 from collections import OrderedDict
 from django.template import RequestContext, Context, loader
 from django.contrib.auth.decorators import login_required
@@ -75,7 +76,7 @@ def individual_stock(request, stock_name):
     #     numStocks = jsonResponse['numStocks']
     # company_stats = jsonResponseresponse_gd.content
     # print(company_stats[0])
-    try:
+    try:   
         stats = requests.get("https://www.quandl.com/api/v3/datatables/SHARADAR/SF1.json?ticker=" + str(stock_name) + "&qopts.columns=ticker,ASSETTURNOVER,ASSETSAVG,BVPS,CURRENTRATIO,DE,DIVYIELD,EBITDA,EBITDAUSD,EBITDAMARGIN,EBT,EQUITYAVG,EV,EVEBIT,EVEBITDA,FCF,FCFPS,FXUSD,GROSSMARGIN,INVCAP,MARKETCAP,NETMARGIN,PE,PE1,PS1,PS,PB,ROIC,SPS,PAYOUTRATIO,ROA,ROE,ROS,TANGIBLES,TBVPS,WORKINGCAPITAL,ASSETS,ASSETSC,ASSETSNC,CASHNEQ,CASHNEQUSD,RECEIVABLES,INTANGIBLES,INVENTORY,LIABILITIES,LIABILITIESC,LIABILITIESNC,DEBT,DEBTUSD,DEBTC,DEBTNC,DEFERREDREV,DEPOSITS,INVESTMENTS,INVESTMENTSC,INVESTMENTSNC,PAYABLES,PPNENET,TAXASSETS,TAXLIABILITIES,EQUITY,EQUITYUSD,RETEARN,ACCOCI,NCFO,DEPAMOR,SBCOMP,NCFI,CAPEX,NCFBUS,NCFINV,NCFF,NCFDEBT,NCFCOMMON,NCFDIV,NCF,REVENUE,REVENUEUSD,COR,GP,RND,SGNA,OPEX,OPINC,EBIT,EBITUSD,INTEXP,TAXEXP,CONSOLINC,NETINCNCI,NETINC,PREFDIVIS,NETINCCMN,NETINCCMNUSD,NETINCDIS,EPS,EPSUSD,EPSDIL,SHARESWA,SHARESWADIL,DPS&calendardate.gte=2013-12-31&api_key=X8CjGKTPEqTuto2v_Q94")
         stats = stats.json()['datatable']['data'][len(stats.json()['datatable']['data'])-1]
         metrics = []
