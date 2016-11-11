@@ -25,6 +25,7 @@ from portal.views.user.top_portfolios import top_portfolios
 from portal.views.user.top_portfolios import get_top_portfolios
 from yahoo_finance import Share
 from portal.models.data.portfolio import Portfolio
+quandl.ApiConfig.api_key = 'X8CjGKTPEqTuto2v_Q94'
 
 
 def BuildStockDatabase():
@@ -42,23 +43,8 @@ def BuildStockDatabase():
                             "`Adj_Close` VARCHAR(255),"
                             "`Adj_Volume` VARCHAR(255),"
                             "PRIMARY KEY (id) );")
-            # cursor.execute("SELECT last_date FROM stock_" + str(item['ticker']) + " WHERE last_date IN ("
-            #                     "SELECT MAX( last_date ) "
-            #                         "FROM stock_" + str(item['ticker']) + ""
-            #                 ")"
-            #                 "ORDER BY last_date DESC" )
-            # lasttime = dictfetchall(cursor)
-            # for t in lasttime:
-            #     print(t)
             a = quandl.get(["EOD/" + str(item['ticker']) ])
-            # for item in a['EOD/' + str(item['ticker']) + " - Adj_Close"]):
             for c in a.index.tolist():
-                # originaltime = c
-                # c = str(c)
-                # c = datetime.datetime.strptime(c, "%Y-%m-%d %H:%M:%S.%f")
-                # today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-                # dt = datetime.datetime.strptime(today, "%Y-%m-%d %H:%M:%S.%f")
-                # if c > dt:
                 c = pd.to_datetime(c)
                 adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
                 adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
@@ -71,16 +57,6 @@ def BuildStockDatabase():
                             " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")
         except:
             print("err")         
-            #     cursor.execute("INSERT INTO stock_" + str(item['ticker']))
-            #     print(str(c) + " is over " + str(dt))
-            # else:
-            #     print(str(c) + "is under " + str(dt))
-    # try:
-
-    # print(a.index)
-        # except: xX
-        #     print("b")
-        # cursor.execute("DROP TABLE stock_" + str(item['ticker']) + "")
 def dictfetchall(cursor):
     "Returns all rows from a cursor as a dict"
     desc = cursor.description
