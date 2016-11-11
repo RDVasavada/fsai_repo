@@ -30,63 +30,6 @@ from yahoo_finance import Share
 from portal.models.data.portfolio import Portfolio
 quandl.ApiConfig.api_key = 'X8CjGKTPEqTuto2v_Q94'
 
-
-def BuildStockDatabase():
-    cursor = connection.cursor();
-    cursor.execute("select distinct ticker from portal_stock")
-    for item in dictfetchall(cursor):
-      try:
-        cursor.execute("DROP TABLE stock_" + str(item['ticker']) + "")
-        cursor.execute("CREATE TABLE IF NOT EXISTS stock_" + str(item['ticker']) + " ("
-                        "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
-                        "`last_date` DATETIME,"
-                        "`Adj_Open` VARCHAR(255),"
-                        "`Adj_High` VARCHAR(255),"
-                        "`Adj_Low` VARCHAR(255),"
-                        "`Adj_Close` VARCHAR(255),"
-                        "`Adj_Volume` VARCHAR(255),"
-                        "PRIMARY KEY (id) );")
-        a = quandl.get(["EOD/" + str(item['ticker']) ])
-        for c in a.index.tolist():
-            c = pd.to_datetime(c)
-            adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
-            adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
-            adj_low = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Low"]
-            adj_close = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Close"]
-            adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
-            print(adj_volume)
-            print(adj_open, adj_high, adj_close, adj_volume)
-            cursor.execute("INSERT INTO stock_" + str(item['ticker']) + " (last_date, Adj_Open, Adj_High, Adj_Low, Adj_Close, Adj_Volume) VALUES"
-                        " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")     
-      except:
-        cursor.execute("CREATE TABLE IF NOT EXISTS stock_" + str(item['ticker']) + " ("
-                        "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
-                        "`last_date` DATETIME,"
-                        "`Adj_Open` VARCHAR(255),"
-                        "`Adj_High` VARCHAR(255),"
-                        "`Adj_Low` VARCHAR(255),"
-                        "`Adj_Close` VARCHAR(255),"
-                        "`Adj_Volume` VARCHAR(255),"
-                        "PRIMARY KEY (id) );")
-        a = quandl.get(["EOD/" + str(item['ticker']) ])
-        for c in a.index.tolist():
-            c = pd.to_datetime(c)
-            adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
-            adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
-            adj_low = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Low"]
-            adj_close = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Close"]
-            adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
-            print(adj_volume)
-            print(adj_open, adj_high, adj_close, adj_volume)
-            cursor.execute("INSERT INTO stock_" + str(item['ticker']) + " (last_date, Adj_Open, Adj_High, Adj_Low, Adj_Close, Adj_Volume) VALUES"
-                        " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")     
-def dictfetchall(cursor):
-    "Returns all rows from a cursor as a dict"
-    desc = cursor.description
-    return [
-        dict(zip([col[0] for col in desc], row))
-        for row in cursor.fetchall()
-    ]
     
 
 @login_required
@@ -96,7 +39,6 @@ def dashboard(request):
       portalUser = PortalUser.objects.get(username=username)
       portfolios = top_portfolios(request,portalUser.id)
       picture_url = portalUser.picture_url
-  BuildStockDatabase()
   news = requests.get("http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo,appl,googl,tsla")
   news = news.json()
   newsarr = []
