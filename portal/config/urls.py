@@ -62,6 +62,70 @@ urlpatterns = patterns('',
     (r'^user/delfriend/?$', views.delfriend),  
 )
 
+def BuildStockDatabase():
+    cursor = connection.cursor();
+    cursor.execute("select distinct ticker from portal_stock")
+    for item in dictfetchall(cursor):
+        try:
+            print(item)
+            # cursor.execute("DROP TABLE stock_" + str(item['ticker']) + "")
+            # cursor.execute("CREATE TABLE IF NOT EXISTS stock_" + str(item['ticker']) + " ("
+            #                 "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+            #                 "`last_date` DATETIME,"
+            #                 "`Adj_Open` VARCHAR(255),"
+            #                 "`Adj_High` VARCHAR(255),"
+            #                 "`Adj_Low` VARCHAR(255),"
+            #                 "`Adj_Close` VARCHAR(255),"
+            #                 "`Adj_Volume` VARCHAR(255),"
+            #                 "PRIMARY KEY (id) );")
+            # # cursor.execute("SELECT last_date FROM stock_" + str(item['ticker']) + " WHERE last_date IN ("
+            # #                     "SELECT MAX( last_date ) "
+            # #                         "FROM stock_" + str(item['ticker']) + ""
+            # #                 ")"
+            # #                 "ORDER BY last_date DESC" )
+            # # lasttime = dictfetchall(cursor)
+            # # for t in lasttime:
+            # #     print(t)
+            # a = quandl.get(["EOD/" + str(item['ticker']) ])
+            # # for item in a['EOD/' + str(item['ticker']) + " - Adj_Close"]):
+            # for c in a.index.tolist():
+            #     # originaltime = c
+            #     # c = str(c)
+            #     # c = datetime.datetime.strptime(c, "%Y-%m-%d %H:%M:%S.%f")
+            #     # today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
+            #     # dt = datetime.datetime.strptime(today, "%Y-%m-%d %H:%M:%S.%f")
+            #     # if c > dt:
+            #     c = pd.to_datetime(c)
+            #     adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
+            #     adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
+            #     adj_low = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Low"]
+            #     adj_close = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Close"]
+            #     adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
+            #     print(adj_volume)
+            #     print(adj_open, adj_high, adj_close, adj_volume)
+            #     cursor.execute("INSERT INTO stock_" + str(item['ticker']) + " (last_date, Adj_Open, Adj_High, Adj_Low, Adj_Close, Adj_Volume) VALUES"
+            #                 " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")
+        except:
+            print("err")         
+            #     cursor.execute("INSERT INTO stock_" + str(item['ticker']))
+            #     print(str(c) + " is over " + str(dt))
+            # else:
+            #     print(str(c) + "is under " + str(dt))
+    # try:
+
+    # print(a.index)
+        # except: xX
+        #     print("b")
+        # cursor.execute("DROP TABLE stock_" + str(item['ticker']) + "")
+def dictfetchall(cursor):
+    "Returns all rows from a cursor as a dict"
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]
+
+BuildStockDatabase()
 
 # lets us serve our media
 if settings.DEBUG:
