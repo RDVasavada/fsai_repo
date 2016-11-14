@@ -28,6 +28,8 @@ def individual_stock(request, stock_name):
     for row in cr:
         CompanyName = row[1]
         context_dict['company_name'] = CompanyName
+        CompanyName = CompanyName.split()
+        CompanyName = CompanyName[0] + " " + CompanyName[1]
     try:
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(CompanyName)
     except IndexError:

@@ -8,6 +8,7 @@ import requests
 import pandas as pd
 import numpy as np
 import quandl
+from django.db import connection
 import csv
 import string
 import datetime
@@ -19,6 +20,14 @@ from urllib2 import urlopen
 import re
 import pandas as pd
 quandl.ApiConfig.api_key = 'X8CjGKTPEqTuto2v_Q94'
+
+def dictfetchall(cursor):
+    "Returns all rows from a cursor as a dict"
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]    
 # response = requests.get("http://finance.yahoo.com/d/quotes.csv?s=VNET&f=sn")
 @csrf_exempt
 @login_required
@@ -40,7 +49,7 @@ def guru_optimize(request):
   wr.writerow(['PortfolioID;Screen_frequency;Initial_capital'])
   wr.writerow(['84;BA;1000000000'])
   resultFile.close()
-  print
+  cursor = connection.cursor()
   filename = 'Screen_parameters.csv'
   screen_params = pd.read_csv(filename,delimiter = ';')
   Screen_freq = screen_params.loc[0,'Screen_frequency']
@@ -68,18 +77,98 @@ def guru_optimize(request):
 
   # Add current prices. If no price available, exclude stock.
   stocks = qu_EOD_trsf('EOD',portfolio_imported['symbol'],field='.11')
-  try:
-      prices = quandl.get(stocks,start_date=end, end_date=end,collapse='daily')
-  except:
-      prices = quandl.get(stocks,start_date=end - BDay(1), end_date=end,collapse='daily')
-  portfolio_imported['Pricing_current_date'] = prices.iloc[-1].name.date()
+  time = str(end)
+  closearr = []
+  headarr = []
+  for item in stocks:
+    itemstr = item.replace("EOD","")
+    itemstr = itemstr.replace(".11","")
+    itemstr = itemstr.replace("/","")
+    table_name = "stock_" + itemstr
+    headarr.append("EOD/" + itemstr + " - Adj_Close")
+    try:
+      cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date = '" + str(time) + "'")
+      bool = 0
+      for a in dictfetchall(cursor):
+          closearr.append(a['Adj_Close'])
+          bool = 1
+      if bool == 0:
+        closearr.append("NaN")
+    except:
+      closearr.append("NaN")
+      print("no table")
+  prices = {}
+  count = 0
+  for info in headarr:
+    try:
+      value = [float(closearr[int(count)])]
+      prices[info] = value
+      count += 1 
+    except:
+      count += 1 
+      print("err")
+  date_ = [time[:10]]
+  print(type(time[:10]))
+  prices = pd.DataFrame(prices, index=date_)
+  prices.index.name = "Date"
+  # print("this is your prices:")
+  # print(prices)
+  # try:
+  #     prices = quandl.get(stocks,start_date=end, end_date=end,collapse='daily')
+  # except:
+  #     prices = quandl.get(stocks,start_date=end - BDay(1), end_date=end,collapse='daily')
+  # print("quandl prices:")
+  # print(prices)
+  print(prices.iloc[-1])
+  print("__")
+  print(prices.iloc[-1].name)
+  print("__")
+  # print(prices.iloc[-1].name.date())
+  portfolio_imported['Pricing_current_date'] = prices.iloc[-1].name
   portfolio_imported['Price_current'] = prices.iloc[-1].T.values
   portfolio_imported = portfolio_imported.dropna(subset=['Price_current']) .reset_index(drop=True) 
   stocks = qu_EOD_trsf('EOD',portfolio_imported['symbol'],field='.11')
-  try:
-      prices = quandl.get(stocks,start_date=snapshots[0], end_date=snapshots[0],collapse='daily')
-  except:
-      prices = quandl.get(stocks,start_date=snapshots[0] - BDay(4), end_date=snapshots[0],collapse='daily')
+  time = str(snapshots[0])
+  closearr = []
+  headarr = []
+  for item in stocks:
+    itemstr = item.replace("EOD","")
+    itemstr = itemstr.replace(".11","")
+    itemstr = itemstr.replace("/","")
+    table_name = "stock_" + itemstr
+    headarr.append("EOD/" + itemstr + " - Adj_Close")
+    try:
+      cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date = '" + str(time) + "'")
+      bool = 0
+      for a in dictfetchall(cursor):
+          closearr.append(a['Adj_Close'])
+          bool = 1
+      if bool == 0:
+        closearr.append("NaN")
+    except:
+      closearr.append("NaN")
+      print("no table")
+  prices = {}
+  count = 0
+  for info in headarr:
+    try:
+      value = [float(closearr[int(count)])]
+      prices[info] = value
+      count += 1 
+    except:
+      count += 1 
+      print("err")
+  date_ = [time[:10]]
+  prices = pd.DataFrame(prices, index=date_)
+  prices.index.name = "Date"
+  # except:
+  #     print("_____")
+  #     print("THIS IS QUANDL REQUEST")
+  #     print(stocks)
+  #     print(snapshots[0] - BDay(4))
+  #     print(snapshots[0])
+  #     print("_____")
+  #     print("_____")
   portfolio_imported['Price'] = prices.iloc[-1].T.values
   portfolio_imported = portfolio_imported.dropna(subset=['Price']) .reset_index(drop=True)
   portfolio = portfolio_imported[['PortfolioID','symbol','Price','weight_orig_pct']].copy()
@@ -143,6 +232,7 @@ def guru_optimize(request):
 
   pf_input = portfolio.copy()
   for m in range(len(snapshots)):
+      print(m)
       pf, screen, pf_ret = Portfolio_Reallocation(pf_input, m,min_factor,max_factor, snapshots, p_fundamentals, screener, screen_list, m)
           
       # returns portfolio if stocks got filtered out. If no filter triggered, returns string  
@@ -154,11 +244,7 @@ def guru_optimize(request):
           # run MV
           if expReturn > 0:
               try:
-                print(pf)
-                print("pf")
                 pf_optimal = MV(pf,startYear ,endYear,expReturn)
-                print(pf_optimal)
-                print("optimal")
                 pf_optimal['weight_optimal'] = pf_optimal['weight_optimal'].astype(float)
                 pf_optimal['Number of Shares bef MV'] = pf_optimal['Number of Shares'].astype(int)
                 portfolio_size = np.round(pf_optimal['Position'].sum(),0)
@@ -235,16 +321,50 @@ def guru_optimize(request):
 
   portfolio_imported['Position_orig'] = portfolio_imported['Price'].multiply(portfolio_imported['Number of Shares'], axis="index")
   portfolio_size = portfolio_imported['Position_orig'].sum(axis=0)
-  portfolio_imported['weight_orig_pct'] = np.round(100*(portfolio_importeted['Position_orig'].divide(portfolio_size, axis="index")).astype(float),3)
+  portfolio_imported['weight_orig_pct'] = np.round(100*(portfolio_imported['Position_orig'].divide(portfolio_size, axis="index")).astype(float),3)
 
   # Add current prices. If no price available, exclude stock.
   stocks = qu_EOD_trsf('EOD',portfolio_imported['symbol'],field='.11')
-  try:
-      prices = quandl.get(stocks,start_date=end, end_date=end,collapse='daily')
-  except:
-      prices = quandl.get(stocks,start_date=end - BDay(1), end_date=end,collapse='daily')
+  time = str(end)
+  closearr = []
+  headarr = []
+  for item in stocks:
+    itemstr = item.replace("EOD","")
+    itemstr = itemstr.replace(".11","")
+    itemstr = itemstr.replace("/","")
+    table_name = "stock_" + itemstr
+    headarr.append("EOD/" + itemstr + " - Adj_Close")
+    try:
+      cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date = '" + str(time) + "'")
+      bool = 0
+      for a in dictfetchall(cursor):
+          closearr.append(a['Adj_Close'])
+          bool = 1
+      if bool == 0:
+        closearr.append("NaN")
+    except:
+      closearr.append("NaN")
+      print("no table")
+  prices = {}
+  count = 0
+  for info in headarr:
+    try:
+      value = [float(closearr[int(count)])]
+      prices[info] = value
+      count += 1 
+    except:
+      count += 1 
+      print("err")
+  date_ = [time[:10]]
+  print(type(time[:10]))
+  prices = pd.DataFrame(prices, index=date_)
+  prices.index.name = "Date"
+  # try:
+  #     prices = quandl.get(stocks,start_date=end, end_date=end,collapse='daily')
+  # except:
+  #     prices = quandl.get(stocks,start_date=end - BDay(1), end_date=end,collapse='daily')
 
-  portfolio_imported['Pricing_current_date'] = prices.iloc[-1].name.date()
+  portfolio_imported['Pricing_current_date'] = prices.iloc[-1].name
   portfolio_imported['Price_current'] = prices.iloc[-1].T.values
 
   portfolio_imported = portfolio_imported.dropna(subset=['Price_current']) .reset_index(drop=True) 
@@ -252,14 +372,46 @@ def guru_optimize(request):
   # For Backtesting: Only include stocks which have a price as of today AND to the beginning of the period
 
   stocks = qu_EOD_trsf('EOD',portfolio_imported['symbol'],field='.11')
-  try:
-      prices = quandl.get(stocks,start_date=snapshots[0], end_date=snapshots[0],collapse='daily')
-  except:
-      prices = quandl.get(stocks,start_date=snapshots[0] - BDay(4), end_date=snapshots[0],collapse='daily')
+  # try:
+  #     prices = quandl.get(stocks,start_date=snapshots[0], end_date=snapshots[0],collapse='daily')
+  # except:
+  #     prices = quandl.get(stocks,start_date=snapshots[0] - BDay(4), end_date=snapshots[0],collapse='daily')
+  time = str(snapshots[0])
+  closearr = []
+  headarr = []
+  for item in stocks:
+    itemstr = item.replace("EOD","")
+    itemstr = itemstr.replace(".11","")
+    itemstr = itemstr.replace("/","")
+    table_name = "stock_" + itemstr
+    headarr.append("EOD/" + itemstr + " - Adj_Close")
+    try:
+      cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date = '" + str(time) + "'")
+      bool = 0
+      for a in dictfetchall(cursor):
+          closearr.append(a['Adj_Close'])
+          bool = 1
+      if bool == 0:
+        closearr.append("NaN")
+    except:
+      closearr.append("NaN")
+      print("no table")
+  prices = {}
+  count = 0
+  for info in headarr:
+    try:
+      value = [float(closearr[int(count)])]
+      prices[info] = value
+      count += 1 
+    except:
+      count += 1 
+      print("err")
+  date_ = [time[:10]]
+  prices = pd.DataFrame(prices, index=date_)
+  prices.index.name = "Date"
   portfolio_imported['Price'] = prices.iloc[-1].T.values
   portfolio_imported = portfolio_imported.dropna(subset=['Price']) .reset_index(drop=True)
-  print(screen_overview)
-  print(portfolio_overview)
+
   stocks = portfolio_overview['symbol'].tolist()
   Snapshot_date = portfolio_overview['Snapshot_date'].tolist()
   price = portfolio_overview['Price'].tolist()
@@ -289,18 +441,55 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
     ##################################################
 
     stocks = qu_EOD_trsf('EOD',list_stocks=portfolio['symbol'],field='.11')
-
-    try:
-        prices = quandl.get(stocks,start_date=end, end_date=end,collapse='daily')
-    except:
-        prices = quandl.get(stocks,start_date=end - datetime.timedelta(days=4), end_date=end,collapse='daily')
-
-
+    end = end - datetime.timedelta(days=2)
+    # try:
+    #     prices = quandl.get(stocks,start_date=end, end_date=end,collapse='daily')
+    # except:
+    #     prices = quandl.get(stocks,start_date=end - datetime.timedelta(days=4), end_date=end,collapse='daily')
+    time = str(end) 
+    closearr = []
+    headarr = []
+    cursor = connection.cursor()
+    for item in stocks:
+      print(item)
+      itemstr = item.replace("EOD","")
+      itemstr = itemstr.replace(".11","")
+      itemstr = itemstr.replace("/","")
+      table_name = "stock_" + itemstr
+      print(table_name)
+      print(time)
+      headarr.append("EOD/" + itemstr + " - Adj_Close")
+      try:
+        cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date = '" + str(time) + "'")
+        bool = 0
+        for a in dictfetchall(cursor):
+            closearr.append(a['Adj_Close'])
+            bool = 1
+        if bool == 0:
+          closearr.append(0.1)
+      except:
+        closearr.append(0.1)
+        print("no table")
+    prices = {}
+    count = 0
+    for info in headarr:
+      try:
+        value = [float(closearr[int(count)])]
+        prices[info] = value
+        count += 1 
+      except:
+        count += 1 
+        print("err")
+    date_ = [time[:10]]
+    print(type(time[:10]))
+    prices = pd.DataFrame(prices, index=date_)
+    prices.index.name = "Date"
+    print(prices)
     portfolio['Price'] = prices.iloc[-1].T.values
     ######### NEUER TEIL
     portfolio = portfolio.dropna(subset=['Price']).reset_index(drop=True) 
     
-    portfolio['Pricing_date'] = prices.iloc[-1].name.date()
+    portfolio['Pricing_date'] = prices.iloc[-1].name
     portfolio['Snapshot_date'] = end
 
     # Calculate portfolio positions and weights
@@ -481,24 +670,41 @@ def qu_EOD_trsf(db=None,list_stocks=None,field=None):
     return stocks
 
 def qu_SF1_trsf(db=None,ticker=None,field=None,start=None,end=None,dimension=None,freq=None):
-    
     # Adapt ticker to quandl syntax
-    tick_quandl = ticker.replace('.', '')
-    tick_quandl = tick_quandl.replace('_', '')
+    # tick_quandl = ticker.replace('.', '')
+    # tick_quandl = tick_quandl.replace('_', '')
 
-    if field == 'PB':     
-            qu = db + "/" + tick_quandl + "_" +field+ "_ARY"
-    if field in ('DIVYIELD','MARKETCAP'):        
-            qu = db + "/" + tick_quandl +'_' + field 
-    if field not in ('PB','DIVYIELD','MARKETCAP'):        
-            qu = db + "/" + tick_quandl +'_' +field+'_' + dimension
+    # if field == 'PB':     
+    #         qu = db + "/" + tick_quandl + "_" +field+ "_ARY"
+    # if field in ('DIVYIELD','MARKETCAP'):        
+    #         qu = db + "/" + tick_quandl +'_' + field 
+    # if field not in ('PB','DIVYIELD','MARKETCAP'):        
+    #         qu = db + "/" + tick_quandl +'_' +field+'_' + dimension
 
-    df = quandl.get(qu,
-                    start_date=start, end_date=end,
-                    collapse=freq, returns='pandas')
+    # df = quandl.get(qu,
+    #                 start_date=start, end_date=end,
+    #                 collapse=freq, returns='pandas')
 
-    df['symbol'] = ticker
-    df.rename(columns={'Value': field }, inplace=True)
+    # df['symbol'] = ticker
+    # df.rename(columns={'Value': field }, inplace=True)
+    # print(df)
+    tablename = "SF1_"+str(ticker)+"_"+str(field)
+    start = start + " 00:00:00"
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM " + str(tablename) + ""
+                  " WHERE last_date BETWEEN '" + str(start) + "' AND '" + str(end) +"'")
+    valArr = {}
+    valArr[field] = []
+    valArr['symbol'] = []
+    dateArr = []
+    # print(df)
+    for a in dictfetchall(cursor):
+      valArr[field].append(a['value'])
+      valArr['symbol'].append(str(ticker))
+      dateArr.append(a['last_date'])
+    df = pd.DataFrame(valArr, index=dateArr)
+    df.index.name = "Date"
+    print("__")    
     return df
 
 

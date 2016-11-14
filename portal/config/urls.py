@@ -4,9 +4,11 @@ from django.conf import settings
 from django.conf.urls import patterns, url
 from django.db import connection
 import quandl
+quandl.ApiConfig.api_key = 'X8CjGKTPEqTuto2v_Q94'
 import pandas as pd
 import time
 import datetime
+import requests
 
 
 urlpatterns = patterns('',
@@ -17,11 +19,17 @@ urlpatterns = patterns('',
     (r'^login/?$', views.loginview),
     (r'^logout/?$', views.logoutview),
     (r'^register/?$', views.register),
+    (r'^username_exist/(?P<username>\w{0,50})/$', views.username_exist),
+    (r'^email_exist/(?P<email>\w{0,50}@\w{0,50}.\w{0,50})/$', views.email_exist),
     (r'^recover_password/?$', views.recover_password),
     (r'^new_password/(?P<token>\w+)/?$', views.new_password),
     (r'^email_sent/?$', views.email_sent),
     (r'^sms/?$', views.sms),
     (r'^getsms/?$', views.getsms),
+    (r'^user/dashboard/marketnews/?$', views.marketnews),
+    (r'^user/dashboard/sentiment/?$', views.dash_sentiment),
+    (r'^user/dashboard/top_picks/?$', views.top_picks),
+    (r'^user/dashboard/portfolio_value/?$', views.portfolio_value),
     (r'^chat_portal/?$', views.chat_portal),
     (r'^sms/sms_symbolexchange/?$', views.sms_symbolexchange),
 
@@ -66,56 +74,148 @@ def BuildStockDatabase():
     cursor = connection.cursor();
     cursor.execute("select distinct ticker from portal_stock")
     for item in dictfetchall(cursor):
+        cursor.execute("CREATE TABLE IF NOT EXISTS stock_" + str(item['ticker']) + " ("
+                        "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                        "`last_date` DATETIME,"
+                        "`Adj_Open` VARCHAR(255),"
+                        "`Adj_High` VARCHAR(255),"
+                        "`Adj_Low` VARCHAR(255),"
+                        "`Adj_Close` VARCHAR(255),"
+                        "`Adj_Volume` VARCHAR(255),"
+                        "PRIMARY KEY (id) );")
+        #     # cursor.execute("SELECT last_date FROM stock_" + str(item['ticker']) + " WHERE last_date IN ("
+        #     #                     "SELECT MAX( last_date ) "
+        #     #                         "FROM stock_" + str(item['ticker']) + ""
+        #     #                 ")"
+        #     #                 "ORDER BY last_date DESC" )
+        #     # lasttime = dictfetchall(cursor)
+        #     # for t in lasttime:
+        #     #     print(t)
         try:
-            cursor.execute("DROP TABLE stock_" + str(item['ticker']) + "")
-            cursor.execute("CREATE TABLE IF NOT EXISTS stock_" + str(item['ticker']) + " ("
-                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
-                            "`last_date` DATETIME,"
-                            "`Adj_Open` VARCHAR(255),"
-                            "`Adj_High` VARCHAR(255),"
-                            "`Adj_Low` VARCHAR(255),"
-                            "`Adj_Close` VARCHAR(255),"
-                            "`Adj_Volume` VARCHAR(255),"
-                            "PRIMARY KEY (id) );")
-            # cursor.execute("SELECT last_date FROM stock_" + str(item['ticker']) + " WHERE last_date IN ("
-            #                     "SELECT MAX( last_date ) "
-            #                         "FROM stock_" + str(item['ticker']) + ""
-            #                 ")"
-            #                 "ORDER BY last_date DESC" )
-            # lasttime = dictfetchall(cursor)
-            # for t in lasttime:
-            #     print(t)
             a = quandl.get(["EOD/" + str(item['ticker']) ])
-            # for item in a['EOD/' + str(item['ticker']) + " - Adj_Close"]):
+        #         # for item in a['EOD/' + str(item['ticker']) + " - Adj_Close"]):
             for c in a.index.tolist():
-                # originaltime = c
-                # c = str(c)
-                # c = datetime.datetime.strptime(c, "%Y-%m-%d %H:%M:%S.%f")
-                # today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-                # dt = datetime.datetime.strptime(today, "%Y-%m-%d %H:%M:%S.%f")
-                # if c > dt:
+        #             # originaltime = c
+        #             # c = str(c)
+        #             # c = datetime.datetime.strptime(c, "%Y-%m-%d %H:%M:%S.%f")
+        #             # today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
+        #             # dt = datetime.datetime.strptime(today, "%Y-%m-%d %H:%M:%S.%f")
+        #             # if c > dt:
                 c = pd.to_datetime(c)
                 adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
                 adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
                 adj_low = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Low"]
                 adj_close = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Close"]
                 adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
-                print(adj_volume)
-                print(adj_open, adj_high, adj_close, adj_volume)
                 cursor.execute("INSERT INTO stock_" + str(item['ticker']) + " (last_date, Adj_Open, Adj_High, Adj_Low, Adj_Close, Adj_Volume) VALUES"
                             " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")
+                print(item['ticker'])
         except:
-            print("err")         
-            #     cursor.execute("INSERT INTO stock_" + str(item['ticker']))
-            #     print(str(c) + " is over " + str(dt))
-            # else:
-            #     print(str(c) + "is under " + str(dt))
-    # try:
+            print("error again")
+def BuildSF1Database():
+    cursor = connection.cursor();
+    cursor.execute("select distinct ticker from portal_stock")
+    for item in dictfetchall(cursor):
+        d = "SF1/" + str(item['ticker']) + "_DIVYIELD"
+        try:
+            d_data = quandl.get(d,start_date="2004-01-01", end_date="2016-11-10")
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_DIVYIELD ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in d_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in d_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_DIVYIELD (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
 
-    # print(a.index)
-        # except: xX
-        #     print("b")
-        # cursor.execute("DROP TABLE stock_" + str(item['ticker']) + "")
+
+        mkt = "SF1/" + str(item['ticker']) + "_MARKETCAP"
+        try:
+            mkt_data = quandl.get(mkt,start_date="2004-01-01", end_date="2016-11-10")
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_MARKETCAP ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in mkt_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in mkt_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_MARKETCAP (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
+
+        nm = "SF1/" + str(item['ticker']) + "_NETMARGIN_ART"
+        try:
+            nm_data = quandl.get(nm,start_date="2004-01-01", end_date="2016-11-10")  
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_NETMARGIN ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in nm_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in nm_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_NETMARGIN (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
+        pb = "SF1/" + str(item['ticker']) + "_PB_ARY"
+        try:
+            pb_data = quandl.get(pb,start_date="2004-01-01", end_date="2016-11-10") 
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_PB ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in pb_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in pb_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_PB (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
+        pe = "SF1/" + str(item['ticker']) + "_PE_ART"
+        try:
+            pe_data = quandl.get(pe,start_date="2004-01-01", end_date="2016-11-10")
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_PE ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in pe_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in pe_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_PE (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
+        epusd = "SF1/" + str(item['ticker']) + "_EPSUSD_ART"
+        try:
+            epusd_data = quandl.get(epusd,start_date="2004-01-01", end_date="2016-11-10")
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_EPUSD ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in epusd_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in epusd_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_EPUSD (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
+            
 def dictfetchall(cursor):
     "Returns all rows from a cursor as a dict"
     desc = cursor.description
@@ -123,6 +223,8 @@ def dictfetchall(cursor):
         dict(zip([col[0] for col in desc], row))
         for row in cursor.fetchall()
     ]
+
+# BuildSF1Database()
 # BuildStockDatabase()
 
 # lets us serve our media

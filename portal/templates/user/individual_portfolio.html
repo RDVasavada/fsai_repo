@@ -15,11 +15,11 @@ $("li#a" + url).attr('class','active')
        <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
     </a>
   </div>
-<div class="col-lg-12 col-lg-12 col-sm-12" style="padding-right:25px;padding-left:25px;background:rgba(0,0,0,0.6);height:100%;padding-top:25px">
+<div class="col-lg-12 col-lg-12 col-sm-12" style="padding-right:25px;padding-left:25px;background:rgba(255,255,255,0.2);height:100%;padding-top:25px">
 
         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white" id="companyName">{{portfolio.name}}</h2> 
 
-        <div class="block">
+        <div class="block" style="background:rgba(0,0,0,0.6)">
                     <div class="header">
                         <h2>Portfolio Returns Graph </h2>
                         <div class="side pull-right">                            
@@ -30,12 +30,10 @@ $("li#a" + url).attr('class','active')
                                         <li><a href="#" onClick="downloadCsv()">Export portfolio as .CSV</a></li>
                                     </ul>                                                                            
                                 </li>
-                                <li><a href="#" class="block-toggle tip" title="" data-original-title="Show"><span class="icon-chevron-down"></span></a></li>
-                                <li><a href="#" class="block-remove tip" title="" data-original-title="Remove"><span class="icon-remove"></span></a></li>
                             </ul>
                         </div>                        
                     </div>                  
-                    <div class="content" id="content{{portfolio.id}}" style="display:none;height:384px;overflow:hidden">
+                    <div class="content" id="content{{portfolio.id}}" style="height:384px;overflow:hidden;background:transparent">
                   <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px">Value : ${{portfolio.investment}}</h2>                        
                       <div class="loader{{portfolio.id}}" style="height:100%;text-align:center;top:35%;position:relative">
                         <img src="/static/img/loader.gif"><br><br>
@@ -45,7 +43,7 @@ $("li#a" + url).attr('class','active')
 
 (function() {
   var div = $("#content{{portfolio.id}}")
-  console.log(div.width())
+
   var margin = {top: 30, right: 20, bottom: 100, left: 50},
     margin2  = {top: 210, right: 20, bottom: 20, left: 50},
     width    = div.width() - 75;
@@ -90,7 +88,7 @@ $("li#a" + url).attr('class','active')
      // .attr('class', 'chart')
      //responsive SVG needs these 2 attributes and no width and height attr
      .attr("preserveAspectRatio", "none")
-     .attr("viewBox", "0 0 1500 325")
+     .attr("viewBox", "0 0 "+(width+100)+" 325")
       .style("max-height", "265") 
       .style("min-height", "265") 
       .append("g")
@@ -346,18 +344,13 @@ $("li#a" + url).attr('class','active')
 </script>
 
               
-                    </div>
-                    <div class="footer" style="width:95%;display:none;margin-right:25px;margin-left:25px">
-<h2 style="font-size:18px;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">{{portfolio.risk}}% Expected Risk on a {{portfolio.investment}}$ investment into {{portfolio.no_of_tickers}} shares.</h2>
-                    </div>
-                </div>                
 
-    <div class="block">
-    <div class="header">
-        <h2 style="text-align:center;">{{ portfolio.name }}</h2>
-    </div>
-        <div class="content" style="background-color:rgba(0,0,0,0.6)">
-                    <div id="pieChart" style="text-align:center;position:absolute;left:25px;display:inline;top:50x;width:50%;height:500px"></div>
+
+<<!-- h2 style="font-size:18px;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">{{portfolio.risk}}% Expected Risk on a {{portfolio.investment}}$ investment into {{portfolio.no_of_tickers}} shares.</h2> -->
+                    </div>
+  
+        <!-- <div class="content" style="background-color:rgba(0,0,0,0.6)"> -->
+                    <div id="pieChart" style="text-align:center;position:absolute;left:25px;display:inline;top:400px;width:50%;height:500px"></div>
                 <script>
 
 var randomColor = (function(){
@@ -403,7 +396,9 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                             "text": "Stock Distribution",
                             "color": "#ffffff",
                             "fontSize": 24,
-                            "": "helvetica"
+                            "fontFamily": "helvetica neue",
+                            "fontWeight":100,
+                            "letterSpacing":"2px",
                         },
                         "subtitle": {
                             "color": "#999999",
@@ -477,7 +472,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                 });
                 </script>
 
-                               <div id="pieChart2" style="text-align:center;position:absolute;right:25px;display:inline;top:50px;height:500px"></div>
+                               <div id="pieChart2" style="text-align:center;position:absolute;right:25px;display:inline;top:400px;height:500px"></div>
                 <script>
                 
 var randomColor = (function(){
@@ -523,7 +518,9 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                             "text": "Sector Breakdown",
                             "color": "#ffffff",
                             "fontSize": 24,
-                            "": "helvetica"
+                            "fontFamily": "helvetica neue",
+                            "fontWeight":100,
+                            "letterSpacing":"2px",                            
                         },
                         "subtitle": {
                             "color": "#999999",
@@ -607,7 +604,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                 });
                 </script>  
 
-                <div class="blsock" style="width:100%;margin-top:500px">
+                <div class="blsock" style="width:100%;margin-top:900px">
                     <div class="input-group" style="width:100%;text-align:center">
                         <div class="btn-group btn-group-lg" style="text-align:center">
 

@@ -64,8 +64,7 @@ def portfolio_optimize(request):
     eachStockresult['expectedRisk'] = "20"
     eachStockresult['expectedReturn'] = "25"
     optimizeSearchResults.append(eachStockresult)
-    stocks = [
-      ["ADS","Alliance Data Systems"],
+    stocks = [["ADS","Alliance Data Systems"],
      ["GILD","Gilead Sciences"],
      ["AAPL","Apple"],
      ["BMY","Bristol-Myers Squibb Co"],
@@ -189,7 +188,7 @@ def portfolio_optimize(request):
      ["EBAY","eBay Inc."],
      ["MINI","Mobile Mini Inc."],
      ["MATX","Matson Inc."],
-     ["DENN","Denny\'s Corporation"],
+     ["DENN","Dennys Corporation"],
      ["NATI","National Instruments Corporation"],
      ["EGN","Energen Corporation"],
      ["NVDA","NVIDIA Corporation"],
@@ -238,7 +237,7 @@ def portfolio_optimize(request):
      ["MON","Monsanto Company"],
      ["CATO","Cato Corporation"],
      ["RBA","Ritchie Bros. Auctioneers"],
-     ["MCD","McDonald\'s Corporation"],
+     ["MCD","McDonalds Corporation"],
      ["SWK","Stanley Black & Decker Inc."],
      ["GATX","GATX Corporation"],
      ["ADSK","Autodesk Inc."],
@@ -298,7 +297,7 @@ def portfolio_optimize(request):
      ["PTEN","Patterson-UTI Energy Inc."],
      ["NBL","Noble Energy Inc."],
      ["AVT","Avnet Inc."],
-     ["AAN","Aaron\'s, Inc."],
+     ["AAN","Aarons, Inc."],
      ["IDCC","InterDigital Inc."],
      ["DV","DeVry Education Group Inc."],
      ["XEC","Cimarex Energy Co"],
@@ -348,13 +347,13 @@ def portfolio_optimize(request):
      ["AMT","American Tower Corporation"],
      ["MKL","Markel Corporation"],
      ["MA","Mastercard Incorporated"],
-     ["MCO","Moody\'s Corporation"],
+     ["MCO","Moodys Corporation"],
      ["DLTR","Dollar Tree Inc."],
      ["KMX","CarMax Inc"],
      ["V","Visa Inc."],
      ["ROP","Roper Technologies Inc."],
      ["ESGR","Enstar Group Limited"],
-     ["ORLY","O\'Reilly Automotive Inc."],
+     ["ORLY","OReilly Automotive Inc."],
      ["SBAC","SBA Communications Corporation"],
      ["LKQ","LKQ Corporation"],
      ["MNRO","Monro Muffler Brake Inc."],
@@ -398,7 +397,7 @@ def portfolio_optimize(request):
      ["AVP","Avon Products Inc."],
      ["STT","State Street Corporation"]]
     shuffle(stocks)
-    numshares = int(20)
+    numshares = int(len(stocks))
     context_dict = {}
     context_dict['stock_invest'] = float(25000)/float(15.00)
     context_dict['investingAmount'] = ('25,000')
@@ -442,12 +441,11 @@ def portfolio_optimize(request):
         ticker = ticker[0:]
         randomfloat = str(randint(5,89)) + "." + str(randint(0,99))
         randomshares = str(randint(15,15000))
-        print(randomarr[num])
-        print(randomtotal)
+        print(companyname)
         randomallocation = str(float(randomarr[num])/float(randomtotal)*100)
         cursor = connection.cursor()
         cursor.execute("INSERT INTO `portal_stock` (created_date, update_date, ticker, show_id, buy_date, current_price, initial_price, number_of_shares, sell_date, company_name, allocation) VALUES"
-                        "('2016-07-09 12:12:12','2016-07-09 12:12:12','" + str(ticker) + "','" + str(show_id) + "','2016-07-29','" + randomfloat + "','" + randomshares + "','2','2016-09-01','" + str(companyname) + "','" + str(randomallocation)[0:11] + "')")
+                        "('2016-07-09 12:12:12','2016-07-09 12:12:12','" + str(ticker) + "','" + str(show_id) + "','2016-07-29','" + str(1) + "','" + str(1) + "','2','2016-09-01','" + str(companyname) + "','" + str(1) + "')")
         newstocks.append({'ticker':stocks[num][0],'cname':stocks[num][1],'price':randomfloat,'shares':randomshares,'allocation':randomallocation})
     # new_investment = request.POST['investingAmount']
     # if request.POST['Market'] == "S&P500":

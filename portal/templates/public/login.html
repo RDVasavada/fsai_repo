@@ -124,7 +124,7 @@
                             <button class="btn" type="button" onclick="isNotVisible()">Cancel</button>
                         </div>
                     </div>                
-                    <div class="content controls" style="padding-top:18vh;padding-left:30vw;padding-right:30vw;height:100%;background:url(/static/img/bg-11.jpg)">                
+                    <div class="content controls" style="padding-top:18vh;padding-left:30vw;padding-right:30vw;height:100%;background:url(/static/img/bg-11.jpg);-moz-background-size: 100% 100%;-o-background-size: 100% 100%;-webkit-background-size: 100% 100%; background-size: 100% 100%;">                
 <!--                         <ul id="wizard_validate-titles" class="stepy-titles">
                             <li id="wizard_validate-title-0" class="current-step" style="cursor: default;">
                                 <div>Step 1</div><span>User Info</span>
@@ -139,7 +139,84 @@
                                 <div>Step 4</div><span>Terms & Conditions</span>
                             </li>                                                        
                         </ul> -->
+<script>
+var typing = 0
+$(function() {
 
+    $("#username").data("old_value", $("#username").val());
+
+    $("#username").bind("paste cut keydown",function(e) {
+        typing = 1
+        var that = this;
+        setTimeout(function() {
+                if(typeof $(that).data("old_value") == "undefined") {
+                    $(that).data("old_value",$(that).val());
+                }
+
+                getNewInsertion($(that).data("old_value"), $(that).val(), e.target.selectionStart);
+                $(that).data("old_value",$(that).val());
+            },500);
+
+    })
+
+}); 
+function getNewInsertion(oldValue, newValue, newPosition) {
+
+    var type='';
+    var from=0;
+    var length=0;
+    var text='';
+
+    if(oldValue.length > newValue.length) {
+        type = 'deletion';
+        changeLength = oldValue.length - newValue.length;
+        pos = newPosition;
+        text = oldValue.substr(pos, changeLength);
+    } else {
+        type = 'insertion';
+        changeLength = newValue.length - oldValue.length;
+        pos = newPosition - changeLength;
+        text = newValue.substr(pos, changeLength);
+    }
+
+
+    log();
+
+
+    return {text:text, type:type, position: pos, changeLength: changeLength};
+}
+function log() {
+    typing = 0
+    setTimeout(function() {
+        if (typing == 0) {
+            checkUser()
+        }
+    },1500);    
+}
+function checkUser() {
+    user = $("#username").val()
+    if (typing == 0) {
+        $.ajax({
+            url: '/username_exist/'+String(user)+'/',
+            method: 'POST',
+        }).done(function(x) {
+            if (x.exist == 1) {
+                $("#greenUser").fadeOut(250)
+                $("#redUser")[0].innerText = "Username " + user + "is already taken"
+                $("#redUser").fadeIn(250)
+                $("#wizard_validate-buttons-0").fadeOut(150)
+            } else {
+                $("#redUser").fadeOut(50)
+                $("#greenUser")[0].innerText = "Username " + user + "is available !"
+                $("#greenUser").fadeIn(250)
+                $("#wizard_validate-buttons-0").fadeIn(150)
+            }
+        })
+        typing = 1
+    }
+}
+// $("#username").val($("#username").val());
+</script>
                         <form action="/register" method="POST" id="wizard_validate" onsubmit="submitRegistration()">
                             {% csrf_token %}
                             <fieldset title="Step 1" class="step" id="wizard_validate-step-0">
@@ -148,7 +225,14 @@
                                     <div class="col-md-3">Username:</div>
                                     <div class="col-md-9">
                                         <input type="text" name="username" id="username" class="form-control validate[required,minSize[4]]">
-                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Minimum 4 Characters</span>
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Minimum 4 Characters
+                                        <div class="side pull-right">
+
+                                            <span id="greenUser" style="color:rgba(0,255,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;">Minimum 4 Characters</span>
+                                            <span id="redUser" style="color:rgba(255,0,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;">Minimum 4 Characters</span>
+                                        </div>
+
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -167,10 +251,11 @@
                                     </div>
                                 </div>
 
-                                <p id="wizard_validate-buttons-0" class="wizard_validate-buttons stepy_buttons">
+                                <p id="wizard_validate-buttons-0" class="wizard_validate-buttons stepy_buttons" style="display:none">
                                     <!-- <a id="wizard_validate-next-0" href="javascript:void(0);" class="btn">Next &gt;</a> -->
                                 </p>
-                            </fieldset>
+                            </fieldset>                            
+
 
                             <fieldset title="Step 2" class="step" id="wizard_validate-step-1" style="display: none;">
                                 <legend>Contact Information</legend>
@@ -179,6 +264,11 @@
                                     <div class="col-md-9">
                                         <input type="text" id="email" name="email" class="form-control validate[required,custom[email]]" autocomplete="off">
                                         <span class="help-inline" style="color:rgba(255,255,255,.5)">Example: John.Doe@Yahoo.Com </span>
+                                          <div class="side pull-right">
+
+                                            <span id="greenEmail" style="color:rgba(0,255,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;"></span>
+                                            <span id="redEmail" style="color:rgba(255,0,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;"></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row" id="makedinputs">
@@ -188,7 +278,92 @@
                                         <span class="help-inline" style="color:rgba(255,255,255,.5)">Example: 98 (765) 432-10-98</span>
                                     </div>
                                 </div>  
-                                <p id="wizard_validate-buttons-1" class="wizard_validate-buttons stepy_buttons">
+<script>
+var etyping = 0
+$(function() {
+
+    $("#email").data("old_value", $("#email").val());
+
+    $("#email").bind("paste cut keydown",function(e) {
+        etyping = 1
+        var that = this;
+        setTimeout(function() {
+                if(typeof $(that).data("old_value") == "undefined") {
+                    $(that).data("old_value",$(that).val());
+                }
+
+                getNewEmail($(that).data("old_value"), $(that).val(), e.target.selectionStart);
+                $(that).data("old_value",$(that).val());
+            },500);
+
+    })
+
+}); 
+function getNewEmail(oldValue, newValue, newPosition) {
+
+    var type='';
+    var from=0;
+    var length=0;
+    var text='';
+
+    if(oldValue.length > newValue.length) {
+        type = 'deletion';
+        changeLength = oldValue.length - newValue.length;
+        pos = newPosition;
+        text = oldValue.substr(pos, changeLength);
+    } else {
+        type = 'insertion';
+        changeLength = newValue.length - oldValue.length;
+        pos = newPosition - changeLength;
+        text = newValue.substr(pos, changeLength);
+    }
+
+
+    elog();
+
+
+    return {text:text, type:type, position: pos, changeLength: changeLength};
+}
+function elog() {
+    etyping = 0
+    setTimeout(function() {
+        if (etyping == 0) {
+            checkEmail()
+        }
+    },1500);    
+}
+function checkEmail() {
+    email = $("#email").val()
+    console.log(email)
+    if (etyping == 0) {
+        $.ajax({
+            url: '/email_exist/'+String(email)+'/',
+            method: 'POST',
+        }).done(function(x) {
+            if (x.exist == 1) {
+                $("#greenEmail").fadeOut(250)
+                $("#redEmail")[0].innerText = "Email " + email + "is already taken"
+                $("#redEmail").fadeIn(250)
+                $("#wizard_validate-buttons-1").fadeOut(150)
+            } else {
+                $("#redEmail").fadeOut(50)
+                $("#greenEmail")[0].innerText = "Email " + email + "is available !"
+                $("#greenEmail").fadeIn(250)
+                $("#wizard_validate-buttons-1").fadeIn(150)
+            }
+        }).fail(function(e) {
+            console.log(e)
+            $("#greenEmail").fadeOut(250)
+            $("#redEmail")[0].innerText = email + "is an invalid Email !"
+            $("#redEmail").fadeIn(250)
+            $("#wizard_validate-buttons-1").fadeOut(150)
+        })
+        etyping = 1
+    }
+}
+// $("#username").val($("#username").val());
+</script>                                
+                                <p id="wizard_validate-buttons-1" class="wizard_validate-buttons stepy_buttons" style="display:none">
                                     <!-- <a id="wizard_validate-back-1" href="javascript:void(0);" class="btn">&lt; Back</a> -->
                                     <!-- <button type="submit" class="btn btn-primary finish">Submit</button> -->
                                 </p>
@@ -244,74 +419,125 @@
                                 </p>
                             </fieldset>
                             <fieldset title="Step 4" class="step" id="wizard_validate-step-3">
-                                <legend>Terms & Conditions</legend>
+                                <legend>Pin Number</legend>
                                 <div class="form-row">
-                                    <div class="col-md-12">Terms & Conditions</div>
-                                    <div class="col-md-12" style="height:25vh;overflow:scroll">
-                                        <!-- <input type="text" name="login" class="validate[required,minSize[4]]"> -->
-                                        <!-- <span class="help-inline">Required, minSize = 4</span> -->
-                                        <textarea style="height:100%">LOREM IPSUM
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum dolor sem, quis pharetra dui ultricies vel. Cras non pulvinar tellus, vel bibendum magna. Morbi tellus nulla, cursus non nisi sed, porttitor dignissim erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis commodo lectus. Vivamus vel tincidunt enim, non vulputate ipsum. Ut pellentesque consectetur arcu sit amet scelerisque. Fusce commodo leo eros, ut eleifend massa congue at.
+                                      <div class="col-md-12" style="font-size:24px">Enter a personal PIN Number</div>
+                                        <div class="col-md-12" style="height:auto">
+                                           <div class="btn-group btn-group-justified" style="height:150px">
+                                                <a href="#" id="1" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px" onClick="p_click(1)">1</a>
+                                                <a href="#" id="2"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(2)">2</a>
+                                                <a href="#" id="3" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(3)">3</a>
+                                            </div>      
+                                           <div class="btn-group btn-group-justified" style="height:150px">
+                                                <a href="#" id="4" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(4)">4</a>
+                                                <a href="#" id="5"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(5)">5</a>
+                                                <a href="#" id="6"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(6)">6</a>
+                                            </div>      
+                                           <div class="btn-group btn-group-justified" style="height:150px">
+                                                <a href="#" id="7"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(7)">></a>
+                                                <a href="#" id="8" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(8)">8</a>
+                                                <a href="#" id="9" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(9)">9</a>
+                                            </div> 
+<script>
+var p_arr =[]
+var p_click = function(i) {
+    console.log(p_arr.length)
+    if (p_arr.length < 4) {
+        if (i < 9) {
+            p_arr.push(i)
+            $("#pinnumber")[0].value += "*"
+        }
+    } else {
+        if (i < 9) {
+            p_arr[3] = i
+        }
+    }
+    console.log(p_arr)
+}
+var e_click = function() {
+    p_arr.pop()
+    $("#pinnumber")[0].value = $("#pinnumber")[0].value.slice(0,-1)
+}
+</script>
+                                            <div class="input-group m-b" style="margin-top:25px;margin-bottom:25px">
+                                                <span class="input-group-addon">
+                                                    <span style="font-size:50px" class="icon-eraser" onClick="e_click()"></span>
+                                                </span>
+                                                <input type="password" id="pinnumber" name="pinnumber" class="form-control validate[required,maxSize[4]]" style="height:100px;text-align:center;font-size:50px">
+                                            </div>                                                                                   
+                                        </div>
 
-                                            Nam a nisi et nisi tristique lacinia non sit amet orci. Duis blandit leo odio, eu varius nulla fringilla adipiscing. Praesent posuere blandit diam, sit amet suscipit justo consequat sed. Duis cursus volutpat ante at convallis. Integer posuere a enim eget imperdiet. Nulla consequat dui quis purus molestie fermentum. Donec faucibus sapien eu nisl placerat auctor. Pellentesque quis justo lobortis, tempor sapien vitae, dictum orci.
+                                    </div>
 
-                                            Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.
+                                <p id="wizard_validate-buttons-3" class="wizard_validate-buttons stepy_buttons">
+                                    <!-- <a id="wizard_validate-back-1" href="javascript:void(0);" class="btn">&lt; Back</a> -->
+                                    <!-- <button type="submit" class="btn btn-primary finish">Submit</button> -->
+                                </p>
+                            </fieldset>     
+                            <fieldset title="Step 5" class="step" id="wizard_validate-step-4">
+                                <legend>Payment Information</legend>
+                                <div class="form-row">
+                                 
+                                </div>
 
-                                            Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.
-
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum dolor sem, quis pharetra dui ultricies vel. Cras non pulvinar tellus, vel bibendum magna. Morbi tellus nulla, cursus non nisi sed, porttitor dignissim erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis commodo lectus. Vivamus vel tincidunt enim, non vulputate ipsum. Ut pellentesque consectetur arcu sit amet scelerisque. Fusce commodo leo eros, ut eleifend massa congue at.
-
-                                            Nam a nisi et nisi tristique lacinia non sit amet orci. Duis blandit leo odio, eu varius nulla fringilla adipiscing. Praesent posuere blandit diam, sit amet suscipit justo consequat sed. Duis cursus volutpat ante at convallis. Integer posuere a enim eget imperdiet. Nulla consequat dui quis purus molestie fermentum. Donec faucibus sapien eu nisl placerat auctor. Pellentesque quis justo lobortis, tempor sapien vitae, dictum orci.
-
-                                            Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.
-
-                                            Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.
-
-                                            LOREM IPSUM
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum dolor sem, quis pharetra dui ultricies vel. Cras non pulvinar tellus, vel bibendum magna. Morbi tellus nulla, cursus non nisi sed, porttitor dignissim erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis commodo lectus. Vivamus vel tincidunt enim, non vulputate ipsum. Ut pellentesque consectetur arcu sit amet scelerisque. Fusce commodo leo eros, ut eleifend massa congue at.
-
-                                            Nam a nisi et nisi tristique lacinia non sit amet orci. Duis blandit leo odio, eu varius nulla fringilla adipiscing. Praesent posuere blandit diam, sit amet suscipit justo consequat sed. Duis cursus volutpat ante at convallis. Integer posuere a enim eget imperdiet. Nulla consequat dui quis purus molestie fermentum. Donec faucibus sapien eu nisl placerat auctor. Pellentesque quis justo lobortis, tempor sapien vitae, dictum orci.
-
-                                            Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.
-
-                                            Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.
-
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum dolor sem, quis pharetra dui ultricies vel. Cras non pulvinar tellus, vel bibendum magna. Morbi tellus nulla, cursus non nisi sed, porttitor dignissim erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis commodo lectus. Vivamus vel tincidunt enim, non vulputate ipsum. Ut pellentesque consectetur arcu sit amet scelerisque. Fusce commodo leo eros, ut eleifend massa congue at.
-
-                                            Nam a nisi et nisi tristique lacinia non sit amet orci. Duis blandit leo odio, eu varius nulla fringilla adipiscing. Praesent posuere blandit diam, sit amet suscipit justo consequat sed. Duis cursus volutpat ante at convallis. Integer posuere a enim eget imperdiet. Nulla consequat dui quis purus molestie fermentum. Donec faucibus sapien eu nisl placerat auctor. Pellentesque quis justo lobortis, tempor sapien vitae, dictum orci.
-
-                                            Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.
-
-                                            Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</textarea>
+                                <p id="wizard_validate-buttons-4" class="wizard_validate-buttons stepy_buttons" >
+                                    <!-- <a id="wizard_validate-next-0" href="javascript:void(0);" class="btn">Next &gt;</a> -->
+                                </p>
+                            <!-- <button type="submit" class="btn btn-primary finish" style="position:relative;top:-29px" id="wizard_validate">Submit</button> -->
+                            </fieldset>
+                            <fieldset title="Step 6" class="step" id="wizard_validate-step-5">
+                                <legend>Summary</legend>
+                                <div class="form-row">
+                                    <div class="col-md-3">Username:</div>
+                                    <div class="col-md-9">
+                                                asdf
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="col-md-12">
-                                        <span>
-                                            <input type="checkbox" class="validate[required]" name="terms" value="1">
-                                             Yes, I accept your terms and conditions.
-                                        </span>
-                                    </div>
-                                    <div class="col-md-12" style="margin-top:25px">Tell us the reason you are interested in Vise: </div>
-                                    <div class="col-md-12">
-
-                                        <textarea style="height:75px" class="form-control" id="reason" name="reason"></textarea>
-                                        <!-- <input type="text" name="reason" class="validate[required,minSize[4],maxSize[10]]"> -->
-                                        <!-- <span class="help-inline">Required, minSize = 4, maxSize = 10</span> -->
-                                    </div>
-                                </div>                                
-<!--                                 <div class="form-row">
-                                    <div class="col-md-3">Repeat Password:</div>
+                                    <div class="col-md-3">Email:</div>
                                     <div class="col-md-9">
-                                        <input type="text" name="password" class="validate[required,minSize[4],maxSize[10]]">
-                                        <span class="help-inline">Required</span>
+                                                asdf
                                     </div>
-                                </div>  -->                               
-                                <p id="wizard_validate-buttons-3" class="wizard_validate-buttons stepy_buttons">
+                                </div>    
+                                <div class="form-row">
+                                    <div class="col-md-3">Phone:</div>
+                                    <div class="col-md-9">
+                                                asdf
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <hr>
+                                    <div class="col-md-3">Firm Name:</div>
+                                    <div class="col-md-9">
+                                                asdf
+                                    </div>
+                                </div>   
+                                <div class="form-row">
+                                    <div class="col-md-3">Firm Size:</div>
+                                    <div class="col-md-9">
+                                                asdf
+                                    </div>
+                                </div>   
+                                <div class="form-row">
+                                    <hr>
+                                    <div class="col-md-3">Subscription Plan:</div>
+                                    <div class="col-md-9">
+                                        Monthly
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-3">Payment Amount:</div>
+                                    <div class="col-md-9">
+                                        600$
+                                    </div>
+                                </div>
+                                              
+
+                                <p id="wizard_validate-buttons-5" class="wizard_validate-buttons stepy_buttons" style="display:none">
                                     <!-- <a id="wizard_validate-next-0" href="javascript:void(0);" class="btn">Next &gt;</a> -->
                                 </p>
                             </fieldset>                            
-                            <button type="submit" class="btn btn-primary finish" style="position:relative;top:-29px" id="wizard_validate">Submit</button>
+                            <button type="submit" class="btn btn-primary finish" style="position:relative;top:-29px;position:relative;top:0px" id="wizard_validate">Submit</button>
                             
                         </form>                
 
@@ -327,7 +553,7 @@
 // });
 // $("#splash").animate({
 //     opacity: 1,
-// }, 750, function() {
+// }, 750, function() {q
 //     $("#secondSplash").animate({
 //         opacity: 1,
 //     }, 750, function() {
@@ -361,4 +587,9 @@ function loadIn() {
          }, 1000);
      }, 250);
 }
+
+$("a#wizard-next-4.btn").click(function() {
+    
+ 
+})
 </script>

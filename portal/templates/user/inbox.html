@@ -10,6 +10,7 @@ $.ajax({
     console.log(x)
 })
 function confirmExit(){
+    $("#hooter").fadeOut(1)
 localStorage.removeItem('YourPictureUrl');
 $.ajax({
     url: '/user/removeconnection',
@@ -58,7 +59,7 @@ $.ajax({
 </div>
 
 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7" style="height:90vh;padding-left:1px;padding-right:1px" id="intwo">
-    <div class="block block-drop-shadow" style="height:100%;background-color:transparent;margin-bottom:0px;padding-bottom:100px" id="inb">
+    <div class="block block-drop-shadow" style="height:100%;background-color:rgba(255,255,255,0.2);margin-bottom:0px;padding-bottom:100px" id="inb">
         <div class="header">
             <h2>Conversation with </h2>
             <span id="chosenuser" style="margin-left:5px"></span>
@@ -92,7 +93,7 @@ $.ajax({
                 </div>
               -->
             </div>
-        <div class="footer" id="hooter" style="position:fixed;left:25vw;width:75vw;bottom:0px;height:76px;background:black;">
+        <div class="footer" id="hooter" style="position:fixed;left:25vw;width:75vw;bottom:0px;height:100px;background:black;">
             <div class="input-group" style="position:fixed;bottom:0px;padding-bottom:25px">
                 <span class="input-group-addon"><i class="icon-comment"></i></span>
                 <!-- <input type="text" class="form-control" placeholder="message.."> -->
@@ -147,6 +148,8 @@ var hyperchat = (function() {
     localStorage.setItem('user',JSON.stringify(user))
     $("#chosenuser")[0].innerText = " Hyperchat Bot"
 })
+
+$("#hooter").fadeIn(1000)
 </script>
          
 {% endblock %}

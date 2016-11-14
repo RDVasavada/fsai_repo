@@ -259,7 +259,8 @@ var filterPortfolios = function() {
       }
     })
     newStockArr.forEach(function(x, index) {
-      $("#optimizePin").append("<tr><td>" + (index + 1) + "</td><td>" + x + "</td><td>$" + String(newPriceArr[index]).slice(0,2) + "." + String(newPriceArr[index]).slice(3,5) + "</td><td>" + newShares[index] + "</td><td>" + newWeightArr[index] + "</td></tr>")
+      $("#noty_topCenter_layout_container").fadeIn(250)
+      $("#optimizePin").append("<tr><td>" + (index + 1) + "</td><td><a href=\'/user/individual_stock/"+x+"/'\'>" + x + "</a></td><td>$" + String(newPriceArr[index]).slice(0,2) + "." + String(newPriceArr[index]).slice(3,5) + "</td><td>" + newShares[index] + "</td><td>" + newWeightArr[index] + "</td></tr>")
     })
     $("#filterLoader").fadeOut(250)
     console.log(newDateArr)

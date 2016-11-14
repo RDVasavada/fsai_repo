@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
     {% block content %}
+
 <style>
 svg {
   font: 10px sans-serif;
@@ -25,7 +27,7 @@ svg {
                 </div>
 </div>
 <div class="sceneElement" data-viewport="0">
-<div class="col-lg-12 col-md-12 col-sm-8 col-xs-12" style="margin:0px;height:auto;padding-left:0px;padding-right:0px;background:rgba(0,0,0,0.6);position:relative;bottom:0px;padding-bottom:100px;margin-bottom:-50px" id="ha">
+<div class="col-lg-12 col-md-12 col-sm-8 col-xs-12" style="margin:0px;height:auto;padding-left:0px;padding-right:0px;background:rgba(255,255,255,0.1);position:relative;bottom:0px;padding-bottom:100px;margin-bottom:-50px;padding-top:10px" id="ha">
   <div class="col-md-8" style="padding-left:15px;padding-top:10px;padding-right:15px">
       <div class="row" >
       <div class="col-md-6" style="margin-top:-10px">
@@ -34,7 +36,7 @@ svg {
                         <div class="side pull-left">
                             <button type="button" class="btn btn-default btn-clean" style="border: 0px">
                             YOUR PROFILE
-                            <a href="#"><span class="icon-pencil"></span></a>Edit Your Profile</button>
+                            <!-- <a href="#"><span class="icon-pencil"></span></a>Edit Your Pr /ofile</button> -->
                         </div>
                         <div class="side pull-right">                            
                             <ul class="buttons">
@@ -46,7 +48,7 @@ svg {
                     <div class="content" style="height:150px">
                         <div class="row" style="height:100%;overflow:hidden">
                             <div class="col-lg-4" style="text-align:center;padding-right:0px;margin-left:25px;height:100%">
-                                   <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAaJAAAAJGVlZDNlZjNiLTRiNzgtNDU0NC1iOGM0LWFjMTQzODNhOGY1MA.jpg"  style="width: 100px;height: 100px;position: relative;top: 15px;border-radius:99px">
+                                   <img src="/static/img/profile.svg"  style="width: 100px;height: 100px;position: relative;top: 15px;border-radius:99px">
                             <!-- {% if picture_url %} -->
                                    <!-- <img src="{{picture_url}}"  style="width: 100px;height: 100px;position: relative;top: 15px;"> -->
                             <!-- {% else %} -->
@@ -207,8 +209,8 @@ var pie = new d3pie("pieChart", {
                             </ul>
                         </div>                        
                     </div>                  
-                    <div class="content" style="height:150px">
-                        <div style="text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%"> $26,111,000 </div>
+                    <div class="content" id="totalPortfolioValue" style="height:150px;text-align:center">
+                        <img src="/static/img/loader.gif" style="margin-top:50px">
                     </div>
                     <div class="footer" style="background:transparent">
                                       
@@ -227,7 +229,7 @@ var pie = new d3pie("pieChart", {
                         </div>                        
                     </div>                  
                     <div class="content" style="height:150px">
-                    {% if change < 0 %}
+                    {% if change > 0 %}
                         <div style="text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%;color:rgba(255,0,0,1)"> <span style="font-size:54px;">&uarr;</span>&nbsp;14.33% </div>
                     {% else %}
                       <div style="text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%;color:rgba(0,255,0,1)"> <span style="font-size:54px;">&uarr;</span>&nbsp;2.99% </div>
@@ -905,9 +907,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
        
     <div class="scroll-nail email-list mCustomScrollbar _mCS_1" style="height:30vh;overflow:hidden">
       <div id="pin">
-{% for x in news %}
-<a href={{x.link}} target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>{{x.title}}</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>{{x.description}}<br></div><div class='item-line-date'>{{x.pubDate}}</div></div></div></a>
-  {% endfor %}
+
       </div>
                
                         
@@ -926,32 +926,8 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
 <div class="block block-transparent nm">
        
     <div class="scroll-tail email-list" style="height:25vh;">
-        <div class="email-list-item" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';background:rgba(0,255,0,0.1)">
-            <div class="item-line-content" >
-
-            </div>
-            <div class="item-line">
-                <div class="item-line-content" style="font-size:22px">SCTY [Test Portfolio]: +78</div>
-            </div>
-        </div>
-        <div class="email-list-item" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';background:rgba(255,0,0,0.1)">
-            <div class="item-line-content" >
-
-            </div>
-            <div class="item-line">
-                <div class="item-line-content" style="font-size:22px">NYSE: TWTR [Test Portfolio]: -12</div>
-            </div>
-        </div>   
-{% for pick in sentiment %}
-       <div class="email-list-item" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';">
-            <div class="item-line-content" >
-
-            </div>
-            <div class="item-line">
-                <div class="item-line-content" style="font-size:22px">{{pick.stock}}: {{pick.sentiment}}</div>
-            </div>
-        </div>               
-{% endfor %}    
+        <div id="sentiment_pin"></div>
+  
 <script type="text/javascript">
   $(".scroll-tail").height('25vh').mCustomScrollbar();
 </script>          
@@ -974,19 +950,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
   $(".scroll-sail").height('25vh').mCustomScrollbar();
 </script>     
     <div class="scroll-sail email-list" style="height:25vh;">
- 
-{% for pick in picks %}
-       <div class="email-list-item" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';">
-            <div class="item-line-content" >
-                <div class="item-line-title">Expected Yield : {{pick.yield}}%
-                <div class="item-line-date pull-right">Buy on {{pick.13f_date}}</div>
-                </div>
-            </div>
-            <div class="item-line">
-                <div class="item-line-content" style="font-size:22px">{{pick.symbol}}:{{pick.exchange}} - {{pick.price}}$</div>
-            </div>
-        </div>               
-{% endfor %}    
+    <div id="pick_pin"></div> 
      
     </div>
     

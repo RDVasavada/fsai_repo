@@ -1,4 +1,45 @@
-
+$(document).on('mouseenter','#a1', function (event) {
+    $("#helper")[0].innerText = "Update your profile, stay updated on latest news, and notifications"
+    $("#helper").fadeIn(250)
+}).on('mouseleave','#a1',  function(){
+    $("#helper").fadeOut(250)
+});
+$(document).on('mouseenter','#a2', function (event) {
+    $("#helper")[0].innerText = "Communicate with other advisors, friends, and a robot"
+    $("#helper").fadeIn(250)
+}).on('mouseleave','#a2',  function(){
+    $("#helper").fadeOut(250)
+});
+$(document).on('mouseenter','#a3', function (event) {
+    $("#helper")[0].innerText = "Summary and indepth report on your portfolios and stocks"
+    $("#helper").fadeIn(250)
+}).on('mouseleave','#a3',  function(){
+    $("#helper").fadeOut(250)
+});
+$(document).on('mouseenter','#a4', function (event) {
+    $("#helper")[0].innerText = "Create a new portfolio for your client"
+    $("#helper").fadeIn(250)
+}).on('mouseleave','#a4',  function(){
+    $("#helper").fadeOut(250)
+});
+$(document).on('mouseenter','#a5', function (event) {
+    $("#helper")[0].innerText = "See how the markets feel today"
+    $("#helper").fadeIn(250)
+}).on('mouseleave','#a5',  function(){
+    $("#helper").fadeOut(250)
+});
+$(document).on('mouseenter','#a6', function (event) {
+    $("#helper")[0].innerText = "FAQ, Customer Support, Contact"
+    $("#helper").fadeIn(250)
+}).on('mouseleave','#a6',  function(){
+    $("#helper").fadeOut(250)
+});
+$(document).on('mouseenter','#a7', function (event) {
+    $("#helper")[0].innerText = "Logout your profile"
+    $("#helper").fadeIn(250)
+}).on('mouseleave','#a7',  function(){
+    $("#helper").fadeOut(250)
+});
 if (navigator.userAgent.indexOf('Safari') != -1 && 
     navigator.userAgent.indexOf('Chrome') == -1) {
         document.body.className += " safari";

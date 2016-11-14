@@ -6,11 +6,14 @@ from django.contrib.auth import logout, authenticate, login
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from portal.services import EmailService
+from django.http import JsonResponse
 from portal.models.user.portal_user import PortalUser
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.db import connection
 from portal.utils import TokenGenerator
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
 
 def main(request):
@@ -50,6 +53,42 @@ def loginview(request):
 
         return render(request, 'public/login.html', { 'errors': errors })
 
+@csrf_exempt
+def username_exist(request, username):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM portal_portaluser WHERE username = \'" + str(username) + "\'")
+    nameL = 0
+    for item in dictfetchall(cursor):
+        nameL += 1
+    if nameL == 0 : 
+        return(JsonResponse({'exist':0}))
+    else:
+        return(JsonResponse({'exist':1}))
+
+@csrf_exempt
+def email_exist(request, email):
+    print(email)
+    # return(JsonResponse({'exist':0}))
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM portal_portaluser WHERE email = \'" + str(email) + "\'")
+    nameL = 0
+    for item in dictfetchall(cursor):
+        nameL += 1
+    if nameL == 0 : 
+        return(JsonResponse({'exist':0}))
+    else:
+        return(JsonResponse({'exist':1}))
+
+
+def dictfetchall(cursor):
+    "Returns all rows from a cursor as a dict"
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]    
+
+
 def register(request):
     if request.method == 'GET':
         return render(request, 'public/login.html')
@@ -63,12 +102,15 @@ def register(request):
         reason = request.POST.get('reason', None)
         picture_url = "/static/img/profile.svg"
         connections = 0
+        confirm_email = 0
+        confirm_phone = 0
+        pin_number = 1111
         errors = []
 
         if password == password_repeat:
             if len(password) > 8:
 
-                new_user = PortalUser.objects.create_user(username=username, email=email, password=password, connections=0, picture_url=picture_url)
+                new_user = PortalUser.objects.create_user(username=username, email=email, password=password, connections=0, picture_url=picture_url, confirm_email = confirm_email, confirm_phone = confirm_phone, pin_number = pin_number)
 
                 new_user.phone=phone
                 new_user.email=email
@@ -90,6 +132,7 @@ def register(request):
                     return HttpResponseRedirect('/')
                 except Exception as e:
                     #This user must already exist
+                    print("already")
                     print e
             else:
                 errors.append('Passwords must 9 or more charecters')

@@ -1,4 +1,3 @@
-{% load render_bundle from webpack_loader %}
 <!DOCTYPE html>
 <html style="overflow:hidden;height: 100%;">
 <head>
@@ -67,6 +66,7 @@ function del_cookie() {
 
 </script>
 <body onunload="del_cookie()" style="background-attachment:fixed !important;height:100%;overflow-x:hidden">
+    <ul id="noty_topCenter_layout_container" class="" style="top: 50px;display:none;left: 40vw; position: fixed; width: 310px; height: auto; margin: 0px; padding: 0px; list-style-type: none; z-index: 10000000;"><li style="overflow: hidden; background: rgb(0, 0, 0); border-radius: 3px 3px 0px 0px; border: 1px solid white; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px; color: rgb(255, 255, 255); opacity: 1; width: 310px; cursor: pointer;"><div class="noty_bar" id="noty_739730318433366900"><div class="noty_message" style="font-size: 11px; line-height: 14px; text-align: center; padding: 8px 10px 9px; width: auto; position: relative;"><span class="noty_text">Your Guru Porftolio is ready !</span></div></div></li></ul>
     <div class="row" style="margin:0px">
 
         <div class="col-md-12" id="mainheader" style="position:relative;width:102vw;padding:0px;margin-bottom:0px">
@@ -92,11 +92,15 @@ function del_cookie() {
                 <a id="a" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/logout" id="/logout" class="btn btn-default btn-clean"><span class="icon-share-alt" style="font-size:24px"></span> 
                 <br><span id="navicon"> Log Out</span></a>
                               
-            </div>            
+            </div>      
+
         </div><!-- 
         <div class="col-md-2" style="margin-right:10px">
         </div> -->
 
+    </div>
+    <div class="row" style="height:25px;background:rgba(0,0,0,0.4);width:100%;margin:0px;text-align:center;margin-top:5px;padding-top:5px">
+    <span id="helper" style="display:none;letter-spacing:3px;font-weight:100"></span>
     </div>
     <div class="row" style="padding-left:20px;padding-right:20px">
         

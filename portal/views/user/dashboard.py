@@ -30,7 +30,74 @@ from yahoo_finance import Share
 from portal.models.data.portfolio import Portfolio
 quandl.ApiConfig.api_key = 'X8CjGKTPEqTuto2v_Q94'
 
-    
+@csrf_exempt
+def marketnews(request):
+  news = requests.get("http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo,appl,googl,tsla")
+  news = news.json()
+  newsarr = []
+  for newsitem in news['items']:
+    newsarr.append(newsitem)
+  return JsonResponse({'news':newsarr})
+
+@csrf_exempt
+def dash_sentiment(request):
+  sentiment = []
+  sentiment.append({'stock':'AAPL [Test Portfolio] ','sentiment':'+33'})
+  sentiment.append({'stock':'GOOGL [Test Portfolio] ','sentiment':'+23'})
+  sentiment.append({'stock':'BAIDU [Test Portfolio] ','sentiment':'-12'})
+  sentiment.append({'stock':'VAL [Test Portfolio] ','sentiment':'+28'})
+  sentiment.append({'stock':'TSLA [Test Portfolio] ','sentiment':'-12'})
+  sentiment.append({'stock':'YHOO [Test Portfolio] ','sentiment':'2'})
+  return JsonResponse({'sentiment':sentiment})
+
+@csrf_exempt
+def top_picks(request):
+  picks = find()
+  return JsonResponse({'picks':picks})
+
+@csrf_exempt
+def portfolio_value(request):
+  context_dict = {}
+  if request.user.is_authenticated():
+      username = request.user.username
+      portalUser = PortalUser.objects.get(username=username)
+      portfolios = top_portfolios(request,portalUser.id)
+      stockDict = []
+      stockTotal = 0
+      oldTotal = 0
+      valtotal = 0
+      performanceval = 0
+      for port in portfolios:
+        valtotal += int(re.sub(r'[^\w\s]','',port['value']))
+        stocks = get_stocks_by_portfolio(request, str(port['id']))
+        for stock in stocks:
+          val = stock["current_price"] * stock["number_of_shares"]
+          performanceval += stock['current_price']
+          oldTotal += stock['initial_price'] * stock["number_of_shares"]
+          stockTotal += val
+          prestock = {}
+          ticker = stock['ticker']
+          prestock[ticker] = {}
+          prestock[ticker]['data'] = []
+          prestock[ticker]['buy_date'] = stock['buy_date']
+          prestock[ticker]['current_price'] = stock['current_price']
+          prestock[ticker]['initial_price'] = stock['initial_price']
+          prestock[ticker]['number_of_shares'] = stock['number_of_shares']
+          timenow = time.strftime("%Y-%m-%d")
+          stocks = []
+          stocks.append(stockDict)
+          stocks = json.dumps(list(stocks), cls=DjangoJSONEncoder)
+          context_dict['stockDict'] = stocks
+          print(stockTotal)
+      try:
+        change = stockTotal/oldTotal
+        change = change*100
+      except ZeroDivisionError:
+        change = 0
+      context_dict["change"] = "{0:.2f}".format(round(change,2))
+      context_dict["total"] = '{:20,.2f}'.format(valtotal)
+      context_dict["performanceval"] = '{:20,.2f}'.format(performanceval)
+      return JsonResponse({'data':context_dict})
 
 @login_required
 def dashboard(request):
@@ -39,63 +106,11 @@ def dashboard(request):
       portalUser = PortalUser.objects.get(username=username)
       portfolios = top_portfolios(request,portalUser.id)
       picture_url = portalUser.picture_url
-  news = requests.get("http://rss2json.com/api.json?rss_url=http://finance.yahoo.com/rss/headline?s=yhoo,msft,tivo,appl,googl,tsla")
-  news = news.json()
-  newsarr = []
-  for newsitem in news['items']:
-    newsarr.append(newsitem)
   context_dict = {}
-  context_dict['news'] = newsarr
   if picture_url == 'NULL':
     context_dict['picture_url'] = "asdf"
   else:
     context_dict['picture_url'] = picture_url
-  stockDict = []
-  stockTotal = 0
-  oldTotal = 0
-  valtotal = 0
-  performanceval = 0
-  for port in portfolios:
-    valtotal += int(re.sub(r'[^\w\s]','',port['value']))
-    stocks = get_stocks_by_portfolio(request, str(port['id']))
-    for stock in stocks:
-      val = stock["current_price"] * stock["number_of_shares"]
-      performanceval += stock['current_price']
-      oldTotal += stock['initial_price'] * stock["number_of_shares"]
-      stockTotal += val
-      prestock = {}
-      ticker = stock['ticker']
-      prestock[ticker] = {}
-      prestock[ticker]['data'] = []
-      prestock[ticker]['buy_date'] = stock['buy_date']
-      prestock[ticker]['current_price'] = stock['current_price']
-      prestock[ticker]['initial_price'] = stock['initial_price']
-      prestock[ticker]['number_of_shares'] = stock['number_of_shares']
-      timenow = time.strftime("%Y-%m-%d")
-      stocks = []
-      stocks.append(stockDict)
-      stocks = json.dumps(list(stocks), cls=DjangoJSONEncoder)
-      context_dict['stockDict'] = stocks
-      print(stockTotal)
-  try:
-    change = stockTotal/oldTotal
-    change = change*100
-  except ZeroDivisionError:
-    change = 0
-  context_dict["change"] = "{0:.2f}".format(round(change,2))
-  print("this is change !!")
-  context_dict["total"] = '{:20,.2f}'.format(valtotal)
-  context_dict["performanceval"] = '{:20,.2f}'.format(performanceval)
-  picks = find()
-  sentiment = []
-  sentiment.append({'stock':'AAPL [Test Portfolio] ','sentiment':'+33'})
-  sentiment.append({'stock':'GOOGL [Test Portfolio] ','sentiment':'+23'})
-  sentiment.append({'stock':'BAIDU [Test Portfolio] ','sentiment':'-12'})
-  sentiment.append({'stock':'VAL [Test Portfolio] ','sentiment':'+28'})
-  sentiment.append({'stock':'TSLA [Test Portfolio] ','sentiment':'-12'})
-  sentiment.append({'stock':'YHOO [Test Portfolio] ','sentiment':'2'})
-  context_dict['sentiment'] = sentiment
-  context_dict['picks'] = picks
   context_dict["portfolios"] = portfolios
   context_dict["username"] = username
   t = loader.get_template("user/dashboard.html")

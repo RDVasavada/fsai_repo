@@ -150,11 +150,14 @@ var MSGList = React.createClass({
                                                 fontFamily:'Helvetica Neue',
                                                 letterSpacing: '2px',
                                                 bottom: '50px',
+                                                background: 'rgba(0,0,0,0.4)',
+                                                maxWidth: '40%',
+                                                left: 'calc(40% + 2px)',
                                             }
                                             var spanRight = {
                                                 float: 'left',
                                                 position: 'relative',
-                                                left:'109px',
+                                                left:'calc(80% + 123px)',
                                                 fontWeight:'900',
                                             }
                                             var iconDel = {
@@ -169,9 +172,10 @@ var MSGList = React.createClass({
                                             var timeLeft = {
                                                 float: 'right',
                                                 position: 'relative',
-                                                right:'100px',
+                                                right: '0px',
                                                 fontWeight:'400',
-                                                fontSize: '8px',                                       
+                                                fontSize: '8px',
+                                                top: '95px',
                                             }     
                                             var divStyle = {
                                                 position: 'relative',
@@ -191,7 +195,7 @@ var MSGList = React.createClass({
                                             var imgStyle = {
                                                 width: '60px',
                                                 position: 'relative',
-                                                right: '25px'
+                                                left: 'calc(80% + 135px)'
                                             }
                                             var delMe = function(id) {
                                                $.ajax({
@@ -204,27 +208,27 @@ var MSGList = React.createClass({
                                                    this.forceUpdate()
                                                 })                                                
                                             }
+                                            var arrowStyle = {
+                                                border: '1px solid rgba(0,0,0,0)',
+                                                borderWidth: '13px',
+                                                borderLeftColor: 'rgba(0,0,0,0.4)',
+                                                top: '40px',
+                                                left: 'calc(80% + 101px)',
+                                                height: '25px',
+                                                width: '25px',
+                                                position: 'relative',
+                                            }                                            
                                             var YourPictureUrl = JSON.parse(localStorage.getItem('YourPictureUrl')).url;
                                             var myStar = React.createClass
-                                            if (lastmsg === 0 || lastmsg === -1){
-                                                lastmsg = 1
-                                                return(
-                                                    <div style={boxStyle}>
-                                                        <img src={YourPictureUrl} style={imgStyle} />
-                                                        <span style={spanRight}>{you}</span>
-                                                        <span style={timeLeft}>{time}</span>
-                                                        <div style={style}>{str}
-                                                        </div>
-                                                    </div>
-                                                )
-                                            } else {
-                                                lastmsg = 1
-                                                return(
-                                                    <div>
-                                                        <div style={repeatStyle}>{str}</div>
-                                                    </div>
-                                                )
-                                            }
+                                            return(
+                                                <div style={boxStyle}>
+                                                    <span style={spanRight}>{you}</span>
+                                                    <span style={timeLeft}>{time}</span>
+                                                    <div style={arrowStyle}> </div>
+                                                    <img src={YourPictureUrl} style={imgStyle} />
+                                                    <div style={style}>{str}</div>
+                                                </div>
+                                            )
                                         } else {
                                             var boxStyle = {
                                                 height: 'auto',
@@ -233,21 +237,20 @@ var MSGList = React.createClass({
                                             var imgUrl = JSON.parse(localStorage.getItem('user')).picture_url;
                                             var style = {
                                                 marginLeft: '100px',
-                                                fontSize: '16px',
-                                                padding: '10px',
                                                 position: 'relative',
-                                                textAlign: 'left',
-                                                bottom: '60px',
+                                                top: '-46px',
+                                                maxWidth: '50%',
+                                                padding: '15px',
+                                                background: 'rgba(0,0,0,0.4)',
                                                 fontWeight: '300',
+                                                fontSize: '16px',
+                                                letterSpacing: '2px',
                                                 WebkitFontSmoothing: 'antialiased',
                                                 fontFamily:'Helvetica Neue',
-                                                letterSpacing: '2px',
-                                                bottom: '50px',
                                             }
                                             var spanLeft = {
                                                 float: 'left',
-                                                position: 'relative',
-                                                left:'109px',
+                                                left:'100px',
                                                 fontWeight:'900',                                             
                                             }
                                            var timeLeft = {
@@ -279,26 +282,28 @@ var MSGList = React.createClass({
                                             var imgStyle = {
                                                 width: '60px',
                                                 position: 'relative',
-                                                right: '67px'
+                                                right: '-15px',
+                                                bottom: '0px',
                                             }
-                                            if (lastmsg === 1 || lastmsg === -1) {
-                                                lastmsg = 0 
-                                                return(
-                                                    <div style={boxStyle}>
-                                                        <img src={imgUrl} style={imgStyle} />
-                                                        <span style={spanLeft}>{writer}</span>
-                                                        <span style={timeLeft}>{time}</span>
-                                                        <div style={style}>{str}</div>
-                                                    </div>
-                                                )
-                                            } else {
-                                                lastmsg = 0
-                                                return (
-                                                    <div>
-                                                        <div style={repeatStyle}>{str}</div>
-                                                    </div>
-                                                )
+                                            var arrowStyle = {
+                                                border: '1px solid rgba(0,0,0,0)',
+                                                borderWidth: '13px',
+                                                borderRightColor: 'rgba(0,0,0,0.4)',
+                                                top: '40px',
+                                                left: '75px',
+                                                height: '25px',
+                                                width: '25px',
+                                                position: 'relative',
                                             }
+                                            return(
+                                                <div style={boxStyle}>
+                                                    <span style={spanLeft}>{writer}</span>
+                                                    <span style={timeLeft}>{time}</span>
+                                                    <div style={arrowStyle}> </div>
+                                                    <img src={imgUrl} style={imgStyle} />
+                                                    <div style={style}>{str}</div>
+                                                </div>
+                                            )
                                         } 
                                     }
                                 }

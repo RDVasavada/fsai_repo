@@ -2,7 +2,6 @@ function rerun() {
     url = String(window.location.href)
     if ((url.indexOf("dashboard")) > 0 ){
         window.location.reload()
-        $.getScript("/static/assets/js/plugins.js")
         $('<link/>', {
            rel: 'stylesheet',
            type: 'text/css',
@@ -13,6 +12,7 @@ function rerun() {
         $.getScript("/static/assets/js/plugins.js")
     } else if ((url.indexOf("inbox")) > 0 ) {
         window.location.reload()
+        $("#hooter").css('display','none')
         $.getScript("/static/assets/js/actions.js")
         $.getScript("/static/js/user/inbox.js")
         $.getScript("/static/assets/js/plugins.js")
