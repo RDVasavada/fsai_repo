@@ -223,7 +223,6 @@ var MSGList = React.createClass({
                                             return(
                                                 <div style={boxStyle}>
                                                     <span style={spanRight}>{you}</span>
-                                                    <span style={timeLeft}>{time}</span>
                                                     <div style={arrowStyle}> </div>
                                                     <img src={YourPictureUrl} style={imgStyle} />
                                                     <div style={style}>{str}</div>
@@ -298,7 +297,6 @@ var MSGList = React.createClass({
                                             return(
                                                 <div style={boxStyle}>
                                                     <span style={spanLeft}>{writer}</span>
-                                                    <span style={timeLeft}>{time}</span>
                                                     <div style={arrowStyle}> </div>
                                                     <img src={imgUrl} style={imgStyle} />
                                                     <div style={style}>{str}</div>

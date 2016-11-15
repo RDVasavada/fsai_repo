@@ -34,12 +34,12 @@ def backtest(request, port_id):
         stocks = get_stocks_by_portfolio(request, port_id)
         even = (float(1.00/(len(stocks)-1))*100)
         url = "https://www.portfoliovisualizer.com/backtest-portfolio?s=y&timePeriod=4&startYear=2006&firstMonth=1&endYear=2016&lastMonth=12&endDate=10%2F28%2F2016&initialAmount=10000&annualOperation=0&annualAdjustment=0&inflationAdjusted=true&annualPercentage=0.0&frequency=4&rebalanceType=1&showYield=false&reinvestDividends=true"
-        for x in range(0,50):
+        for x in range(0,len(stocks)):
             print(stocks[x])
             rtnstr = "&symbol"
             rtnstr += str(x)
             rtnstr += "="
-            rtnstr += str(stocks[x+300]['ticker'])
+            rtnstr += str(stocks[x]['ticker'])
             rtnstr += "&allocation"
             rtnstr += str(x)
             rtnstr += "_1="

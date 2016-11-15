@@ -4,53 +4,95 @@
 
   $(".scroll-sail").height('25vh').mCustomScrollbar();
 
-$(".statusbar-text")[0].innerText = "Loading your market news . . ."
 $("#statusbar_2").show()
 
+$(".statusbar-text")[0].innerText = "Loading your market news . . ."
 $.ajax({
-    url:"marketnews/",
+    url:"dashboard/marketnews/",
     method: "POST"
 }).done(function(data){
     data.news.forEach(function(x) {
         $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
     })
-    $(".statusbar-text")[0].innerText = "Loading your sentiment updates . . ."
+}).fail(function() {
     $.ajax({
-        url:"sentiment/",
+    url:"marketnews/",
+    method: "POST"
+    }).done(function(data){
+        data.news.forEach(function(x) {
+            $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
+        })
+    })
+})
+    $(".statusbar-text")[0].innerText = "Loading your sentiment updates . . ."
+$.ajax({
+    url:"dashboard/sentiment/",
+    method: "POST"
+}).done(function(data){
+    data.sentiment.forEach(function(x) {
+        if (String(x.sentiment).indexOf("+") !== -1) {
+            $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(255,0,0,1)'>"+x.sentiment+"</span></div></div></div>")            
+        } else {
+                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(0,255,0,1)'>"+x.sentiment+"</span></div></div></div>")            
+
+        }
+    }) 
+}).fail(function(data) {
+    $.ajax({
+    url:"sentiment/",
+    method: "POST"
+    }).done(function(data){
+    data.sentiment.forEach(function(x) {
+        if (String(x.sentiment).indexOf("+") !== -1) {
+            $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(255,0,0,1)'>"+x.sentiment+"</span></div></div></div>")            
+        } else {
+                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(0,255,0,1)'>"+x.sentiment+"</span></div></div></div>")            
+
+        }
+    }) 
+})
+})
+        $(".statusbar-text")[0].innerText = "Loading your Top Picks . . ."
+$.ajax({
+    url:"dashboard/top_picks/",
+    method: "POST"
+}).done(function(data){
+    console.log(data)
+    data.picks.forEach(function(x) {
+        console.log(x)
+        $("#pick_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content' ><div class='item-line-title'>Expected Yield :"+x.yield+"<div class='item-line-date pull-right'>Buy on "+x['13f_date']+"</div></div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.symbol+":"+x.exchange+" - "+x.price+"$</div></div></div>")
+    })
+}).fail(function(data) {
+    $.ajax({
+        url:"top_picks/",
         method: "POST"
     }).done(function(data){
-        data.sentiment.forEach(function(x) {
-            if (String(x.sentiment).indexOf("+") !== -1) {
-                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(255,0,0,1)'>"+x.sentiment+"</span></div></div></div>")            
-            } else {
-                    $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(0,255,0,1)'>"+x.sentiment+"</span></div></div></div>")            
-
-            }
-        }) 
-        $(".statusbar-text")[0].innerText = "Loading your Top Picks . . ."
-        $.ajax({
-            url:"top_picks/",
-            method: "POST"
-        }).done(function(data){
-            console.log(data)
-            data.picks.forEach(function(x) {
-                console.log(x)
-                $("#pick_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content' ><div class='item-line-title'>Expected Yield :"+x.yield+"<div class='item-line-date pull-right'>Buy on "+x['13f_date']+"</div></div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.symbol+":"+x.exchange+" - "+x.price+"$</div></div></div>")
-            })
-            $.ajax({
-                url:"portfolio_value/",
-                method: "POST"
-            }).done(function(data){
-                console.log(data)
-                $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
-            })
-            $("#statusbar_2").hide()
+        console.log(data)
+        data.picks.forEach(function(x) {
+            console.log(x)
+            $("#pick_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content' ><div class='item-line-title'>Expected Yield :"+x.yield+"<div class='item-line-date pull-right'>Buy on "+x['13f_date']+"</div></div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.symbol+":"+x.exchange+" - "+x.price+"$</div></div></div>")
         })
-
     })
+})
+$.ajax({
+    url:"dashboard/portfolio_value/",
+    method: "POST"
+}).done(function(data){
+    console.log(data)
+    $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
+}).fail(function(data) {
+    $.ajax({
+    url:"portfolio_value/",
+    method: "POST"
+    }).done(function(data){
+        console.log(data)
+        $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
+    })
+})
+$("#statusbar_2").hide()
 
     
-})
+
 
 
 

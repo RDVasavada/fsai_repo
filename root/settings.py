@@ -32,6 +32,7 @@ APPEND_SLASH = True
 ADMINS = (
     ('', ''),
 )
+USE_L10N=False
 USE_THOUSAND_SEPARATOR = True
 
 MANAGERS = ADMINS

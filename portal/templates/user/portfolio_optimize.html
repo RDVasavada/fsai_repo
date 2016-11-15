@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-             <div class="row" style="margin-left:5px;height:1150px;background-color:rgba(255,255,255,0.1);padding-left:25px;padding-right:25px">
+             <div class="row" style="margin-left:5px;height:1150px;padding-left:25px;padding-right:25px">
                 <div class="block" style="box-shadow: 4px 5px 5px 0px rgba(0,0,0,0);">
                     <div class="head">   
                         <div class="ibox-content">
@@ -544,7 +544,7 @@
                     <tbody id="optimizedPortfolio">
 
                     {% for stock in newstocks %}<tr>
-                        <td class="text-center"><a href="/user/individual_stock/{{stock.ticker}}/" id="stockLink">{{stock.ticker}}</a></td>
+                        <td class="text-center"><a href="/user/individual_stock/{{stock.ticker}}/" id="stockLink" target="_blank">{{stock.ticker}}</a></td>
                         <td class="text-center">{{stock.cname}}</td>
                         <td class="text-center">{{stock.shares}}</td>
                         <td class="text-center">${{stock.price}}</td>

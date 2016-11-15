@@ -115,16 +115,16 @@
 
 <div class="modal in" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: hidden">
         <!-- <div class="modal-dialog"> -->
-        <div class="modal-dialog" style="width: 100vw; height: 100vh; margin:0px;background:url('/static/img/background/bg_num1.jpg')">            
+        <div class="modal-dialog" style="width: 100vw; height: 100vh; margin:0px;background:url(/static/img/bg-11.jpg);-moz-background-size: 100% 100%;-o-background-size: 100% 100%;-webkit-background-size: 100% 100%; background-size: 100% 100%;">            
             <div class="modal-content">
-                <div class="block" style="height:100vh;overflow:hidden;margin-bottom:0px">
+                <div class="block" style="height:100vh;overflow:scroll;margin-bottom:0px">
                     <div class="header">                                        
                         <h2>VISE - New User Registration</h2>
                         <div class="side pull-right">
                             <button class="btn" type="button" onclick="isNotVisible()">Cancel</button>
                         </div>
                     </div>                
-                    <div class="content controls" style="padding-top:18vh;padding-left:30vw;padding-right:30vw;height:100%;background:url(/static/img/bg-11.jpg);-moz-background-size: 100% 100%;-o-background-size: 100% 100%;-webkit-background-size: 100% 100%; background-size: 100% 100%;">                
+                    <div class="content controls" style="background:transparent;position:relative;padding-top:15vh;padding-left:30vw;padding-right:30vw;bottom:0px;height:100%;">                
 <!--                         <ul id="wizard_validate-titles" class="stepy-titles">
                             <li id="wizard_validate-title-0" class="current-step" style="cursor: default;">
                                 <div>Step 1</div><span>User Info</span>
@@ -202,12 +202,12 @@ function checkUser() {
         }).done(function(x) {
             if (x.exist == 1) {
                 $("#greenUser").fadeOut(250)
-                $("#redUser")[0].innerText = "Username " + user + "is already taken"
+                $("#redUser")[0].innerText = "Username " + user + " is already taken"
                 $("#redUser").fadeIn(250)
                 $("#wizard_validate-buttons-0").fadeOut(150)
             } else {
                 $("#redUser").fadeOut(50)
-                $("#greenUser")[0].innerText = "Username " + user + "is available !"
+                $("#greenUser")[0].innerText = "Username " + user + " is available !"
                 $("#greenUser").fadeIn(250)
                 $("#wizard_validate-buttons-0").fadeIn(150)
             }

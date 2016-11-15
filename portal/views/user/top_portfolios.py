@@ -48,17 +48,17 @@ def top_portfolios(request, user_id):
         # cursor.execute("select p.id as id,name,risk,investment,sum(investment) as value, COUNT(DISTINCT(ticker)) as total_value from "
         #                "portal_portfolio p, portal_stock s where p.id=s.show_id "
         #                "and p.user_id=" + str(1) + " group by p.id order by investment desc limit 10")
-        cursor.execute("select p.id as id,name,risk,investment, sum(investment) as value, COUNT(DISTINCT(ticker)) as no_of_tickers, "
+        cursor.execute("select p.id as id,name,expected_risk,investing_amount, sum(investing_amount) as value, COUNT(DISTINCT(ticker)) as no_of_tickers, "
                        "COUNT(DISTINCT(ticker)) as total_value from "
                        "portal_portfolio p, portal_stock s where p.id=s.show_id "
-                       "and p.user_id=" + str(user_id) + " group by p.id order by investment desc limit 10") 
+                       "and p.user_id=" + str(user_id) + " group by p.id order by investing_amount desc limit 10") 
         # investment = cursor[]
         portfolios = dictfetchall(cursor)
         for port in portfolios:
-            port['investment'] = '{:20,.2f}'.format(port['investment'])
+            port['investment'] = '{:20,.2f}'.format(port['investing_amount'])
             port['value'] = '{:20,.2f}'.format(port['value'])
             s = re.sub(r'[^\w\s]','',port['value'])
-            d = re.sub(r'[^\w\s]','',port['investment'])
+            d = re.sub(r'[^\w\s]','',port['investing_amount'])
             port['change'] = float(s)/float(d)
         print(portfolios)
     except Exception as e:

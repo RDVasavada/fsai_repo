@@ -39,6 +39,10 @@ def marketnews(request):
     newsarr.append(newsitem)
   return JsonResponse({'news':newsarr})
 
+def graph_performance(request):
+  cursor = connection.cursor()
+  cursor.execute("")
+
 @csrf_exempt
 def dash_sentiment(request):
   sentiment = []

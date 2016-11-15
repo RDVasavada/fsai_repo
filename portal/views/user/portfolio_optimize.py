@@ -14,6 +14,7 @@ from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
 from django.db import connection
 from django.http import JsonResponse
+import numpy as np, numpy.random
 from portal.models.data.stock import Stock
 from portal.views.user import top_portfolios
 
@@ -52,18 +53,6 @@ def saveportfolio(request, portfolio_id):
 @login_required
 @csrf_exempt
 def portfolio_optimize(request):
-    if request.user.is_authenticated():
-        username = request.user.username
-        userid = request.user.id
-    optimizeSearchResults = []
-    eachStockresult = {}
-    eachStockresult['months'] = "12"
-    eachStockresult['market'] = "S"
-    eachStockresult['investingAmount'] = "2,500"
-    eachStockresult['numStocks'] = "15"
-    eachStockresult['expectedRisk'] = "20"
-    eachStockresult['expectedReturn'] = "25"
-    optimizeSearchResults.append(eachStockresult)
     stocks = [["ADS","Alliance Data Systems"],
      ["GILD","Gilead Sciences"],
      ["AAPL","Apple"],
@@ -396,17 +385,44 @@ def portfolio_optimize(request):
      ["BK","Bank of New York Mellon"],
      ["AVP","Avon Products Inc."],
      ["STT","State Street Corporation"]]
+    if request.user.is_authenticated():
+        username = request.user.username
+        userid = request.user.id
+    optimizeSearchResults = []
+    eachStockresult = {}
+    # eachStockresult['months'] = "12"
+    # eachStockresult['market'] = "S"
+    eachStockresult['investingAmount'] = str(request.POST['investing_amount'])
+    eachStockresult['numStocks'] = str(request.POST['number_of_shares'])
+    eachStockresult['expectedRisk'] = str(request.POST['expRisk'])
+    # eachStockresult['expectedReturn'] = "25"
+    optimizeSearchResults.append(eachStockresult)
     shuffle(stocks)
-    numshares = int(len(stocks))
+    numshares = int(request.POST['number_of_shares'])
     context_dict = {}
     context_dict['stock_invest'] = float(25000)/float(15.00)
-    context_dict['investingAmount'] = ('25,000')
-    context_dict['market'] = U"S Markets"
-    context_dict['Months'] = "12"
-    context_dict['Years'] = "12"
-    context_dict['expectedReturn'] = 25
-    context_dict['expectedRisk'] = "20"
+    context_dict['investingAmount'] =  str(request.POST['investing_amount'])
+    # context_dict['market'] = U"S Markets"
+    # context_dict['Months'] = "12"
+    context_dict['numStocks'] = str(request.POST['number_of_shares'])
+#brokerage account
+    context_dict['expectedRisk'] = str(request.POST['expRisk'])
+    context_dict['brokerage'] = str(request.POST['bb_account'])
+#retirement
+    context_dict['retirement'] = str(request.POST['retirement_account'])
+#age
+    context_dict['Years'] = str(request.POST['Years'])
+    # context_dict['expectedReturn'] = str(request.POST[''])
+    context_dict['expectedRisk'] = str(request.POST['expRisk'])
+#household salary
+    context_dict['household_salary'] = str(request.POST['salary'])
+#household pension
+    context_dict['household_pension'] = str(request.POST['hh_pension'])
+#ss_income
+    context_dict['ss_income'] = str(request.POST['ss_income'])
+    
     time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+#portname
     try: 
         if request.POST['portname'] == "":
             context_dict['portname'] = "Test Portfolio"
@@ -414,12 +430,32 @@ def portfolio_optimize(request):
             context_dict['portname'] = request.POST['portname']
     except:
         context_dict['portname'] = "Test Portfolio"
-        time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    client_name = "samirvasavada1112"
-    description = "Long Term Investment"
+    time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+#clientname
+    try: 
+        if request.POST['clientname'] == "":
+            context_dict['clientname'] = "Your Portfolio"
+            client_name = "Your Portfolio"
+        else: 
+            context_dict['clientname'] = request.POST['clientname']
+            client_name = str(request.POST['clientname'])
+    except:
+        context_dict['clientname'] = "Your Portfolio"
+        client_name = "Your Portfolio"
+#description
+    try: 
+        if request.POST['description'] == "":
+            context_dict['description'] = "N/A"
+            description = "N/A"
+        else: 
+            context_dict['description'] = request.POST['description']
+            description = request.POST['description']
+    except:
+        context_dict['description'] = "N/A"    
+        description = "N/A"
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO `portal_portfolio` (name,created_date,update_date,description,risk,timeframe,control_market,investment,user_id, client_name) VALUES "
-                    "('" + str(context_dict['portname']) + "','" + str(time) + "','" + str(time) + "','" + str(description) + "','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['Years']) + "','" + str('S') + "','" + str(25000) + "','" + str(userid) + "','" + str(client_name) + "')")
+    cursor.execute("INSERT INTO `portal_portfolio` (investing_amount, num_stocks, expected_risk, brokerage_account, retirement_account, age, household_salary, household_income, ss_income, name, created_date, update_date, client_name, description, user_id) VALUES "
+                    "('" + str(context_dict['investingAmount']) + "','" + str(context_dict['numStocks']) + "','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['brokerage']) + "','" + str(context_dict['retirement']) + "','" + str(context_dict['Years']) + "','" + str(context_dict['household_salary']) + "','" + str(context_dict['household_pension']) + "','" + str(context_dict['ss_income']) + "','" + str(context_dict['portname']) + "',now(),now(),'" + str(context_dict['clientname']) + "','" + str(context_dict['description']) + "','" + str(userid) + "')")
     cursor.execute("SELECT LAST_INSERT_ID();")
     show_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
     context_dict['portfolio_id']  = show_id
@@ -435,18 +471,22 @@ def portfolio_optimize(request):
             ranInt = randint(1,25)
         randomarr.append(ranInt)
         randomtotal += ranInt
+    allocationArr = np.random.dirichlet(np.ones(numshares),size=100)
+    count=0
     for num in range(numshares):
         ticker = str(stocks[num][0])
         companyname = str(stocks[num][1])
         ticker = ticker[0:]
         randomfloat = str(randint(5,89)) + "." + str(randint(0,99))
+        multipler = str(randint(0,2)) + "." + str(randint(0,99))
+        randomfloatTwo = float(randomfloat) * float(multipler)
         randomshares = str(randint(15,15000))
-        print(companyname)
-        randomallocation = str(float(randomarr[num])/float(randomtotal)*100)
+        randomallocation = str(allocationArr[count]*100)[1:10]
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO `portal_stock` (created_date, update_date, ticker, show_id, buy_date, current_price, initial_price, number_of_shares, sell_date, company_name, allocation) VALUES"
-                        "('2016-07-09 12:12:12','2016-07-09 12:12:12','" + str(ticker) + "','" + str(show_id) + "','2016-07-29','" + str(1) + "','" + str(1) + "','2','2016-09-01','" + str(companyname) + "','" + str(1) + "')")
+        cursor.execute("INSERT INTO `portal_stock` (created_date, update_date, ticker, show_id, buy_date, current_price, initial_price, number_of_shares, sell_date, company_name, allocation)  VALUES "
+                        "('2016-07-09 12:12:12','2016-07-09 12:12:12','" + str(ticker) + "','" + str(show_id) + "','2016-07-29','" + str(randomfloat) + "','" + str(randomfloatTwo) + "','" + str(randomshares) + "','2016-09-01','" + str(companyname) + "','" + randomallocation + "')")
         newstocks.append({'ticker':stocks[num][0],'cname':stocks[num][1],'price':randomfloat,'shares':randomshares,'allocation':randomallocation})
+        count += 1
     # new_investment = request.POST['investingAmount']
     # if request.POST['Market'] == "S&P500":
     #     new_market = "S"

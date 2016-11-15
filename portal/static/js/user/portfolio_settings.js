@@ -1,8 +1,10 @@
 
-$("a").click(function() {
+$("a#wizard-next-3").click(function() {
+
   var portname = $("#portname")[0].value
-  console.log(portname)
-  $("#xname")[0].innerText = portname
+  var investing_amount = $("#investing_amount")[0].value
+  $("#xname")[0].innerText = portname + " - for " + $("#clientname")[0].value
+  $("#xinvest")[0].innerText = investing_amount
 })
 
   $("div#vise").hover(function() {
@@ -19,7 +21,26 @@ $("a").click(function() {
     $("li#selectedOption")[0].innerHTML = "<li> This option is a smart choice for beginners with no specific preference for portfolio settings.<br> Templated portfolios provide a standard base foundation and introduction toward investing with Vise.<li>"
   })    
 
-function loadDummyData() {
+function loadDummyData() 
+{
+    if (!($("#investing_amount")[0].value)) {
+      $("#investing_amount")[0].value = "250000"
+    }
+    if (!($("#bb_account")[0].value)) {
+      $("#bb_account")[0].value = "250000"
+    }
+      if (!($("#retirement_account")[0].value)) {
+      $("#retirement_account")[0].value = "250000"
+    }
+      if (!($("#salary")[0].value)) {
+      $("#salary")[0].value = "250000"
+    }
+    if (!($("#hh_pension")[0].value)) {
+      $("#hh_pension")[0].value = "250000"
+    }
+    if (!($("#ss_income")[0].value)) {
+      $("#ss_income")[0].value = "250000"
+    }
     setTimeout(function(){ document.forms["wizard"].submit(); }, 2000);
 }
 $("button").click(function(e) {

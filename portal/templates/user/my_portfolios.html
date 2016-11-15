@@ -76,7 +76,7 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
   {% for portfolio in all_portfolios %}
     {% if portfolio.stocks %} 
     {% for stock in portfolio.stocks %}                           
-            <div class="col-md-3" style="margin-top:10px">
+            <div class="col-md-3" style="padding-top:10px;">
                                             <div class="block">
                                                 <div class="header">
                                                    <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.ticker}}</h2>       
@@ -154,7 +154,7 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                                                     <tbody>
                                                         <tr>
                                                             <td>Value</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">${{portfolio.investment}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">${{portfolio.investing_amount}}</h2>  </td>
                                                         </tr>
      <tr>
                                                             <td>Update Date</td>

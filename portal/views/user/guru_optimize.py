@@ -636,8 +636,44 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
 
         stocks = qu_EOD_trsf('EOD',list_stocks=portfolio['symbol'],field='.11')
         # print(stocks)
-        monthly_returns = quandl.get(stocks,start_date=start, end_date=end,collapse='monthly',transform='rdiff')
-
+        # monthly_returns = quandl.get(stocks,start_date=start, end_date=end,collapse='monthly',transform='rdiff')
+        closearr = []
+        headarr = []
+        cursor = connection.cursor()
+        for item in stocks:
+          print(item)
+          itemstr = item.replace("EOD","")
+          itemstr = itemstr.replace(".11","")
+          itemstr = itemstr.replace("/","")
+          table_name = "stock_" + itemstr
+          print(table_name)
+          print(time)
+          headarr.append("EOD/" + itemstr + " - Adj_Close")
+          try:
+            cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date BETWEEN '" + str(start) + "' AND '" + str(end) + "'")
+            bool = 0
+            for a in dictfetchall(cursor):
+                closearr.append(a['Adj_Close'])
+                bool = 1
+            if bool == 0:
+              closearr.append(0.1)
+          except:
+            closearr.append(0.1)
+            print("no table")
+        monthly_returns = {}
+        count = 0
+        for info in headarr:
+          try:
+            value = [float(closearr[int(count)])]
+            monthly_returns[info] = value
+            count += 1 
+          except:
+            count += 1 
+            print("err")
+        date_ = [time[:10]]
+        print(type(time[:10]))
+        monthly_returns = pd.DataFrame(monthly_returns, index=date_)
+        monthly_returns.index.name = "Date"
         # print(len(monthly_returns))
         portfolio['return'] = np.round(((monthly_returns +1).prod(axis=0)**(12/len(monthly_returns)) -1),3).T.values
 
@@ -646,7 +682,7 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
 
         df1 = {'PortfolioID' : [portfolio['PortfolioID'].loc[0]],
                'Snapshot_date' : end,
-               'Start_year' : monthly_returns.iloc[0].name.date().year,
+               'Start_year' : monthly_returns.iloc[0].name[0:5],
                'End_year' : end.year,
                'Portfolio_return' : portfolio_return}
 
