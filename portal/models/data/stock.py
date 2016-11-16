@@ -11,7 +11,7 @@ class Stock(BaseModel):
     sell_date = models.DateField(null=True)
     current_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     initial_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    allocation = models.DecimalField(max_digits=11, decimal_places=6, default=0)
+    allocation = models.TextField()
     number_of_shares = models.IntegerField(default=0)
 
     class Meta:

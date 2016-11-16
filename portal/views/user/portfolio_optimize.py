@@ -478,10 +478,13 @@ def portfolio_optimize(request):
         companyname = str(stocks[num][1])
         ticker = ticker[0:]
         randomfloat = str(randint(5,89)) + "." + str(randint(0,99))
-        multipler = str(randint(0,2)) + "." + str(randint(0,99))
+        if randint(1,2) == 1:
+            multipler = "0." + str(randint(6,9))
+        else:
+            multipler = str(1) + "." + str(randint(0,3))
         randomfloatTwo = float(randomfloat) * float(multipler)
         randomshares = str(randint(15,15000))
-        randomallocation = str(allocationArr[count]*100)[1:10]
+        randomallocation = str(allocationArr[count]*100)[1:13]
         cursor = connection.cursor()
         cursor.execute("INSERT INTO `portal_stock` (created_date, update_date, ticker, show_id, buy_date, current_price, initial_price, number_of_shares, sell_date, company_name, allocation)  VALUES "
                         "('2016-07-09 12:12:12','2016-07-09 12:12:12','" + str(ticker) + "','" + str(show_id) + "','2016-07-29','" + str(randomfloat) + "','" + str(randomfloatTwo) + "','" + str(randomshares) + "','2016-09-01','" + str(companyname) + "','" + randomallocation + "')")

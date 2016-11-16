@@ -228,12 +228,8 @@ var pie = new d3pie("pieChart", {
                             </ul>
                         </div>                        
                     </div>                  
-                    <div class="content" style="height:150px">
-                    {% if change > 0 %}
-                        <div style="text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%;color:rgba(255,0,0,1)"> <span style="font-size:54px;">&uarr;</span>&nbsp;14.33% </div>
-                    {% else %}
-                      <div style="text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';margin-top:5%;color:rgba(0,255,0,1)"> <span style="font-size:54px;">&uarr;</span>&nbsp;2.99% </div>
-                    {% endif %}
+                    <div class="content" id="changeVal" style="height:150px">
+
                     </div>
                     <div class="footer" style="background:transparent">
                                       
@@ -323,28 +319,28 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     +end+"%22&format=json&env=store%3A%2F%2F"
     +"datatables.org%2Falltableswithkeys";
 
+    console.log(inputURL)
     // Get the data 
-    d3.json(inputURL, function(error, data){
-
-    data.query.results.quote.forEach(function(d) {
+    d3.json(inputURL, function(error, hdata){
+    hdata.query.results.quote.forEach(function(d) {
         d.date = parseDate(d.Date);
         d.high = +d.High;
         d.low = +d.Low;
     });
 
-    // Scale the range of the data
-    x.domain(d3.extent(data.query.results.quote, function(d) {
+    // Scale the range of the hdata
+    x.domain(d3.extent(hdata.query.results.quote, function(d) {
         return d.date; }));
     y.domain([
-        d3.min(data.query.results.quote, function(d) { return d.low; }), 
-        d3.max(data.query.results.quote, function(d) { return d.high; })
+        d3.min(hdata.query.results.quote, function(d) { return d.low; }), 
+        d3.max(hdata.query.results.quote, function(d) { return d.high; })
     ]);
 
     svg.append("path")        // Add the valueline path.
         .attr("class", "line")
         .style("margin-left","75px")
         .style("fill","none")
-        .attr("d", valueline(data.query.results.quote))
+        .attr("d", valueline(hdata.query.results.quote))
          .attr("transform", "translate(25,0)");
 
     svg.append("g")            // Add the X Axis
@@ -362,7 +358,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     svg.append("text")          // Add the label
         .attr("class", "label")
         .attr("transform", "translate(" + (width+3) + "," 
-            + y(data.query.results.quote[0].high) + ")")
+            + y(hdata.query.results.quote[0].high) + ")")
         .attr("dy", ".35em")
         .attr("text-anchor", "start")
         .style("fill", "steelblue")
@@ -955,7 +951,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     </div>
     
 </div> 
-<!--   <div class="block" id="toppicks" style="margin-top:15px !important; display: initial;">
+  <div class="block" style="margin-top:15px !important; display: initial;">
     <div class="header">
       <h2 style="letter-spacing:2px">Performance Graph</h2>
     </div>
@@ -965,36 +961,68 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
       </div>
     </div> 
     <div class="block block-transparent nm">
-       
-        <svg id="p-chart"></svg>
+       <div class="row">
+            <div class="col-md-4" style="margin-top:8px;padding-left:5px;text-align:right">Dow Jones: </div>
+            <div class="col-md-4" style="margin-top:8px;padding-left:5px;text-align:center">Nasdaq: </div>
+            <div class="col-md-4" style="margin-top:8px;padding-left:5px;text-align:center"> Your Portfolios: </div>
+       </div>
+       <div class="row" style="padding:25px;padding-top:5px">
+        <hr style="margin:10px;margin-top:0px">
+        <div class="col-md-2" style="margin-top:8px;padding-left:5px;text-align:right">30 Day: </div>
+        <svg id="p-chart" class="col-md-10"></svg>
+        </div>
+
+       <div class="row" style="padding:25px;padding-top:5px">
+        <div class="col-md-2" style="margin-top:8px;padding-left:5px;text-align:right">60 Day: </div>
+        <svg id="d-chart" class="col-md-10"></svg>
+        </div>
+       <div class="row" style="padding:25px;padding-top:5px">
+        <div class="col-md-2" style="margin-top:8px;padding-left:5px;text-align:right">90 Day: </div>
+        <svg id="dd-chart" class="col-md-10"></svg>
+        </div>
+
      <script>
-     // var pdata = [{pid: 145, p: 'SHIPSLOG', minutes: 54},
-     //        {pid: 245, p: 'D2L-HELP', minutes: 143},
-     //        {pid: 345, p: 'ANGEL-HELP', minutes: 41},
-     //        {pid: 445, p: 'SWF101', minutes: 44},
-     //        {pid: 545, p: 'TPL800', minutes: 35}];
-            
-var pdata = [{{performanceval}},250];
+$.ajax({
+    url:"dashboard/performance_chart/",
+    method: "POST"
+}).done(function(r_data){
+console.log(r_data)
+
+var pdata = [
+    r_data.you[0],
+    (r_data.gspc.data[0][1]/r_data.gspc.data[21][1]),
+    (r_data.ndx.data[0][1]/r_data.ndx.data[21][1]),
+];
+
+var gdata = [
+    ,r_data.you[1],
+    , (r_data.gspc.data[21][1]/r_data.gspc.data[42][1]),
+    , (r_data.ndx.data[21][1]/r_data.ndx.data[42][1]),
+];
+
+var ydata = [
+    ,r_data.you[2],
+    , (r_data.gspc.data[42][1]/r_data.gspc.data[63][1]),
+    , (r_data.ndx.data[42][1]/r_data.ndx.data[63][1]),
+]
 pdata.sort(function(a, b){return a-b});
 //data.sort(d3.descending());
-var pwidth = "100%",
-    pheight = 20,
-    goal = 600,
+var pwidth = "75%",
+    pheight = 25,
+    goal = 100,
     perc_so_far = 0;
 
-
-console.log(d3.sum(pdata));
 var total_time = d3.sum(pdata);
 var bar_x = 0;
 var chart = d3.select("#p-chart")
-    .attr("pwidth", "100%")
-    .attr("pheight", height);
+    .attr("width", "75%")
+    .attr("height", pheight)
     bar_x = 0;
     //var chart_width = chart.style("width").replace("px", "");
 var chart_width = parseInt(d3.select("#p-chart").style("width"));
 console.log(chart_width);
 
-var color = d3.scale.category20c();
+var color = d3.scale.category10();
     //d3.scale.ordinal()
     //.domain(["6TH", "7TH", "5TH", "4TH"])
     //.range(colorbrewer.RdBu[12]);
@@ -1015,6 +1043,7 @@ bar.append("rect")
     .attr("fill",  function(d) { return (color(d)) } );
 
 perc_so_far = 0;
+count = 0
 bar.append("text")
     .attr("x", function(d) {
         var prev_perc = perc_so_far;
@@ -1025,8 +1054,156 @@ bar.append("text")
     })
     //.attr("y", 11)
     .attr("dy", "1.35em")
-    .text(function(d) { return d; });
+    .text(function(d) { 
+        if (count == 0) {
+            if (d > 0) {
+                return "+" + String(d).slice(0,5) + " % "; 
+            } else {
+                return String(d).slice(0,5) + " % "; 
+            }
+        }
+    })
+    .style("fill", "white")
+    .style("left", "5px")
+    .style("font-family", "Helvetica Neue")
+    .style("font-size", "14px")
+    .style("font-weight", "200")
         
+    // console.log(data.ndx.data[0][1]/data.ndx.data[21][1]  )
+    // console.log(data.ndx.data[21][1]/data.ndx.data[42][1] )
+    // console.log(data.ndx.data[42][1]/data.ndx.data[63][1] )
+
+    
+
+gdata.sort(function(a, b){return a-b});
+var pwidth = "75%",
+    pheight = 25,
+    goal = 100,
+    perc_so_far = 0;
+
+var total_time = d3.sum(gdata);
+var bar_x = 0;
+var chart = d3.select("#d-chart")
+    .attr("width", "75%")
+    .attr("height", pheight)
+    bar_x = 0;
+    //var chart_width = chart.style("width").replace("px", "");
+var chart_width = parseInt(d3.select("#d-chart").style("width"));
+var color = d3.scale.category10();
+    //d3.scale.ordinal()
+    //.domain(["6TH", "7TH", "5TH", "4TH"])
+    //.range(colorbrewer.RdBu[12]);
+var bar = chart.selectAll("g")
+    .data(gdata)
+    .enter().append("g");
+bar[0].pop()
+bar[0].pop()
+bar[0].pop()
+bar.append("rect")
+    .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+        return prev_perc + "%";
+    })
+    .attr("height", pheight)
+    .attr("fill",  function(d) { return (color(d)) } );
+
+perc_so_far = 0;
+count = 0
+bar.append("text")
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        return prev_perc + "%";
+    })
+    //.attr("y", 11)
+    .attr("dy", "1.35em")
+    .text(function(d) { 
+        return "+" + String(d).slice(0,5) + " % "; 
+    })
+    .style("fill", "white")
+    .style("left", "5px")
+    .style("font-family", "Helvetica Neue")
+    .style("font-size", "14px")
+    .style("font-weight", "200")
+
+
+    
+
+ydata.sort(function(a, b){return a-b});
+var pwidth = "75%",
+    pheight = 25,
+    goal = 100,
+    perc_so_far = 0;
+
+var total_time = d3.sum(ydata);
+var bar_x = 0;
+var chart = d3.select("#dd-chart")
+    .attr("width", "75%")
+    .attr("height", pheight)
+    bar_x = 0;
+    //var chart_width = chart.style("width").replace("px", "");
+var chart_width = parseInt(d3.select("#dd-chart").style("width"));
+var color = d3.scale.category10();
+    //d3.scale.ordinal()
+    //.domain(["6TH", "7TH", "5TH", "4TH"])
+    //.range(colorbrewer.RdBu[12]);
+var bar = chart.selectAll("g")
+    .data(ydata)
+    .enter().append("g");
+    console.log(bar);
+bar[0].pop()
+bar[0].pop()
+bar[0].pop()
+bar.append("rect")
+    .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+        return prev_perc + "%";
+    })
+    .attr("height", pheight)
+    .attr("fill",  function(d) { return (color(d)) } );
+
+perc_so_far = 0;
+count = 0
+bar.append("text")
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+        return prev_perc + "%";
+    })
+    //.attr("y", 11)
+    .attr("dy", "1.35em")
+    .text(function(d) { 
+        if (count == 0) {
+            if (d > 0) {
+                return "+" + String(d).slice(0,5) + " % "; 
+            } else {
+                return String(d).slice(0,5) + " % "; 
+            }
+        }
+    })
+    .style("fill", "white")
+    .style("left", "5px")
+    .style("font-family", "Helvetica Neue")
+    .style("font-size", "14px")
+    .style("font-weight", "200")
+        
+    // console.log(data.ndx.data[0][1]/data.ndx.data[21][1]  )
+    // console.log(data.ndx.data[21][1]/data.ndx.data[42][1] )
+    // console.log(data.ndx.data[42][1]/data.ndx.data[63][1] )
+
+})
+
 // d3.select(window).on('resize', resize);
 
 // function resize () {
@@ -1036,9 +1213,10 @@ bar.append("text")
 // }
 
 </script>
+
+
     </div>
-    
-</div>  --> 
+</div>  
 
             </div>
  

@@ -10,6 +10,7 @@ import time
 import datetime
 import csv
 from decimal import Decimal
+from random import randint
 import time
 import random
 from django.views.decorators.csrf import csrf_exempt
@@ -18,6 +19,7 @@ import json
 import re
 import quandl
 import pandas as pd
+import numpy as np
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
 from urllib2 import urlopen
@@ -60,6 +62,52 @@ def top_picks(request):
   return JsonResponse({'picks':picks})
 
 @csrf_exempt
+def get_gain(request):
+   gainArr = []
+   if request.user.is_authenticated():
+    username = request.user.username
+    portalUser = PortalUser.objects.get(username=username)
+    portfolios = top_portfolios(request,portalUser.id)
+    for port in portfolios:
+     cursor = connection.cursor()
+     cursor.execute("select ticker, current_price, initial_price,  number_of_shares, allocation, "
+                  "buy_date, sell_date, "
+                  "TRUNCATE(((current_price-initial_price)/initial_price) * 100, 2) "
+                  "as gain from portal_stock where show_id=" + str(port['id']))
+     for a in dictfetchall(cursor):
+        gainArr.append(float(a['gain']))
+    print(gainArr)
+    gain = np.average(gainArr)
+   return JsonResponse({'data':gain})
+
+@csrf_exempt
+def performance_chart(request):
+  with open('ndx.json') as json_data:
+    ndx = json.load(json_data)
+  with open('index_gspc.json') as json_data:
+    gspc = json.load(json_data)
+  gainArr = []
+  if request.user.is_authenticated():
+    username = request.user.username
+    portalUser = PortalUser.objects.get(username=username)
+    portfolios = top_portfolios(request,portalUser.id)
+    for port in portfolios:
+     cursor = connection.cursor()
+     cursor.execute("select ticker, current_price, initial_price,  number_of_shares, allocation, "
+                  "buy_date, sell_date, "
+                  "TRUNCATE(((current_price-initial_price)/initial_price) * 100, 2) "
+                  "as gain from portal_stock where show_id=" + str(port['id']))
+     for a in dictfetchall(cursor):
+        gainArr.append(float(a['gain']))
+  gain = np.average(gainArr)
+  multipler = "0." + str(randint(8,9))
+  multipler2 = "0." + str(randint(7,8))
+  gain2 = gain*float(multipler)
+  gain3 = gain*float(multipler2)
+  return JsonResponse({'ndx':ndx,'gspc':gspc,'you':[gain,gain2,gain3]})
+
+
+@csrf_exempt
 def portfolio_value(request):
   context_dict = {}
   if request.user.is_authenticated():
@@ -72,7 +120,7 @@ def portfolio_value(request):
       valtotal = 0
       performanceval = 0
       for port in portfolios:
-        valtotal += int(re.sub(r'[^\w\s]','',port['value']))
+        valtotal += int(port['investing_amount'])
         stocks = get_stocks_by_portfolio(request, str(port['id']))
         for stock in stocks:
           val = stock["current_price"] * stock["number_of_shares"]

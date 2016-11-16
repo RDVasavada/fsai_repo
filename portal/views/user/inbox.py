@@ -7,7 +7,6 @@ from django.db import connection
 from portal.models.user.portal_user import PortalUser
 import re
 import requests
-from time import gmtime, strftime
 from portal.models.data.portfolio import Portfolio
 import time
 from django.http import JsonResponse

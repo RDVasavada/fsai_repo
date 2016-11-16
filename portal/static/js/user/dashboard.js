@@ -8,7 +8,7 @@ $("#statusbar_2").show()
 
 $(".statusbar-text")[0].innerText = "Loading your market news . . ."
 $.ajax({
-    url:"dashboard/marketnews/",
+    url:"/user/dashboard/marketnews/",
     method: "POST"
 }).done(function(data){
     data.news.forEach(function(x) {
@@ -26,7 +26,7 @@ $.ajax({
 })
     $(".statusbar-text")[0].innerText = "Loading your sentiment updates . . ."
 $.ajax({
-    url:"dashboard/sentiment/",
+    url:"/user/dashboard/sentiment/",
     method: "POST"
 }).done(function(data){
     data.sentiment.forEach(function(x) {
@@ -54,12 +54,11 @@ $.ajax({
 })
         $(".statusbar-text")[0].innerText = "Loading your Top Picks . . ."
 $.ajax({
-    url:"dashboard/top_picks/",
+    url:"/user/dashboard/top_picks/",
     method: "POST"
 }).done(function(data){
-    console.log(data)
+    // console.log(data)
     data.picks.forEach(function(x) {
-        console.log(x)
         $("#pick_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content' ><div class='item-line-title'>Expected Yield :"+x.yield+"<div class='item-line-date pull-right'>Buy on "+x['13f_date']+"</div></div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.symbol+":"+x.exchange+" - "+x.price+"$</div></div></div>")
     })
 }).fail(function(data) {
@@ -67,28 +66,81 @@ $.ajax({
         url:"top_picks/",
         method: "POST"
     }).done(function(data){
-        console.log(data)
+        // console.log(data)
         data.picks.forEach(function(x) {
-            console.log(x)
-            $("#pick_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content' ><div class='item-line-title'>Expected Yield :"+x.yield+"<div class='item-line-date pull-right'>Buy on "+x['13f_date']+"</div></div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.symbol+":"+x.exchange+" - "+x.price+"$</div></div></div>")
+            $("#pick_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content' ><div class='item-line-title'>Expected Yield :"+x.yield+"<div class='item-line-date pull-right'>Buy on "+x['13f_date']+"</div></div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.symbol+":"+x.exchange+" - $"+x.price+"</div></div></div>")
         })
     })
 })
 $.ajax({
-    url:"dashboard/portfolio_value/",
+    url:"/user/dashboard/portfolio_value/",
     method: "POST"
 }).done(function(data){
-    console.log(data)
+    // console.log(data)
     $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
 }).fail(function(data) {
     $.ajax({
     url:"portfolio_value/",
     method: "POST"
     }).done(function(data){
-        console.log(data)
+        // console.log(data)
         $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
     })
 })
+$.ajax({
+    url:"/user/dashboard/get_gain/",
+    method: "POST"
+}).done(function(data){
+    var change = String(data.data).slice(0,3)
+    if (Number(change) > 0) {
+        $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(0,255,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
+    } else {
+        $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(255,0,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
+    }
+    console.log(change)
+    // data.news.forEach(function(x) {
+    //     $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
+    // })
+}).fail(function() {
+    $.ajax({
+    url:"/user/get_gain/",
+    method: "POST"
+    }).done(function(data){
+        data.news.forEach(function(x) {
+            $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
+        })
+    })
+})
+// $.ajax({
+//     url:"performance_chart/",
+//     method: "POST"
+// }).done(function(data){
+//     // var change = String(data.data).slice(0,3)
+//     // if (Number(change) > 0) {
+//     //     $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(0,255,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
+//     // } else {
+//     //     $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(255,0,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
+//     // }
+//     console.log(data.dj.data[0][1]/data.dj.data[21][1] )
+//     console.log(data.dj.data[21][1]/data.dj.data[42][1] )
+//     console.log(data.dj.data[42][1]/data.dj.data[63][1] )
+
+//     console.log(data.ndx.data[0][1]/data.ndx.data[21][1]  )
+//     console.log(data.ndx.data[21][1]/data.ndx.data[42][1] )
+//     console.log(data.ndx.data[42][1]/data.ndx.data[63][1] )
+//     // data.news.forEach(function(x) {
+//     //     $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
+//     // })
+// }).fail(function() {
+//     $.ajax({
+//     url:"dashboard/performance_chart/",
+//     method: "POST"
+//     }).done(function(data){
+//         data.news.forEach(function(x) {
+//             $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
+//         })
+//     })
+// })
 $("#statusbar_2").hide()
 
     

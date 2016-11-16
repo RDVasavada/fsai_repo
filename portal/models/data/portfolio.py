@@ -46,7 +46,7 @@ class Portfolio(BaseModel):
         app_label = 'portal'
 
 
-#mysql -u root -p fsai -e "drop table portal_portfolio"
+# mysql -u root -p fsai -e "drop table portal_portfolio"
 
 
 

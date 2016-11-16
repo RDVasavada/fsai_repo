@@ -43,7 +43,7 @@ if($(".scroll-stock").length > 0){
 $(".scroll-stock").height('90vh').mCustomScrollbar();
 }
 if($(".scroll-pail").length > 0){      
-$(".scroll-pail").height('25vh').mCustomScrollbar();
+$(".scroll-pail").height('40vh').mCustomScrollbar();
 }
 
    if($(".summary-scroll").length > 0){                
@@ -54,7 +54,7 @@ $(".scroll-pail").height('25vh').mCustomScrollbar();
     }            
                
     if($(".scroll-pail").length > 0){                
-        $(".scroll-pail").height('calc(70vh  - 318px)').mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
+        $(".scroll-pail").height('calc(70vh)').mCustomScrollbar({advanced: {autoScrollOnFocus: false}});
     }            
     /* eof scroll */
     

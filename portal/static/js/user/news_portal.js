@@ -1,4 +1,4 @@
-$(".scroll-pail").height('40vh').mCustomScrollbar()
+$(".scroll-pail").height('60vh').mCustomScrollbar()
 
 var d3;
 var margin = {top: 25, right: 25, bottom: 50, left: 50},

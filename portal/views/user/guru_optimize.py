@@ -58,7 +58,7 @@ def guru_optimize(request):
 
 
   start = '2006-01-01'
-  end = (datetime.date.today()-BDay(1))
+  end = (datetime.date.today()-BDay(4))
   snapshots =  pd.DatetimeIndex(start=start,end=end, freq=Screen_freq).tolist()
   snapshots.append(end)
   p_fundamentals_exist = fundamentals_exist = 0                 
@@ -78,6 +78,7 @@ def guru_optimize(request):
   # Add current prices. If no price available, exclude stock.
   stocks = qu_EOD_trsf('EOD',portfolio_imported['symbol'],field='.11')
   time = str(end)
+  print(time)
   closearr = []
   headarr = []
   for item in stocks:
@@ -128,6 +129,7 @@ def guru_optimize(request):
   portfolio_imported['Price_current'] = prices.iloc[-1].T.values
   portfolio_imported = portfolio_imported.dropna(subset=['Price_current']) .reset_index(drop=True) 
   stocks = qu_EOD_trsf('EOD',portfolio_imported['symbol'],field='.11')
+
   time = str(snapshots[0])
   closearr = []
   headarr = []
@@ -165,10 +167,11 @@ def guru_optimize(request):
   #     print("_____")
   #     print("THIS IS QUANDL REQUEST")
   #     print(stocks)
-  #     print(snapshots[0] - BDay(4))
+  #     print(snapshots[0]  
   #     print(snapshots[0])
   #     print("_____")
   #     print("_____")
+  print(prices)
   portfolio_imported['Price'] = prices.iloc[-1].T.values
   portfolio_imported = portfolio_imported.dropna(subset=['Price']) .reset_index(drop=True)
   portfolio = portfolio_imported[['PortfolioID','symbol','Price','weight_orig_pct']].copy()

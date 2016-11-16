@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vizuly - Scatter Plot</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto|Raleway:600,400,200' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="styles/examples.css">
+    <link rel="stylesheet" href="../lib/styles/vizuly.css">
+    <link rel="stylesheet" href="../lib/styles/vizuly_scatter.css">
+
+    <!-- Test Index Files -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../lib/styles/cssmenu.css">
+    <script type="text/javascript" src="../lib/jquery-2.1.1.min.js"></script>
+    <script src="../lib/cssmenu.js"></script>
+
+    <!-- D3.js ... of course! -->
+    <script src="lib/d3.min.js"></script>
+
+    <!-- debug source scripts: start --> <!--
+    <script src="src/namespace/namespace.js"></script>
+
+    <script src="src/theme/_theme.js"></script>
+    <script src="src/theme/scatter.js"></script>
+
+    <script src="src/core/viz.js"></script>
+    <script src="src/core/util.js"></script>
+    <script src="src/core/color.js"></script>
+    <script src="src/core/format.js"></script>
+    <script src="src/svg/_svg.js"></script>
+    <script src="src/svg/gradient.js"></script>
+    <script src="src/svg/filter.js"></script>
+    <script src="src/component/_component.js"></script>
+    <script src="src/component/scatter.js"></script>
+
+    --> <!-- debug source scripts: end -->
+
+    <script src="lib/vizuly_core.min.js"></script>
+	<script src="lib/vizuly_scatter.min.js"></script>
+
+
+    <script src="scatter_test.js"></script>
+    <script src="lib/theme_showreel.js"></script>
+
+</head>
+
+<body>
+
+
+<div id='cssmenu'>
+    <ul class="main-menu">
+        <li class='active'>
+            <a><span>Display</span><br><span class="setting"></span></a>
+            <ul class="options" callback="changeSize">
+                <li id="currentDisplay" class="selected"><a></a></li>
+                <li item_value="1000,1000"><a>1000px - 1000px</a></li>
+                <li item_value="800,600"><a>800px - 600px</a></li>
+                <li item_value="375,667"><a>375px - 667px</a></li>
+                <li item_value="320,568"><a>320px - 568px</a></li>
+            </ul>
+        </li>
+        <li class='active'><a><span>Theme </span><br><span class="setting"></span></a>
+            <ul class="options" callback="changeSkin">
+                <li item_value="Fire"><a>Fire</a></li>
+                <li item_value="Sunset"><a>Sunset</a></li>
+                <li item_value="Neon"><a>Neon</a></li>
+                <li item_value="Ocean" class="selected"><a>Ocean</a></li>
+            </ul>
+        </li>
+        <li class='active'><a><span>Radius Scale </span><br><span class="setting"></span></a>
+            <ul class="options" callback="changeRScale">
+                <li item_value="1"><a>Linear</a></li>
+                <li item_value="3" class="selected"><a>Log</a></li>
+            </ul>
+        </li>
+        <li class='active'><a><span>Y Scale </span><br><span class="setting"></span></a>
+            <ul class="options" callback="changeYScale">
+                <li item_value="1"><a>Linear</a></li>
+                <li item_value="3" class="selected"><a>Log</a></li>
+            </ul>
+        </li>
+        <li class='active'><a><span>Data Source</span><br><span class="setting"></span></a>
+            <ul class="options" callback="changeData">
+                <li item_value="static" class="selected"><a>Sample Data</a></li>
+                <li id="liveDataOption" item_value="live" disabled><a>Live Data Loading ...</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="container" style="width:100%">
+     <div id="viz_container" class="theme_default z-depth-3"></div>
+    <div style="margin-left:0px; height:0px; width:90%; margin:0px auto; margin-top:20px; font-family:Raleway; font-size:14px;">
+        This data looks at the spending made by Super PAC's on behalf of political candidates.  The size and height of a circle represents
+        how much was spent on a specific candidate at a given point in time.   You can move your mouse over each circle to see the date, candidate, and super pac of the expenditure.
+        See if you can tell who is spending the most!
+        <br><br>
+        There are two data sets.  The first one is a sample data set being served from our servers at vizuly.io.   The second one is live data from
+        <a href="http://sunlightfoundation.com" target="_blank" class="vizuly-link">The Sunlight Foundation.</a>.   Sometimes the live data does not return a full data set and you will see
+        less circles.
+        <br><br>
+        Designed By:  <a href="http://www.brightpointinc.com">BrightPoint Consulting, Inc.</a>
+    </div>
+
+</div>
+
+<script>
+    //Once the document is ready we set javascript and page settings
+    var screenWidth;
+    var screenHeight;
+
+    $(document).ready(function () {
+
+        var rect;
+        if (self==top) {
+            rect = document.body.getBoundingClientRect();
+        }
+        else {
+            rect = document.body.getBoundingClientRect();
+        }
+
+        //Set display size based on window size.
+        screenWidth = (rect.width < 960) ? Math.round(rect.width*.95) : Math.round((rect.width - 210) *.95);
+        screenHeight = 600;
+
+        d3.select("#currentDisplay")
+                .attr("item_value", (String(screenWidth) + "," + String(screenHeight)))
+                .attr("class", "selected")
+                .html("<a>" + screenWidth + "px - " + screenHeight + "px</a>");
+
+        $("#cssmenu").menumaker({
+            title: "VIZULY SCATTER PLOT",
+            format: "multitoggle"
+        });
+
+
+        // Set the size of our container element.
+        viz_container = d3.selectAll("#viz_container")
+                .style("width", screenWidth + "px")
+                .style("height", screenHeight + "px");
+
+        loadData();
+
+
+    });
+
+</script>
+
+</body>
+
+
+</html>

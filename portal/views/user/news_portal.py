@@ -76,3 +76,25 @@ def dictfetchall(cursor):
         dict(zip([col[0] for col in desc], row))
         for row in cursor.fetchall()
     ]
+
+@csrf_exempt
+def scatter(request):
+    html = get_top_portfolios(request, 'user/ScatterTest.html')
+    return HttpResponse(html)
+
+@login_required
+@csrf_exempt
+def sentiment_data(request, stock_name):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="data.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['ticker', 'date', 'article_sentiment', 'impact_score'])
+    if request.user.is_authenticated():
+          userid = request.user.id
+    cursor = connection.cursor()
+    with open("sentiment.csv") as f:
+          reader = csv.reader(f)
+          for row in reader:
+              if str(stock_name) in row[0]:
+                writer.writerow([row[0],row[1],row[2],row[3]])
+    return response

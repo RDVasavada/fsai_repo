@@ -48,7 +48,7 @@
                 <div>
 
                     <ul class="nav nav-tabs nav-justified" style="position:relative;top:0px;position: relative;top: -47px;z-index: 0;height: 100px;">
-                        <li class="active"><a href="#tab5" data-toggle="tab" style="width:100%"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Your Stocks</h2>
+                        <li class="active"><a href="#tab5" data-toggle="tab" style="width:100%"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">Your Stocks</h2>
 <!-- body .ui-autocomplete {
   font-weight:300;
   -webkit-font-smoothing: 
@@ -66,7 +66,7 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
 <!-- }        -->
                                                  </a></li>
 
-                        <li><a href="#tab6" data-toggle="tab" style="width:100%">     <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">Your Portfolios</h2>   </a></li>
+                        <li><a href="#tab6" data-toggle="tab" style="width:100%">     <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">Your Portfolios</h2>   </a></li>
 
                     </ul>
 
@@ -79,41 +79,41 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
             <div class="col-md-3" style="padding-top:10px;">
                                             <div class="block">
                                                 <div class="header">
-                                                   <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.ticker}}</h2>       
+                                                   <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.ticker}}</h2>       
                                                 </div>                    
                                                 <div class="content" style="height:425px">
                                                 <table class="table table-hover">
                                                     <tbody>
                                                         <tr>
                                                             <td>Current Price</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">${{stock.current_price}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">${{stock.current_price}}</h2>  </td>
                                                         </tr>                                                     
                                                         <tr>
                                                             <td>Buy Price</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">${{stock.initial_price}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">${{stock.initial_price}}</h2>  </td>
                                                         </tr>                                                        
                                                         <tr>
                                                             <td>Portfolio</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.name}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.name}}</h2>  </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Buy Date</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.buy_date}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.buy_date}}</h2>  </td>
                                                         </tr>
                                                         <td>Number of Shares</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.number_of_shares}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.number_of_shares}}</h2>  </td>
                                                         </tr>   
                                                         <td>Allocation</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.allocation}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.allocation}}</h2>  </td>
                                                         </tr>                                                           
                                                         <td>Sell Date</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.sell_date}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.sell_date}}</h2>  </td>
                                                         </tr>  
                                                         <td>Total Gains</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.current_price|add:stock.initial_price}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.current_price|add:stock.initial_price}}</h2>  </td>
                                                         </tr>
                                                         <td>Sentiment</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{stock.current_price|add:18}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.current_price|add:18}}</h2>  </td>
                                                         </tr>                                                           
 
                                                     </tbody>
@@ -145,7 +145,7 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                                 <div class="col-md-3" style="margin-top:10px">
                                             <div class="block">
                                                 <div class="header">
-                                                   <h5 id="pn" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.name}}</h5>
+                                                   <h5 id="pn" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.name}}</h5>
                                                                                 <a type="button" style="position:relative;bottom:25px;float:right" href="/user/backtest/{{portfolio.id}}"
                                                  target="_blank" class="btn btn-default btn-clean center">Back Test</a>   
                                                 </div>                    
@@ -154,21 +154,21 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                                                     <tbody>
                                                         <tr>
                                                             <td>Value</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">${{portfolio.investing_amount}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">${{portfolio.investing_amount}}</h2>  </td>
                                                         </tr>
      <tr>
                                                             <td>Update Date</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">
                                                               {{portfolio.update_date}}
                                                             </h2>  </td>
                                                         </tr>                                                        
      <tr>
                                                             <td>Client Name</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.client_name}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.client_name}}</h2>  </td>
                                                         </tr>
                                                         <tr>
                                                           <td>Description</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:14px">{{portfolio.description}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.description}}</h2>  </td>
                                                         </tr> 
                                                     </tbody>
                                                 </table>
