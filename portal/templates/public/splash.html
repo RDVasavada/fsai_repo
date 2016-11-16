@@ -16,14 +16,40 @@
 </head>
 
 <body>
-    <div id="display" class="single-pane" style="padding-top:26em;text-align:center">
-        <h3 style="text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ADEAEA;font-size:100px;font-family:Helvetica Neue" id="splash">
+    <div id="display" class="single-pane" style="padding-top:16em;text-align:center">
+        <h3 style="text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ADEAEA;font-size:100px;font-family:Helvetica Neue;margin-bottom:-10px" id="splash">
             <span style="letter-spacing:10px;"><i>V</i></span>ise
         </h3>
-        <img src="/static/img/loader.gif" style="margin-bottom:15px"><br>
-        <span style="font-weight:300;font-family:'Helvetica Neue';letter-spacing:2px;" id="quotejar"><br><br>
-        <span style="color:rgba(0,0,0,0.6)" id="narrate"> Checking user. . .</span>
+          <h3 style="text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ff;font-size:24px;font-family:Helvetica Neue" id="splash">
+            <span style="letter-spacing:3px;"><i>B</i></span>eta
+        </h3>
+<div class="row">
+    <div class="col-md-5"></div>
+    <div class="col-md-2">
+      <form class="m-t" role="form" method="POST" action="/pre_login">
+{% csrf_token %}
+            <div id="secondSplash">
+                        <div class="">                      
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Username" required="" name="username" >
+                                        </div>
+                        </div>
+                        <div class="">             
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="Password" required="" name="password" >
+                                        </div>
+                        </div>
+            </div>
+             <div class="col-md-12" style="margin-top:12px">
+                    <button type="submit" href="#modal_default_1" class="btn btn-default btn-block btn-clean" onClick="loadIn()">Login</button>
+                </div>
+        </form>
+
     </div>
+        <!-- <img src="/static/img/loader.gif" style="margin-bottom:15px"><br> -->
+        <!-- <span style="font-weight:300;font-family:'Helvetica Neue';letter-spacing:2px;" id="quotejar"><br><br> -->
+        <!-- <span style="color:rgba(0,0,0,0.6)" id="narrate"> Checking user. . .</span> -->
+</div>
     
 <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery.min.js'></script>
 <script>
@@ -40,9 +66,9 @@
     setTimeout(function(){ 
         if(readCookie('csrftoken')){
             if(localStorage['historical'] !== "") {
-                window.location = ("/user/dashboard")
+                // window.location = ("/user/dashboard")
             } else {
-                window.location = ("/user/dashboard/")
+                // window.location = ("/user/dashboard/")
             }
             setTimeout(function(){ 
                 $("#narrate")[0].innerText = "Downloading your market data . ."
@@ -50,7 +76,7 @@
             }, 500);             
         } else {
             $("#display").css('display','none')
-            window.location = ("/login")
+            // window.location = ("/login")
         }
     }, 2000);  
     var quotes = [

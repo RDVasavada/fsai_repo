@@ -28,6 +28,19 @@ def logoutview(request):
     logout(request)
     return HttpResponseRedirect('/login')
 
+def pre_login(request):
+    username = request.POST.get('username', None)
+    password = request.POST.get('password', None)
+    errors = []
+    if username == "AILABS":
+        if password == "plenty2016":
+            return HttpResponseRedirect('/login')
+        else:
+            errors.append('This account is disabled, please contact us @ 555-555-5555')
+    else:
+        errors.append('Invalid username or password')
+
+    return HttpResponseRedirect('/splash')
 def loginview(request):
     if request.method == 'GET':
         error = request.GET.get('error', None)
