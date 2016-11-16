@@ -10,6 +10,7 @@ import time
 import datetime
 import requests
 from time import gmtime, strftime
+import after_response
 
 urlpatterns = patterns('',
     url(r'^upload/$', 'portal.views.upload', name='upload'),
@@ -221,27 +222,68 @@ urlpatterns = patterns('',
 #         except:
 #             print("no quandl")
             
-# def Check_For_DB_Updates():
-#     cursor = connection.cursor();
-#     cursor.execute("select distinct ticker from portal_stock")
-#     for item in dictfetchall(cursor):
-#         time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-#         stock_ticker = item['ticker']
-#         cursor.execute("select last_date from stock_"+str(stock_ticker)+" order by last_date LIMIT 5")
-#         for last_date in dictfetchall(cursor):
-#             print(last_date)
+def RefreshDB():
+    cursor = connection.cursor();
+    cursor.execute("select distinct ticker from portal_stock")
+    for item in dictfetchall(cursor):
+        atime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        stock_ticker = item['ticker']
+        cursor.execute("select last_date from stock_"+str(stock_ticker)+" order by last_date DESC LIMIT 1")
+        for last_date in dictfetchall(cursor):
+            if time.strptime(atime, "%Y-%m-%d %H:%M:%S") > time.strptime(str(last_date['last_date']), "%Y-%m-%d %H:%M:%S"):
+                starttime = str(last_date['last_date'])[0:10]
+                endtime = strftime("%Y-%m-%d", gmtime())
+                print(starttime)
+                print(endtime)
+                a = quandl.get(["EOD/" + str(stock_ticker)], start_date=starttime, end_date=endtime)
+                for c in a.index.tolist():
+                    c = pd.to_datetime(c)
+                    adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
+                    adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
+                    adj_low = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Low"]
+                    adj_close = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Close"]
+                    adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
+                    print(adj_close)
+                    cursor.execute("INSERT INTO stock_" + str(item['ticker']) + " (last_date, Adj_Open, Adj_High, Adj_Low, Adj_Close, Adj_Volume) VALUES"
+                                " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")
+@after_response.enable
+def Update_DB_Dispatcher():
+    for i in xrange(0,365):
+        print("Your Database Dispatcher is now turned on!")
+        t = datetime.datetime.today()
+        future = datetime.datetime(t.year,t.month,t.day,2,0)
+        if t.hour >= 2:
+            future += datetime.timedelta(days=1)
+        print("Going to sleep until " + str(future-t) + ", and then I will refresh your database!")
+        time.sleep((future-t).seconds)
+        RefreshDB()
 
-# def dictfetchall(cursor):
-#     "Returns all rows from a cursor as a dict"
-#     desc = cursor.description
-#     return [
-#         dict(zip([col[0] for col in desc], row))
-#         for row in cursor.fetchall()
-#     ]
+@after_response.enable
+def Update_Stocks_Dispatcher():
+    print("Your Stock Price Dispatcher is now turned on!")
+    cursor = connection.cursor();
+    cursor.execute("select distinct ticker from portal_stock")
+    
+def dictfetchall(cursor):
+    "Returns all rows from a cursor as a dict"
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]
+
+Update_DB_Dispatcher.after_response()
+# Update_Stocks_Dispatcher.after_response()
+
+# def 
+
+# @after_response.enable
+# def my_email_task(to, subject, body):
 
 # BuildSF1Database()
 # BuildStockDatabase()
-# Check_For_DB_Updates()
+
+
 
 # lets us serve our media
 if settings.DEBUG:

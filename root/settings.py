@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys
 # sys.path.append(IMPORT_ROOT)
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True
 APPEND_SLASH = True
@@ -48,7 +48,7 @@ DATABASES = {
         'NAME': 'fsai',
         # The following settings are not used with sqlite3:
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': '',
         'PORT': '',
         'OPTIONS'  : {
         #'init_command' : 'SET storage_engine=MyISAM',
@@ -175,6 +175,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django_extensions',
     'django.contrib.humanize',
+    'after_response',
     #third party apps
     'rest_framework',
     'webpack_loader',

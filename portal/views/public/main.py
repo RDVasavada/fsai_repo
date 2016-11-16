@@ -34,7 +34,8 @@ def pre_login(request):
     errors = []
     if username == "AILABS":
         if password == "plenty2016":
-            return HttpResponseRedirect('/login')
+            # return HttpResponseRedirect('/login')
+            return render(request, 'public/login.html', { 'errors': None })
         else:
             errors.append('This account is disabled, please contact us @ 555-555-5555')
     else:
@@ -47,7 +48,7 @@ def loginview(request):
         errors = []
         if error is not None:
             errors = [error]
-        return render(request, 'public/login.html', { 'errors': errors })
+        return render(request, 'public/splash.html', { 'errors': errors })
     else:
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
