@@ -115,10 +115,10 @@ def sendmsg(request):
   message = "<" + username + "> : " + message
   # print(message)
   recipient = request.POST['to']
-  time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+  a_time = time.strftime("%Y-%m-%d %H:%M:%S", gmtime())
   cursor = connection.cursor()
   cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
-                 "('" + str(portId) + "','" + str(recipient) + "','unread','" + str(time) + "','friends');")
+                 "('" + str(portId) + "','" + str(recipient) + "','unread','" + str(a_time) + "','friends');")
   cursor.execute("SELECT LAST_INSERT_ID();")
   header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
   cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
@@ -126,7 +126,7 @@ def sendmsg(request):
   if recipient == '0':
     botmsg = analyze(message, portId, username)
     cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
-                     "('0','" + str(portId) + "','unread','" + str(time) + "','friends');")  
+                     "('0','" + str(portId) + "','unread','" + str(a_time) + "','friends');")  
     cursor.execute("SELECT LAST_INSERT_ID();")
     header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
     cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
@@ -285,7 +285,7 @@ def analyze(message, id, username):
         for value in dictfetchall(cursor):
           total = total + int(value['gain'])
         startdate = str(item['created_date'])[0:10]
-        time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        b_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         sp = Share('^GSPC').get_historical(startdate, today)
         gspreturn = float(sp[0]['Close']) - float(sp[len(sp)-1]['Close'])
         rtnstr = "Since " + str(startdate) + ", the S&P500 has changed " + str(gspreturn) + "$, while your portfolio " + str(item['name']) + " has changed " + str(total) + "$. "
