@@ -113,22 +113,17 @@ function del_cookie() {
                 <div class="modal-dialog" style="width: 1647px; height: 926px; padding-top: 15px; padding-bottom: 15px;">
                     <script>
                         function refresh() {
-                            location.assign('http://127.0.0.1:8000/user/dashboard')
+                            location.assign('http://127.0.0.1:8000/user/news_portal')
                         }                    
                     </script>
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onClick="refresh()">×</button>
-                            <h4 class="modal-title">Backtesting your portfolio</h4>
-                            <span style="font-size:10px">Provided by PortfolioVisualizer @ Silicon Cloud Technologies LLc</span>
+                            <h4 class="modal-title"></h4>
                         </div>
-                        <div class="modal-body clearfix npr">
-                            <div class="scroll mCustomScrollbar _mCS_2" style="height: 821px;"><div class="mCustomScrollBox mCS-light" id="mCSB_2" style="position:relative; height:100%; overflow:hidden; max-width:100%;"><div class="mCSB_container" style="position:relative; top:0;">
-                                
-                                <iframe style="width:100%;height:80vh"></iframe>
-                                <!-- <iframe src="https://www.portfoliovisualizer.com/backtest-portfolio" style="width:100%;height:80vh"></iframe> -->
+                        <div class="modal-body clearfix npr" style="margin-top:25px" id="visual_modal">
 
-                            </div><div class="mCSB_scrollTools" style="position: absolute; display: block;"><div class="mCSB_draggerContainer"><div class="mCSB_dragger" style="position: absolute; top: 0px; height: 756px;" oncontextmenu="return false;"><div class="mCSB_dragger_bar" style="position: relative; line-height: 756px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>
+
                         </div>                
                     </div>
                 </div>

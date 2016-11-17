@@ -10,6 +10,7 @@ from urllib2 import urlopen
 from django.template import RequestContext, Context, loader
 import requests
 from bs4 import BeautifulSoup
+
 @login_required
 def guru_settings(request):
   rotate_token(request)
@@ -57,6 +58,8 @@ def guru_settings(request):
 def guru_portfolio(request, guru_id):
   rtnlist = find(guru_id)
   return JsonResponse({'data':rtnlist})
+
+
 
 def find(chosen):
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"

@@ -22,6 +22,11 @@ from portal.views.user.top_portfolios import *
 def individual_stock(request, stock_name):
     context_dict = {}
     context_dict["company_symbol"] = str(stock_name)
+    cursor = connection.cursor()
+    cursor.execute("SELECT sentiment, current_price FROM portal_stock WHERE ticker = \'" + str(stock_name) + "' LIMIT 1")
+    for s_score in dictfetchall(cursor):
+         context_dict['score'] =  s_score['sentiment']
+         context_dict['current_price'] =  s_score['current_price']
     url = "http://finance.yahoo.com/d/quotes.csv?s="+str(stock_name)+"&f=sn"
     response = urlopen(url)
     cr = csv.reader(response)
@@ -34,10 +39,12 @@ def individual_stock(request, stock_name):
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(CompanyName)
     except IndexError:
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(stock_name) + " stock"
-    print(url)
-    news = requests.get(url)
-    print(news.json()['response'])
-    context_dict["newsheadline"] = news.json()['response']['docs']
+    try:
+        news = requests.get(url)
+        context_dict["newsheadline"] = news.json()['response']['docs']
+    except:
+        context_dict["newsheadline"] = ""
+
     try: 
         params_gd = OrderedDict({
             "v": "1",

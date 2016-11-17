@@ -41,20 +41,32 @@ def marketnews(request):
     newsarr.append(newsitem)
   return JsonResponse({'news':newsarr})
 
-def graph_performance(request):
-  cursor = connection.cursor()
-  cursor.execute("")
-
 @csrf_exempt
-def dash_sentiment(request):
-  sentiment = []
-  sentiment.append({'stock':'AAPL [Test Portfolio] ','sentiment':'+33'})
-  sentiment.append({'stock':'GOOGL [Test Portfolio] ','sentiment':'+23'})
-  sentiment.append({'stock':'BAIDU [Test Portfolio] ','sentiment':'-12'})
-  sentiment.append({'stock':'VAL [Test Portfolio] ','sentiment':'+28'})
-  sentiment.append({'stock':'TSLA [Test Portfolio] ','sentiment':'-12'})
-  sentiment.append({'stock':'YHOO [Test Portfolio] ','sentiment':'2'})
-  return JsonResponse({'sentiment':sentiment})
+def your_sentiment(request):
+  cursor = connection.cursor()
+  if request.user.is_authenticated():
+     username = request.user.username
+     portalUser = PortalUser.objects.get(username=username)
+  cursor.execute("select id from portal_portfolio WHERE user_id = '" + str(portalUser.id) + "' limit 4")
+  idArr = []
+  stockTickerArr = []
+  for portfolio in dictfetchall(cursor):
+    idArr.append(str(portfolio['id']))
+  for xid in idArr:
+    cursor.execute("select distinct ticker from portal_stock where show_id = '" + str(xid) + "' limit 30")
+    for sentiment_stock in dictfetchall(cursor):
+        stockTickerArr.append(sentiment_stock['ticker'])
+  print(stockTickerArr)
+  sentimentObj =[]
+  with open("sentiment.csv") as f:
+      reader = csv.reader(f)
+      for row in reader:
+          if any(row[0] in s for s in stockTickerArr):
+            if row[1] == '2016-11-11':
+              sentimentObj.append({'ticker':row[0],'date':row[1],'sentiment':row[2],'impact':row[3]})
+          if len(sentimentObj) == 10:
+            break
+  return JsonResponse({'sentiment':sentimentObj})
 
 @csrf_exempt
 def top_picks(request):
@@ -64,28 +76,35 @@ def top_picks(request):
 @csrf_exempt
 def get_gain(request):
    gainArr = []
+   portArr = []
    if request.user.is_authenticated():
     username = request.user.username
     portalUser = PortalUser.objects.get(username=username)
     portfolios = top_portfolios(request,portalUser.id)
     for port in portfolios:
-     cursor = connection.cursor()
-     cursor.execute("select ticker, current_price, initial_price,  number_of_shares, allocation, "
-                  "buy_date, sell_date, "
-                  "TRUNCATE(((current_price-initial_price)/initial_price) * 100, 2) "
-                  "as gain from portal_stock where show_id=" + str(port['id']))
-     for a in dictfetchall(cursor):
-        gainArr.append(float(a['gain']))
-    print(gainArr)
-    gain = np.average(gainArr)
-   return JsonResponse({'data':gain})
+      cursor = connection.cursor()
+      portChangeArr = []
+      cursor.execute("select current_price, initial_price from portal_stock where show_id=" + str(port['id']))
+      for a in dictfetchall(cursor):
+          denom = float(a['initial_price'])
+          if float(a['initial_price']) == 0 :
+            denom = 1
+          tgain = (float(a['current_price']) - float(a['initial_price'])) / denom
+          portChangeArr.append(tgain)
+          gainArr.append(tgain)
+      portChange =  np.average(portChangeArr)
+      portArr.append(portChange)
+    gain = np.average(gainArr) * 100
+   return JsonResponse({'data':gain, 'ports':portArr})
 
 @csrf_exempt
 def performance_chart(request):
   with open('ndx.json') as json_data:
     ndx = json.load(json_data)
-  with open('index_gspc.json') as json_data:
-    gspc = json.load(json_data)
+  with open('dj.json') as json_data:
+    dj = json.load(json_data)
+  with open('sp.json') as json_data:
+    sp = json.load(json_data)    
   gainArr = []
   if request.user.is_authenticated():
     username = request.user.username
@@ -93,18 +112,19 @@ def performance_chart(request):
     portfolios = top_portfolios(request,portalUser.id)
     for port in portfolios:
      cursor = connection.cursor()
-     cursor.execute("select ticker, current_price, initial_price,  number_of_shares, allocation, "
-                  "buy_date, sell_date, "
-                  "TRUNCATE(((current_price-initial_price)/initial_price) * 100, 2) "
-                  "as gain from portal_stock where show_id=" + str(port['id']))
+     cursor.execute("select current_price, initial_price from portal_stock where show_id=" + str(port['id']))
      for a in dictfetchall(cursor):
-        gainArr.append(float(a['gain']))
+          denom = float(a['initial_price'])
+          if float(a['initial_price']) == 0 :
+            denom = 1
+          tgain = (float(a['current_price']) - float(a['initial_price'])) / denom
+          gainArr.append(tgain)
   gain = np.average(gainArr)
   multipler = "0." + str(randint(8,9))
   multipler2 = "0." + str(randint(7,8))
   gain2 = gain*float(multipler)
   gain3 = gain*float(multipler2)
-  return JsonResponse({'ndx':ndx,'gspc':gspc,'you':[gain,gain2,gain3]})
+  return JsonResponse({'ndx':ndx,'sp':sp,'dj':dj,'you':[gain,gain2,gain3]})
 
 
 @csrf_exempt
@@ -123,9 +143,9 @@ def portfolio_value(request):
         valtotal += int(port['investing_amount'])
         stocks = get_stocks_by_portfolio(request, str(port['id']))
         for stock in stocks:
-          val = stock["current_price"] * stock["number_of_shares"]
+          val = int(stock["current_price"]) * int(stock["number_of_shares"])
           performanceval += stock['current_price']
-          oldTotal += stock['initial_price'] * stock["number_of_shares"]
+          oldTotal += stock['initial_price'] * int(stock["number_of_shares"])
           stockTotal += val
           prestock = {}
           ticker = stock['ticker']
@@ -134,7 +154,7 @@ def portfolio_value(request):
           prestock[ticker]['buy_date'] = stock['buy_date']
           prestock[ticker]['current_price'] = stock['current_price']
           prestock[ticker]['initial_price'] = stock['initial_price']
-          prestock[ticker]['number_of_shares'] = stock['number_of_shares']
+          prestock[ticker]['number_of_shares'] = int(stock['number_of_shares'])
           timenow = time.strftime("%Y-%m-%d")
           stocks = []
           stocks.append(stockDict)
@@ -178,10 +198,10 @@ def find():
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
   gurusoup = BeautifulSoup(urlopen(guru))
   try:
-    g = gurusoup.body.contents[0]
+    g = gurusoup.p.contents[0]
     d = json.loads(g)
   except TypeError:
-    g = gurusoup.p.contents[0]
+    g = gurusoup.body.contents[0]
     d = json.loads(g)   
   guruarr = []
   for key in d:

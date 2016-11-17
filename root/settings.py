@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys
 # sys.path.append(IMPORT_ROOT)
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True
 APPEND_SLASH = True
@@ -48,7 +48,7 @@ DATABASES = {
         'NAME': 'fsai',
         # The following settings are not used with sqlite3:
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '1234',
         'PORT': '',
         'OPTIONS'  : {
         #'init_command' : 'SET storage_engine=MyISAM',

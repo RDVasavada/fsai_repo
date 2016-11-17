@@ -24,14 +24,12 @@ def individual_portfolio(request, portfolio_id):
         portfolios = top_portfolios(request, portalUser.id)
     stocks = get_stocks_by_portfolio(request, portfolio_id)
     portfolio = Portfolio.objects.get(id=portfolio_id)
-    market_sentiment = range(1, 100, 1)
     change = range(1, 100, 1)
     context_dict = {}
     context_dict["portfolios"] = portfolios
     context_dict["stocks"] = stocks
     context_dict["change"] = change
     context_dict["portfolio"] = portfolio
-    context_dict["market_sentiment"] = market_sentiment
     t = loader.get_template('user/individual_portfolio.html')
     c = Context(context_dict)
     html = t.render(context_dict)

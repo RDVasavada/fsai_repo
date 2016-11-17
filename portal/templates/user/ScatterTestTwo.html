@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vizuly - Scatter Plot</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto|Raleway:600,400,200' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="/static/scatter/scatter/styles/examples.css">
+    <link rel="stylesheet" href="/static/scatter/lib/styles/vizuly.css">
+    <link rel="stylesheet" href="/static/scatter/lib/styles/vizuly_scatter.css">
+
+    <!-- Test Index Files -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/static/scatter/lib/styles/cssmenu.css">
+    <script type="text/javascript" src="/static/scatter/lib/jquery-2.1.1.min.js"></script>
+    <script src="/static/scatter/lib/cssmenu.js"></script>
+
+    <!-- D3.js ... of course! -->
+    <script src="/static/scatter/scatter/lib/d3.min.js"></script>
+
+    <!-- debug source scripts: start --> 
+    <script src="/static/scatter/scatter/src/namespace/namespace.js"></script>
+
+    <script src="/static/scatter/scatter/src/theme/_theme.js"></script>
+    <script src="/static/scatter/scatter/src/theme/scatter.js"></script>
+
+    <script src="/static/scatter/scatter/src/core/viz.js"></script>
+    <script src="/static/scatter/scatter/src/core/util.js"></script>
+    <script src="/static/scatter/scatter/src/core/color.js"></script>
+    <script src="/static/scatter/scatter/src/core/format.js"></script>
+    <script src="/static/scatter/scatter/src/svg/_svg.js"></script>
+    <script src="/static/scatter/scatter/src/svg/gradient.js"></script>
+    <script src="/static/scatter/scatter/src/svg/filter.js"></script>
+    <script src="/static/scatter/scatter/src/component/_component.js"></script>
+    <script src="/static/scatter/scatter/src/component/scatter.js"></script>
+
+     <!-- debug source scripts: end -->
+<!-- 
+    <script src="/static/scatter/scatter/lib/vizuly_core.min.js"></script>
+	<script src="/static/scatter/scatter/lib/vizuly_scatter.min.js"></script>
+ -->
+
+    <script src="/static/scatter/scatter/scatter_test.js"></script>
+    <script src="/static/scatter/scatter/lib/theme_showreel.js"></script>
+
+</head>
+
+<body>
+
+
+<div class="container" style="width:100%;position:fixed;top:0px">
+     <div id="viz_container" class="theme_default z-depth-3"></div>
+</div>
+
+<script>
+    //Once the document is ready we set javascript and page settings
+    var screenWidth;
+    var screenHeight;
+
+    $(document).ready(function () {
+
+        var rect;
+        if (self==top) {
+            rect = document.body.getBoundingClientRect();
+        }
+        else {
+            rect = document.body.getBoundingClientRect();
+        }
+
+        //Set display size based on window size.
+        screenWidth = (rect.width < 960) ? Math.round(rect.width*.95) : Math.round((rect.width - 210) *.95);
+        screenHeight = 600;
+
+        d3.select("#currentDisplay")
+                .attr("item_value", (String(screenWidth) + "," + String(screenHeight)))
+                .attr("class", "selected")
+                .html("<a>" + screenWidth + "px - " + screenHeight + "px</a>");
+
+        $("#cssmenu").menumaker({
+            title: "VIZULY SCATTER PLOT",
+            format: "multitoggle"
+        });
+
+
+        // Set the size of our container element.
+        viz_container = d3.selectAll("#viz_container")
+                .style("width", screenWidth + "px")
+                .style("height", screenHeight + "px");
+
+        loadData();
+
+
+    });
+
+</script>
+
+</body>
+
+
+</html>

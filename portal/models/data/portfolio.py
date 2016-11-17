@@ -3,7 +3,7 @@ from django.db import models
 from portal.models.base import BaseModel
 
 class Portfolio(BaseModel):
-    investing_amount = models.IntegerField()
+    investing_amount = models.TextField()
     num_stocks = models.IntegerField()
     expected_risk = models.IntegerField()
     brokerage_account = models.IntegerField()

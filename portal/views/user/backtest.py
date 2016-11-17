@@ -43,7 +43,7 @@ def backtest(request, port_id):
             rtnstr += "&allocation"
             rtnstr += str(x)
             rtnstr += "_1="
-            rtnstr += str(even)
+            rtnstr += str(stocks[x]['allocation'])
             url+= rtnstr
         return HttpResponseRedirect(url)
 

@@ -41,10 +41,7 @@ html {
     position: absolute;
     top: -1em; left: -1em;
     width: .5em; height: .5em;
-    box-shadow: 1.0em 1.25em 0 #F65314,
-                1.6em 1.25em 0 #7CBB00,
-                1.0em 1.85em 0 #00A1F1,
-                1.6em 1.85em 0 #FFBB00;
+
 }
 
 .microsoft:after, .microsoft::after {
@@ -53,7 +50,6 @@ html {
     position: absolute;
     top: 0; left: 0;
     width: 2em; height: 2em;
-    background-image: linear-gradient(90deg, white 70%, rgba(255,255,255,0));
 }
 
 /* Style the links */

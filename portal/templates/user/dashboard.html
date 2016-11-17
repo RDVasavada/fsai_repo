@@ -510,7 +510,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
                                            <a href="/user/individual_portfolio/{{portfolio.id}}">
                                         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.name}}</h2> </td></a>
                                     <td >   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.value}}$</h2> </a></td>
-                                    <td >   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:cente">{{portfolio.change}}%</h2> </td>
+                                    <td >   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:left" id="uc_{{forloop.counter}}">{{portfolio.gain}}%</h2> </td>
                                 </tr>
 {% endfor %}                    
                             </tbody>
@@ -543,7 +543,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
                                            <a href="/user/individual_portfolio/{{portfolio.id}}">
                                         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.name}}</h2> </td></a>
                                     <td >   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{portfolio.value}}$</h2> </a></td>
-                                    <td >   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:cente">{{portfolio.change}}%</h2> </td>
+                                    <td >   <a href="/user/individual_portfolio/{{portfolio.id}}"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:left" id="dc_{{forloop.counter}}">{{portfolio.change}}%</h2> </td>
                                 </tr>
 {% endfor %}                    
                             </tbody>
@@ -962,9 +962,10 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     </div> 
     <div class="block block-transparent nm">
        <div class="row">
-            <div class="col-md-4" style="margin-top:8px;padding-left:5px;text-align:right">Dow Jones: </div>
-            <div class="col-md-4" style="margin-top:8px;padding-left:5px;text-align:center">Nasdaq: </div>
-            <div class="col-md-4" style="margin-top:8px;padding-left:5px;text-align:center"> Your Portfolios: </div>
+            <div class="col-md-3" style="margin-top:8px;padding-left:5px;text-align:right">Dow Jones </div>
+            <div class="col-md-3" style="margin-top:8px;padding-left:5px;text-align:center">Nasdaq </div>
+            <div class="col-md-3" style="margin-top:8px;padding-left:5px;text-align:center">S&P 500 </div>
+            <div class="col-md-3" style="margin-top:8px;padding-left:5px;text-align:center"> Your Portfolios </div>
        </div>
        <div class="row" style="padding:25px;padding-top:5px">
         <hr style="margin:10px;margin-top:0px">
@@ -983,10 +984,235 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
 
      <script>
 $.ajax({
-    url:"dashboard/performance_chart/",
+    url:"performance_chart/",
     method: "POST"
 }).done(function(r_data){
 console.log(r_data)
+
+var pdata = [
+    r_data.you[0],
+    (r_data.sp.data[0][1]/r_data.sp.data[21][1]),
+    (r_data.dj.dataset.data[0][1]/r_data.dj.dataset.data[21][1]),
+    (r_data.ndx.data[0][1]/r_data.ndx.data[21][1]),
+];
+
+var gdata = [
+    ,r_data.you[1],
+    , (r_data.sp.data[21][1]/r_data.sp.data[42][1]),
+    , (r_data.ndx.data[21][1]/r_data.ndx.data[42][1]),
+    , (r_data.dj.dataset.data[21][1]/r_data.dj.dataset.data[42][1]),
+];
+
+var ydata = [
+    ,r_data.you[2],
+    , (r_data.sp.data[42][1]/r_data.sp.data[63][1]),
+    , (r_data.dj.dataset.data[42][1]/r_data.dj.dataset.data[63][1]),
+    , (r_data.ndx.data[42][1]/r_data.ndx.data[63][1]),
+]
+pdata.sort(function(a, b){return a-b});
+//data.sort(d3.descending());
+var pwidth = "75%",
+    pheight = 25,
+    goal = 100,
+    perc_so_far = 0;
+
+var total_time = d3.sum(pdata);
+var bar_x = 0;
+var chart = d3.select("#p-chart")
+    .attr("width", "75%")
+    .attr("height", pheight)
+    bar_x = 0;
+    //var chart_width = chart.style("width").replace("px", "");
+var chart_width = parseInt(d3.select("#p-chart").style("width"));
+console.log(chart_width);
+
+var color = d3.scale.category20b();
+    //d3.scale.ordinal()
+    //.domain(["6TH", "7TH", "5TH", "4TH"])
+    //.range(colorbrewer.RdBu[12]);
+var bar = chart.selectAll("g")
+    .data(pdata)
+    .enter().append("g");
+    console.log(bar);
+bar.append("rect")
+    .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+        return prev_perc + "%";
+    })
+    .attr("height", pheight)
+    .attr("fill",  function(d) { return (color(d)) } );
+
+perc_so_far = 0;
+count = 0
+bar.append("text")
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+        return prev_perc + "%";
+    })
+    //.attr("y", 11)
+    .attr("dy", "1.35em")
+    .text(function(d) { 
+        if (count == 0) {
+            if (d > 0) {
+                return "+" + String(d).slice(0,5) + " % "; 
+            } else {
+                return String(d).slice(0,5) + " % "; 
+            }
+        }
+    })
+    .style("fill", "white")
+    .style("left", "5px")
+    .style("font-family", "Helvetica Neue")
+    .style("font-size", "14px")
+    .style("font-weight", "200")
+        
+    // console.log(data.ndx.data[0][1]/data.ndx.data[21][1]  )
+    // console.log(data.ndx.data[21][1]/data.ndx.data[42][1] )
+    // console.log(data.ndx.data[42][1]/data.ndx.data[63][1] )
+
+    
+
+gdata.sort(function(a, b){return a-b});
+var pwidth = "75%",
+    pheight = 25,
+    goal = 100,
+    perc_so_far = 0;
+
+var total_time = d3.sum(gdata);
+var bar_x = 0;
+var chart = d3.select("#d-chart")
+    .attr("width", "75%")
+    .attr("height", pheight)
+    bar_x = 0;
+    //var chart_width = chart.style("width").replace("px", "");
+var chart_width = parseInt(d3.select("#d-chart").style("width"));
+var color = d3.scale.category20b();
+    //d3.scale.ordinal()
+    //.domain(["6TH", "7TH", "5TH", "4TH"])
+    //.range(colorbrewer.RdBu[12]);
+var bar = chart.selectAll("g")
+    .data(gdata)
+    .enter().append("g");
+bar[0].pop()
+bar[0].pop()
+bar[0].pop()
+bar[0].pop()
+bar.append("rect")
+    .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+        return prev_perc + "%";
+    })
+    .attr("height", pheight)
+    .attr("fill",  function(d) { return (color(d)) } );
+
+perc_so_far = 0;
+count = 0
+bar.append("text")
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        return prev_perc + "%";
+    })
+    //.attr("y", 11)
+    .attr("dy", "1.35em")
+    .text(function(d) { 
+        return "+" + String(d).slice(0,5) + " % "; 
+    })
+    .style("fill", "white")
+    .style("left", "5px")
+    .style("font-family", "Helvetica Neue")
+    .style("font-size", "14px")
+    .style("font-weight", "200")
+
+
+    
+
+ydata.sort(function(a, b){return a-b});
+var pwidth = "75%",
+    pheight = 25,
+    goal = 100,
+    perc_so_far = 0;
+
+var total_time = d3.sum(ydata);
+var bar_x = 0;
+var chart = d3.select("#dd-chart")
+    .attr("width", "75%")
+    .attr("height", pheight)
+    bar_x = 0;
+    //var chart_width = chart.style("width").replace("px", "");
+var chart_width = parseInt(d3.select("#dd-chart").style("width"));
+var color = d3.scale.category20b();
+    //d3.scale.ordinal()
+    //.domain(["6TH", "7TH", "5TH", "4TH"])
+    //.range(colorbrewer.RdBu[12]);
+var bar = chart.selectAll("g")
+    .data(ydata)
+    .enter().append("g");
+    console.log(bar);
+bar[0].pop()
+bar[0].pop()
+bar[0].pop()
+bar[0].pop()
+bar.append("rect")
+    .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+        return prev_perc + "%";
+    })
+    .attr("height", pheight)
+    .attr("fill",  function(d) { return (color(d)) } );
+
+perc_so_far = 0;
+count = 0
+bar.append("text")
+    .attr("x", function(d) {
+        var prev_perc = perc_so_far;
+        var this_perc = 100*(d/total_time);
+        perc_so_far = perc_so_far + this_perc;
+        console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+        return prev_perc + "%";
+    })
+    //.attr("y", 11)
+    .attr("dy", "1.35em")
+    .text(function(d) { 
+        if (count == 0) {
+            if (d > 0) {
+                return "+" + String(d).slice(0,5) + " % "; 
+            } else {
+                return String(d).slice(0,5) + " % "; 
+            }
+        }
+    })
+    .style("fill", "white")
+    .style("left", "5px")
+    .style("font-family", "Helvetica Neue")
+    .style("font-size", "14px")
+    .style("font-weight", "200")
+        
+    // console.log(data.ndx.data[0][1]/data.ndx.data[21][1]  )
+    // console.log(data.ndx.data[21][1]/data.ndx.data[42][1] )
+    // console.log(data.ndx.data[42][1]/data.ndx.data[63][1] )
+
+}).fail(function(err){
+    $.ajax({
+        url:"performance_chart/",
+        method: "POST"
+    }).done(function(r_data) {
 
 var pdata = [
     r_data.you[0],
@@ -1022,7 +1248,7 @@ var chart = d3.select("#p-chart")
 var chart_width = parseInt(d3.select("#p-chart").style("width"));
 console.log(chart_width);
 
-var color = d3.scale.category10();
+var color = d3.scale.category20b();
     //d3.scale.ordinal()
     //.domain(["6TH", "7TH", "5TH", "4TH"])
     //.range(colorbrewer.RdBu[12]);
@@ -1099,6 +1325,7 @@ var bar = chart.selectAll("g")
 bar[0].pop()
 bar[0].pop()
 bar[0].pop()
+bar[0].pop()
 bar.append("rect")
     .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
     .attr("x", function(d) {
@@ -1159,6 +1386,7 @@ var bar = chart.selectAll("g")
 bar[0].pop()
 bar[0].pop()
 bar[0].pop()
+bar[0].pop()
 bar.append("rect")
     .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
     .attr("x", function(d) {
@@ -1198,10 +1426,8 @@ bar.append("text")
     .style("font-size", "14px")
     .style("font-weight", "200")
         
-    // console.log(data.ndx.data[0][1]/data.ndx.data[21][1]  )
-    // console.log(data.ndx.data[21][1]/data.ndx.data[42][1] )
-    // console.log(data.ndx.data[42][1]/data.ndx.data[63][1] )
-
+    // console.log(data.ndx.data[0
+    })
 })
 
 // d3.select(window).on('resize', resize);

@@ -12,6 +12,7 @@ $( window ).load(function() {
     // $("#noWorkCulture").css('background','rgba(0,0,0,0.4)')
   }
 });
+             
 // var company_name = $("#companyName")[0];
 // console.log($("#companyName"))
 // var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";

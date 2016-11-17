@@ -6,7 +6,7 @@
 
 $("#statusbar_2").show()
 
-$(".statusbar-text")[0].innerText = "Loading your market news . . ."
+
 $.ajax({
     url:"/user/dashboard/marketnews/",
     method: "POST"
@@ -24,35 +24,35 @@ $.ajax({
         })
     })
 })
-    $(".statusbar-text")[0].innerText = "Loading your sentiment updates . . ."
+
 $.ajax({
-    url:"/user/dashboard/sentiment/",
+    url:"/user/dashboard/your_sentiment/",
     method: "POST"
 }).done(function(data){
     data.sentiment.forEach(function(x) {
-        if (String(x.sentiment).indexOf("+") !== -1) {
-            $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(255,0,0,1)'>"+x.sentiment+"</span></div></div></div>")            
+        if (String(x.sentiment).indexOf("-") !== -1) {
+            $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(255,0,0,1)'>↓"+x.sentiment+"</span></div></div></div>")            
         } else {
-                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(0,255,0,1)'>"+x.sentiment+"</span></div></div></div>")            
+                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(0,255,0,1)'>↑"+x.sentiment+"</span></div></div></div>")            
 
         }
     }) 
 }).fail(function(data) {
     $.ajax({
-    url:"sentiment/",
+    url:"your_sentiment/",
     method: "POST"
     }).done(function(data){
     data.sentiment.forEach(function(x) {
-        if (String(x.sentiment).indexOf("+") !== -1) {
-            $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(255,0,0,1)'>"+x.sentiment+"</span></div></div></div>")            
+        if (String(x.sentiment).indexOf("-") !== -1) {
+            $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(255,0,0,1)'>"+x.sentiment+"</span></div></div></div>")            
         } else {
-                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(0,255,0,1)'>"+x.sentiment+"</span></div></div></div>")            
+                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(0,255,0,1)'>"+x.sentiment+"</span></div></div></div>")            
 
         }
     }) 
 })
 })
-        $(".statusbar-text")[0].innerText = "Loading your Top Picks . . ."
+
 $.ajax({
     url:"/user/dashboard/top_picks/",
     method: "POST"
@@ -91,13 +91,19 @@ $.ajax({
     url:"/user/dashboard/get_gain/",
     method: "POST"
 }).done(function(data){
+    // console.log(data)
     var change = String(data.data).slice(0,3)
     if (Number(change) > 0) {
         $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(0,255,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
     } else {
         $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(255,0,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
     }
-    console.log(change)
+    $("#uc_1")[0].innerText = String(data.ports[0]).slice(0,4)+"%"
+    $("#uc_2")[0].innerText = String(data.ports[1]).slice(0,4)+"%"
+    $("#uc_3")[0].innerText = String(data.ports[2]).slice(0,4)+"%"
+    $("#dc_1")[0].innerText = String(data.ports[data.ports.length-1]).slice(0,4)+"%"
+    $("#dc_2")[0].innerText = String(data.ports[data.ports.length-2]).slice(0,4)+"%"
+    $("#dc_3")[0].innerText = String(data.ports[data.ports.length-3]).slice(0,4)+"%"
     // data.news.forEach(function(x) {
     //     $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
     // })
@@ -110,6 +116,13 @@ $.ajax({
             $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
         })
     })
+})
+$.ajax({
+    url:"/user/dashboard/your_sentiment/",
+    method: "POST"
+}).done(function(data){
+    console.log(data)
+    // $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
 })
 // $.ajax({
 //     url:"performance_chart/",

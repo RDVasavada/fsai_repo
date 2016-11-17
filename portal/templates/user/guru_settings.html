@@ -36,6 +36,8 @@ var showHide = function(){
     <input id="xpe" name="xpe" class="form-control" type="text" />
     <input id="xpb" name="xpb" class="form-control" type="text" />
     <input id="xepusd" name="xepusd" class="form-control" type="text" />
+    <input id="port_name" name="port_name" class="form-control" type="text" />
+    <input id="initial_capital" name="initial_caoutak" class="form-control" type="text" />
 </form>
 
 <div id="mySidenav" class="sidenav" style="width:75vw x">
@@ -48,6 +50,11 @@ var showHide = function(){
 <hr>
         <div class="row">
             <div class="block" style="height:200px;text-align:center">
+                <div class="header" style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> Portfolio Name </div>
+                <input type="text" style="margin-left:25%;width:50%;letter-spacing:2px;font-weight:100;font-family:'Helvetica Neue';text-align:center;border:1px solid white; border-radius:10px;margin-top:50px;margin-bottom:25px" placeholder="How much do you want to name your portfolio?" id="u_initial">
+
+                 <div class="header" style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> Initial Capital (Required) : </div>
+                <input type="number" style="margin-left:25%;width:50%;letter-spacing:2px;font-weight:100;font-family:'Helvetica Neue';text-align:center;border:1px solid white; border-radius:10px;margin-top:50px;margin-bottom:25px" placeholder="How much do you want to name your portfolio?" id="t_initial" />
                 <div class="header" style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px"> Filter Criteria : </div>
                     <div class="checkbox-inline">
                         <label>
@@ -82,7 +89,7 @@ var showHide = function(){
 
                 <br>
 
-                <div class="header" style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px;margin-top:50px"> Filter Frequency : </div>
+                <div class="header" style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px;margin-top:25px"> Filter Frequency : </div>
                     <div class="checkbox-inline">
                         <label>
                             <div class="checker"><span style="border:1px solid white"><input type="checkbox" class="validate[required] form-control" name="vcheck" value="1"></span></div> Annually 
@@ -104,7 +111,7 @@ var showHide = function(){
        <div class="row">
      
                 <div class="col-md-3" style="margin-left:50px;display:none" id="fdivy">
-                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                        <div class="block" style="border:1px solid white;border-radius:5px;margin-top:175px" >
                                    
                              <div style="width:100%;margin:25px">
 
@@ -134,7 +141,7 @@ var showHide = function(){
 
      
                 <div class="col-md-3" style="margin-left:50px;display:none" id="fmktcap">
-                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                        <div class="block" style="border:1px solid white;border-radius:5px;margin-top:175px" >
                                    
                              <div style="width:100%;margin:25px">
 
@@ -164,7 +171,7 @@ var showHide = function(){
 
                              
                 <div class="col-md-3" style="margin-left:50px;display:none" id="fnm">
-                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                        <div class="block" style="border:1px solid white;border-radius:5px;margin-top:175px" >
                                    
                              <div style="width:100%;margin:25px">
 
@@ -194,7 +201,7 @@ var showHide = function(){
 
      
                 <div class="col-md-3" style="margin-left:50px;display:none" id="fpe">
-                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                        <div class="block" style="border:1px solid white;border-radius:5px;margin-top:175px" >
                                    
                              <div style="width:100%;margin:25px">
 
@@ -224,7 +231,7 @@ var showHide = function(){
 
 
                 <div class="col-md-3" style="margin-left:50px;display:none" id="fpb">
-                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                        <div class="block" style="border:1px solid white;border-radius:5px;margin-top:175px" >
                                    
                              <div style="width:100%;margin:25px">
 
@@ -254,7 +261,7 @@ var showHide = function(){
 
 
                 <div class="col-md-3" style="margin-left:50px;display:none" id="fepusd">
-                        <div class="block" style="border:1px solid white;border-radius:5px" >
+                        <div class="block" style="border:1px solid white;border-radius:5px;margin-top:175px" >
                                    
                              <div style="width:100%;margin:25px">
 
@@ -291,10 +298,15 @@ var showHide = function(){
             
         </div>
 
-        <div class="row" style="text-align:center">
+        <div class="row" style="text-align:center;margin-top:150px">
             <button type="button" class="btn btn-default btn-clean">
                  <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px" id="filterName" onClick="filterPortfolios()"> 
                                 Filter & Optimize Portfolio <span>
+            </button>
+
+            <button type="button" class="btn btn-default btn-clean" id="saveThisPortfolio" style="display:none">
+                 <span style="font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;padding:0px;font-family:'helvetica neue';font-size:24px" onClick="save_guru()"> 
+                                Save This Portfolio <span>
             </button>
 
         </div>

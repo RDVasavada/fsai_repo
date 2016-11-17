@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
  
+
 <div class="sceneElement" data-viewport="0">
     <div class="row" style="background:rgba(0,0,0,0.6)">
  <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top:25px;padding-left:10vw;padding-right:10vw;height:100%;position:relative">
@@ -8,7 +9,30 @@
 
         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:36px;text-align:center;color:white" id="companyName">{{company_name}} </h2>
         <span style="display:none" id="companySymbol">{{company_symbol}}</span>
+        <div class="row" style="margin-left:100px;margin-right:100px;margin-top:50px">
+          <div class="col-md-6 col-sm-6">
+            <div class="block" style="border:1px solid white;text-align:left;padding:25px;font-size:24px;font-weight:100px;font-family:Helvetica Neue">
+              Price: {{current_price}}
+
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <div class="block" style="border:1px solid white;text-align:left;padding:25px;font-size:24px;font-weight:100px;font-family:Helvetica Neue">
+              Sentiment: {{score}}
+            </div>
+            <script>
+              $.ajax({
+                    url:"get_stock_sentiment/{{company_symbol}}",
+                    method: "POST"
+                }).done(function(data){
+                    $("#sentiment")[0].innerText = data.score
+                })
+              </script>
+          </div>
+
+        </div>
         <div class="col-md-12 col-sm-12">
+
     <div class="content" id="content1" style="height:325px;overflow:hidden">                   
                       <div class="loader" style="height:100%;text-align:center;top:35%;position:relative;background:transparent">
                         <img src="/static/img/loader.gif"><br><br>
@@ -333,7 +357,7 @@
                         <li><a href="#tab9" data-toggle="tab">Balance Sheet</a></li>
                         <li><a href="#tab10" data-toggle="tab">Metrics</a></li>
                         <li><a href="#tab11" data-toggle="tab">Work Culture</a></li>
-                        <li><a href="#tab12" data-toggle="tab">Future Sentiment</a></li>
+                        <!-- <li><a href="#tab12" data-toggle="tab">Future Sentiment</a></li> -->
                     </ul>                   
                     </div>   
 

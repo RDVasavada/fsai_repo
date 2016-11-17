@@ -11,15 +11,387 @@ import quandl
 from django.db import connection
 import csv
 import string
+import time
 import datetime
 from django.views.decorators.csrf import csrf_exempt
 from datetime import date
 from pandas.tseries.offsets import BDay
+import json
 from bs4 import BeautifulSoup
 from urllib2 import urlopen
 import re
 import pandas as pd
 quandl.ApiConfig.api_key = 'X8CjGKTPEqTuto2v_Q94'
+
+@login_required
+@csrf_exempt
+def save_guru(request):
+  stocks = [["ADS","Alliance Data Systems"],
+   ["GILD","Gilead Sciences"],
+   ["AAPL","Apple"],
+   ["BMY","Bristol-Myers Squibb Co"],
+   ["MSFT","Microsoft"],
+   ["ON","ON Semiconductor"],
+   ["HBI","Hanesbrands"],
+   ["LCI","Lannett Co"],
+   ["TEVA","Teva Pharmaceutical"],
+   ["MCK","McKesson"],
+   ["UNH","UnitedHealth Group"],
+   ["RUSHA","Rush Enterprises"],
+   ["CE","Celanese Corporation"],
+   ["NSR","Neustar"],
+   ["BIIB","Biogen"],
+   ["ALGT","Allegiant Travel Company"],
+   ["OLED","Universal Display"],
+   ["SLB","Schlumberger N.V."],
+   ["CYH","Community Health Systems"],
+   ["HAL","Halliburton Company"],
+   ["NLY","Annaly Capital"],
+   ["RUSHB","Rush Enterprises"],
+   ["CELG","Celgene Corporation"],
+   ["PFE","Pfizer"],
+   ["BWP","Boardwalk Pipeline"],
+   ["BXE","Bellatrix Exploration"],
+   ["AXL","American Axle"],
+   ["AB","AllianceBernstein"],
+   ["GLNG","Golar LNG"],
+   ["ACAS","American Capital"],
+   ["DSPG","DSP Group"],
+   ["QUIK","QuickLogic"],
+   ["GTIM","Good Times Restaurants"],
+   ["BHI","Baker Hughes"],
+   ["TOO","Teekay Offshore Partners"],
+   ["SHLD","Sears Holdings"],
+   ["AN","AutoNation"],
+   ["IBM","International Business Machines"],
+   ["GPS","Gap, Inc."],
+   ["STX","Seagate Technology"],
+   ["FOSL","Fossil Group"],
+   ["BAM","Brookfield Asset Management"],
+   ["AME","AMETEK"],
+   ["SCHW","Charles Schwab"],
+   ["WFC","Wells Fargo"],
+   ["LBTYK","Liberty Global"],
+   ["CCK","Crown Holdings"],
+   ["USB","U.S. Bancorp"],
+   ["VRX","Valeant Pharmaceuticals"],
+   ["BRO","Brown & Brown"],
+   ["LKQ","LKQ"],
+   ["AMG","Affiliated Managers Group"],
+   ["PRGO","Perrigo Company"],
+   ["MHK","Mohawk Industries"],
+   ["JLL","Jones Lang LaSalle"],
+   ["SRCL","Stericycle"],
+   ["FMC","FMC Corporation"],
+   ["AME","AMETEK, Inc."],
+   ["CERN","Cerner Corporation"],
+   ["EWBC","East West Bancorp"],
+   ["TRMB","Trimble"],
+   ["VAL","Valspar Corporation"],
+   ["MAT","Mattel"],
+   ["SBAC","SBA Communications Corporation"],
+   ["BOH","Bank of Hawaii Corporation"],
+   ["XRAY","DENTSPLY SIRONA"],
+   ["WSO","Watsco, Inc."],
+   ["MLHR","Herman Miller, Inc."],
+   ["JBHT","J.B. Hunt Transport Services"],
+   ["ROL","Rollins"],
+   ["WWD","Woodward"],
+   ["FTI","FMC Technologies"],
+   ["CLB","Core Laboratories"],
+   ["KEX","Kirby Corporation"],
+   ["AZO","AutoZone"],
+   ["CTXS","Citrix Systems"],
+   ["EW","Edwards Lifesciences"],
+   ["DSW","DSW Inc."],
+   ["SBH","Sally Beauty Holdings"],
+   ["ANSS","ANSYS"],
+   ["BBBY","Bed Bath & Beyond"],
+   ["IDXX","IDEXX Laboratories"],
+   ["IDXX","IDEXX Laboratories"],
+   ["NBL","Noble Energy Inc."],
+   ["ZBRA","Zebra Technologies"],
+   ["BC","Brunswick Corporation"],
+   ["PKI","PerkinElmer"],
+   ["CBRL","Cracker Barrel Old Country"],
+   ["GWR","Genesee & Wyoming Inc."],
+   ["DLTR","Dollar Tree,"],
+   ["COH","Coach"],
+   ["HE","Hawaiian Electric Industries"],
+   ["INT","World Fuel Services Corporation"],
+   ["HAE","Haemonetics Corporation Common "],
+   ["HURN","Huron Consulting Group"],
+   ["VRNT","Verint Systems Inc."],
+   ["AJG","Arthur J. Gallagher"],
+   ["SCS","Steelcase Inc."],
+   ["RCL","Royal Caribbean Cruises Ltd."],
+   ["EOG","EOG Resources Inc."],
+   ["UNP","Union Pacific Corporation"],
+   ["CMP","Compass Minerals Intl"],
+   ["PII","Polaris Industries Inc."],
+   ["FLO","Flowers Foods Inc."],
+   ["FLIR","FLIR Systems Inc."],
+   ["EXPD","Expeditors International"],
+   ["GIL","Gildan Activewear Inc."],
+   ["POWI","Power Integrations Inc."],
+   ["PHG","Koninklijke Philips"],
+   ["FLS","Flowserve Corporation"],
+   ["LII","Lennox International"],
+   ["LLTC","Linear Technology Corporation"],
+   ["ASB","Associated Banc-Corp"],
+   ["ATR","AptarGroup, Inc"],
+   ["WWW","Wolverine World Wide Inc."],
+   ["ICLR","ICON plc"],
+   ["SMG","Scotts Miracle-Gro Company"],
+   ["APD","Air Products and Chemicals"],
+   ["EFX","Equifax Inc."],
+   ["SHW","Sherwin-Williams Company"],
+   ["HUM","Humana Inc"],
+   ["EBAY","eBay Inc."],
+   ["MINI","Mobile Mini Inc."],
+   ["MATX","Matson Inc."],
+   ["DENN","Dennys Corporation"],
+   ["NATI","National Instruments Corporation"],
+   ["EGN","Energen Corporation"],
+   ["NVDA","NVIDIA Corporation"],
+   ["ITRI","Itron, Inc."],
+   ["TPX","Tempur Sealy International"],
+   ["IPHS","Innophos Holdings"],
+   ["OXY","Occidental Petroleum"],
+   ["GWW","W.W. Grainger Inc"],
+   ["BRCD","Brocade Communications Systems"],
+   ["CREE","Cree Inc."],
+   ["LANC","Lancaster Colony Corporation"],
+   ["NGD","New Gold Inc."],
+   ["BLK","BlackRock Inc."],
+   ["ETN","Eaton Corporation,"],
+   ["KMB","Kimberly-Clark"],
+   ["MDP","Meredith Corporation"],
+   ["RPM","RPM International Inc."],
+   ["LEG","Leggett & Platt"],
+   ["WBA","Walgreens Boots Alliance"],
+   ["CSCO","Cisco Systems"],
+   ["JNJ","Johnson & Johnson"],
+   ["HAS","Hasbro"],
+   ["GPC","Genuine Parts Company"],
+   ["LMT","Lockheed Martin Corporation"],
+   ["RAI","Reynolds American Inc"],
+   ["SYY","Sysco Corporation"],
+   ["EMR","Emerson Electric Company"],
+   ["PAYX","Paychex"],
+   ["BAX","Baxter International Inc."],
+   ["MSFT","Microsoft Corporation"],
+   ["CFR","Cullen/Frost Bankers Inc."],
+   ["UPS","United Parcel Service Inc."],
+   ["T","AT&T Inc."],
+   ["CA","CA Inc."],
+   ["CVX","Chevron Corporation"],
+   ["TAP","Molson Coors Brewing Company"],
+   ["DD","E.I. du Pont de Nemours"],
+   ["GEF","Greif Inc. Class A Common Stock"],
+   ["AAPL","Apple Inc."],
+   ["MMC","Marsh & McLennan Companies"],
+   ["NSC","Norfolk Southern Corporation"],
+   ["INTC","Intel Corporation"],
+   ["EEP","Enbridge Energy"],
+   ["NEM","Newmont Mining Corporation"],
+   ["BMRN","BioMarin Pharmaceuticals"],
+   ["MON","Monsanto Company"],
+   ["CATO","Cato Corporation"],
+   ["RBA","Ritchie Bros. Auctioneers"],
+   ["MCD","McDonalds Corporation"],
+   ["SWK","Stanley Black & Decker Inc."],
+   ["GATX","GATX Corporation"],
+   ["ADSK","Autodesk Inc."],
+   ["GLW","Corning Incorporated"],
+   ["DLR","Digital Realty Trust"],
+   ["LVLT","Level 3 Communications"],
+   ["WYNN","Wynn Resorts Limited"],
+   ["FDX","FedEx Corporation"],
+   ["CNX","CONSOL Energy Inc."],
+   ["UTX","United Technologies Corporation"],
+   ["DD","E.I. du Pont de Nemours"],
+   ["GHC","Graham Holdings Company"],
+   ["VSAT","ViaSat Inc."],
+   ["RL","Ralph Lauren Corporation"],
+   ["RE","Everest Re Group Ltd."],
+   ["PHG","Koninklijke Philips"],
+   ["RYN","Rayonier Inc."],
+   ["LMCK","Liberty Media Corporation"],
+   ["MTN","Vail Resorts Inc."],
+   ["ATU","Actuant Corporation"],
+   ["DEL","Deltic Timber Corporation"],
+   ["CHK","Chesapeake Energy Corporation"],
+   ["BEN","Franklin Resources Inc."],
+   ["BIDU","Baidu, Inc."],
+   ["CKH","SEACOR Holdings Inc."],
+   ["MPEL","Melco Crown Entertainment"],
+   ["AON","AON plc"],
+   ["CF","CF Industries Holdings"],
+   ["TPLM","Triangle Petroleum Corporation "],
+   ["JOE","St. Joe Company"],
+   ["SHLD","Sears Holdings Corporation"],
+   ["BAC","Bank of America Corporation"],
+   ["LUK","Leucadia National Corporation"],
+   ["RDI","Reading International Inc"],
+   ["APD","Air Products and Chemicals"],
+   ["CAR","Avis Budget Group Inc."],
+   ["CALL","magicJack VocalTec Ltd"],
+   ["JBLU","JetBlue Airways Corporation"],
+   ["UNP","Union Pacific Corporation"],
+   ["MU","Micron Technology Inc."],
+   ["GE","General Electric Company"],
+   ["LOV","Spark Networks Inc."],
+   ["GS","Goldman Sachs Group Inc."],
+   ["CP","Canadian Pacific Railway"],
+   ["AAL","American Airlines Group"],
+   ["HTZ","Hertz Global Holdings Inc."],
+   ["RAI","Reynolds American Inc"],
+   ["CTO","Consolidated-Tomoka Land Co."],
+   ["MO","Altria Group Inc."],
+   ["GOOGL","Alphabet Inc."],
+   ["UNP","Union Pacific Corporation"],
+   ["BHI","Baker Hughes Incorporated"],
+   ["GD","General Dynamics Corporation"],
+   ["KO","Coca-Cola Company "],
+   ["WDC","Western Digital Corporation"],
+   ["ARRS","ARRIS International plc"],
+   ["PTEN","Patterson-UTI Energy Inc."],
+   ["NBL","Noble Energy Inc."],
+   ["AVT","Avnet Inc."],
+   ["AAN","Aarons, Inc."],
+   ["IDCC","InterDigital Inc."],
+   ["DV","DeVry Education Group Inc."],
+   ["XEC","Cimarex Energy Co"],
+   ["HP","Helmerich & Payne Inc."],
+   ["RDC","Rowan Companies plc"],
+   ["ARW","Arrow Electronics Inc."],
+   ["VECO","Veeco Instruments Inc."],
+   ["AGCO","AGCO Corporation"],
+   ["SM","SM Energy Company"],
+   ["CUB","Cubic Corporation"],
+   ["APOL","Apollo Education Group Inc."],
+   ["OSK","Oshkosh Corporation"],
+   ["FL","Foot Locker Inc."],
+   ["UHAL","Amerco"],
+   ["NEE","NextEra Energy Inc."],
+   ["DUK","Duke Energy Corporation"],
+   ["CMS","CMS Energy Corporation"],
+   ["ALL","Allstate Corporation"],
+   ["XEL","Xcel Energy Inc."],
+   ["PFE","Pfizer, Inc."],
+   ["MRK","Merck & Company Inc."],
+   ["IBM","International Business Machines"],
+   ["AVA","Avista Corporation"],
+   ["ABT","Abbott Laboratories"],
+   ["FTK","Flotek Industries Inc."],
+   ["SIRI","Sirius XM Holdings Inc."],
+   ["BG","Bunge Limited Bunge Limited"],
+   ["AGN","Allergan "],
+   ["SUPN","Supernus Pharmaceuticals Inc."],
+   ["CPN","Calpine Corporation"],
+   ["EDAP","EDAP TMS S.A."],
+   ["RLI","RLI Corporation"],
+   ["ASH","Ashland Global Holdings"],
+   ["ASTC","Astrotech Corporation"],
+   ["WEC","WEC Energy Group Inc."],
+   ["ACTA","Actua Corporation"],
+   ["ECOL","US Ecology Inc."],
+   ["AGEN","Agenus Inc."],
+   ["GG","Goldcorp Inc."],
+   ["PRGO","Perrigo Company"],
+   ["DRRX","DURECT Corporation"],
+   ["XOM","Exxon Mobil Corporation"],
+   ["K","Kellogg Company"],
+   ["PQ","Petroquest Energy Inc."],
+   ["XPL","Solitario Exploration & Royalty"],
+   ["TWI","Titan International Inc."],
+   ["AMT","American Tower Corporation"],
+   ["MKL","Markel Corporation"],
+   ["MA","Mastercard Incorporated"],
+   ["MCO","Moodys Corporation"],
+   ["DLTR","Dollar Tree Inc."],
+   ["KMX","CarMax Inc"],
+   ["V","Visa Inc."],
+   ["ROP","Roper Technologies Inc."],
+   ["ESGR","Enstar Group Limited"],
+   ["ORLY","OReilly Automotive Inc."],
+   ["SBAC","SBA Communications Corporation"],
+   ["LKQ","LKQ Corporation"],
+   ["MNRO","Monro Muffler Brake Inc."],
+   ["AMTD","TD Ameritrade Holdings"],
+   ["DHR","Danaher Corporation"],
+   ["DHIL","Diamond Hill Investment Group "],
+   ["ANSS","ANSYS Inc."],
+   ["LAMR","Lamar Advertising Company"],
+   ["CSX","CSX Corporation"],
+   ["AI","Arlington Asset Investment"],
+   ["WM","Waste Management Inc."],
+   ["CNI","Canadian National Railway"],
+   ["CAT","Caterpillar Inc."],
+   ["WMT","Wal-Mart Stores, Inc."],
+   ["CCI","Crown Castle International"],
+   ["ECL","Ecolab Inc."],
+   ["KOF","Coca Cola Femsa"],
+   ["UPS","United Parcel Service Inc."],
+   ["FDX","FedEx Corporation"],
+   ["TV","Grupo Televisa S.A."],
+   ["WBA","Walgreens Boots Alliance Inc."],
+   ["LBTYK","Liberty Global"],
+   ["AN","AutoNation Inc."],
+   ["LBTYA","Liberty Global"],
+   ["ARCO","Arcos Dorados Holdings Inc."],
+   ["LILA","Liberty Global"],
+   ["PG","Procter & Gamble "],
+   ["FOXA","Twenty-First Century Fox"],
+   ["FOX","Twenty-First Century Fox"],
+   ["PEP","Pepsico Inc."],
+   ["CSCO","Cisco Systems Inc."],
+   ["ORCL","Oracle Corporation"],
+   ["JNJ","Johnson & Johnson"],
+   ["KO","Coca-Cola Company"],
+   ["SYY","Sysco Corporation"],
+   ["MSFT","Microsoft Corporation"],
+   ["XOM","Exxon Mobil Corporation"],
+   ["USB","U.S. Bancorp"],
+   ["COP","ConocoPhillips"],
+   ["BK","Bank of New York Mellon"],
+   ["AVP","Avon Products Inc."],
+   ["STT","State Street Corporation"]]
+  data_dict = json.loads(request.POST.get('json_data'))
+  if request.user.is_authenticated():
+    print(str(data_dict['initial_capital']))
+    username = request.user.username
+    userid = request.user.id
+    cursor = connection.cursor()
+    cursor.execute("INSERT INTO `portal_portfolio` (investing_amount, num_stocks, expected_risk, brokerage_account, retirement_account, age, household_salary, household_income, ss_income, name, created_date, update_date, client_name, description, user_id) VALUES "
+                    "('" + str(data_dict['initial_capital']) + "','" + str(len(data_dict['new_tickers'])) + "','20','0','0','24','0','0','0','" + str(data_dict['portname']) + "',now(),now(),'" + str(data_dict['portname']) + "','Guru Portfolio','" + str(userid) + "')")
+    cursor.execute("SELECT LAST_INSERT_ID();")
+    show_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
+    create_date = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+    count=0
+
+    for guru_stock in data_dict['new_tickers']:
+        sentimentarr = []
+        company_name = ""
+        for desc in stocks:
+          if str(desc[0]) == str(data_dict['new_tickers'][count]):
+            company_name = str(desc[1])
+            with open("sentiment.csv") as f:
+                  reader = csv.reader(f)
+                  for row in reader:
+                    if len(sentimentarr) > 50:
+                        break
+                    if str(row[0]) in str(data_dict['new_tickers'][count]):
+                      if str(row[1])[0:5] in '2016-11-11':
+                        stock_sentiment = (float(row[2])*100)+50
+                        sentimentarr.append(stock_sentiment)
+        sentimentavg = np.average(sentimentarr)
+        cursor.execute("INSERT INTO `portal_stock` (created_date, update_date, ticker, show_id, buy_date, current_price, initial_price, number_of_shares, sell_date, company_name, allocation,sentiment)  VALUES "
+                        "('"+str(create_date)+"','"+str(create_date)+"','" + str(data_dict['new_tickers'][count]) + "','" + str(show_id) + "','" + str(create_date) + "','" + str(data_dict['new_price'][count]) + "','" + str(data_dict['new_price'][count]) + "','"  + str(data_dict['new_number_of_shares'][count]) + "','2016-09-01','" + str(company_name) + "','"  + str((data_dict['new_weights'][count])*.6666666666666667) + "','" + str(sentimentavg) + "')")
+        count += 1
+  return JsonResponse({'data':'completed!'})
+
 
 def dictfetchall(cursor):
     "Returns all rows from a cursor as a dict"
@@ -46,8 +418,11 @@ def guru_optimize(request):
   resultFile = open("Screen_parameters.csv",'w')
   wr = csv.writer(resultFile, delimiter=' ',
                             quotechar=' ', quoting=csv.QUOTE_MINIMAL)
+  tabletwo_string = str(request.POST['guru']) + ";BA;" + str(request.POST['capital'])
+  print(tabletwo_string)
   wr.writerow(['PortfolioID;Screen_frequency;Initial_capital'])
-  wr.writerow(['84;BA;1000000000'])
+  wr.writerow([tabletwo_string])
+  # wr.writerow(['84;BA;1000000000'])
   resultFile.close()
   cursor = connection.cursor()
   filename = 'Screen_parameters.csv'
@@ -58,7 +433,7 @@ def guru_optimize(request):
 
 
   start = '2006-01-01'
-  end = (datetime.date.today()-BDay(4))
+  end = (datetime.date.today()-BDay(5))
   snapshots =  pd.DatetimeIndex(start=start,end=end, freq=Screen_freq).tolist()
   snapshots.append(end)
   p_fundamentals_exist = fundamentals_exist = 0                 
@@ -219,7 +594,7 @@ def guru_optimize(request):
             if i > 0:
                 p_fundamentals = p_fundamentals.append(fundamentals)
             del fundamentals
-      
+  print(screener)
   for k in range(len(screener)):
       if k == 0:
           txt = "np.where(((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + screener['Filter_value'][k].astype(str) + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))"

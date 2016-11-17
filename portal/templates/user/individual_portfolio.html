@@ -640,13 +640,13 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                     <tbody id="optimizedPortfolio">
                     {% for stock in stocks %}
                         <td><a href="/user/individual_stock/{{stock.ticker}}/" id="stockLink">{{stock.ticker}}</a></td>
-                        <td class="text-center small">{{stock.ticker}}</td>
+                        <td class="text-center small">{{stock.company_name}}</td>
                         <td class="text-center">{{stock.buy_date}}</td>
                         <td class="text-center">{{stock.sell_date}}</td>
-                      {% if stock.gain >= 0%}
-                      <td class="text-center" style="color:rgba(255,0,0,1)"><span style="font-size:20px;">&darr;</span>&nbsp;-{{market_sentiment | random }}</td>
+                      {% if stock.sentiment <= 0 %}
+                      <td class="text-center" style="color:rgba(255,0,0,1)"><span style="font-size:20px;">&darr;</span>&nbsp;-{{stock.sentiment}}</td>
                       {% else %}
-                        <td class="text-center" style="color:rgba(0,255,0,1)"><span style="font-size:20px;">&uarr;</span>&nbsp;{{market_sentiment | random }}</td>
+                        <td class="text-center" style="color:rgba(0,255,0,1)"><span style="font-size:20px;">&uarr;</span>&nbsp;{{stock.sentiment}}</td>
                       {% endif %}
                         <td class="text-center">{{stock.current_price}}</td>
 {% if stock.gain >= 0%}
@@ -912,7 +912,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                         <td class="text-center small">{{stock.ticker}}</td>
                         <td class="text-center">{{stock.buy_date}}</td>
                         <td class="text-center">{{stock.sell_date}}</td>
-                        <td class="text-center">{{market_sentiment | random }}</td>
+
                         <td class="text-center">{{stock.current_price}}</td>
 {% if stock.gain >= 0%}
                          <td class="text-center" style="color:rgba(0,255,0,1)"><span style="font-size:20px;">&uarr;</span>&nbsp;{{ stock.gain }}%</td>

@@ -5,9 +5,17 @@ var PB = "PB;;"
 var EPUSD = "EPUSD;;"
 var NETMARGIN = "NETMARGIN;;"
 var filters = [0,0,0,0,0,0,]
+var guru = 0
+var new_tickers = []
+var new_price = []
+var new_number_of_shares = []
+var new_weights = []
+var initial_capital =0
+var portname = ""
 var get_guru = function(id) {
   $("#chosenGuru")[0].value = id
   $("#pickPin").empty()
+  $("#optimizePin").empty()
   $.ajax({
     url: '/user/guru_portfolio/'+id,
     type: 'POST',
@@ -18,6 +26,7 @@ var get_guru = function(id) {
         var rtnstr = ("<tr><td>"+(i+1)+"</td><td><a href='/user/individual_stock/"+stock.symbol+"/\'>" + stock.symbol + "</a></td><td>"+stock.company+"</td><td>"+stock.value+"</td><td>"+stock.change+"</td><td>"+stock.exchange+"</td><td>"+stock['13f_date']+"</td><td>"+stock.impact+"</td><td>"+stock.share+"</td><td>"+stock.yield+"</td><td>"+stock.industry+"</td><td>"+stock.sector+"</td><td>"+stock.position+"</td><td>"+stock.pct+"</td><td>"+stock.mktcap+"</td></tr>")
         console.log(rtnstr)
         $("#pickPin").append(rtnstr)
+        $("#optimizePin").append(rtnstr)
       })
   })
 }
@@ -40,9 +49,34 @@ var closeNav = function() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
+var save_guru = function() {
+  new_price.forEach(function(x) {
+    x = x.replace(/(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g,"")
+  })
+  guru_data = [new_tickers, new_price, new_number_of_shares, new_weights]
+  $.ajax({
+    method: "POST",
+    url: "/user/guru_settings/save_guru/",
+    data: {
+      json_data: JSON.stringify({
+         "new_tickers":new_tickers ,
+          "new_price":new_price,
+          "new_number_of_shares":new_number_of_shares,
+          "new_weights":new_weights,
+          "initial_capital": initial_capital,
+          "portname": portname,
 
+      })
+    },
+  }).done(function(x) {
+    $(".statusbar-text")[0].innerText = "Saved Portfolio!"
+    $("#statusbar_2").show()
+
+  })
+}
 
 var openNav = function(id, chosenGuruName) {
+  guru = String(id)
   $("#pickPin").empty()
   $("#chosenGuruName")[0].innerText = chosenGuruName + "'s Portfolio"
   localStorage.setItem('togglePortfolio',JSON.stringify({'open':1}))
@@ -212,6 +246,9 @@ var filterPortfolios = function() {
   $("#xpe")[0].value = PE
   $("#xpb")[0].value = PB
   $("#xepusd")[0].value = EPUSD
+  $("#port_name")[0].value = EPUSD
+  portname = $("#u_initial")[0].value
+  initial_capital = $("#t_initial")[0].value
   // $("#finalcriteria").submit()
   $.ajax({
     method: "POST",
@@ -221,7 +258,10 @@ var filterPortfolios = function() {
             "xnm":NETMARGIN,
             "xpe":PE,
             "xpb":PB,
-            "xepusd":EPUSD}
+            "xepusd":EPUSD,
+            "portname":portname,
+            "capital":initial_capital,
+            "guru":guru}
   }).done(function(x) {
     console.log(x)
     payload = x.post
@@ -258,11 +298,18 @@ var filterPortfolios = function() {
         newWeightArr.push(weightArr[index])
       }
     })
+
     newStockArr.forEach(function(x, index) {
       $("#noty_topCenter_layout_container").fadeIn(250)
       setTimeout(function(){ $("#noty_topCenter_layout_container").fadeOut(250)  }, 3000);
       $("#optimizePin").append("<tr><td>" + (index + 1) + "</td><td><a href=\'/user/individual_stock/"+x+"/'\'>" + x + "</a></td><td>$" + String(newPriceArr[index]).slice(0,2) + "." + String(newPriceArr[index]).slice(3,5) + "</td><td>" + newShares[index] + "</td><td>" + newWeightArr[index] + "</td></tr>")
+      new_tickers.push(x)
+      new_price.push(String(newPriceArr[index]).slice(0,4))
+      new_number_of_shares.push(newShares[index])
+      new_weights.push(newWeightArr[index])
+      $("#saveThisPortfolio").fadeIn(250)
     })
+
     $("#filterLoader").fadeOut(250)
     console.log(newDateArr)
     console.log(newStockArr)

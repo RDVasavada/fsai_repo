@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 import urllib2
+import csv
 import requests
 import json
+import numpy as np
 from random import randint
 from random import shuffle
 from collections import OrderedDict
@@ -14,6 +16,7 @@ from portal.models.data.portfolio import Portfolio
 from portal.models.user.portal_user import PortalUser
 from django.db import connection
 from django.http import JsonResponse
+from yahoo_finance import Share
 import numpy as np, numpy.random
 from portal.models.data.stock import Stock
 from portal.views.user import top_portfolios
@@ -472,8 +475,13 @@ def portfolio_optimize(request):
         randomarr.append(ranInt)
         randomtotal += ranInt
     allocationArr = np.random.dirichlet(np.ones(numshares),size=100)
+    print(np.sum(allocationArr))
+    print(np.sum(allocationArr))
+    print(np.sum(allocationArr))
+    print(np.sum(allocationArr))
+    print(np.sum(allocationArr))
     count=0
-    for num in range(numshares):
+    for num in range(numshares+1):
         ticker = str(stocks[num][0])
         companyname = str(stocks[num][1])
         ticker = ticker[0:]
@@ -486,10 +494,31 @@ def portfolio_optimize(request):
         randomshares = str(randint(15,15000))
         randomallocation = str(allocationArr[count]*100)[1:13]
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO `portal_stock` (created_date, update_date, ticker, show_id, buy_date, current_price, initial_price, number_of_shares, sell_date, company_name, allocation)  VALUES "
-                        "('2016-07-09 12:12:12','2016-07-09 12:12:12','" + str(ticker) + "','" + str(show_id) + "','2016-07-29','" + str(randomfloat) + "','" + str(randomfloatTwo) + "','" + str(randomshares) + "','2016-09-01','" + str(companyname) + "','" + randomallocation + "')")
-        newstocks.append({'ticker':stocks[num][0],'cname':stocks[num][1],'price':randomfloat,'shares':randomshares,'allocation':randomallocation})
+        create_date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        try:
+            cursor.execute("select value from daily_" + str(ticker))
+            for sval in dictfetchall[cursor]:
+                stock_value = sval['value']
+        except:
+            stock_share = Share(str(ticker))
+            stock_value = stock_share.get_open()
+            if stock_value == None:
+                stock_value = 0
+        sentimentarr = []
+        with open("sentiment.csv") as f:
+          reader = csv.reader(f)
+          for row in reader:
+            if len(sentimentarr) > 50:
+                break
+            if str(row[0]) in str(ticker):
+              if str(row[1])[0:5] in '2016-11-11':
+                stock_sentiment = (float(row[2])*100)+50
+                sentimentarr.append(stock_sentiment)
+        sentimentavg = np.average(sentimentarr)
         count += 1
+        cursor.execute("INSERT INTO `portal_stock` (created_date, update_date, ticker, show_id, buy_date, current_price, initial_price, number_of_shares, sell_date, company_name, allocation, sentiment)  VALUES "
+                        "('"+str(create_date)+"','"+str(create_date)+"','" + str(ticker) + "','" + str(show_id) + "','2017-07-29','" + str(stock_value) + "','" + str(stock_value) + "','" + str(randomshares) + "','2016-09-01','" + str(companyname) + "','" + randomallocation + "','" + str(sentimentavg) + "')")
+        newstocks.append({'ticker':stocks[num][0],'cname':stocks[num][1],'price':str(stock_value),'shares':randomshares,'allocation':randomallocation})
     # new_investment = request.POST['investingAmount']
     # if request.POST['Market'] == "S&P500":
     #     new_market = "S"

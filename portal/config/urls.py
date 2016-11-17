@@ -7,10 +7,13 @@ import quandl
 quandl.ApiConfig.api_key = 'X8CjGKTPEqTuto2v_Q94'
 import pandas as pd
 import time
+from yahoo_finance import Share
 import datetime
 import requests
 from time import gmtime, strftime
 import after_response
+import logging
+logging.basicConfig()
 
 urlpatterns = patterns('',
     url(r'^upload/$', 'portal.views.upload', name='upload'),
@@ -29,13 +32,13 @@ urlpatterns = patterns('',
     (r'^sms/?$', views.sms),
     (r'^getsms/?$', views.getsms),
     (r'^user/dashboard/marketnews/?$', views.marketnews),
-    (r'^user/dashboard/sentiment/?$', views.dash_sentiment),
     (r'^user/dashboard/top_picks/?$', views.top_picks),
     (r'^user/dashboard/portfolio_value/?$', views.portfolio_value),
     (r'^user/dashboard/get_gain/?$', views.get_gain),
+    (r'^user/dashboard/your_sentiment/?$', views.your_sentiment),
     (r'^user/dashboard/performance_chart/?$', views.performance_chart),
     (r'^chat_portal/?$', views.chat_portal),
-    (r'^user/scatter/?$', views.scatter),
+    (r'^user/scatter/(?P<stock_name>\w{0,50})/$', views.scatter),
     (r'^user/sentiment_data/(?P<stock_name>\w{0,50})/$', views.sentiment_data),
     (r'^sms/sms_symbolexchange/?$', views.sms_symbolexchange),
 
@@ -49,6 +52,7 @@ urlpatterns = patterns('',
     (r'^user/portfolio/?$', views.portfolio),
     (r'^user/portfolio_settings/?$', views.portfolio_settings),
     (r'^user/guru_settings/?$', views.guru_settings),
+    (r'^user/guru_settings/save_guru/?$', views.save_guru),
     (r'^user/guru_scrape/(?P<guru_id>[0-9]+)/?$', views.guru_scrape), 
     (r'^user/guru_optimize/?$', views.guru_optimize),
     (r'^user/guru_portfolio/(?P<guru_id>[0-9]+)/?$', views.guru_portfolio), 
@@ -59,6 +63,10 @@ urlpatterns = patterns('',
     (r'^user/individual_sentiment/(?P<portfolio_id>[0-9]+)/?$', views.individual_sentiment),    
     (r'^user/individual_stock/(?P<stock_name>\w{0,50})/$', views.individual_stock),
     (r'^user/news_portal/?$', views.news_portal),
+    (r'^user/news_portal/getnews/?$', views.getnews),
+    (r'^user/news_portal/get_stock_sentiment/(?P<stock_name>\w{0,50})/$', views.get_stock_sentiment),
+    (r'^user/news_portal/get_stock_news/(?P<stock_name>\w{0,50})/$', views.get_stock_news),
+    (r'^user/news_portal/portfolio_sentiment_data/(?P<id>[0-9]+)/?$', views.portfolio_sentiment_data),    
     (r'^user/top_portfolios/?$', views.top_portfolios),
     (r'^user/search_portfolio/?$', views.search_portfolio),
     (r'^user/backtest/(?P<port_id>[0-9]+)/?$', views.backtest), 
@@ -89,24 +97,9 @@ urlpatterns = patterns('',
 #                         "`Adj_Close` VARCHAR(255),"
 #                         "`Adj_Volume` VARCHAR(255),"
 #                         "PRIMARY KEY (id) );")
-#         #     # cursor.execute("SELECT last_date FROM stock_" + str(item['ticker']) + " WHERE last_date IN ("
-#         #     #                     "SELECT MAX( last_date ) "
-#         #     #                         "FROM stock_" + str(item['ticker']) + ""
-#         #     #                 ")"
-#         #     #                 "ORDER BY last_date DESC" )
-#         #     # lasttime = dictfetchall(cursor)
-#         #     # for t in lasttime:
-#         #     #     print(t)
 #         try:
 #             a = quandl.get(["EOD/" + str(item['ticker']) ])
-#         #         # for item in a['EOD/' + str(item['ticker']) + " - Adj_Close"]):
 #             for c in a.index.tolist():
-#         #             # originaltime = c
-#         #             # c = str(c)
-#         #             # c = datetime.datetime.strptime(c, "%Y-%m-%d %H:%M:%S.%f")
-#         #             # today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-#         #             # dt = datetime.datetime.strptime(today, "%Y-%m-%d %H:%M:%S.%f")
-#         #             # if c > dt:
 #                 c = pd.to_datetime(c)
 #                 adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
 #                 adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
@@ -259,11 +252,38 @@ def Update_DB_Dispatcher():
         RefreshDB()
 
 @after_response.enable
-def Update_Stocks_Dispatcher():
-    print("Your Stock Price Dispatcher is now turned on!")
+def RefreshStockPrices():
     cursor = connection.cursor();
     cursor.execute("select distinct ticker from portal_stock")
-    
+    for table_stock in dictfetchall(cursor):
+        try:
+            cursor.execute("select * from daily_" + str(table_stock['ticker']))
+        except:
+            cursor.execute("CREATE TABLE IF NOT EXISTS daily_" + str(table_stock['ticker']) + " ("
+                            "`id`INTEGER(1) DEFAULT 1,"
+                            "`value` VARCHAR(12),"
+                            "PRIMARY KEY (id) );")
+            cursor.execute("INSERT into daily_" + str(table_stock['ticker']) + " (value) VALUES ('0') ")
+        try:
+            stock_share = Share(str(table_stock['ticker']))
+            stock_value = stock_share.get_open()
+            print(stock_value)
+            update_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+            cursor.execute("UPDATE daily_" + str(table_stock['ticker']) + " SET value = " + str(stock_value) + " WHERE id = 1")
+            cursor.execute("UPDATE portal_stock SET current_price = " + str(stock_value) + " WHERE ticker = '" + str(table_stock['ticker']) + "'")
+            cursor.execute("UPDATE portal_stock SET update_date = '" + str(update_time) + "' WHERE ticker = '" + str(table_stock['ticker']) + "'")
+            print(str(table_stock['ticker'])+ " updated to : " + str(stock_value))
+        except:
+            print("error updating" + str(table_stock['ticker']))
+@after_response.enable
+def Update_Stocks_Dispatcher():
+    print("Your Stock Price Dispatcher is now turned on!")
+    RefreshStockPrices()
+    print("Going to sleep for an 15 minutes, and then I will refresh your database!")
+    for i in xrange(0,365):
+        time.sleep(360)
+        RefreshStockPrices()
+
 def dictfetchall(cursor):
     "Returns all rows from a cursor as a dict"
     desc = cursor.description
@@ -272,17 +292,8 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
     ]
 
-Update_DB_Dispatcher.after_response()
+# Update_DB_Dispatcher.after_response()
 # Update_Stocks_Dispatcher.after_response()
-
-# def 
-
-# @after_response.enable
-# def my_email_task(to, subject, body):
-
-# BuildSF1Database()
-# BuildStockDatabase()
-
 
 
 # lets us serve our media

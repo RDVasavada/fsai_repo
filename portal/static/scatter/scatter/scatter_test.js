@@ -43,7 +43,9 @@ var formatCurrency = function (d) {
 // Each data source has different payload structures.  We abstract the required properties for us to visualize into
 // 'staticData' and 'liveData' objects which we store in the 'sources' object.  This allows us to easily toggle between them.
 var dataSource;
-
+var w = window.location.href.slice(35)
+w =w.slice(0,-1) 
+console.log(w)
 // Test data
 var staticData = {
     name: "ticker",
@@ -52,7 +54,7 @@ var staticData = {
     amount: "impact_score",
     com_nam: "impact_score",
     pty: "impact_score",
-    url: "/user/sentiment_data/ADS/"
+    url: "/user/sentiment_data/" + w
 };
 
 // Live data from sunlight.org (you can use the static one if you want - the public one uses our API key.)
