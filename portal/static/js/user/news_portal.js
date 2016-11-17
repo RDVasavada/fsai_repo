@@ -10,8 +10,11 @@ $.ajax({
             var pub_date = w.pub_date
             var pub_url = w.web_url
             var snippet = w.snippet
-            var newitem =  "<div class='task-item priority-high' style='margin-top:15px'><div class='task-item-content'><div class='task-item-subhead' style='padding-top:15px;height:150px;font-size:12px'><a href='"+pub_url+"' target=_blank>"+w.snippet+"</a></div><div class='task-item-date'><i class='icon-calendar'></i>"+w.pub_date+"<i class='icon-time'></i></div></div></div>"
-            $("#news_pinner").append(newitem)
+            console.log()
+            if (String(snippet) !== "null") {
+                var newitem =  "<div class='task-item priority-high' style='margin-top:15px'><div class='task-item-content'><div class='task-item-subhead' style='padding-top:15px;height:150px;font-size:12px'><a href='"+pub_url+"' target=_blank>"+w.snippet+"</a></div><div class='task-item-date'><i class='icon-calendar'></i>"+w.pub_date+"<i class='icon-time'></i></div></div></div>"
+                $("#news_pinner").append(newitem)
+            }
         })
     $("#feeder").css('display','none')
     })

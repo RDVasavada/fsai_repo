@@ -1122,6 +1122,22 @@ def qu_SF1_trsf(db=None,ticker=None,field=None,start=None,end=None,dimension=Non
     return df
 
 
+# def filter_list(screener):
+#   cols = ""
+#   for index in range(len(screener)):
+#     if index ==0:
+#         print("one")
+#         cols = "['" + screener['Filter_factor'][index] + "\',"
+#         print cols
+#     elif index > 0 and index < max(range(len(screener))):
+#         print("two")
+#         cols = cols + "'" + screener['Filter_factor'][index] + "',"
+#         print cols
+#     elif index  == max(range(0,len(screener))):
+#         print("three")
+#         cols = cols + "'" + screener['Filter_factor'][index] + "', 'screen_out']"
+#         print cols
+#   return cols
 def filter_list(screener):
   cols = ""
   for index in range(len(screener)):
@@ -1138,7 +1154,6 @@ def filter_list(screener):
         cols = cols + "'" + screener['Filter_factor'][index] + "', 'screen_out']"
         print cols
   return cols
-
 
 
 

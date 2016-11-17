@@ -34,16 +34,34 @@ def backtest(request, port_id):
         stocks = get_stocks_by_portfolio(request, port_id)
         even = (float(1.00/(len(stocks)-1))*100)
         url = "https://www.portfoliovisualizer.com/backtest-portfolio?s=y&timePeriod=4&startYear=2006&firstMonth=1&endYear=2016&lastMonth=12&endDate=10%2F28%2F2016&initialAmount=10000&annualOperation=0&annualAdjustment=0&inflationAdjusted=true&annualPercentage=0.0&frequency=4&rebalanceType=1&showYield=false&reinvestDividends=true"
+        total = 00.00
         for x in range(0,len(stocks)):
-            print(stocks[x])
+            total += float(str(stocks[x]['allocation'])[0:4])
+        if total > 100.00:
+            extra = total - 100.00
+        else:
+            extra = 100.00 - total
+        print(total)
+        print(extra)
+        print("-_")
+        x_bool = int(0)
+        for x in range(len(stocks)):
             rtnstr = "&symbol"
-            rtnstr += str(x)
+            rtnstr += str(x+1)
             rtnstr += "="
             rtnstr += str(stocks[x]['ticker'])
             rtnstr += "&allocation"
-            rtnstr += str(x)
+            rtnstr += str(x+1)
             rtnstr += "_1="
-            rtnstr += str(stocks[x]['allocation'])
+            if extra > 2:
+                if x_bool == int(0):
+                    print("first run")
+                    x_bool = int(1)
+                    rtnstr += str(float(stocks[x]['allocation']) + extra - 0.13)
+                else:
+                    rtnstr += str(stocks[x]['allocation'])
+            else:
+                rtnstr += str(stocks[x]['allocation'])
             url+= rtnstr
         return HttpResponseRedirect(url)
 

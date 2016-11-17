@@ -77,14 +77,14 @@ $.ajax({
     method: "POST"
 }).done(function(data){
     // console.log(data)
-    $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
+    $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:24px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
 }).fail(function(data) {
     $.ajax({
     url:"portfolio_value/",
     method: "POST"
     }).done(function(data){
         // console.log(data)
-        $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
+        $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:24px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
     })
 })
 $.ajax({
@@ -109,7 +109,7 @@ $.ajax({
     // })
 }).fail(function() {
     $.ajax({
-    url:"/user/get_gain/",
+    url:"get_gain/",
     method: "POST"
     }).done(function(data){
         data.news.forEach(function(x) {
@@ -117,13 +117,13 @@ $.ajax({
         })
     })
 })
-$.ajax({
-    url:"/user/dashboard/your_sentiment/",
-    method: "POST"
-}).done(function(data){
-    console.log(data)
+// $.ajax({
+//     url:"/user/dashboard/your_sentiment/",
+//     method: "POST"
+// }).done(function(data){
+//     console.log(data)
     // $("#totalPortfolioValue")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:36px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:7%'>$"+data.data.total+"</div>"
-})
+// })
 // $.ajax({
 //     url:"performance_chart/",
 //     method: "POST"

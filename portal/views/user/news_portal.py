@@ -30,10 +30,9 @@ def get_stock_news(request, stock_name):
     cursor = connection.cursor()
     cursor.execute("SELECT company_name FROM portal_stock WHERE ticker = \'" + str(stock_name) + "' LIMIT 1")
     for d_score in dictfetchall(cursor):
-      cnstring = str(d_score['company_name']).split()
-      print(cnstring)
       try:
-        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + cnstring[0]
+        print(str(d_score['company_name']))
+        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=5e4b878121fc4daf91d5c3625e34a51a&sort=newest&q=" + str(d_score['company_name'])
         news = requests.get(url)
         rtnjson = news.json()
         return JsonResponse({'news':rtnjson}) 
@@ -64,13 +63,15 @@ def getnews(request):
   for portfolio in dictfetchall(cursor):
     idArr.append(str(portfolio['id']))
   for xid in idArr:
-    cursor.execute("select ticker, company_name from portal_stock where show_id = '" + str(xid) + "' LIMIT 5")  
+    cursor.execute("select ticker, company_name from portal_stock where show_id = '" + str(xid) + "' LIMIT 3")  
     for dist_ticker in dictfetchall(cursor):
-      cn = str(dist_ticker['company_name']).split()
-      cnstring = str(cn[0] + " " + cn[1])
-      url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + cnstring
+      url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=5e4b878121fc4daf91d5c3625e34a51a&sort=newest&q=" + str(dist_ticker['company_name'])
+       # curl --head https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=1cf6ae6247764c28824a8f160cf73c75 2>/dev/null | grep -i "X-RateLimit"
       news = requests.get(url)
-      newsarr.append(news.json())
+      try:
+        newsarr.append(news.json())
+      except:
+        print(news)
   return JsonResponse({'news':newsarr})
 
 @login_required

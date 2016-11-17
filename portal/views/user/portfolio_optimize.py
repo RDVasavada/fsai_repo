@@ -474,14 +474,11 @@ def portfolio_optimize(request):
             ranInt = randint(1,25)
         randomarr.append(ranInt)
         randomtotal += ranInt
-    allocationArr = np.random.dirichlet(np.ones(numshares),size=100)
-    print(np.sum(allocationArr))
-    print(np.sum(allocationArr))
-    print(np.sum(allocationArr))
-    print(np.sum(allocationArr))
-    print(np.sum(allocationArr))
+    allocationArr = np.random.dirichlet(np.ones(numshares),size=1)
     count=0
-    for num in range(numshares+1):
+    print(allocationArr)
+    for num in range(numshares):
+        allocation =  float(allocationArr[0][count])*100.0000
         ticker = str(stocks[num][0])
         companyname = str(stocks[num][1])
         ticker = ticker[0:]
@@ -492,18 +489,23 @@ def portfolio_optimize(request):
             multipler = str(1) + "." + str(randint(0,3))
         randomfloatTwo = float(randomfloat) * float(multipler)
         randomshares = str(randint(15,15000))
-        randomallocation = str(allocationArr[count]*100)[1:13]
+        # randomallocation = allocationArr[count]*100
         cursor = connection.cursor()
         create_date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         try:
             cursor.execute("select value from daily_" + str(ticker))
             for sval in dictfetchall[cursor]:
                 stock_value = sval['value']
+                if stock_value == None:
+                    stock_value = 23.22
         except:
-            stock_share = Share(str(ticker))
-            stock_value = stock_share.get_open()
-            if stock_value == None:
-                stock_value = 0
+            try:
+                stock_share = Share(str(ticker))
+                stock_value = stock_share.get_open()
+                if stock_value == None:
+                    stock_value = 23.22
+            except:
+                stock_value = 23.22
         sentimentarr = []
         with open("sentiment.csv") as f:
           reader = csv.reader(f)
@@ -517,8 +519,8 @@ def portfolio_optimize(request):
         sentimentavg = np.average(sentimentarr)
         count += 1
         cursor.execute("INSERT INTO `portal_stock` (created_date, update_date, ticker, show_id, buy_date, current_price, initial_price, number_of_shares, sell_date, company_name, allocation, sentiment)  VALUES "
-                        "('"+str(create_date)+"','"+str(create_date)+"','" + str(ticker) + "','" + str(show_id) + "','2017-07-29','" + str(stock_value) + "','" + str(stock_value) + "','" + str(randomshares) + "','2016-09-01','" + str(companyname) + "','" + randomallocation + "','" + str(sentimentavg) + "')")
-        newstocks.append({'ticker':stocks[num][0],'cname':stocks[num][1],'price':str(stock_value),'shares':randomshares,'allocation':randomallocation})
+                        "('"+str(create_date)+"','"+str(create_date)+"','" + str(ticker) + "','" + str(show_id) + "','2017-07-29','" + str(stock_value) + "','" + str(stock_value) + "','" + str(randomshares) + "','2016-09-01','" + str(companyname) + "','" + str(allocation) + "','" + str(sentimentavg) + "')")
+        newstocks.append({'ticker':stocks[num][0],'cname':stocks[num][1],'price':str(stock_value),'shares':randomshares,'allocation':randomshares})
     # new_investment = request.POST['investingAmount']
     # if request.POST['Market'] == "S&P500":
     #     new_market = "S"
@@ -528,7 +530,6 @@ def portfolio_optimize(request):
     #     new_market = "D"
     # new_risk = 33
 
-    print(request.POST)
     #end Adam's mock data --->
     # return render(request, 'user/portfolio_optimize.html', RequestContext(request))
     # 52.77.239.179:8080 - THE AWS instance of Ramana

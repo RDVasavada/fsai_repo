@@ -36,9 +36,9 @@ def individual_stock(request, stock_name):
         CompanyName = CompanyName.split()
         CompanyName = CompanyName[0] + " " + CompanyName[1]
     try:
-        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(CompanyName)
+        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=5e4b878121fc4daf91d5c3625e34a51a&sort=newest&q=" + str(CompanyName)
     except IndexError:
-        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=1cf6ae6247764c28824a8f160cf73c75&sort=newest&q=" + str(stock_name) + " stock"
+        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=5e4b878121fc4daf91d5c3625e34a51a&sort=newest&q=" + str(stock_name) + " stock"
     try:
         news = requests.get(url)
         context_dict["newsheadline"] = news.json()['response']['docs']

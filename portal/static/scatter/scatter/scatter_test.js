@@ -42,7 +42,7 @@ var formatCurrency = function (d) {
 // This example uses two data sources.  One is static and one is live
 // Each data source has different payload structures.  We abstract the required properties for us to visualize into
 // 'staticData' and 'liveData' objects which we store in the 'sources' object.  This allows us to easily toggle between them.
-var dataSource;
+var dataSource
 var w = window.location.href.slice(35)
 w =w.slice(0,-1) 
 console.log(w)

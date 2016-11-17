@@ -71,6 +71,7 @@ var save_guru = function() {
   }).done(function(x) {
     $(".statusbar-text")[0].innerText = "Saved Portfolio!"
     $("#statusbar_2").show()
+    setTimeout(function(){ $("#statusbar_2").fadeOut(250)  }, 2000);
 
   })
 }
