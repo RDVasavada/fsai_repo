@@ -18,7 +18,7 @@ svg {
                     style="width: 80px;">
                     &nbsp &nbsp
                     End: <input type="text" name="end" id="end" value="2015-03-10" 
-                    style="width: 80px;">
+                    style="width: 80px;">   
                     &nbsp &nbsp
                     <input name="updateButton" 
                     type="button" 
@@ -34,9 +34,9 @@ svg {
         <div class="block" style="width:95%;left:4%">
                     <div class="header">
                         <div class="side pull-left">
-                            <button type="button" class="btn btn-default btn-clean" style="border: 0px">
-                            YOUR PROFILE
-                            <!-- <a href="#"><span class="icon-pencil"></span></a>Edit Your Pr /ofile</button> -->
+                            <button type="button" class="btn btn-default btn-clean" style="border: 0px" onClick="i_openNav()">
+                            <!-- YOUR PROFILE -->
+                            <a href="#" ><span class="icon-pencil"></span></a>Edit Your Profile</button>
                         </div>
                         <div class="side pull-right">                            
                             <ul class="buttons">
@@ -48,12 +48,12 @@ svg {
                     <div class="content" style="height:150px">
                         <div class="row" style="height:100%;overflow:hidden">
                             <div class="col-lg-4" style="text-align:center;padding-right:0px;margin-left:25px;height:100%">
-                                   <img src="/static/img/profile.svg"  style="width: 100px;height: 100px;position: relative;top: 15px;border-radius:99px">
-                            <!-- {% if picture_url %} -->
-                                   <!-- <img src="{{picture_url}}"  style="width: 100px;height: 100px;position: relative;top: 15px;"> -->
-                            <!-- {% else %} -->
+                            {% if picture_url %}
+                                   <img src="{{picture_url}}"  style="width: 100px;height: 100px;position: relative;top: 15px;">
+                            {% else %}
+                                   <img src="/static/img/profile.svg/"  style="width: 100px;height: 100px;position: relative;top: 15px;border-radius:99px">
                              
-                            <!-- {% endif %} -->
+                            {% endif %}
 
                             </div>
                             <div class="col-lg-7" style="padding-left:0px">
@@ -77,7 +77,8 @@ svg {
                             </ul>
                         </div>                        
                     </div>                  
-                    <div class="content" style="height:150px">
+                    <div class="content" style="height:150px" id="sectorContent">
+
                         <div class="row">
                             
                         </div>
@@ -85,6 +86,7 @@ svg {
                                <div id="pieChart" style="position:relative;top:-25px;"></div>
 <link href="/static/css2/d3.pie.css" rel="stylesheet">
          <script>
+
 var pie = new d3pie("pieChart", {
     "header": {
         "title": {
@@ -108,48 +110,21 @@ var pie = new d3pie("pieChart", {
     },
     "size": {
         "canvasHeight": 175,
-        "canvasWidth": 350,
+        "canvasWidth": 400,
         "pieInnerRadius": "57%",
         "pieOuterRadius": "68%"
     },
     "data": {
         "sortOrder": "value-desc",
         "content": [
+{% for key, value in sectors.items %}
             {
-                "label": "Basic Materials",
-                "value": 8,
+                "label": "{{value.sector}}",
+                "value": {{value.value}},
                 "color": "#00047c"
             },
-            {
-                "label": "Conglomerates",
-                "value": 5,
-                "color": "#2f3399"
-            },
-            {
-                "label": "Consumer Goods",
-                "value": 2,
-                "color": "#2f52aa"
-            },
-            {
-                "label": "Financial",
-                "value": 3,
-                "color": "#2e58c9"
-            },
-            {
-                "label": "Health",
-                "value": 3,
-                "color": "#4d6fcc"
-            },
-            {
-                "label": "Industrial",
-                "value": 1,
-                "color": "#738def"
-            },
-            {
-                "label": "Services",
-                "value": 3,
-                "color": "#779fdd"
-            }
+{% endfor %}
+
         ]
     },
     "labels": {
@@ -220,7 +195,7 @@ var pie = new d3pie("pieChart", {
      <div class="col-md-6" style="margin-top:-10px">
         <div class="block" style="width:95%;right:-1%">
                     <div class="header">
-                        <h2>Unrealized Changes</h2>
+                        <h2>Unrealized Gains</h2>
                         <div class="side pull-right">                            
                             <ul class="buttons">
                                 <li><a href="#" class="block-toggle tip" title="" data-original-title="Toggle content"><span class="icon-chevron-down"></span></a></li>
@@ -249,237 +224,119 @@ var pie = new d3pie("pieChart", {
                 </div>
             </div> -->
             <div class="header">
-                <h2>Market Charts </h2>
+                <h2>Benchmark Charts </h2>
                 <div class="side pull-right">                            
-                    <ul class="buttons">
+                 <!--    <ul class="buttons">
                         <li class="btn-group">                                    
                         <li><button type="button" class="btn btn-default btn-clean" onClick="changeTime('1y')">1y</button></li>
                         <li><button type="button" class="btn btn-default btn-clean" onClick="changeTime('90d')">90d</button></li>
                         <li><button type="button" class="btn btn-default btn-clean" onClick="changeTime('30d')">30d</button></li>
                         <li><a href="#" class="block-toggle tip" title="" data-original-title="Show"><span class="icon-chevron-down"></span></a></li>
                         <li><a href="#" class="block-remove tip" title="" data-original-title="Remove"><span class="icon-remove"></span></a></li>
-                    </ul>
+                    </ul> -->
                 </div>                        
             </div>             
             <div class="content" style="height:330px;background:rgba(0,0,0,0.6)">
-
-              
-                  <br><span id="chosenMarket" style="top:-10px;left:85px;position:relative"> 
-                    S&P 500
-                  </span>
-
-                  <div class="ibox-content" id="myBar" style="height:150px;position:relative;top:-2vh;left:1vw">
+                  <div class="ibox-content" id="myBar" style="height:auto;position:relative;">
                       <div class="row" style="overflow:hidden">
 
                       </div>
                   </div> 
+
+
 <script>
-var d3;
-var margin = {top: 25, right: 25, bottom: 50, left: 15},
-    width = 600 - margin.left - margin.right,
-    height = 265 - margin.top - margin.bottom;
+var xwidth = String($("#myBar").width())
+console.log(xwidth)
+var margin = {top: 50, right: 20, bottom: 100, left: 50},
+    width = xwidth - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom;
+// Parse the date / time
 var parseDate = d3.time.format("%Y-%m-%d").parse;
+// Set the ranges
 var x = d3.time.scale().range([0, width]);
-var y = d3.scale.linear().range([height, 0]);
+var y = d3.scale.linear().range([height, 0.5]);
+// Define the axes
 var xAxis = d3.svg.axis().scale(x)
     .orient("bottom").ticks(5);
-var    yAxis = d3.svg.axis().scale(y)
-    .orient("left").ticks(5);
-var valueline = d3.svg.line()
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(1);
+// Define the line
+var priceline = d3.svg.line()   
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.high); });
+    .y(function(d) { return y(d.price); });
+    
+// Adds the svg canvas
 var svg = d3.select(".ibox-content")
-    // .append("svg")
-    //     .attr("width", width + margin.left + margin.right)
-    //     .attr("height", height + margin.top + margin.bottom)
-   .append("div")
-   .classed("svg-container", true)
-   .style("max-height", "265")
-   .append("svg")
-   //responsive SVG needs these 2 attributes and no width and height attr
-   .attr("preserveAspectRatio", "none")
-   .attr("viewBox", "0 0 675 250")
-   //class to make it responsive
-   .classed("svg-content-responsive", true)
-    .style("max-height", "265") 
-    .style("min-height", "265") 
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height*3)
     .append("g")
-    .attr("transform", "translate(" 
-        + margin.top 
-        + "," + margin.top + ")");
-var stock = document.getElementById('stock').value;
-var start = document.getElementById('start').value;
-var end = document.getElementById('end').value;
-
-var inputURL = "http://query.yahooapis.com/v1/public/yql"+
-    "?q=select%20*%20from%20yahoo.finance.historicaldata%20"+
-    "where%20symbol%20%3D%20%22"
-    +stock+"%22%20and%20startDate%20%3D%20%22"
-    +start+"%22%20and%20endDate%20%3D%20%22"
-    +end+"%22&format=json&env=store%3A%2F%2F"
-    +"datatables.org%2Falltableswithkeys";
-
-    console.log(inputURL)
-    // Get the data 
-    d3.json(inputURL, function(error, hdata){
-    hdata.query.results.quote.forEach(function(d) {
-        d.date = parseDate(d.Date);
-        d.high = +d.High;
-        d.low = +d.Low;
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
+// Get the data
+d3.csv("performance_line_chart/", function(error, data) {
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+        d.price = +d.price;
     });
-
-    // Scale the range of the hdata
-    x.domain(d3.extent(hdata.query.results.quote, function(d) {
-        return d.date; }));
-    y.domain([
-        d3.min(hdata.query.results.quote, function(d) { return d.low; }), 
-        d3.max(hdata.query.results.quote, function(d) { return d.high; })
-    ]);
-
-    svg.append("path")        // Add the valueline path.
-        .attr("class", "line")
-        .style("margin-left","75px")
-        .style("fill","none")
-        .attr("d", valueline(hdata.query.results.quote))
-         .attr("transform", "translate(25,0)");
-
-    svg.append("g")            // Add the X Axis
+    console.log(data)
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0.5, d3.max(data, function(d) { return d.price; })]);
+    // Nest the entries by symbol
+    var dataNest = d3.nest()
+        .key(function(d) {return d.symbol;})
+        .entries(data);
+    var color = d3.scale.category10();   // set the colour scale
+    legendSpace = width/dataNest.length; // spacing for the legend
+    // Loop through each symbol / key
+    dataNest.forEach(function(d,i) { 
+        console.log(d)
+        svg.append("path")
+            .attr("class", "line")
+            .style("stroke", function() { // Add the colours dynamically
+                return d.color = color(d.key); })
+            .attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
+            .attr("d", priceline(d.values))
+            .attr("fill", "none");
+        // Add the Legend
+        svg.append("text")
+            .attr("x", (legendSpace/2)+i*legendSpace)  // space legend
+            .attr("y", height)
+            .attr("class", "legend")    // style the legend
+            .style("fill", function() { // Add the colours dynamically
+                return d.color = color(d.key); })
+            .on("click", function(){
+                // Determine if current line is visible 
+                var active   = d.active ? false : true,
+                newOpacity = active ? 0 : 1; 
+                // Hide or show the elements based on the ID
+                d3.select("#tag"+d.key.replace(/\s+/g, ''))
+                    .transition().duration(100) 
+                    .style("opacity", newOpacity); 
+                // Update whether or not the elements are active
+                d.active = active;
+                })  
+            .text(d.key)
+            .attr('fill','white')
+            .attr('font-size','18px')
+    });
+    // Add the X Axis
+    svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height*1 + ")")
-        .style("fill", "#fff")
+        .attr("transform", "translate(0," + height*.8 + ")")
         .call(xAxis);
-
-    svg.append("g")            // Add the Y Axis
+    // Add the Y Axis
+    svg.append("g")
         .attr("class", "y axis")
-        .attr("transform", "translate(-5 ,0)")
-        .style("fill", "#fff")
         .call(yAxis);
-
-    svg.append("text")          // Add the label
-        .attr("class", "label")
-        .attr("transform", "translate(" + (width+3) + "," 
-            + y(hdata.query.results.quote[0].high) + ")")
-        .attr("dy", ".35em")
-        .attr("text-anchor", "start")
-        .style("fill", "steelblue")
-        .text("high");
 });
 
-// ** Update data section (Called from the onclick)
-function changeTime(s) {
-    var dateObj = new Date();
-    var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    month = String(month)
-    if (month.length == 1) {month = "0"+ month}
-    var endDate = year + "-" + month + "-" + day;
-    console.log(month)
-    document.getElementById('end').value = endDate;
-    if (s === '1y') {
-        year -=1
-    } else if (s == '90d') {
-        month -=3
-        month = String(month)
-        if (month.length == 1) {month = "0"+ month}
-    } else if (s == '30d') {
-        month -=1
-        month = String(month)
-        if (month.length == 1) {month = "0"+ month}
-    }
-    var startDate = year + "-" + month + "-" + day;
-    console.log(startDate)
-    document.getElementById('start').value = startDate;
-    var market = document.getElementById('chosenMarket').innerText
-    console.log(market)
-    if (market == 'Nasdaq Composite') {updateData('^IXIC')}
-    if (market == 'Dow Jones Industrial Average') {updateData('^DJI')}
-    if (market == 'S&P 500') {updateData('^GSPC')}
-}
-function updateData(stock) {
-if (stock == '^IXIC') {document.getElementById('chosenMarket').innerText = "Nasdaq Composite"}
-if (stock == '^DJI') {document.getElementById('chosenMarket').innerText = "Dow Jones Industrial Average"}
-if (stock == '^GSPC') {document.getElementById('chosenMarket').innerText = "S&P 500"}
-var stock = stock;
-var start = document.getElementById('start').value;
-var end = document.getElementById('end').value;
-console.log(start)
-console.log(end)
-console.log(stock)
-
-var inputURL = "http://query.yahooapis.com/v1/public/yql"+
-    "?q=select%20*%20from%20yahoo.finance.historicaldata%20"+
-    "where%20symbol%20%3D%20%22"
-    +stock+"%22%20and%20startDate%20%3D%20%22"
-    +start+"%22%20and%20endDate%20%3D%20%22"
-    +end+"%22&format=json&env=store%3A%2F%2F"
-    +"datatables.org%2Falltableswithkeys";
-
-    // Get the data again
-    d3.json(inputURL, function(error, data){
-        console.log(data.query)
-        data.query.results.quote.forEach(function(d) {
-            d.date = parseDate(d.Date);
-            d.high = +d.High;
-            d.low = +d.Low;
-        });
-
-        // Scale the range of the data
-        x.domain(d3.extent(data.query.results.quote, function(d) {
-            return d.date; }));
-        y.domain([
-            d3.min(data.query.results.quote, function(d) { 
-                return d.low; }), 
-            d3.max(data.query.results.quote, function(d) { 
-                return d.high; })
-        ]);
-
-        // Select the section we want to apply our changes to
-        var svg = d3.select("body").transition();
-
-        // Make the changes
-        svg.select(".line")    // change the line
-            .duration(750) 
-            .attr("d", valueline(data.query.results.quote));
-
-        svg.select(".label")   // change the label text
-            .duration(750)
-            .attr("transform", "translate(" + (width+3) + "," 
-            + y(data.query.results.quote[0].high) + ")");
- 
-        svg.select(".shadow") // change the title shadow
-            .duration(750)
-            .text(stock);  
-             
-        svg.select(".stock")   // change the title
-            .duration(750)
-            .text(stock);
-     
-        svg.select(".x.axis") // change the x axis
-            .duration(750)
-            .call(xAxis);
-        svg.select(".y.axis") // change the y axis
-            .duration(750)
-            .call(yAxis);
-
-    });
-}
-
-</script>                  
+</script>
            
                   <div class="head-panel nm" style="position:absolute;top:345px;left:25px">
                       <div class="btn-toolbar">
-                          <div id="new_input">
-                           <div class="btn-group btn-group-xs">
-                              <button type="button"  name="stock A" id="stock" value="^GSPC" class="btn btn-default btn-clean" onClick="updateData('^GSPC')">S&P500</button>
-                             <button type="button"  name="stock" id="stock" value="^IXIC" class="btn btn-default btn-clean" onClick="updateData('^IXIC')">Nasdaq</button>
-                             <button type="button"  name="stock" id="stock" value="^DJI" class="btn btn-default btn-clean" onClick="updateData('^DJI')">Dow Jones</button>
-
-                              <!-- <button type="button" class="btn btn-default btn-clean">Nasdaq</button> -->
-                              <!-- <button type="button" class="btn btn-default btn-clean">Dow Jones</button>                                     -->
-                          </div>
-                        
-                          </div>
+              
                       </div>
                  </div>                   
              </div>   
@@ -981,286 +838,6 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
         <div class="col-md-2" style="margin-top:8px;padding-left:5px;text-align:right">90 Day: </div>
         <svg id="dd-chart" class="col-md-10"></svg>
         </div>
-
-     <script>
-function graphit(r_data) {
-        var pdata = [
-        r_data.you[0],
-        (r_data.sp.data[0][1]/r_data.sp.data[21][1]),
-        (r_data.dj.dataset.data[0][1]/r_data.dj.dataset.data[21][1]),
-        (r_data.ndx.data[0][1]/r_data.ndx.data[21][1]),
-    ];
-
-    var gdata = [
-        ,r_data.you[1],
-        , (r_data.sp.data[21][1]/r_data.sp.data[42][1]),
-        , (r_data.ndx.data[21][1]/r_data.ndx.data[42][1]),
-        , (r_data.dj.dataset.data[21][1]/r_data.dj.dataset.data[42][1]),
-    ];
-
-    var ydata = [
-        ,r_data.you[2],
-        , (r_data.sp.data[42][1]/r_data.sp.data[63][1]),
-        , (r_data.dj.dataset.data[42][1]/r_data.dj.dataset.data[63][1]),
-        , (r_data.ndx.data[42][1]/r_data.ndx.data[63][1]),
-    ]
-    pdata.sort(function(a, b){return a-b});
-    //data.sort(d3.descending());
-    var pwidth = "75%",
-        pheight = 25,
-        goal = 100,
-        perc_so_far = 0;
-
-    var total_time = d3.sum(pdata);
-    var bar_x = 0;
-    var chart = d3.select("#p-chart")
-        .attr("width", "75%")
-        .attr("height", pheight)
-        bar_x = 0;
-        //var chart_width = chart.style("width").replace("px", "");
-    var chart_width = parseInt(d3.select("#p-chart").style("width"));
-    console.log(chart_width);
-
-    var color = d3.scale.category20b();
-        //d3.scale.ordinal()
-        //.domain(["6TH", "7TH", "5TH", "4TH"])
-        //.range(colorbrewer.RdBu[12]);
-    var bar = chart.selectAll("g")
-        .data(pdata)
-        .enter().append("g");
-        console.log(bar);
-    bar.append("rect")
-        .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
-        .attr("x", function(d) {
-            var prev_perc = perc_so_far;
-            var this_perc = 100*(d/total_time);
-            perc_so_far = perc_so_far + this_perc;
-            console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
-            return prev_perc + "%";
-        })
-        .attr("height", pheight)
-        .attr("fill",  function(d) { return (color(d)) } );
-
-    perc_so_far = 0;
-    count = 0
-    bar.append("text")
-        .attr("x", function(d) {
-            var prev_perc = perc_so_far;
-            var this_perc = 100*(d/total_time);
-            perc_so_far = perc_so_far + this_perc;
-            console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
-            return prev_perc + "%";
-        })
-        //.attr("y", 11)
-        .attr("dy", "1.35em")
-        .text(function(d) { 
-            if (count == 0) {
-                if (d > 0) {
-                    return "+" + String(d).slice(0,5) + " % "; 
-                } else {
-                    return String(d).slice(0,5) + " % "; 
-                }
-            }
-        })
-        .style("fill", "white")
-        .style("left", "5px")
-        .style("font-family", "Helvetica Neue")
-        .style("font-size", "14px")
-        .style("font-weight", "200")
-            
-        // console.log(data.ndx.data[0][1]/data.ndx.data[21][1]  )
-        // console.log(data.ndx.data[21][1]/data.ndx.data[42][1] )
-        // console.log(data.ndx.data[42][1]/data.ndx.data[63][1] )
-
-        
-
-    gdata.sort(function(a, b){return a-b});
-    var pwidth = "75%",
-        pheight = 25,
-        goal = 100,
-        perc_so_far = 0;
-
-    var total_time = d3.sum(gdata);
-    var bar_x = 0;
-    var chart = d3.select("#d-chart")
-        .attr("width", "75%")
-        .attr("height", pheight)
-        bar_x = 0;
-        //var chart_width = chart.style("width").replace("px", "");
-    var chart_width = parseInt(d3.select("#d-chart").style("width"));
-    var color = d3.scale.category20b();
-        //d3.scale.ordinal()
-        //.domain(["6TH", "7TH", "5TH", "4TH"])
-        //.range(colorbrewer.RdBu[12]);
-    var bar = chart.selectAll("g")
-        .data(gdata)
-        .enter().append("g");
-    bar[0].pop()
-    bar[0].pop()
-    bar[0].pop()
-    bar[0].pop()
-    bar.append("rect")
-        .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
-        .attr("x", function(d) {
-            var prev_perc = perc_so_far;
-            var this_perc = 100*(d/total_time);
-            perc_so_far = perc_so_far + this_perc;
-            console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
-            return prev_perc + "%";
-        })
-        .attr("height", pheight)
-        .attr("fill",  function(d) { return (color(d)) } );
-
-    perc_so_far = 0;
-    count = 0
-    bar.append("text")
-        .attr("x", function(d) {
-            var prev_perc = perc_so_far;
-            var this_perc = 100*(d/total_time);
-            perc_so_far = perc_so_far + this_perc;
-            return prev_perc + "%";
-        })
-        //.attr("y", 11)
-        .attr("dy", "1.35em")
-        .text(function(d) { 
-            return "+" + String(d).slice(0,5) + " % "; 
-        })
-        .style("fill", "white")
-        .style("left", "5px")
-        .style("font-family", "Helvetica Neue")
-        .style("font-size", "14px")
-        .style("font-weight", "200")
-
-
-        
-
-    ydata.sort(function(a, b){return a-b});
-    var pwidth = "75%",
-        pheight = 25,
-        goal = 100,
-        perc_so_far = 0;
-
-    var total_time = d3.sum(ydata);
-    var bar_x = 0;
-    var chart = d3.select("#dd-chart")
-        .attr("width", "75%")
-        .attr("height", pheight)
-        bar_x = 0;
-        //var chart_width = chart.style("width").replace("px", "");
-    var chart_width = parseInt(d3.select("#dd-chart").style("width"));
-    var color = d3.scale.category20b();
-        //d3.scale.ordinal()
-        //.domain(["6TH", "7TH", "5TH", "4TH"])
-        //.range(colorbrewer.RdBu[12]);
-    var bar = chart.selectAll("g")
-        .data(ydata)
-        .enter().append("g");
-        console.log(bar);
-    bar[0].pop()
-    bar[0].pop()
-    bar[0].pop()
-    bar[0].pop()
-    bar.append("rect")
-        .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
-        .attr("x", function(d) {
-            var prev_perc = perc_so_far;
-            var this_perc = 100*(d/total_time);
-            perc_so_far = perc_so_far + this_perc;
-            console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
-            return prev_perc + "%";
-        })
-        .attr("height", pheight)
-        .attr("fill",  function(d) { return (color(d)) } );
-
-    perc_so_far = 0;
-    count = 0
-    bar.append("text")
-        .attr("x", function(d) {
-            var prev_perc = perc_so_far;
-            var this_perc = 100*(d/total_time);
-            perc_so_far = perc_so_far + this_perc;
-            console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
-            return prev_perc + "%";
-        })
-        //.attr("y", 11)
-        .attr("dy", "1.35em")
-        .text(function(d) { 
-            if (count == 0) {
-                if (d > 0) {
-                    return "+" + String(d).slice(0,5) + " % "; 
-                } else {
-                    return String(d).slice(0,5) + " % "; 
-                }
-            }
-        })
-        .style("fill", "white")
-        .style("left", "5px")
-        .style("font-family", "Helvetica Neue")
-        .style("font-size", "14px")
-        .style("font-weight", "200")
-}
-$.ajax({
-    url:"dashboard/performance_chart/",
-    method: "POST"
-}).done(function(r_data){
-
-if (r_data.you[0]) {
-    graphit(r_data)
-    } else {
-        $.ajax({
-            url:"performance_chart/",
-            method: "POST"
-        }).done(function(r_data) {
-            if (r_data.you[0]) {
-                graphit(r_data)
-
-            } else {
-                $.ajax({
-                    url:"dashboard/performance_chart/",
-                    method: "POST"
-                }).done(function(r_data) {
-                    graphit(r_data)
-
-                })
-            }
-        }).fail(function(err) {
-            $.ajax({
-                url:"dashboard/performance_chart/",
-                method: "POST"
-            }).done(function(r_data) {
-                    graphit(r_data)
-
-            })
-
-        })
-    }
-}).fail(function(err) {
-            $.ajax({
-                url:"user/dashboard/performance_chart/",
-                method: "POST"
-            }).done(function(r_data) {
-                    graphit(r_data)
-
-            })
-})
-
-
-        
-
-
-
-
-
-// d3.select(window).on('resize', resize);
-
-// function resize () {
-//     var width = parseInt(d3.select("#p-chart").style("width"));
-//     //console.log(width);
-//     //console.log(bar);
-// }
-
-</script>
-
 
     </div>
 </div>  

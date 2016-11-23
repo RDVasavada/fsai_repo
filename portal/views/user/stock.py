@@ -9,7 +9,7 @@ def get_stocks_by_portfolio(request, portfolio_id):
    cursor = connection.cursor()
    cursor.execute("select ticker, current_price, initial_price, number_of_shares, sentiment, allocation, company_name,  "
                   "buy_date, sell_date, "
-                  "TRUNCATE(((current_price-initial_price)/initial_price) * 100, 2) "
+                  "TRUNCATE(((current_price-initial_price)/initial_price), 2) "
                   "as gain from portal_stock where show_id=" + str(portfolio_id))
    stocks = dictfetchall(cursor)
    #stocks = Stock.objects.filter(show=portfolio_id)

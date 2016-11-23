@@ -127,7 +127,22 @@ for (var key in portChanges) {
         }
     }
 }
-  
+var length = $("h2#s_sentiment").length
+for (var i = 0; i <= Number(length); i++) {
+    var stars = Number(String($("h2#s_sentiment")[i].innerText).slice(0,1))
+    if (stars <= 2) {
+        $("h2#s_sentiment")[i].innerHTML = "<i class='icon-star'></i><i class='icon-star-empty'></i><i class='icon-star-empty'></i><i class='icon-star-empty'></i><i class='icon-star-empty'></i>"
+    } else if (stars > 2 && stars <= 4) {
+        $("h2#s_sentiment")[i].innerHTML = "<i class='icon-star'></i><i class='icon-star'></i><i class='icon-star-empty'></i><i class='icon-star-empty'></i><i class='icon-star-empty'></i>"
+    } else if (stars > 4 && stars <= 6) {
+        $("h2#s_sentiment")[i].innerHTML = "<i class='icon-star'></i><i class='icon-star'></i><i class='icon-star'></i><i class='icon-star-empty'></i><i class='icon-star-empty'></i>"
+    } else if (stars > 6 && stars <= 8) {
+        $("h2#s_sentiment")[i].innerHTML = "<i class='icon-star'></i><i class='icon-star'></i><i class='icon-star'></i><i class='icon-star'></i><i class='icon-star-empty'></i>"
+    } else if (stars > 8 && stars <= 10) {
+        $("h2#s_sentiment")[i].innerHTML = "<i class='icon-star'></i><i class='icon-star'></i><i class='icon-star'></i><i class='icon-star'></i><i class='icon-star'></i>"
+    }
+
+}
 //navbar bug fix
 $(".page-navigation li a").click(function(e){
     renav(e)       

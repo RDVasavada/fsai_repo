@@ -304,7 +304,7 @@ vizuly.theme.scatter = function (viz) {
                  return  color;
             },
             node_fill_opacity: function (d, i) {
-                return .2;
+                return 1;
             },
             class: "vz-skin-neon"
         },

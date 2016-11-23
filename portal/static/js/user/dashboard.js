@@ -4,7 +4,10 @@
 
   $(".scroll-sail").height('25vh').mCustomScrollbar();
 
-$("#statusbar_2").show()
+// $("#statusbar_2").show()
+var sectorpadding = String($("#sectorContent").width() / 18).slice(0,2) + "px"
+console.log(sectorpadding)
+$("#pieChart").css("left",sectorpadding)
 
 
 $.ajax({
@@ -30,10 +33,11 @@ $.ajax({
     method: "POST"
 }).done(function(data){
     data.sentiment.forEach(function(x) {
-        if (String(x.sentiment).indexOf("-") !== -1) {
-            $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(255,0,0,1)'>↓"+x.sentiment+"</span></div></div></div>")            
+        sentiment_value = String(x.sentiment * 100).slice(0,String(x.sentiment*100).indexOf("."))
+        if (sentiment_value < 40) {
+            $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(255,0,0,1)'>↓"+sentiment_value+"</span></div></div></div>")            
         } else {
-                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(0,255,0,1)'>↑"+x.sentiment+"</span></div></div></div>")            
+                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(0,255,0,1)'>↑"+sentiment_value+"</span></div></div></div>")            
 
         }
     }) 
@@ -43,10 +47,11 @@ $.ajax({
     method: "POST"
     }).done(function(data){
     data.sentiment.forEach(function(x) {
-        if (String(x.sentiment).indexOf("-") !== -1) {
-            $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(255,0,0,1)'>"+x.sentiment+"</span></div></div></div>")            
+        sentiment_value =  String(x.sentiment * 100).slice(0,String(x.sentiment*100).indexOf("."))
+        if (sentiment_value < 40) {
+            $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(255,0,0,1)'>"+sentiment_value+"</span></div></div></div>")            
         } else {
-                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(0,255,0,1)'>"+x.sentiment+"</span></div></div></div>")            
+                $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(0,255,0,1)'>"+sentiment_value+"</span></div></div></div>")            
 
         }
     }) 
@@ -107,16 +112,283 @@ $.ajax({
     // data.news.forEach(function(x) {
     //     $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
     // })
-}).fail(function() {
-    $.ajax({
-    url:"get_gain/",
-    method: "POST"
-    }).done(function(data){
-        data.news.forEach(function(x) {
-            $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
-        })
-    })
 })
+
+function graphit(r_data) {
+        var pdata = [
+        r_data.you[0],  
+        (r_data.sp.data[0][1]/r_data.sp.data[21][1]),
+        (r_data.dj.dataset.data[0][1]/r_data.dj.dataset.data[21][1]),
+        (r_data.ndx.data[0][1]/r_data.ndx.data[21][1]),
+    ];
+
+    var gdata = [
+        ,r_data.you[1],
+        , (r_data.sp.data[21][1]/r_data.sp.data[42][1]),
+        , (r_data.ndx.data[21][1]/r_data.ndx.data[42][1]),
+        , (r_data.dj.dataset.data[21][1]/r_data.dj.dataset.data[42][1]),
+    ];
+
+    var ydata = [
+        ,r_data.you[2],
+        , (r_data.sp.data[42][1]/r_data.sp.data[63][1]),
+        , (r_data.dj.dataset.data[42][1]/r_data.dj.dataset.data[63][1]),
+        , (r_data.ndx.data[42][1]/r_data.ndx.data[63][1]),
+    ]
+    pdata.sort(function(a, b){return a-b});
+    //data.sort(d3.descending());
+    var pwidth = "75%",
+        pheight = 25,
+        goal = 100,
+        perc_so_far = 0;
+
+    var total_time = d3.sum(pdata);
+    var bar_x = 0;
+    var chart = d3.select("#p-chart")
+        .attr("width", "75%")
+        .attr("height", pheight)
+        bar_x = 0;
+        //var chart_width = chart.style("width").replace("px", "");
+    var chart_width = parseInt(d3.select("#p-chart").style("width"));
+    console.log(chart_width);
+
+    var color = d3.scale.category20b();
+        //d3.scale.ordinal()
+        //.domain(["6TH", "7TH", "5TH", "4TH"])
+        //.range(colorbrewer.RdBu[12]);
+    var bar = chart.selectAll("g")
+        .data(pdata)
+        .enter().append("g");
+        console.log(bar);
+    bar.append("rect")
+        .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
+        .attr("x", function(d) {
+            var prev_perc = perc_so_far;
+            var this_perc = 100*(d/total_time);
+            perc_so_far = perc_so_far + this_perc;
+            console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+            return prev_perc + "%";
+        })
+        .attr("height", pheight)
+        .attr("fill",  function(d) { return (color(d)) } );
+
+    perc_so_far = 0;
+    count = 0
+    bar.append("text")
+        .attr("x", function(d) {
+            var prev_perc = perc_so_far;
+            var this_perc = 100*(d/total_time);
+            perc_so_far = perc_so_far + this_perc;
+            console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+            return prev_perc + "%";
+        })
+        //.attr("y", 11)
+        .attr("dy", "1.35em")
+        .text(function(d) { 
+            if (count == 0) {
+                if (d > 0) {
+                    return "+" + String(d).slice(0,5) + " % "; 
+                } else {
+                    return String(d).slice(0,5) + " % "; 
+                }
+            }
+        })
+        .style("fill", "white")
+        .style("left", "5px")
+        .style("font-family", "Helvetica Neue")
+        .style("font-size", "14px")
+        .style("font-weight", "200")
+            
+        // console.log(data.ndx.data[0][1]/data.ndx.data[21][1]  )
+        // console.log(data.ndx.data[21][1]/data.ndx.data[42][1] )
+        // console.log(data.ndx.data[42][1]/data.ndx.data[63][1] )
+
+        
+
+    gdata.sort(function(a, b){return a-b});
+    var pwidth = "75%",
+        pheight = 25,
+        goal = 100,
+        perc_so_far = 0;
+
+    var total_time = d3.sum(gdata);
+    var bar_x = 0;
+    var chart = d3.select("#d-chart")
+        .attr("width", "75%")
+        .attr("height", pheight)
+        bar_x = 0;
+        //var chart_width = chart.style("width").replace("px", "");
+    var chart_width = parseInt(d3.select("#d-chart").style("width"));
+    var color = d3.scale.category20b();
+        //d3.scale.ordinal()
+        //.domain(["6TH", "7TH", "5TH", "4TH"])
+        //.range(colorbrewer.RdBu[12]);
+    var bar = chart.selectAll("g")
+        .data(gdata)
+        .enter().append("g");
+    bar[0].pop()
+    bar[0].pop()
+    bar[0].pop()
+    bar[0].pop()
+    bar.append("rect")
+        .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
+        .attr("x", function(d) {
+            var prev_perc = perc_so_far;
+            var this_perc = 100*(d/total_time);
+            perc_so_far = perc_so_far + this_perc;
+            console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+            return prev_perc + "%";
+        })
+        .attr("height", pheight)
+        .attr("fill",  function(d) { return (color(d)) } );
+
+    perc_so_far = 0;
+    count = 0
+    bar.append("text")
+        .attr("x", function(d) {
+            var prev_perc = perc_so_far;
+            var this_perc = 100*(d/total_time);
+            perc_so_far = perc_so_far + this_perc;
+            return prev_perc + "%";
+        })
+        //.attr("y", 11)
+        .attr("dy", "1.35em")
+        .text(function(d) { 
+            return "+" + String(d).slice(0,5) + " % "; 
+        })
+        .style("fill", "white")
+        .style("left", "5px")
+        .style("font-family", "Helvetica Neue")
+        .style("font-size", "14px")
+        .style("font-weight", "200")
+
+
+        
+
+    ydata.sort(function(a, b){return a-b});
+    var pwidth = "75%",
+        pheight = 25,
+        goal = 100,
+        perc_so_far = 0;
+
+    var total_time = d3.sum(ydata);
+    var bar_x = 0;
+    var chart = d3.select("#dd-chart")
+        .attr("width", "75%")
+        .attr("height", pheight)
+        bar_x = 0;
+        //var chart_width = chart.style("width").replace("px", "");
+    var chart_width = parseInt(d3.select("#dd-chart").style("width"));
+    var color = d3.scale.category20b();
+        //d3.scale.ordinal()
+        //.domain(["6TH", "7TH", "5TH", "4TH"])
+        //.range(colorbrewer.RdBu[12]);
+    var bar = chart.selectAll("g")
+        .data(ydata)
+        .enter().append("g");
+        console.log(bar);
+    bar[0].pop()
+    bar[0].pop()
+    bar[0].pop()
+    bar[0].pop()
+    bar.append("rect")
+        .attr("width", function(d) { return ((d/total_time)*100) + "%"; } )
+        .attr("x", function(d) {
+            var prev_perc = perc_so_far;
+            var this_perc = 100*(d/total_time);
+            perc_so_far = perc_so_far + this_perc;
+            console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+            return prev_perc + "%";
+        })
+        .attr("height", pheight)
+        .attr("fill",  function(d) { return (color(d)) } );
+
+    perc_so_far = 0;
+    count = 0
+    bar.append("text")
+        .attr("x", function(d) {
+            var prev_perc = perc_so_far;
+            var this_perc = 100*(d/total_time);
+            perc_so_far = perc_so_far + this_perc;
+            console.log("perc_so_far:" + perc_so_far + "; this_perc:" + this_perc + "; prev_perc:" + prev_perc + ";");
+            return prev_perc + "%";
+        })
+        //.attr("y", 11)
+        .attr("dy", "1.35em")
+        .text(function(d) { 
+            if (count == 0) {
+                if (d > 0) {
+                    return "+" + String(d).slice(0,5) + " % "; 
+                } else {
+                    return String(d).slice(0,5) + " % "; 
+                }
+            }
+        })
+        .style("fill", "white")
+        .style("left", "5px")
+        .style("font-family", "Helvetica Neue")
+        .style("font-size", "14px")
+        .style("font-weight", "200")
+}
+$.ajax({
+    url:"performance_chart/",
+    method: "POST"
+}).done(function(r_data){
+
+if (r_data.you[0]) {
+    console.log(r_data)
+    graphit(r_data)
+    } else {
+        $.ajax({
+            url:"performance_chart/",
+            method: "POST"
+        }).done(function(r_data) {
+            console.log(r_data)
+            if (r_data.you[0]) {
+                graphit(r_data)
+
+            } else {
+                $.ajax({
+                    url:"user/dashboard/performance_chart/",
+                    method: "POST"
+                }).done(function(r_data) {
+                    console.log(r_data)
+                    graphit(r_data)
+
+                })
+            }
+        }).fail(function(err) {
+            $.ajax({
+                url:"dashboard/performance_chart/",
+                method: "POST"
+            }).done(function(r_data) {
+                    console.log(r_data)
+                    graphit(r_data)
+
+            })
+
+        })
+    }
+}).fail(function(err) {
+            $.ajax({
+                url:"user/dashboard/performance_chart/",
+                method: "POST"
+            }).done(function(r_data) {
+                    graphit(r_data)
+
+            })
+})
+
+// .fail(function() {
+//     $.ajax({
+//     url:"get_gain/",
+//     method: "POST"
+//     }).done(function(data){
+//         data.news.forEach(function(x) {
+//             $("#pin").append("<a href="+x.link+" target='_blank'><div class='email-list-item' ><div class='item-line'><div class='item line-title' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:3px'>"+x.title+"</div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.description+"<br></div><div class='item-line-date'>"+x.pubDate+"</div></div></div></a>")
+//         })
+//     })
+// })
 // $.ajax({
 //     url:"/user/dashboard/your_sentiment/",
 //     method: "POST"

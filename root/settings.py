@@ -176,6 +176,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'django.contrib.humanize',
     'after_response',
+    'mathfilters',
     #third party apps
     'rest_framework',
     'webpack_loader',

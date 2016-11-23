@@ -56,7 +56,6 @@ def your_sentiment(request):
     cursor.execute("select distinct ticker from portal_stock where show_id = '" + str(xid) + "' limit 30")
     for sentiment_stock in dictfetchall(cursor):
         stockTickerArr.append(sentiment_stock['ticker'])
-  print(stockTickerArr)
   sentimentObj =[]
   with open("sentiment.csv") as f:
       reader = csv.reader(f)
@@ -89,13 +88,143 @@ def get_gain(request):
           denom = float(a['initial_price'])
           if float(a['initial_price']) == 0 :
             denom = 1
-          tgain = (float(a['current_price']) - float(a['initial_price'])) / denom
+          tgain = (float(a['current_price']) / denom )
           portChangeArr.append(tgain)
           gainArr.append(tgain)
       portChange =  np.average(portChangeArr)
       portArr.append(portChange)
-    gain = np.average(gainArr) * 100
+    gain = np.average(gainArr)
    return JsonResponse({'data':gain, 'ports':portArr})
+
+@csrf_exempt
+def performance_line_chart(request):
+  response = HttpResponse(content_type='text/csv')
+  response['Content-Disposition'] = 'attachment; filename="data.csv"'
+  writer = csv.writer(response)
+  writer.writerow(['symbol', 'date', 'price'])
+  end = datetime.date.today()
+  start = (end - datetime.timedelta(days=365))
+  if request.user.is_authenticated():
+     username = request.user.username
+     portalUser = PortalUser.objects.get(username=username)
+  portfolios = top_portfolios(request,portalUser.id)
+  cursor = connection.cursor()
+  returnarr = []
+  imparr = []
+  return_date_arr = []
+  for item in portfolios:
+    cursor.execute("SELECT ticker from portal_stock where show_id = \'" + str(item['id']) + "'")
+    newarr = []
+    for stock in dictfetchall(cursor):
+      datearr = []
+      stockarr = []
+      try:
+        cursor.execute("SELECT Adj_Close, last_date FROM stock_" + str(stock['ticker']) + " WHERE last_date BETWEEN '" + str(start) + "' AND '" + str(end) + "'")
+        first_price = 0
+        if len(newarr) == 0:
+          for s_val in dictfetchall(cursor):
+              newarr.append(0)
+              return_date_arr.append(s_val['last_date'])
+        if len(stockarr) == 0:
+          for s_val in dictfetchall(cursor):
+            if first_price == 0:
+              first_price = s_val['Adj_Close']
+            stockarr.append(s_val['Adj_Close'])
+            datearr.append(s_val['last_date'])
+        count = 1
+        for x in datearr:
+          a = stockarr[count]
+          b = stockarr[count - 1]
+          c = (float(a)/float(first_price))
+          newarr[count] = c
+          count += 1
+      except:
+        print("oh well")
+    if len(returnarr) == 0 :
+      returnarr = newarr
+    else:
+      imparr = newarr
+      returnarr = [(x+y)/2 for x,y in zip(imparr/returnarr)]
+  returnarr[0] = 1
+  for line in returnarr:
+    print(return_date_arr.pop(0))
+    writer.writerow(['You',str(return_date_arr.pop(0))[0:10],returnarr.pop(0)])
+  valarr = []
+  datearr = []
+  last = 0
+  with open('ndx.json') as json_data:
+    ndx = json.load(json_data)
+    for item in ndx['data']:
+      if last == 0:
+        last = item[1]
+      if start <= datetime.datetime.strptime(item[0], '%Y-%m-%d').date() <= end:
+        change = float(item[1])/float(last)
+        change = change * change 
+        datearr.append(item[0])
+        valarr.append(change)
+  datearr.pop(0)
+  valarr.pop(0)
+  for item in valarr:
+    print(datearr.pop())
+    writer.writerow(['Nasdaq',str(datearr.pop()),valarr.pop()])
+  valarr = []
+  datearr = []
+  last = 0
+  with open('sp.json') as json_data:
+    sp = json.load(json_data)
+    for item in sp['data']:
+      if last == 0:
+        last = item[1]
+      if start <= datetime.datetime.strptime(item[0], '%Y-%m-%d').date() <= end:
+        change = float(item[1])/float(last)
+        change = change * change 
+        datearr.append(item[0])
+        valarr.append(change)
+  datearr.pop(0)
+  valarr.pop(0)        
+  for item in valarr:
+    print(datearr.pop())
+    writer.writerow(['S&P 500',datearr.pop(),valarr.pop()])
+  l_valarr = []
+  l_datearr = []
+  last = 0
+  with open('dj.json') as json_data:
+    dj = json.load(json_data)
+    for item in dj['dataset']['data']:
+      if last == 0:
+        last = item[1]
+      if start <= datetime.datetime.strptime(item[0], '%Y-%m-%d').date() <= end:
+        change = float(item[1])/float(last)
+        change = change * change 
+        l_datearr.append(item[0])
+        l_valarr.append(change)
+  for item in valarr:
+    print(l_datearr.pop())
+    writer.writerow(['Dow Jones',l_datearr.pop(),l_valarr.pop()])
+  return response
+  # return response
+   # gainArr = []
+   # portArr = []
+   # if request.user.is_authenticated():
+   #  username = request.user.username
+   #  portalUser = PortalUser.objects.get(username=username)
+   #  portfolios = top_portfolios(request,portalUser.id)
+   #  for port in portfolios:
+   #    cursor = connection.cursor()
+   #    portChangeArr = []
+   #    cursor.execute("select ticker from portal_stock where show_id=" + str(port['id']))
+   #    for a in dictfetchall(cursor):
+   #        denom = float(a['initial_price'])
+   #        print(denom)
+   #        if float(a['initial_price']) == 0 :
+   #          denom = 1
+   #        tgain = (float(a['current_price']) / denom )
+   #        print(tgain)
+   #        portChangeArr.append(tgain)
+   #        gainArr.append(tgain)
+   #    portChange =  np.average(portChangeArr)
+   #    portArr.append(portChange)
+   #  gain = np.average(gainArr)
 
 @csrf_exempt
 def performance_chart(request):
@@ -119,9 +248,9 @@ def performance_chart(request):
             denom = 1
           tgain = (float(a['current_price']) - float(a['initial_price'])) / denom
           gainArr.append(tgain)
-  gain = np.average(gainArr)
-  multipler = "0." + str(randint(8,9))
-  multipler2 = "0." + str(randint(7,8))
+  gain = np.average(gainArr) 
+  multipler = "0." + str(randint(8,9)) 
+  multipler2 = "0." + str(randint(7,8)) 
   gain2 = gain*float(multipler)
   gain3 = gain*float(multipler2)
   return JsonResponse({'ndx':ndx,'sp':sp,'dj':dj,'you':[gain,gain2,gain3]})
@@ -160,7 +289,6 @@ def portfolio_value(request):
           stocks.append(stockDict)
           stocks = json.dumps(list(stocks), cls=DjangoJSONEncoder)
           context_dict['stockDict'] = stocks
-          print(stockTotal)
       try:
         change = stockTotal/oldTotal
         change = change*100
@@ -173,12 +301,28 @@ def portfolio_value(request):
 
 @login_required
 def dashboard(request):
+  sectorList = {}
   if request.user.is_authenticated():
       username = request.user.username
       portalUser = PortalUser.objects.get(username=username)
       portfolios = top_portfolios(request,portalUser.id)
       picture_url = portalUser.picture_url
+      cursor = connection.cursor()
+      cursor.execute("SELECT id from portal_portfolio where user_id = \'" + str(portalUser.id) + "'")
+      for stock in dictfetchall(cursor):
+        showid = stock['id']
+        print(showid)
+        cursor.execute("SELECT sector from portal_stock where show_id = \'" + str(showid) + "'")
+        for sector in dictfetchall(cursor):
+          print(sector)
+          if str(sector['sector']) in sectorList:
+            sectorList[str(sector['sector'])]['value'] += 1
+          else:
+            sectorList[str(sector['sector'])] = {}
+            sectorList[str(sector['sector'])]['sector'] = str(sector['sector'])
+            sectorList[str(sector['sector'])]['value'] = 1
   context_dict = {}
+  context_dict['sectors'] = sectorList
   if picture_url == 'NULL':
     context_dict['picture_url'] = "asdf"
   else:
@@ -263,7 +407,6 @@ def portfolio_chart(request, portfolio_id):
           portClose = map(sum, zip(portClose, incomingClose))
           portVolume = map(sum, zip(portVolume, incomingVolume))
           portAverage = map(sum, zip(portAverage, incomingAverage))
-        print(incomingClose)
     except:
       print("err")
   response = HttpResponse(content_type='text/csv')
@@ -296,7 +439,6 @@ def stock_chart(request, stock_name):
   cursor.execute("SELECT last_date, Adj_Close, Adj_High, Adj_Low from stock_" + str(stock_name) + " "
                 "WHERE DATE(last_date) > '%s'" %(end))
   for item in dictfetchall(cursor):
-    print(item['last_date'])
     portDate.append(str(item['last_date'])[:10])
     portVolume.append(item['Adj_Low'])
     portClose.append(item['Adj_Close'])

@@ -34,6 +34,84 @@
  <div class="col-md-12 col-sm-12 col-xs-12" style="padding:50px;display:none;height:90vh;padding-bottom:50px;bottom:0px" id="visePicked" >
            <div class="block" style="height:auto;"> 
               <div class="content controls">  
+<script>
+var typing = 0
+$(function() {
+
+    $("#portname").data("old_value", $("#portname").val());
+
+    $("#portname").bind("paste cut keydown",function(e) {
+        typing = 1
+        var that = this;
+        setTimeout(function() {
+                if(typeof $(that).data("old_value") == "undefined") {
+                    $(that).data("old_value",$(that).val());
+                }
+
+                getNewInsertion($(that).data("old_value"), $(that).val(), e.target.selectionStart);
+                $(that).data("old_value",$(that).val());
+            },500);
+
+    })
+
+}); 
+function getNewInsertion(oldValue, newValue, newPosition) {
+
+    var type='';
+    var from=0;
+    var length=0;
+    var text='';
+
+    if(oldValue.length > newValue.length) {
+        type = 'deletion';
+        changeLength = oldValue.length - newValue.length;
+        pos = newPosition;
+        text = oldValue.substr(pos, changeLength);
+    } else {
+        type = 'insertion';
+        changeLength = newValue.length - oldValue.length;
+        pos = newPosition - changeLength;
+        text = newValue.substr(pos, changeLength);
+    }
+
+
+    log();
+
+
+    return {text:text, type:type, position: pos, changeLength: changeLength};
+}
+function log() {
+    typing = 0
+    setTimeout(function() {
+        if (typing == 0) {
+            p_checkUser()
+        }
+    },1500);    
+}
+function p_checkUser() {
+    user = $("#portname").val()
+    if (typing == 0) {
+        $.ajax({
+            url: 'portfolio_exist/'+String(user)+'/',
+            method: 'POST',
+        }).done(function(x) {
+            if (x.exist == 1) {
+                $("#greenUser").fadeOut(250)
+                $("#redUser")[0].innerText = "Portfolio name " + user + " is already taken"
+                $("#redUser").fadeIn(250)
+                $("#wizard_validate-buttons-0").fadeOut(150)
+            } else {
+                $("#redUser").fadeOut(50)
+                $("#greenUser")[0].innerText = "Portfolio name " + user + " is available !"
+                $("#greenUser").fadeIn(250)
+                $("#wizard_validate-buttons-0").fadeIn(150)
+            }
+        })
+        typing = 1
+    }
+}
+// $("#username").val($("#username").val());
+</script>
                    <form id="wizard" class="form-horizontal" action="/user/portfolio_optimize" method="post">            
                         {% csrf_token %}
                         <!-- Details -->
@@ -47,7 +125,13 @@
                                     <a href="login.html" onclick="return popitup('/login')"></a>
                                    <div class="col-sm-8 col-xs-12">
                                         <input type="text" class="form-control" id="portname" name="portname" placeholder="Your new portfolio . . ."  style="font-size:18px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;font-family:'helvetica neue';font-weight: 100;line-height: 47px;margin-top: 15px;outline: medium none;text-indent: 46px;width: 100%;letter-spacing:3px;height:75px">
+                                         <div class="side pull-left">
+
+                                            <span id="greenUser" style="color:rgba(0,255,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;">Minimum 4 Characters</span>
+                                            <span id="redUser" style="color:rgba(255,0,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;">Minimum 4 Characters</span>
+                                        </div>
                                    </div>
+
                                 </div>
                              <div class="form-row">
                               <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;letter-spacing:2px">
@@ -500,7 +584,7 @@
 
                     <div class="statusbar" id="statusbar_2" style="display: block;margin:0px;padding:10px;height:50px;">
                         <div class="statusbar-icon"><img src="/static/img/loader.gif"></div>
-                        <div class="statusbar-text">Loading...</div>
+                        <div class="statusbar-text" id="status_loader"> We are now calculating your portfolio . . . This whole process may take a few minutes</div>
                     </div>
 
 

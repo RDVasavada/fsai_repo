@@ -14,6 +14,7 @@ class Stock(BaseModel):
     allocation = models.TextField()
     sentiment = models.TextField()
     company_name = models.TextField()
+    sector = models.TextField()
     number_of_shares = models.IntegerField(default=0)
 
     class Meta:

@@ -38,24 +38,34 @@ var formatDate = d3.time.format("%b %d, 20%y");
 var formatCurrency = function (d) {
     return "$" + d3.format("0,000")(d)
 };
+function hasNumber(myString) {
+  return /\d/.test(myString);
+}
 
 // This example uses two data sources.  One is static and one is live
 // Each data source has different payload structures.  We abstract the required properties for us to visualize into
 // 'staticData' and 'liveData' objects which we store in the 'sources' object.  This allows us to easily toggle between them.
 var dataSource
-var w = window.location.href.slice(33)
+var w = window.location.href.slice(35)
 w =w.slice(0,-1) 
-console.log(w)
+if (String(hasNumber(w)) === "true") {
+    var urlString = "/user/portfolio_sentiment_data/" + w
+    var rAmount = "allocation"
+} else {
+    var urlString = "/user/sentiment_data/" + w
+    var rAmount = "impact_score"
+}
 // Test data
 var staticData = {
     name: "ticker",
     date: "article_sentiment",
     dateParser: d3.time.format("%Y-%m-%d").parse,
-    amount: "impact_score",
+    amount: rAmount,
     com_nam: "impact_score",
     pty: "impact_score",
-    url: "/user/sentiment_data/" + w + " /"
+    url: urlString
 };
+    // url: "/user/sentiment_data/" + w + " /"
 
 // Live data from sunlight.org (you can use the static one if you want - the public one uses our API key.)
 var liveData = {
@@ -281,7 +291,7 @@ function onUpdate() {
 
 // On mouse over we select all plots related to the candidate ID and highlight them.
 function onMouseOver(e, d, i) {
-    viz.selection().selectAll(".vz-scatter-node." + d.key).style("fill-opacity", .8).style("opacity", 1);
+    viz.selection().selectAll(".vz-scatter-node." + d.key).style("fill-opacity", 1).style("opacity", 1);
     // style("fill", "#FFF")
     // We create our data tip
     createDataTip(e, d);

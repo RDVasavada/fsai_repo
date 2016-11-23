@@ -15,26 +15,16 @@ $("li#a" + url).attr('class','active')
        <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
     </a>
   </div>
-<div class="col-lg-12 col-lg-12 col-sm-12" style="padding-right:25px;padding-left:25px;height:100%;padding-top:25px">
+<div class="col-lg-12 col-lg-12 col-sm-12" style="padding-right:50px;padding-left:40px;height:100%;padding-top:25px">
 
         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white" id="companyName">{{portfolio.name}}</h2> 
-
-        <div class="block" style="background:rgba(0,0,0,0.6)">
+<div class="row" style="background:rgba(0,0,0,0.2);padding:25px;padding-bottom:0px">
+  <div class="col-lg-8">
                     <div class="header">
-                        <h2>Portfolio Returns Graph </h2>
-                        <div class="side pull-right">                            
-                            <ul class="buttons">
-                                <li class="btn-group">                                    
-                                    <a href="#" class="dropdown-toggle tip" title="" data-toggle="dropdown" data-original-title="More"><span class="icon-align-justify"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#" onClick="downloadCsv()">Export portfolio as .CSV</a></li>
-                                    </ul>                                                                            
-                                </li>
-                            </ul>
-                        </div>                        
+                        <h2>Portfolio Graph </h2>
+                       
                     </div>                  
                     <div class="content" id="content{{portfolio.id}}" style="height:384px;overflow:hidden;background:transparent">
-                  <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px">Value : ${{portfolio.investment}}</h2>                        
                       <div class="loader{{portfolio.id}}" style="height:100%;text-align:center;top:35%;position:relative">
                         <img src="/static/img/loader.gif"><br><br>
                         <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px">We are loading your portfolio data! This may take a minute..</h2>
@@ -346,11 +336,51 @@ $("li#a" + url).attr('class','active')
               
 
 
-<<!-- h2 style="font-size:18px;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">{{portfolio.risk}}% Expected Risk on a {{portfolio.investment}}$ investment into {{portfolio.no_of_tickers}} shares.</h2> -->
-                    </div>
+<!-- h2 style="font-size:18px;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">{{portfolio.risk}}% Expected Risk on a {{portfolio.investment}}$ investment into {{portfolio.no_of_tickers}} shares.</h2> -->
+
+
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="header">
+                    <h2>Portfolio Information </h2>
+                  </div>
+                        <table class="table table-hover">
+                                <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
+                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Initial Capital</td>
+                                        <td style="text-align:left">{{portfolio.investing_amount}}</td>
+                                   </tr>
+                                  <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Number of Stocks</td>
+                                        <td style="text-align:left">{{portfolio.num_stocks}}</td>
+                                 </tr>
+                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Expected Risk</td>
+                                        <td style="text-align:left">{{portfolio.expected_risk}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Brokerage Account</td>
+                                        <td style="text-align:left">{{portfolio.brokerage_account}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Retirement Account</td>
+                                        <td style="text-align:left">{{portfolio.retirement_account}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Social Security Income</td>
+                                        <td style="text-align:left">{{portfolio.ss_income}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Client Name</td>
+                                        <td style="text-align:left">{{portfolio.client_anem}}</td>
+                                    </tr>                                     
+                                  </tbody>
+                                </table>
+                </div>
+              </div>
+              <div class="row" style="background:rgba(0,0,0,0.2)">
+                <div class="col-md-4">
   
         <!-- <div class="content" style="background-color:rgba(0,0,0,0.6)"> -->
-                    <div id="pieChart" style="text-align:center;position:absolute;left:25px;display:inline;top:400px;width:50%;height:500px"></div>
+                    <div id="pieChart" style="text-align:center;position:absolute;left:25px;display:inline;top:0px;width:100%;height:500px"></div>
                 <script>
 
 var randomColor = (function(){
@@ -475,7 +505,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                 });
                 </script>
 
-                               <div id="pieChart2" style="text-align:center;position:absolute;right:25px;display:inline;top:400px;height:500px"></div>
+                               <div id="pieChart2" style="text-align:center;position:absolute;left:25px;display:inline;top:520px;height:500px;width:100%"></div>
                 <script>
                 
 var randomColor = (function(){
@@ -545,22 +575,13 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                     "data": {
                         "sortOrder": "value-desc",
                         "content": [
-                            {
-                                "label": "Technology",
-                                "value": 232,
-                                "color": randomColor()
-                            },
-                           {
-                                "label": "Health",
-                                "value": 432,
-                                "color": randomColor()
-                            },
-
-                           {
-                                "label": "Agriculture",
-                                "value": 374,
-                                "color": randomColor()
-                            },
+                       {% for key, value in sectors.items %}
+                                  {
+                                      "label": "{{value.sector}}",
+                                      "value": {{value.value}},
+                                      "color": randomColor(),
+                                  },
+                      {% endfor %}
 
 
                         ]
@@ -606,14 +627,13 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                     }
                 });
                 </script>  
+</div>
+<div class="col-md-8">
+                                <div class="btn-group btn-group-justified" style="width:25%">
+                                    <a href="/user/backtest/{{portfolio.id}}"  class="btn btn-default btn-clean"  target="_blank">Back-Test Portfolio</a>
+                                    <a href="#" class="btn btn-default btn-clean" onClick="downloadCsv()">Export as CSV</a>
+                                </div>
 
-                <div class="blsock" style="width:100%;margin-top:900px">
-                    <div class="input-group" style="width:100%;text-align:center">
-                        <div class="btn-group btn-group-lg" style="text-align:center">
-
-                        </div>              
-                    </div>  
-                </div>  
                 <script>
                 function backtest(id) {
                     $.ajax({
@@ -625,6 +645,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                     })
                 }
                 </script>
+                <hr>
                     <table class="table table-hover margin bottom">
                     <thead>
                     <tr>
@@ -643,11 +664,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                         <td class="text-center small">{{stock.company_name}}</td>
                         <td class="text-center">{{stock.buy_date}}</td>
                         <td class="text-center">{{stock.sell_date}}</td>
-                      {% if stock.sentiment <= 0 %}
-                      <td class="text-center" style="color:rgba(255,0,0,1)"><span style="font-size:20px;">&darr;</span>&nbsp;-{{stock.sentiment}}</td>
-                      {% else %}
-                        <td class="text-center" style="color:rgba(0,255,0,1)"><span style="font-size:20px;">&uarr;</span>&nbsp;{{stock.sentiment}}</td>
-                      {% endif %}
+                      <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;padding-left:25px" id="s_sentiment">{{stock.sentiment|floatformat}}</h2>  </td>
                         <td class="text-center">{{stock.current_price}}</td>
 {% if stock.gain >= 0%}
                          <td class="text-center" style="color:rgba(0,255,0,1)"><span style="font-size:20px;">&uarr;</span>&nbsp;{{ stock.gain }}%</td>

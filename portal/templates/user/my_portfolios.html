@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-   
+{% load humanize %}
+   {% load mathfilters %}
 <div class="sceneElement" data-viewport="0">
   <div class="col-lg-12 col-md-12 col-sm-12" style="background:rgba(0,0,0,0.6);padding-top:25px;padding-left:10vw;padding-right:10vw;height:100%;position:relative">
 <!--    
@@ -104,16 +104,16 @@ body .ui-autocomplete .ui-menu-item .ui-state-focus {
                                                             <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.number_of_shares}}</h2>  </td>
                                                         </tr>   
                                                         <td>Allocation</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.allocation}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.allocation|floatformat}}</h2>  </td>
                                                         </tr>                                                           
                                                         <td>Sell Date</td>
                                                             <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.sell_date}}</h2>  </td>
                                                         </tr>  
                                                         <td>Total Gains</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.current_price|add:stock.initial_price}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.current_price|floatformat|sub:stock.initial_price}}</h2>  </td>
                                                         </tr>
                                                         <td>Sentiment</td>
-                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">{{stock.sentiment}}</h2>  </td>
+                                                            <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px" id="s_sentiment">{{stock.sentiment|floatformat}}</h2>  </td>
                                                         </tr>                                                           
 
                                                     </tbody>

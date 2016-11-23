@@ -33,18 +33,23 @@ $.ajax({
         }
     }) 
 })
-var visualize = function() {
+ var visualize = function() {
     console.log("<iframe style='width:99%;height:80vh' src='/user/scatter/"+chosen_stock+"'></iframe>")
-    $("#visual_modal").append("<iframe style='width:99%;height:60vh' src='/user/scatter/"+chosen_stock+"/'></iframe>")
+    $("#visual_modal").append("<iframe style='width:100%;height:60vh' src='/user/scatter/"+chosen_stock+"/'></iframe>")
     $("#modal_wide_1").fadeIn(250)
-
 }
+
 $(".marquee").toggleClass("microsoft");
-$("#sentient").fadeIn(250)
+$("#sentiment").fadeIn(250)
+var varwidth = $("div#choose").width()
+console.log(varwidth)
+// var xwidth = $("#sentiment_box").css("width")
+// console.log(String(xwidth) + " is xwidth")
 var d3;
 var margin = {top: 25, right: 25, bottom: 50, left: 50},
-    width = 600 - margin.left - margin.right,
+    width = Number(varwidth) - margin.left - margin.right,
     height = 265 - margin.top - margin.bottom;
+
 var parseDate = d3.time.format("%Y-%m-%d").parse;
 var x = d3.time.scale().range([0, width]);
 var y = d3.scale.linear().range([height, 0]);
@@ -64,7 +69,7 @@ var svg = d3.select(".ibox-content")
    .append("svg")
    //responsive SVG needs these 2 attributes and no width and height attr
    .attr("preserveAspectRatio", "xMinYMin meet")
-   .attr("viewBox", "0 0 650 300")
+   .attr("viewBox", "0 0 450 300")
    //class to make it responsive
    .classed("svg-content-responsive", true)
     .style("max-height", "265") 
@@ -73,25 +78,13 @@ var svg = d3.select(".ibox-content")
     .attr("transform", "translate(" 
         + margin.left 
         + "," + margin.top + ")");
-var stock = document.getElementById('stock').value;
-var start = document.getElementById('start').value;
-var end = document.getElementById('end').value;
-
-var inputURL = "http://query.yahooapis.com/v1/public/yql"+
-    "?q=select%20*%20from%20yahoo.finance.historicaldata%20"+
-    "where%20symbol%20%3D%20%22"
-    +stock+"%22%20and%20startDate%20%3D%20%22"
-    +start+"%22%20and%20endDate%20%3D%20%22"
-    +end+"%22&format=json&env=store%3A%2F%2F"
-    +"datatables.org%2Falltableswithkeys";
 
     // Get the data 
-    d3.json(inputURL, function(error, data){
-
+    d3.json("news_portal/stock_sentiment_graph/BRCD/", function(error, data){
     data.query.results.quote.forEach(function(d) {
-        d.date = parseDate(d.Date);
-        d.high = +d.High;
-        d.low = +d.Low;
+        d.date = parseDate(d.date);
+        d.high = Number(d.High)*100;
+        d.low = Number(d.High)*100;
     });
 
     // Scale the range of the data
@@ -127,61 +120,12 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
         .text("high");
 });
 
-// ** Update data section (Called from the onclick)
-function changeTime(s) {
-    var dateObj = new Date();
-    var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    month = String(month)
-    if (month.length == 1) {month = "0"+ month}
-    var endDate = year + "-" + month + "-" + day;
-    console.log(month)
-    document.getElementById('end').value = endDate;
-    if (s === '1y') {
-        year -=1
-    } else if (s == '90d') {
-        month -=3
-        month = String(month)
-        if (month.length == 1) {month = "0"+ month}
-    } else if (s == '30d') {
-        month -=1
-        month = String(month)
-        if (month.length == 1) {month = "0"+ month}
-    }
-    var startDate = year + "-" + month + "-" + day;
-    console.log(startDate)
-    document.getElementById('start').value = startDate;
-    var market = document.getElementById('chosenMarket').innerText
-    console.log(market)
-    if (market == 'Nasdaq Composite') {updateData('^IXIC')}
-    if (market == 'Dow Jones Industrial Average') {updateData('^DJI')}
-    if (market == 'S&P 500') {updateData('^GSPC')}
-}
 function updateData(stock) {
-if (stock == '^IXIC') {document.getElementById('chosenMarket').innerText = "Nasdaq Composite"}
-if (stock == '^DJI') {document.getElementById('chosenMarket').innerText = "Dow Jones Industrial Average"}
-if (stock == '^GSPC') {document.getElementById('chosenMarket').innerText = "S&P 500"}
-var stock = stock;
-var start = document.getElementById('start').value;
-var end = document.getElementById('end').value;
-console.log(start)
-console.log(end)
-console.log(stock)
-
-var inputURL = "http://query.yahooapis.com/v1/public/yql"+
-    "?q=select%20*%20from%20yahoo.finance.historicaldata%20"+
-    "where%20symbol%20%3D%20%22"
-    +stock+"%22%20and%20startDate%20%3D%20%22"
-    +start+"%22%20and%20endDate%20%3D%20%22"
-    +end+"%22&format=json&env=store%3A%2F%2F"
-    +"datatables.org%2Falltableswithkeys";
-
-    // Get the data again
+    var inputURL = "news_portal/stock_sentiment_graph/" + String(stock) + "/"
+    var parseDate = d3.time.format("%Y-%m-%d").parse;
     d3.json(inputURL, function(error, data){
-        console.log(data.query)
         data.query.results.quote.forEach(function(d) {
-            d.date = parseDate(d.Date);
+            d.date = parseDate(d.date);
             d.high = +d.High;
             d.low = +d.Low;
         });

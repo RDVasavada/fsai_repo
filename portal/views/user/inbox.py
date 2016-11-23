@@ -115,7 +115,7 @@ def sendmsg(request):
   message = "<" + username + "> : " + message
   # print(message)
   recipient = request.POST['to']
-  a_time = time.strftime("%Y-%m-%d %H:%M:%S", gmtime())
+  a_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
   cursor = connection.cursor()
   cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
                  "('" + str(portId) + "','" + str(recipient) + "','unread','" + str(a_time) + "','friends');")
@@ -259,6 +259,7 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
     ]
 def analyze(message, id, username):
+  today = time.strftime("%Y-%m-%d")
   message = message.lower()
   if "can you do" in message:
     return("<Hyperchat Bot> : I can carry out basic commands for you via SMS, or chat. Text me at (205)490 - 7304! Some things I can do: provide updates on your portfolios, provide information about stocks, and companies.")
@@ -274,7 +275,7 @@ def analyze(message, id, username):
     if "sp500" in message or "s&p" in message:
       cursor = connection.cursor()
       arr = []
-      cursor.execute("SELECT created_date, investment, id, name FROM `portal_portfolio` WHERE "
+      cursor.execute("SELECT created_date, investing_amount, id, name FROM `portal_portfolio` WHERE "
                     "'" + str(id) + "' = user_id")
       for item in dictfetchall(cursor):
         total = 0
@@ -285,7 +286,7 @@ def analyze(message, id, username):
         for value in dictfetchall(cursor):
           total = total + int(value['gain'])
         startdate = str(item['created_date'])[0:10]
-        b_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        b_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
         sp = Share('^GSPC').get_historical(startdate, today)
         gspreturn = float(sp[0]['Close']) - float(sp[len(sp)-1]['Close'])
         rtnstr = "Since " + str(startdate) + ", the S&P500 has changed " + str(gspreturn) + "$, while your portfolio " + str(item['name']) + " has changed " + str(total) + "$. "
@@ -295,7 +296,7 @@ def analyze(message, id, username):
     elif "nasdaq" in message or "ndx" in message:
       cursor = connection.cursor()
       arr = []
-      cursor.execute("SELECT created_date, investment, id, name FROM `portal_portfolio` WHERE "
+      cursor.execute("SELECT created_date, investing_amount, id, name FROM `portal_portfolio` WHERE "
                     "'" + str(id) + "' = user_id")
       for item in dictfetchall(cursor):
         total = 0
@@ -318,7 +319,7 @@ def analyze(message, id, username):
     else:
       cursor = connection.cursor()
       arr = []
-      cursor.execute("SELECT investment, id, name FROM `portal_portfolio` WHERE "
+      cursor.execute("SELECT investing_amount, id, name FROM `portal_portfolio` WHERE "
                     "'" + str(id) + "' = user_id")
       for item in dictfetchall(cursor):
         total = 0
@@ -329,7 +330,7 @@ def analyze(message, id, username):
         for value in dictfetchall(cursor):
           total = total + int(value['gain'])
           print(total)
-        rtnstr = str(item['name']) + " was bought for " + str(item['investment']) + "$ and since then it has changed " + str(total) + "$ in value and is now worth " + str(int(total) + int(item['investment'])) + "$." 
+        rtnstr = str(item['name']) + " was bought for " + str(item['investing_amount']) + "$ and since then it has changed " + str(total) + "$ in value and is now worth " + str(int(total) + int(item['investing_amount'])) + "$." 
         arr.append(rtnstr)
       a = ' '.join(arr)
       return("<Hyperchat Bot> : Here are your summaries: " + a) 
@@ -339,7 +340,7 @@ def analyze(message, id, username):
       if truth != 'false':
         cursor = connection.cursor()
         arr = []
-        cursor.execute("SELECT created_date, investment, id, name FROM `portal_portfolio` WHERE "
+        cursor.execute("SELECT created_date, investing_amount, id, name FROM `portal_portfolio` WHERE "
                       "'" + str(truth) + "' = name")
         for item in dictfetchall(cursor):
           a = 0
@@ -368,7 +369,7 @@ def analyze(message, id, username):
       if truth != 'false':
         cursor = connection.cursor()
         arr = []
-        cursor.execute("SELECT created_date, investment, id, name FROM `portal_portfolio` WHERE "
+        cursor.execute("SELECT created_date, investing_amount, id, name FROM `portal_portfolio` WHERE "
                       "'" + str(truth) + "' = name")
         for item in dictfetchall(cursor):
           total = 0
@@ -420,7 +421,7 @@ def analyze(message, id, username):
       name = str(hasPortfolio(message,id))
       arr = []
       cursor = connection.cursor()
-      cursor.execute("SELECT investment, id FROM `portal_portfolio` WHERE "
+      cursor.execute("SELECT investing_amount, id FROM `portal_portfolio` WHERE "
                     "'" + str(id) + "' = user_id AND '" + name + "' = name ")
       for item in dictfetchall(cursor):
         total = 0
@@ -431,7 +432,7 @@ def analyze(message, id, username):
         for value in dictfetchall(cursor):
           total = total + int(value['gain'])
           print(total)
-        rtnstr = name + " was bought for " + str(item['investment']) + "$ and since then it has changed " + str(total) + "$ in value and is now worth " + str(int(total) + int(item['investment'])) + "$." 
+        rtnstr = name + " was bought for " + str(item['investing_amount']) + "$ and since then it has changed " + str(total) + "$ in value and is now worth " + str(int(total) + int(item['investing_amount'])) + "$." 
         arr.append(rtnstr)
       a = ' '.join(arr)
       return("<Hyperchat Bot> : " + a) 
@@ -445,7 +446,7 @@ def analyze(message, id, username):
       name = str(hasPortfolio(message,id))
       arr = []
       cursor = connection.cursor()
-      cursor.execute("SELECT investment, id FROM `portal_portfolio` WHERE "
+      cursor.execute("SELECT investing_amount, id FROM `portal_portfolio` WHERE "
                     "'" + str(id) + "' = user_id AND '" + name + "' = name ")
       for item in dictfetchall(cursor):
         total = 0
@@ -456,7 +457,7 @@ def analyze(message, id, username):
         for value in dictfetchall(cursor):
           total = total + int(value['gain'])
           print(total)
-        rtnstr = name + " was bought for " + str(item['investment']) + "$ and since then it has changed " + str(total) + "$ in value and is now worth " + str(int(total) + int(item['investment'])) + "$." 
+        rtnstr = name + " was bought for " + str(item['investing_amount']) + "$ and since then it has changed " + str(total) + "$ in value and is now worth " + str(int(total) + int(item['investing_amount'])) + "$." 
         arr.append(rtnstr)
       a = ' '.join(arr)
       return("<Hyperchat Bot> : " + a) 

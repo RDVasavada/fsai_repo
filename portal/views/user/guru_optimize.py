@@ -421,8 +421,8 @@ def guru_optimize(request):
   tabletwo_string = str(request.POST['guru']) + ";BA;" + str(request.POST['capital'])
   print(tabletwo_string)
   wr.writerow(['PortfolioID;Screen_frequency;Initial_capital'])
-  wr.writerow([tabletwo_string])
-  # wr.writerow(['84;BA;1000000000'])
+  # wr.writerow([tabletwo_string])
+  wr.writerow(['84;BA;1000000000'])
   resultFile.close()
   cursor = connection.cursor()
   filename = 'Screen_parameters.csv'
@@ -433,7 +433,7 @@ def guru_optimize(request):
 
 
   start = '2006-01-01'
-  end = (datetime.date.today()-BDay(5))
+  end = (datetime.date.today()-BDay(10))
   snapshots =  pd.DatetimeIndex(start=start,end=end, freq=Screen_freq).tolist()
   snapshots.append(end)
   p_fundamentals_exist = fundamentals_exist = 0                 
@@ -499,6 +499,7 @@ def guru_optimize(request):
   print("__")
   print(prices.iloc[-1].name)
   print("__")
+  print(prices)
   # print(prices.iloc[-1].name.date())
   portfolio_imported['Pricing_current_date'] = prices.iloc[-1].name
   portfolio_imported['Price_current'] = prices.iloc[-1].T.values
@@ -594,13 +595,12 @@ def guru_optimize(request):
             if i > 0:
                 p_fundamentals = p_fundamentals.append(fundamentals)
             del fundamentals
-  print(screener)
   for k in range(len(screener)):
       if k == 0:
-          txt = "np.where(((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + screener['Filter_value'][k].astype(str) + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))"
+          txt = "np.where(((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + str(screener['Filter_value'][k]) + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))"
           txt_ct = txt
       else:
-          txt = txt + " & ((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + screener['Filter_value'][k].astype(str) + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))" 
+          txt = txt + " & ((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + str(screener['Filter_value'][k]) + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))" 
           txt_ct = txt
   txt = txt_ct + ",0,1) "
   p_fundamentals.sort_index(inplace=True)
@@ -683,7 +683,7 @@ def guru_optimize(request):
   PortfolioID = '156'
   capital = '10000000'
   start = '2006-01-01'
-  end = (datetime.date.today()-BDay(1))
+  end = (datetime.date.today()-BDay(5))
 
   snapshots =  pd.DatetimeIndex(start=start,end=end, freq=Screen_freq).tolist()
   snapshots.append(end)
@@ -839,15 +839,15 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
       headarr.append("EOD/" + itemstr + " - Adj_Close")
       try:
         cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date = '" + str(time) + "'")
-        bool = 0
         for a in dictfetchall(cursor):
             closearr.append(a['Adj_Close'])
-            bool = 1
-        if bool == 0:
-          closearr.append(0.1)
       except:
-        closearr.append(0.1)
-        print("no table")
+         end = end - datetime.timedelta(days=4)
+         cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date = '" + str(end) + "'")
+         for a in dictfetchall(cursor):
+             closearr.append(a['Adj_Close'])
+         print("no stock data- rereoute")
+         print("no table")
     prices = {}
     count = 0
     for info in headarr:
@@ -859,15 +859,18 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
         count += 1 
         print("err")
     date_ = [time[:10]]
-    print(type(time[:10]))
     prices = pd.DataFrame(prices, index=date_)
     prices.index.name = "Date"
-    print(prices)
-    portfolio['Price'] = prices.iloc[-1].T.values
+    print(prices.iloc[-1])
+    # portfolio['Price'] = prices.iloc[-1].T.value
+    portfolio['Price'] = prices.iloc[-1].T
+    print("--")
+    print(portfolio['Price'])
     ######### NEUER TEIL
     portfolio = portfolio.dropna(subset=['Price']).reset_index(drop=True) 
     
     portfolio['Pricing_date'] = prices.iloc[-1].name
+    print(portfolio['Pricing_date'])
     portfolio['Snapshot_date'] = end
 
     # Calculate portfolio positions and weights
@@ -1019,25 +1022,21 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
         headarr = []
         cursor = connection.cursor()
         for item in stocks:
-          print(item)
           itemstr = item.replace("EOD","")
           itemstr = itemstr.replace(".11","")
           itemstr = itemstr.replace("/","")
           table_name = "stock_" + itemstr
-          print(table_name)
-          print(time)
           headarr.append("EOD/" + itemstr + " - Adj_Close")
           try:
             cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date BETWEEN '" + str(start) + "' AND '" + str(end) + "'")
-            bool = 0
             for a in dictfetchall(cursor):
                 closearr.append(a['Adj_Close'])
-                bool = 1
-            if bool == 0:
-              closearr.append(0.1)
           except:
-            closearr.append(0.1)
-            print("no table")
+            end = end - datetime.timedelta(days=4)
+            cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date BETWEEN '" + str(start) + "' AND '" + str(end) + "'")
+            for a in dictfetchall(cursor):
+                closearr.append(a['Adj_Close'])
+            print("no stock data- rereoute")
         monthly_returns = {}
         count = 0
         for info in headarr:

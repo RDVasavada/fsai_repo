@@ -37,9 +37,12 @@ urlpatterns = patterns('',
     (r'^user/dashboard/get_gain/?$', views.get_gain),
     (r'^user/dashboard/your_sentiment/?$', views.your_sentiment),
     (r'^user/dashboard/performance_chart/?$', views.performance_chart),
+    (r'^user/dashboard/performance_line_chart/?$', views.performance_line_chart),
     (r'^chat_portal/?$', views.chat_portal),
-    (r'^user/scatter/(?P<stock_name>\w{0,50})/$', views.scatter),
+    (r'^user/scatter/(?P<stock_name>.+)/$', views.scatter),
     (r'^user/sentiment_data/(?P<stock_name>\w{0,50})/$', views.sentiment_data),
+    (r'^user/portfolio_sentiment_data/(?P<portfolio_id>[0-9]+)/?$', views.portfolio_sentiment_data), 
+    (r'^user/portfolio_chart/(?P<portfolio_id>[0-9]+)/?$', views.portfolio_chart), 
     (r'^sms/sms_symbolexchange/?$', views.sms_symbolexchange),
 
     #General User Pages
@@ -51,6 +54,7 @@ urlpatterns = patterns('',
     (r'^user/stock_chart/(?P<stock_name>\w{0,50})/$', views.stock_chart), 
     (r'^user/portfolio/?$', views.portfolio),
     (r'^user/portfolio_settings/?$', views.portfolio_settings),
+    (r'^user/portfolio_exist/(?P<portname>.+)/?$', views.portfolio_exist),
     (r'^user/guru_settings/?$', views.guru_settings),
     (r'^user/guru_settings/save_guru/?$', views.save_guru),
     (r'^user/guru_scrape/(?P<guru_id>[0-9]+)/?$', views.guru_scrape), 
@@ -64,8 +68,11 @@ urlpatterns = patterns('',
     (r'^user/individual_stock/(?P<stock_name>\w{0,50})/$', views.individual_stock),
     (r'^user/news_portal/?$', views.news_portal),
     (r'^user/news_portal/getnews/?$', views.getnews),
-    (r'^user/news_portal/get_stock_sentiment/(?P<stock_name>\w{0,50})/$', views.get_stock_sentiment),
     (r'^user/news_portal/get_stock_news/(?P<stock_name>\w{0,50})/$', views.get_stock_news),
+    (r'^user/news_portal/get_stock_sentiment/(?P<stock_name>\w{0,50})/$', views.get_stock_sentiment),
+    (r'^user/news_portal/stock_sentiment_graph/(?P<stock_name>\w{0,50})/$', views.stock_sentiment_graph),
+    (r'^user/news_portal/get_portfolio_news/(?P<port_id>.+)/$', views.get_portfolio_news),
+    (r'^user/news_portal/get_portfolio_sentiment/(?P<port_id>.+)/$', views.get_portfolio_sentiment),
     (r'^user/news_portal/portfolio_sentiment_data/(?P<id>[0-9]+)/?$', views.portfolio_sentiment_data),    
     (r'^user/top_portfolios/?$', views.top_portfolios),
     (r'^user/search_portfolio/?$', views.search_portfolio),
@@ -84,33 +91,38 @@ urlpatterns = patterns('',
     (r'^user/delfriend/?$', views.delfriend),  
 )
 
-# def BuildStockDatabase():
-#     cursor = connection.cursor();
-#     cursor.execute("select distinct ticker from portal_stock")
-#     for item in dictfetchall(cursor):
-#         cursor.execute("CREATE TABLE IF NOT EXISTS stock_" + str(item['ticker']) + " ("
-#                         "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
-#                         "`last_date` DATETIME,"
-#                         "`Adj_Open` VARCHAR(255),"
-#                         "`Adj_High` VARCHAR(255),"
-#                         "`Adj_Low` VARCHAR(255),"
-#                         "`Adj_Close` VARCHAR(255),"
-#                         "`Adj_Volume` VARCHAR(255),"
-#                         "PRIMARY KEY (id) );")
-#         try:
-#             a = quandl.get(["EOD/" + str(item['ticker']) ])
-#             for c in a.index.tolist():
-#                 c = pd.to_datetime(c)
-#                 adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
-#                 adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
-#                 adj_low = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Low"]
-#                 adj_close = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Close"]
-#                 adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
-#                 cursor.execute("INSERT INTO stock_" + str(item['ticker']) + " (last_date, Adj_Open, Adj_High, Adj_Low, Adj_Close, Adj_Volume) VALUES"
-#                             " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")
-#                 print(item['ticker'])
-#         except:
-#             print("error again")
+def BuildStockDatabase():
+    cursor = connection.cursor();
+    cursor.execute("select distinct ticker from portal_stock")
+    for item in dictfetchall(cursor):
+        try:
+            cursor.execute("DROP TABLE stock_" + str(item['ticker']) + "")
+        except:
+            print("oh well couldnt drop")
+        cursor.execute("CREATE TABLE IF NOT EXISTS stock_" + str(item['ticker']) + " ("
+                        "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                        "`last_date` DATETIME,"
+                        "`Adj_Open` VARCHAR(255),"
+                        "`Adj_High` VARCHAR(255),"
+                        "`Adj_Low` VARCHAR(255),"
+                        "`Adj_Close` VARCHAR(255),"
+                        "`Adj_Volume` VARCHAR(255),"
+                        "PRIMARY KEY (id) );")
+        try:
+            a = quandl.get(["EOD/" + str(item['ticker']) ])
+            for c in a.index.tolist():
+                c = pd.to_datetime(c)
+                adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
+                adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
+                adj_low = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Low"]
+                adj_close = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Close"]
+                adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
+                cursor.execute("INSERT INTO stock_" + str(item['ticker']) + " (last_date, Adj_Open, Adj_High, Adj_Low, Adj_Close, Adj_Volume) VALUES"
+                            " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")
+                print(item['ticker'])
+        except:
+            print("error again")
+
 # def BuildSF1Database():
 #     cursor = connection.cursor();
 #     cursor.execute("select distinct ticker from portal_stock")
@@ -226,21 +238,25 @@ def RefreshDB():
             if time.strptime(atime, "%Y-%m-%d %H:%M:%S") > time.strptime(str(last_date['last_date']), "%Y-%m-%d %H:%M:%S"):
                 starttime = str(last_date['last_date'])[0:10]
                 endtime = strftime("%Y-%m-%d", gmtime())
+                print(str(stock_ticker))
                 print(starttime)
                 print(endtime)
-                a = quandl.get(["EOD/" + str(stock_ticker)], start_date=starttime, end_date=endtime)
+                a = quandl.get(["EOD/" + str(stock_ticker)], start_date=endttime, end_date=endtime)
+                print(a)
                 for c in a.index.tolist():
                     c = pd.to_datetime(c)
                     adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
                     adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
                     adj_low = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Low"]
                     adj_close = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Close"]
-                    adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
                     print(adj_close)
+                    print(c)
+                    adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
                     cursor.execute("INSERT INTO stock_" + str(item['ticker']) + " (last_date, Adj_Open, Adj_High, Adj_Low, Adj_Close, Adj_Volume) VALUES"
                                 " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")
 @after_response.enable
 def Update_DB_Dispatcher():
+    RefreshDB()
     for i in xrange(0,365):
         print("Your Database Dispatcher is now turned on!")
         t = datetime.datetime.today()
@@ -291,7 +307,7 @@ def dictfetchall(cursor):
         dict(zip([col[0] for col in desc], row))
         for row in cursor.fetchall()
     ]
-
+# BuildStockDatabase()
 # Update_DB_Dispatcher.after_response()
 # Update_Stocks_Dispatcher.after_response()
 

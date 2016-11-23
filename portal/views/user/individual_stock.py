@@ -23,10 +23,11 @@ def individual_stock(request, stock_name):
     context_dict = {}
     context_dict["company_symbol"] = str(stock_name)
     cursor = connection.cursor()
-    cursor.execute("SELECT sentiment, current_price FROM portal_stock WHERE ticker = \'" + str(stock_name) + "' LIMIT 1")
+    cursor.execute("SELECT sentiment, current_price, initial_price FROM portal_stock WHERE ticker = \'" + str(stock_name) + "' LIMIT 1")
     for s_score in dictfetchall(cursor):
          context_dict['score'] =  s_score['sentiment']
          context_dict['current_price'] =  s_score['current_price']
+         context_dict['gain'] =  float(s_score['current_price']) / float(s_score['initial_price'])
     url = "http://finance.yahoo.com/d/quotes.csv?s="+str(stock_name)+"&f=sn"
     response = urlopen(url)
     cr = csv.reader(response)
