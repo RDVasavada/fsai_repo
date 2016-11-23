@@ -536,7 +536,6 @@
                     <tr>
                         <th class="text-center">Ticker Symbol</th>
                         <th class="text-center">Company Name</th>
-                        <th class="text-center">Number of Shares</th>
                         <th class="text-center">Target Price</th>
                         <th class="text-center">Allocation</th>
                     </tr>
@@ -546,7 +545,6 @@
                     {% for stock in newstocks %}<tr>
                         <td class="text-center"><a href="/user/individual_stock/{{stock.ticker}}/" id="stockLink" target="_blank">{{stock.ticker}}</a></td>
                         <td class="text-center">{{stock.cname}}</td>
-                        <td class="text-center">{{stock.shares}}</td>
                         <td class="text-center">${{stock.price}}</td>
                         <td class="text-center">{{stock.allocation}}</td>
 </tr>

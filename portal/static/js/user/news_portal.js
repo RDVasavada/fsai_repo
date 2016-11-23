@@ -1,7 +1,7 @@
 var chosen_stock = "";
 $(".scroll-pail").height('60vh').mCustomScrollbar()
 $.ajax({
-    url:"news_portal/getnews/",
+    url:"/user/news_portal/getnews/",
     method: "POST"
 }).done(function(data){
     data.news.forEach(function(newsItem) {
@@ -24,10 +24,9 @@ $.ajax({
     method: "POST"
 }).done(function(data){
     data.sentiment.forEach(function(x) {
-        if (String(x.sentiment).indexOf("-") == -1) {
+        if (x.sentiment > 50) {
             $("#sentiment").append("<span style='font-size:20px;margin-right:15vw'>"+x.ticker+"<span style='color:rgba(0,255,0,1)'>↑"+x.sentiment+"</span></span>")
-        }
-        if (String(x.sentiment).indexOf("-") !== -1) {
+        } else {
             $("#sentiment").append("<span style='font-size:20px;margin-right:15vw'>"+x.ticker+"<span style='color:rgba(255,0,0,1)'>↓"+x.sentiment+"</span></span>")
 
         }

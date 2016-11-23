@@ -54,7 +54,7 @@ var staticData = {
     amount: "impact_score",
     com_nam: "impact_score",
     pty: "impact_score",
-    url: "/user/sentiment_data/" + w + " /"
+    url: "/user/sentiment_data/" + w + "/"
 };
 
 // Live data from sunlight.org (you can use the static one if you want - the public one uses our API key.)

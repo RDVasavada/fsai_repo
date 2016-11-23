@@ -63,7 +63,8 @@ def your_sentiment(request):
       for row in reader:
           if any(row[0] in s for s in stockTickerArr):
             if row[1] == '2016-11-11':
-              sentimentObj.append({'ticker':row[0],'date':row[1],'sentiment':row[2],'impact':row[3]})
+	      sentiment_value = int(round((float(row[2]) * 100 ) + 40))
+              sentimentObj.append({'ticker':row[0],'date':row[1],'sentiment':sentiment_value,'impact':row[3]})
           if len(sentimentObj) == 10:
             break
   return JsonResponse({'sentiment':sentimentObj})
@@ -263,15 +264,19 @@ def portfolio_chart(request, portfolio_id):
           portClose = map(sum, zip(portClose, incomingClose))
           portVolume = map(sum, zip(portVolume, incomingVolume))
           portAverage = map(sum, zip(portAverage, incomingAverage))
-        print(incomingClose)
     except:
       print("err")
   response = HttpResponse(content_type='text/csv')
   response['Content-Disposition'] = 'attachment; filename="data.csv"'
+  print(portDate)
+  print(portVolume)
   writer = csv.writer(response)
   writer.writerow(['Date', 'Volume', 'Close', 'Average'])
   for item in portDate:
-    writer.writerow([portDate.pop(0),portVolume.pop(0),portClose.pop(0),portAverage.pop(0)])
+     try:
+          writer.writerow([portDate.pop(0),portVolume.pop(0),portClose.pop(0),portAverage.pop(0)])
+     except:
+	print("oh well")
   return response
 
 def dictfetchall(cursor):

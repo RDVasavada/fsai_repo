@@ -30,7 +30,7 @@ $.ajax({
     method: "POST"
 }).done(function(data){
     data.sentiment.forEach(function(x) {
-        if (String(x.sentiment).indexOf("-") !== -1) {
+        if (x.sentiment < 50 ) {
             $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(255,0,0,1)'>↓"+x.sentiment+"</span></div></div></div>")            
         } else {
                 $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(0,255,0,1)'>↑"+x.sentiment+"</span></div></div></div>")            
@@ -43,7 +43,7 @@ $.ajax({
     method: "POST"
     }).done(function(data){
     data.sentiment.forEach(function(x) {
-        if (String(x.sentiment).indexOf("-") !== -1) {
+        if (x.sentiment < 50) {
             $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(255,0,0,1)'>"+x.sentiment+"</span></div></div></div>")            
         } else {
                 $("#sentiment_pin").append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.stock+"<span style='color:rgba(0,255,0,1)'>"+x.sentiment+"</span></div></div></div>")            
@@ -94,9 +94,9 @@ $.ajax({
     // console.log(data)
     var change = String(data.data).slice(0,3)
     if (Number(change) > 0) {
-        $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(0,255,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
+        $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(0,255,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change.replace(/\./g,'')+"</div>"
     } else {
-        $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(255,0,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
+        $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(255,0,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change.replace(/\./g, '')+"</div>"
     }
     $("#uc_1")[0].innerText = String(data.ports[0]).slice(0,4)+"%"
     $("#uc_2")[0].innerText = String(data.ports[1]).slice(0,4)+"%"

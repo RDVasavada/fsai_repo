@@ -1204,14 +1204,14 @@ $.ajax({
     method: "POST"
 }).done(function(r_data){
 
-if (r_data.you[0]) {
+if (r_data.you) {
     graphit(r_data)
     } else {
         $.ajax({
             url:"performance_chart/",
             method: "POST"
         }).done(function(r_data) {
-            if (r_data.you[0]) {
+            if (r_data.you) {
                 graphit(r_data)
 
             } else {

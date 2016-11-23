@@ -292,8 +292,8 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
     ]
 
-# Update_DB_Dispatcher.after_response()
-# Update_Stocks_Dispatcher.after_response()
+#Update_DB_Dispatcher.after_response()
+#Update_Stocks_Dispatcher.after_response()
 
 
 # lets us serve our media

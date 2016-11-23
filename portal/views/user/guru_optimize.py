@@ -421,8 +421,8 @@ def guru_optimize(request):
   tabletwo_string = str(request.POST['guru']) + ";BA;" + str(request.POST['capital'])
   print(tabletwo_string)
   wr.writerow(['PortfolioID;Screen_frequency;Initial_capital'])
-  wr.writerow([tabletwo_string])
-  # wr.writerow(['84;BA;1000000000'])
+ # wr.writerow([tabletwo_string])
+  wr.writerow(['84;BA;1000000000'])
   resultFile.close()
   cursor = connection.cursor()
   filename = 'Screen_parameters.csv'
@@ -433,7 +433,7 @@ def guru_optimize(request):
 
 
   start = '2006-01-01'
-  end = (datetime.date.today()-BDay(5))
+  end = (datetime.date.today()-BDay(4))
   snapshots =  pd.DatetimeIndex(start=start,end=end, freq=Screen_freq).tolist()
   snapshots.append(end)
   p_fundamentals_exist = fundamentals_exist = 0                 
@@ -595,13 +595,18 @@ def guru_optimize(request):
                 p_fundamentals = p_fundamentals.append(fundamentals)
             del fundamentals
   print(screener)
+ 
   for k in range(len(screener)):
-      if k == 0:
-          txt = "np.where(((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + screener['Filter_value'][k].astype(str) + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))"
+    test_screen = str(screener['Filter_factor'])  
+    if k == 0:
+          txt = "np.where(((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + test_screen +") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))"
           txt_ct = txt
-      else:
-          txt = txt + " & ((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + screener['Filter_value'][k].astype(str) + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))" 
+    else:
+          txt = txt + " & ((" + "p_fundamentals['" + screener['Filter_factor'][k] + "']" + screener['condition'][k] + test_screen + ") | (pd.isnull(p_fundamentals['" + screener['Filter_factor'][k] + "'])==True))" 
           txt_ct = txt
+  print("this is txt.shape")  
+  print(txt)
+
   txt = txt_ct + ",0,1) "
   p_fundamentals.sort_index(inplace=True)
   p_fundamentals['screen_out'] = eval(txt)

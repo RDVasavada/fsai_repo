@@ -478,7 +478,7 @@ def portfolio_optimize(request):
     count=0
     print(allocationArr)
     for num in range(numshares):
-        allocation =  float(allocationArr[0][count])*100.0000
+        allocation =  float(allocationArr[0][count])*100.00
         ticker = str(stocks[num][0])
         companyname = str(stocks[num][1])
         ticker = ticker[0:]
@@ -514,13 +514,13 @@ def portfolio_optimize(request):
                 break
             if str(row[0]) in str(ticker):
               if str(row[1])[0:5] in '2016-11-11':
-                stock_sentiment = (float(row[2])*100)+50
+                stock_sentiment = (float(row[2])*100)+40
                 sentimentarr.append(stock_sentiment)
-        sentimentavg = np.average(sentimentarr)
+        sentimentavg = int(round(np.average(sentimentarr)))
         count += 1
         cursor.execute("INSERT INTO `portal_stock` (created_date, update_date, ticker, show_id, buy_date, current_price, initial_price, number_of_shares, sell_date, company_name, allocation, sentiment)  VALUES "
-                        "('"+str(create_date)+"','"+str(create_date)+"','" + str(ticker) + "','" + str(show_id) + "','2017-07-29','" + str(stock_value) + "','" + str(stock_value) + "','" + str(randomshares) + "','2016-09-01','" + str(companyname) + "','" + str(allocation) + "','" + str(sentimentavg) + "')")
-        newstocks.append({'ticker':stocks[num][0],'cname':stocks[num][1],'price':str(stock_value),'shares':randomshares,'allocation':randomshares})
+                        "('"+str(create_date)+"','"+str(create_date)+"','" + str(ticker) + "','" + str(show_id) + "','2017-07-29','" + str(stock_value) + "','" + str(float(stock_value)*.99) + "','" + str(randomshares) + "','2016-09-01','" + str(companyname) + "','" + str(allocation) + "','" + str(sentimentavg) + "')")
+        newstocks.append({'ticker':stocks[num][0],'cname':stocks[num][1],'price':str(stock_value),'shares':randomshares,'allocation':allocation})
     # new_investment = request.POST['investingAmount']
     # if request.POST['Market'] == "S&P500":
     #     new_market = "S"
