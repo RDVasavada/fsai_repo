@@ -38,6 +38,7 @@
 <script>
 $(function () {
     $.getJSON('http://127.0.0.1:8000/user/stock_chart/{{company_symbol}}/', function (data) {
+        data = (JSON.parse(data))
 
         // Create the chart
         Highcharts.stockChart('container', {

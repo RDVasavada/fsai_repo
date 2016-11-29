@@ -22,7 +22,8 @@ $.ajax({
 </script>
   
 <div class="sceneElement" data-viewport="0">
- <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px;height:100%;color:black;overflow:hidden;height:90vh;min-width:200px" id="nopad">
+<div class="row" style="width:100%;height:100%;margin:0px">    
+ <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px;height:100%;color:black;overflow:hidden;min-width:200px" id="nopad">
     <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.6);margin-bottom:0px" id="infirst">
         <div class="header">
             <h2>Direct Message</h2>
@@ -58,13 +59,13 @@ $.ajax({
     </div>    
 </div>
 
-<div class="col-lg-9 col-md-9 col-sm-9 col-xs-7" style="height:90vh;padding-left:1px;padding-right:1px" id="intwo">
-    <div class="block block-drop-shadow" style="height:100%;åmargin-bottom:0px;padding-bottom:100px" id="inb">
+<div class="col-lg-9 col-md-9 col-sm-9 col-xs-7" style="height:100%;padding-left:1px;padding-right:1px" id="intwo">
+    <div class="block block-drop-shadow" style="height:100%;margin-bottom:0px;padding-bottom:100px" id="inb">
         <div class="header">
             <h2>Conversation with </h2>
             <span id="chosenuser" style="margin-left:5px"></span>
         </div>
-        <div class="content messages mail-scroll mCustomScrollbar" style="height:79vh !important;" id="incontent"> 
+        <div class="content messages mail-scroll mCustomScrollbar" style="height:85vh !important;" id="incontent"> 
             <div class="email-list-item list-active">
                 <div id="mcontainer">
                      {% render_bundle 'main' %}
@@ -93,8 +94,8 @@ $.ajax({
                 </div>
               -->
             </div>
-        <div class="footer" id="hooter" style="position:fixed;left:25vw;width:75vw;bottom:0px;height:100px;background:black;">
-            <div class="input-group" style="position:fixed;bottom:0px;padding-bottom:25px">
+        <div class="footer" id="hooter" style=";width:75vw;bottom:0px;height:100px;background:black;">
+            <div class="input-group" style="bottom:0px;padding-bottom:25px">
                 <span class="input-group-addon"><i class="icon-comment"></i></span>
                 <!-- <input type="text" class="form-control" placeholder="message.."> -->
                 <input id="messageBody" type="text" name="message" class="form-control" placeholder="message.." style="height:50px;width: 70vw;border: 1px solid rgba255,255,255,0.5); border-radius: 5px;">
@@ -107,6 +108,9 @@ $.ajax({
         </div>
     </div>
 </div>
+</div>
+</div>
+
 <div class="col-lg-2 col-md-2 col-sm-2"><div class="nav" id="navlast">
     <a href="/user/my_portfolios" data-target="-1" style=";margin-right:50px;float:right">           
       <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
@@ -115,8 +119,6 @@ $.ajax({
     </a>
   </div>  
 </div>
-</div>
-
 <div class="statusbar center" id="statusbar_8" style="width:45%;height:100px;position:absolute;left:26%;top:45%;background-color:black">
         <div class="statusbar-body" style="width:100%">
                 <div class="form-group">                    

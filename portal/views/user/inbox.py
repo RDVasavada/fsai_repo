@@ -13,6 +13,14 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext, Context, loader
 from yahoo_finance import Share
+import pusher
+
+pusher_client = pusher.Pusher(
+app_id='226549',
+key='494655f2d7fa16cf1fd7',
+secret='b1e306b6252db57482f5',
+ssl=True
+)
 
 @csrf_exempt
 @login_required
@@ -25,6 +33,7 @@ def inbox(request):
     portalUser = PortalUser.objects.get(username=username)
     picture_url = portalUser.picture_url
     context_dict['picture_url'] = picture_url
+    context_dict['userid'] = portalUser.id
     try:
         arr = getconnections(request)
         # print(arr)
@@ -48,7 +57,7 @@ def getmsg(request):
     print(fromid)
     cursor = connection.cursor()
     rtnarray = []
-    cursor.execute("SELECT id, time FROM portal_messageheader WHERE "
+    cursor.execute("SELECT id, time, status FROM portal_messageheader WHERE "
                    "'" + fromid + "' = to_id AND '" + str(userid) + "' = from_id")
     msgs = dictfetchall(cursor)
     for msg in msgs:
@@ -60,10 +69,12 @@ def getmsg(request):
       except IndexError:
         print("none")   
       rtnarray.append(returnmsg)  
-    cursor.execute("SELECT id, time FROM portal_messageheader WHERE "
+    cursor.execute("SELECT id, time, status FROM portal_messageheader WHERE "
                    "'" + str(fromid) + "' = from_id AND '" + str(userid) + "' = to_id")
     msgs = dictfetchall(cursor)
     for msg in msgs:
+      if msg['status'] == "unread":
+        cursor.execute("UPDATE portal_messageheader SET status = 'read' WHERE id = " + str(msg['id']) + "")
       cursor.execute("SELECT content, id FROM portal_message WHERE "
                      "'" + str(msg['id']) + "' = header_id")
       returnmsg = dictfetchall(cursor)
@@ -118,7 +129,7 @@ def sendmsg(request):
   a_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
   cursor = connection.cursor()
   cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
-                 "('" + str(portId) + "','" + str(recipient) + "','unread','" + str(a_time) + "','friends');")
+                 "('" + str(portId) + "','" + str(recipient) + "','unread','" + str(a_time) + "','unread');")
   cursor.execute("SELECT LAST_INSERT_ID();")
   header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
   cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
@@ -126,11 +137,13 @@ def sendmsg(request):
   if recipient == '0':
     botmsg = analyze(message, portId, username)
     cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
-                     "('0','" + str(portId) + "','unread','" + str(a_time) + "','friends');")  
+                     "('0','" + str(portId) + "','unread','" + str(a_time) + "','unread');")  
     cursor.execute("SELECT LAST_INSERT_ID();")
     header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
     cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
-                 "('" + str(header_id) + "','0','" + str(botmsg) + "');")    
+                 "('" + str(header_id) + "','0','" + str(botmsg) + "');")
+    pusher_client.trigger("u_"+str(username), 'my_event', {'message': str(botmsg)})
+  pusher_client.trigger("u_"+str(recipient), 'my_event', {'message': str(message)})      
   t = loader.get_template('user/inbox.html')
   c = Context(context_dict)
   html = t.render(context_dict)
@@ -146,7 +159,7 @@ def getconnections(request):
     picture_url = portalUser.picture_url
     arr = []
     arr.append({
-      'username' : username,
+      'username' : username + " ( you )",
       'id' : userid,
       'picture_url' : picture_url,
     })

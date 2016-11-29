@@ -24,11 +24,11 @@ class PortalUser(auth.models.AbstractUser):
 
     class Meta:
         app_label = 'portal'
-# Tas-MacBook-Pro:reacttest ta$ mysql -u root -p fsai -e "alter table portal_portaluser add column firmname varchar(255) not null"
+# mysql -u root -p fsai -e "alter table portal_portaluser add column firmname varchar(255) not null"
+# mysql -u root -p fsai -e "alter table portal_portaluser add column firmsize varchar(255) not null"
+# mysql -u root -p fsai -e "alter table portal_portaluser add column assets varchar(255) not null"
 # Enter password:
-# Tas-MacBook-Pro:reacttest ta$ mysql -u root -p fsai -e "alter table portal_portaluser add column firmsize varchar(255) not null"
 # Enter password:
-# Tas-MacBook-Pro:reacttest ta$ mysql -u root -p fsai -e "alter table portal_portaluser add column assets varchar(255) not null"
 # Enter password:
 # mysql -u root -p fsai -e "alter table portal_portaluser change column f_name first_name varchar(255) not null"
 # mysql -u root -p fsai -e "alter table portal_portaluser change column l_name last_name varchar(255) not null"

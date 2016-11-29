@@ -49,11 +49,11 @@
         <script type='text/javascript' src='/static/assets/js/plugins/stepy/jquery.stepy.min.js'></script>
         <script type="text/javascript" src="/static/js/user/dashboard.js"></script>
         <script type="text/javascript" src="/static/js/user/individual_portfolio.js"></script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-         <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js' charset="utf-8"></script>
-
-       <script src="/static/assets/js/d3pie.min.js"></script>
-         <script type='text/javascript' src='/static/assets/main.js'></script>    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js' charset="utf-8"></script>
+        <script src="/static/assets/js/d3pie.min.js"></script>
+        <script type='text/javascript' src='/static/assets/main.js'></script>    
+        <script src="//js.pusher.com/3.2/pusher.min.js"></script>
     {% endblock %}
 </head>
 
@@ -64,11 +64,18 @@ function del_cookie() {
                 deleteCookie('cst')
                 deleteCookie('ssi')
             }
-
 </script>
 <body onunload="del_cookie()" style="background-attachment:fixed !important;height:100%;overflow-x:hidden">
     <ul id="noty_topCenter_layout_container" class="" style="top: 50px;display:none;left: 40vw; position: fixed; width: 310px; height: auto; margin: 0px; padding: 0px; list-style-type: none; z-index: 10000000;"><li style="overflow: hidden; background: rgb(0, 0, 0); border-radius: 3px 3px 0px 0px; border: 1px solid white; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px; color: rgb(255, 255, 255); opacity: 1; width: 310px; cursor: pointer;"><div class="noty_bar" id="noty_739730318433366900"><div class="noty_message" style="font-size: 11px; line-height: 14px; text-align: center; padding: 8px 10px 9px; width: auto; position: relative;"><span class="noty_text">Your Guru Porftolio is ready !</span></div></div></li></ul>
-    <div class="row" style="margin:0px">
+    <div class="row" style="margin:0px;">
+        <div class="block" style="display:none !important;position:fixed;top:100px;right:25px;width:300px;height:100px;text-align:center;padding-top:25px;background:rgba(55,55,255,0.4)" id="new_msg_noty">
+            <div class="row">
+                <h2 style="font-size:12px;font-family:Raleway;text-align:left;padding-left:50px">New Message<h2>
+                <hr style="margin:0px;width:50%;margin-left:50px">
+                <span style="font-family:Raleway;text-align:left;padding-left:50px;font-size:10px" id="incoming_message_noty"></span>
+            </div>
+        </div>
+    
 <script>
 var bg = JSON.parse(localStorage.getItem('bg'));
 if (bg) {
@@ -78,14 +85,17 @@ if (bg) {
 }
 </script>
         <div class="col-md-12" id="mainheader" style="position:relative;width:102vw;padding:0px;margin-bottom:0px">
-            <div class="btn-group btn-group-justified" id="navbtn" style="height:10vh;text-align:center;box-shadow:none">
+            <div class="btn-group btn-group-justified" id="navbtn" style="height:10vh;text-align:center;box-shadow:none;z-index:999">
                 <div class="btn" id="navlast">
                     <h8 style="opacity: 0.4; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 54px;font-family:'Raleway',thin;display:inline;line-height:75px;text-align:center" id="splash">
-                        <span style="letter-spacing:1px;" id="navicon"><i >V</i></span><span id="navicon">ise</span><br>
+                        <span style="letter-spacing:1px;" id="navicon"><i >V</i></span><span id="navicon">ise
+                        </span>
+                        <br>
                     </h8>
                 </div>                
                 <a id="a1" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/dashboard/" class="btn btn-default btn-clean stbar transition" id="/user/dashboard">
-                    <span class="icon-home" style="font-size:24px"></span><br><span id="navicon"> Dashboard </span>
+                    <span class="icon-home" style="font-size:24px"></span><br><span id="navicon"> Dashboard
+                     </span>
                 </a>               
                 <a id="a2" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/inbox"class="btn btn-default btn-clean"><span class="icon-comments" style="font-size:24px"></span> 
                 <br><span id="navicon"> Messages</span></span></a>
@@ -106,37 +116,31 @@ if (bg) {
         <div class="col-md-2" style="margin-right:10px">
         </div> -->
 
+    <div class="row" style="height:25px;width:100%;margin:0px;text-align:right;padding-top:5px;position:relative;bottom:50px;z-index:0">
+                <div class="btn-group btn-group-justified" id="navbtn" style="text-align:center;box-shadow:none">
+                <a style="border:0px;co;text-align:rightlor:rgba(255,255,255,0.4)"class="btn btn-default btn-clean stbar transition">
+                </a>               
+                <a style="border:0px;color:rgba(255,255,255,1);text-align:right;font-size:16px;padding-right:3%;" class="btn btn-default btn-clean stbar transition">
+                </a>               
+                <a style="border:0px;color:rgba(255,255,255,0.4);text-align:right" id="message_alert" class="btn btn-default btn-clean stbar transition">
+                </a>               
+                <a style="border:0px;color:rgba(255,255,255,0.4);text-align:right"class="btn btn-default btn-clean stbar transition">
+                </a>               
+                <a style="border:0px;color:rgba(255,255,255,0.4);text-align:right"class="btn btn-default btn-clean stbar transition">
+                </a>               
+                <a style="border:0px;color:rgba(255,255,255,0.4);text-align:right"class="btn btn-default btn-clean stbar transition">
+                </a>               
+                <a style="border:0px;color:rgba(255,255,255,0.4);text-align:right" id="sentiment_alert" class="btn btn-default btn-clean stbar transition">
+                </a>            
+                <a style="border:0px;color:rgba(255,255,255,0.4);text-align:right"class="btn btn-default btn-clean stbar transition">
+                </a>                           
+            </div>     
+    </div>    
     </div>
-    <div class="row" style="height:25px;background:rgba(0,0,0,0.4);width:100%;margin:0px;text-align:center;padding-top:5px">
+    <div class="row" style="height:25px;background:rgba(0,0,0,0.4);width:100%;margin:0px;text-align:center;padding-top:0px;position:relative;">
     <span id="helper" style="display:none;letter-spacing:3px;font-weight:100"></span>
     </div>
-    <div class="row" style="padding-left:20px;padding-right:20px">
-        
-        <div class="statusbar" id="statusbar_2" style="display: block;z-index:999;display:none;width:110vw">
-            <div class="statusbar-icon"><img src="/static/img/loader.gif"></div>
-            <div class="statusbar-text">Loading...</div>
-            <div class="statusbar-close icon-remove"></div>
-        </div>
-        <div class="modal in" id="modal_wide_1" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;display:none;height:110vh"><div class="modal-backdrop  in"></div>
-                <div class="modal-dialog" style="width: 60vw; height: 926px; padding-top: 15px; padding-bottom: 15px;">
-                    <script>
-                        function refresh() {
-                            location.assign('visebeta.com/user/news_portal')
-                        }                    
-                    </script>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onClick="refresh()">×</button>
-                            <h4 class="modal-title"></h4>
-                        </div>
-                        <div class="modal-body clearfix npr" style="margin-top:25px" id="visual_modal">
-
-
-                        </div>                
-                    </div>
-                </div>
-            </div>
-</div>
+    <div id="main">
 <div class="modal in" id="modal_default_5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;margin-top:20vh"><div class="modal-backdrop  in"></div>
         <div class="modal-dialog">
             <div class="modal-content">                
@@ -159,7 +163,7 @@ if (bg) {
     <div style="width:100%;height:100%;text-align:center">
         <img src="/static/img/profile.svg" style="width:100px;border-radius:50px;margin-left:5px">
         <div style="margin-top:50px">
-            <h2 style="font-family:Raleway;font-size:24px;font-weight:100">{{username}}<!-- <span class="icon-pencil" style="position:absolute;right:25px"></span> --></h2>
+            <h2 style="font-family:Raleway;font-size:24px;font-weight:100">{{username}}</h2>
             <hr style="margin-top:15px;margin-bottom:0px;width:50%">
             Username 
             <h2 style="font-family:Raleway;font-size:18px;font-weight:100;margin-top:50px">{{last}}</h2>
@@ -168,7 +172,7 @@ if (bg) {
             <h2 style="font-family:Raleway;font-size:18px;font-weight:100;margin-top:50px">{{date_joined}}</h2>
             <hr style="margin-top:5px;margin-bottom:0px;width:50%">
             Date Joined
-            <h2 style="font-family:Raleway;font-size:24px;font-weight:100;margin-top:50px">{{email}}<!-- <span class="icon-pencil" style="position:absolute;right:25px"></span> --></h2>
+            <h2 style="font-family:Raleway;font-size:24px;font-weight:100;margin-top:50px">{{email}}</h2>
             <hr style="margin-top:15px;margin-bottom:0px;width:50%">
             Email (Unconfirmed)<br>
             <button type="button" class="btn btn-warning btn-clean" id="emailed_confirmed">Resend</button>
@@ -206,10 +210,9 @@ if (bg) {
             Background
 
         </div>
-       <!-- <iframe src="/upload" style="border: 0px;width:100%"></iframe> -->
     </div>
 </div>
-    <div id="main">
+    
 <script>
 confirmed_phone()
 
@@ -269,7 +272,28 @@ function i_closeNav() {
     document.getElementById("i_mySidenav").style.width = "0";
 }
 
+$.ajax({
+    url:"/user/message_update/",
+    method: "POST"
+}).done(function(data){
+    if (data.val > 0) {
+        $("#message_alert")[0].innerHTML = "<div style='padding-top:3px;width:25px;float:right;height:25px;border:1px solid white;background:rgba(0,0,0,0.2);border-radius:50px;text-align:center' id='message_alert_number'>"+data.val+"</div>"
+    }
+})
+Pusher.logToConsole = true;
 
+var pusher = new Pusher('494655f2d7fa16cf1fd7', {
+  encrypted: true
+});
+
+var channel = pusher.subscribe('u_{{userid}}');
+channel.bind('my_event', function(data) {
+    $("#new_msg_noty").fadeIn(250)
+    $("#incoming_message_noty")[0].innerText = data.message.slice(0,40)+"..."
+    setTimeout(function(){ 
+        $("#new_msg_noty").fadeOut(250)
+    }, 1000);
+});
 </script>
 
 {% block content %}
@@ -287,7 +311,33 @@ function i_closeNav() {
             <i class="icon-circle-blank" id="nav6"></i>
         <!-- </div> -->
     </div>
+   <div class="row" style="padding-left:20px;padding-right:20px">
+        
+        <div class="statusbar" id="statusbar_2" style="display: block;z-index:999;display:none;width:110vw">
+            <div class="statusbar-icon"><img src="/static/img/loader.gif"></div>
+            <div class="statusbar-text">Loading...</div>
+            <div class="statusbar-close icon-remove"></div>
+        </div>
+        <div class="modal in" id="modal_wide_1" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;display:none;height:110vh"><div class="modal-backdrop  in"></div>
+                <div class="modal-dialog" style="width: 60vw; height: 926px; padding-top: 15px; padding-bottom: 15px;">
+                    <script>
+                        function refresh() {
+                            location.assign('visebeta.com/user/news_portal')
+                        }                    
+                    </script>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onClick="refresh()">×</button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body clearfix npr" style="margin-top:25px" id="visual_modal">
 
+
+                        </div>                
+                    </div>
+                </div>
+            </div>
+</div>
 {% block scripts %}
 
 {% endblock %}

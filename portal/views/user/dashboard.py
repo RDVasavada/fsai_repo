@@ -1,3 +1,4 @@
+import pusher
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -240,7 +241,7 @@ def performance_line_chart(request):
 def performance_chart(request):
   with open('ndx.json') as json_data:
     ndx = json.load(json_data)
-  with open('dj.json') as json_data:
+  with open('ndx.json') as json_data:
     dj = json.load(json_data)
   with open('sp.json') as json_data:
     sp = json.load(json_data)    
@@ -249,6 +250,9 @@ def performance_chart(request):
     username = request.user.username
     portalUser = PortalUser.objects.get(username=username)
     portfolios = top_portfolios(request,portalUser.id)
+    if (len(portfolios)) == 0:
+      print("RETURNiNG ERROR")
+      return JsonResponse({'error':'error'})
     for port in portfolios:
      cursor = connection.cursor()
      cursor.execute("select current_price, initial_price from portal_stock where show_id=" + str(port['id']))
@@ -319,14 +323,15 @@ def dashboard(request):
       portfolios = top_portfolios(request,portalUser.id)
       picture_url = portalUser.picture_url
       context_dict['email'] = portalUser.email
+      context_dict['userid'] = portalUser.id
       context_dict['date_joined'] = portalUser.date_joined
       context_dict['phone'] = portalUser.phone
       context_dict['confirm_email'] = portalUser.confirm_email
       context_dict['confirm_phone'] = portalUser.confirm_phone
       context_dict['username'] = portalUser.username
       context_dict['last'] = portalUser.last_login
-      # context_dict['last_name'] = portalUser.lastname
-      # context_dict['first_name'] = portalUser.firstname
+      context_dict['last_name'] = portalUser.last_name
+      context_dict['first_name'] = portalUser.first_name
       cursor = connection.cursor()
       cursor.execute("SELECT id from portal_portfolio where user_id = \'" + str(portalUser.id) + "'")
       for stock in dictfetchall(cursor):
@@ -361,9 +366,9 @@ def find():
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
   gurusoup = BeautifulSoup(urlopen(guru))
   try:
-    g = gurusoup.body.contents[0]
+    g = gurusoup.p.contents[0]
     d = json.loads(g)
-  except TypeError:
+  except AttributeError:
     g = gurusoup.body.contents[0]
     d = json.loads(g)   
   guruarr = []
@@ -387,6 +392,19 @@ def dashboardskip(request):
   rotate_token(request)
   html = get_top_portfolios(request, 'user/dashboard.html')
   return HttpResponse(html)
+
+@csrf_exempt
+def message_update(request):
+  if request.user.is_authenticated():
+    userid = request.user.id
+    cursor = connection.cursor()
+    rtnnum = 0
+    cursor.execute("SELECT * FROM portal_messageheader WHERE "
+                   "'" + str(userid) + "' = to_id AND 'unread' = status")
+    msgs = dictfetchall(cursor)
+    for msg in msgs:
+      rtnnum += 1
+    return JsonResponse({'val':rtnnum})
 
 @csrf_exempt
 def portfolio_chart(request, portfolio_id):
@@ -541,6 +559,13 @@ def portfolio_chart(request, portfolio_id):
 @json_response
 @login_required
 def confirm_phone(request, code):
+  pusher_client = pusher.Pusher(
+    app_id='226549',
+    key='494655f2d7fa16cf1fd7',
+    secret='b1e306b6252db57482f5',
+    ssl=True
+  )
+  pusher_client.trigger('test_channel', 'my_event', {'message': 'hello world'})
   cursor = connection.cursor()
   message = "Unconfirmed"
   if request.user.is_authenticated():
@@ -558,6 +583,13 @@ def confirm_phone(request, code):
 @json_response
 @login_required
 def confirmed_phone(request):
+  pusher_client = pusher.Pusher(
+    app_id='226549',
+    key='494655f2d7fa16cf1fd7',
+    secret='b1e306b6252db57482f5',
+    ssl=True
+  )
+  # pusher_client.trigger('test_channel', 'my_event', {'message': 'hello world'})  
   cursor = connection.cursor()
   message = "Unconfirmed"
   if request.user.is_authenticated():

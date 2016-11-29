@@ -116,7 +116,7 @@
 
 <div class="modal in" id="modal_default_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: hidden">
         <!-- <div class="modal-dialog"> -->
-        <div class="modal-dialog" style="width: 100vw; height: 100vh; margin:0px;background:url(/static/img/bg-11.jpg);-moz-background-size: 100% 100%;-o-background-size: 100% 100%;-webkit-background-size: 100% 100%; background-size: 100% 100%;">            
+        <div class="modal-dialog" style="width: 100vw; height: 100vh; margin:0px;background:url(/static/img/bg-11.jpg);-moz-background-size: 100% 100%;-o-background-size: 100% 100%;-webkit-background-size: 100% 100%; background-size: 100% 500%;">            
             <div class="modal-content">
                 <div class="block" style="height:100vh;overflow:scroll;margin-bottom:0px">
                     <div class="header">                                        
@@ -216,7 +216,6 @@ function checkUser() {
         typing = 1
     }
 }
-// $("#username").val($("#username").val());
 </script>
                         <form action="/register" method="POST" id="wizard_validate" onsubmit="submitRegistration()">
                             {% csrf_token %}
@@ -290,9 +289,14 @@ function checkUser() {
                                     <div class="col-md-9">
                                         <input type="text" name="phone" id="phone" class="form-control validate[required,custom[phone]]" value="" autocomplete="off">
                                         <span class="help-inline" style="color:rgba(255,255,255,.5)">Example:(777)777-7777</span>
+                                        <div class="side pull-right">
+                                            <span id="greenPhone" style="color:rgba(0,255,0,1);display:none;font-family:'Raleway',thin;line-height: 1.5;"></span>
+                                            <span id="redPhone" style="color:rgba(255,0,0,1);display:none;font-family:'Raleway',thin;line-height: 1.5;"></span>
+                                        </div>
                                     </div>
                                 </div>  
 <script>
+var bothpass = 0
 var etyping = 0
 $(function() {
 
@@ -363,7 +367,10 @@ function checkEmail() {
                 $("#redEmail").fadeOut(50)
                 $("#greenEmail")[0].innerText = "Email " + email + "is available !"
                 $("#greenEmail").fadeIn(250)
-                $("#wizard_validate-buttons-1").fadeIn(150)
+                bothpass += 1
+                if (bothpass == 2) {
+                    $("#wizard_validate-buttons-1").fadeIn(150)
+                }
             }
         }).fail(function(e) {
             console.log(e)
@@ -374,6 +381,83 @@ function checkEmail() {
         })
         etyping = 1
     }
+}
+
+var p_typing = 0
+$(function() {
+
+    $("#phone").data("old_value", $("#phone").val());
+
+    $("#phone").bind("paste cut keydown",function(e) {
+        p_typing = 1
+        var that = this;
+        setTimeout(function() {
+                if(typeof $(that).data("old_value") == "undefined") {
+                    $(that).data("old_value",$(that).val());
+                }
+
+                p_getNewInsertion($(that).data("old_value"), $(that).val(), e.target.selectionStart);
+                $(that).data("old_value",$(that).val());
+            },500);
+
+    })
+
+}); 
+function p_getNewInsertion(oldValue, newValue, newPosition) {
+
+    var type='';
+    var from=0;
+    var length=0;
+    var text='';
+
+    if(oldValue.length > newValue.length) {
+        type = 'deletion';
+        changeLength = oldValue.length - newValue.length;
+        pos = newPosition;
+        text = oldValue.substr(pos, changeLength);
+    } else {
+        type = 'insertion';
+        changeLength = newValue.length - oldValue.length;
+        pos = newPosition - changeLength;
+        text = newValue.substr(pos, changeLength);
+    }
+
+
+    p_log();
+
+
+    return {text:text, type:type, position: pos, changeLength: changeLength};
+}
+function p_log() {
+    p_typing = 0
+    setTimeout(function() {
+        if (p_typing == 0) {
+            checkPhone()
+        }
+    },1500);    
+}
+function checkPhone() {
+    number = $("#phone").val()
+    console.log(formatPhoneNumber(number))
+    if (formatPhoneNumber(number) == null) {
+        $("#greenPhone").fadeOut(250)
+        $("#redPhone")[0].innerText = "Phone Number " + number + " is not a valid number !"
+        $("#redPhone").fadeIn(250)
+        $("#wizard_validate-buttons-0").fadeOut(150)
+    } else {
+        $("#redPhone").fadeOut(50)
+        $("#greenPhone")[0].innerText = "Phone Number " + number + " is valid !"
+        $("#greenPhone").fadeIn(250)
+        bothpass += 1
+        if (bothpass == 2) {
+            $("#wizard_validate-buttons-1").fadeIn(150)
+        }
+    }
+}
+function formatPhoneNumber(s) {
+  var s2 = (""+s).replace(/\D/g, '');
+  var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+  return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
 }
 // $("#username").val($("#username").val());
 </script>                                
@@ -455,20 +539,21 @@ function checkEmail() {
 <script>
 var p_arr =[]
 var p_click = function(i) {
-    console.log(p_arr.length)
     if (p_arr.length < 4) {
         if (i < 9) {
             p_arr.push(i)
             $("#pinnumber")[0].value += "*"
+            $("#spin")[0].value = Number(String(p_arr.join("")))
         }
     } else {
         if (i < 9) {
             p_arr[3] = i
+            $("#spin")[0].value = Number(String(p_arr.join("")))
         }
     }
-    console.log(p_arr)
 }
 var e_click = function() {
+    console.log($("#spin")[0].value)
     p_arr.pop()
     $("#pinnumber")[0].value = $("#pinnumber")[0].value.slice(0,-1)
 }
@@ -478,6 +563,7 @@ var e_click = function() {
                                                     <span style="font-size:50px" class="icon-eraser" onClick="e_click()"></span>
                                                 </span>
                                                 <input type="password" id="pinnumber" name="pinnumber" class="form-control validate[required,maxSize[4]]" style="height:100px;text-align:center;font-size:50px">
+                                                <input type="number" id="spin" name="spin" class="form-control" style="display:none">
                                             </div>                                                                                   
                                         </div>
 

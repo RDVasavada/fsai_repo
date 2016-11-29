@@ -1,15 +1,15 @@
-confirmed_phone()
-  $(".scroll-jail").mCustomScrollbar();
-   
+// confirmed_phone()
+$(".scroll-jail").mCustomScrollbar();
+$(".scroll-sail").height('25vh').mCustomScrollbar();
 
-  $(".scroll-sail").height('25vh').mCustomScrollbar();
-
-// $("#statusbar_2").show()
-// var sectorpadding = String($("#sectorContent").width() / 18).slice(0,2) + "px"
-// console.log(sectorpadding)
-// $("#pieChart").css("left",sectorpadding)
-
-
+if ($("#sector-check")[0].children.length == '0') {
+    $("#sectorContent")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;font-family:Raleway;padding-top:25px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show !<br><br><span style='font-size:12px'>Try creating one first.</span></div>"
+    $("#sectorContent").css('background','rgba(0,0,0,0.2')
+} 
+if (!($("#changeVal")[0].innerText)) {
+    $("#changeVal")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;font-family:Raleway;padding-top:25px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show !<br><br><span style='font-size:12px'>Try creating one first.</span></div>"
+    $("#changeVal").css('background','rgba(0,0,0,0.4')
+}
 $.ajax({
     url:"/user/dashboard/marketnews/",
     method: "POST"
@@ -34,12 +34,16 @@ $.ajax({
     url:"/user/dashboard/your_sentiment/",
     method: "POST"
 }).done(function(data){
+    if (data.sentiment.length == 0) {
+         $("#sentiment_pin")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;font-family:Raleway;margin-top:100px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show !<br><br><span style='font-size:12px'>Try creating one first.</span></div>"   
+         $(".scroll-tail").css('background','rgba(0,0,0,0.4')
+    }
     data.sentiment.forEach(function(x) {
         sentiment_value = String(x.sentiment).slice(0,String(x.sentiment).indexOf("."))
         if (sentiment_value < 50) {
             $("#sentiment_pin").hide().append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(255,0,0,1)'>↓"+sentiment_value+"</span></div></div></div>").fadeIn(250)
         } else {
-                $("#sentiment_pin").hide().append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(0,255,0,1)'>↑"+sentiment_value+"</span></div></div></div>").fadeIn(250)
+            $("#sentiment_pin").hide().append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content'></div><div class='item-line'><div class='item-line-content' style='width:100%;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:14px;letter-spacing:2px'>"+x.ticker+"<span style='color:rgba(0,255,0,1)'>↑"+sentiment_value+"</span></div></div></div>").fadeIn(250)
 
         }
     }) 
@@ -98,7 +102,6 @@ $.ajax({
     url:"/user/dashboard/get_gain/",
     method: "POST"
 }).done(function(data){
-    // console.log(data)
     var change = String(data.data).slice(0,3)
     if (Number(change) > 0) {
         $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(0,255,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
@@ -336,9 +339,11 @@ $.ajax({
     url:"dashboard/performance_chart/",
     method: "POST"
 }).done(function(r_data){
-
+    if (r_data.error = "error") {
+        $("#performance_check")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;margin-bottom:50px;font-family:Raleway;padding-top:50px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show !<br><br><span style='font-size:12px'>Try creating one first.</span></div>"
+        $("#performance_check").css("background","rgba(0,0,0,0.4)")
+    }
 if (r_data.you[0] || r_data) {
-    console.log(r_data)
     graphit(r_data)
     } else {
         $.ajax({

@@ -34,7 +34,7 @@ if (url[0] == '/') {
 <script>
 $(function () {
     $.getJSON('http://127.0.0.1:8000/user/portfolio_chart/{{portfolio.id}}/', function (data) {
-        console.log(data)
+        data = (JSON.parse(data))
         // Create the chart
         Highcharts.stockChart('container', {
 

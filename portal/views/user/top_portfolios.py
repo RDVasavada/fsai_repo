@@ -17,7 +17,7 @@ def get_top_portfolios(request, html_template):
     if request.user.is_authenticated():
         username = request.user.username
         portalUser = PortalUser.objects.get(username=username)
-        print portalUser.id
+        userid = portalUser.id
 
     portfolios = top_portfolios(request, portalUser.id)
     # portfolios = top_portfolios(request, portalUser.id)
@@ -26,6 +26,7 @@ def get_top_portfolios(request, html_template):
     context_dict = {}
     context_dict["portfolios"] = portfolios
     context_dict["username"] = username
+    context_dict["userid"] = userid
     t = loader.get_template(html_template)
     c = Context(context_dict)
     html = t.render(context_dict)

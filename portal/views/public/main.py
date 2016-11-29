@@ -123,6 +123,8 @@ def register(request):
         # message = client.messages.create(to=phone, from_="+12054907304",
         #                              body=phone_message)
         email = request.POST.get('email', None)
+        firstname = request.POST.get('firstname', None)
+        lastname = request.POST.get('lastname', None)
         address = request.POST.get('address', None)
         reason = request.POST.get('reason', None)
         firmname = request.POST.get('firmName', None)
@@ -132,13 +134,14 @@ def register(request):
         connections = 0
         confirm_email = 0
         confirm_phone = 0
-        pin_number = 1111
+        pin_number = str(request.POST.get('spin', None))
+        print(pin_number)
         errors = []
 
         if password == password_repeat:
             if len(password) > 8:
 
-                new_user = PortalUser.objects.create_user(username=username, email=email, password=password, connections=0, picture_url=picture_url, confirm_email = confirm_email, confirm_phone = str(phone_confirm), pin_number = pin_number, firmname = firmname, firmsize = firmsize, assets = assets)
+                new_user = PortalUser.objects.create_user(username=username, first_name = firstname, last_name = lastname, email=email, password=password, connections=0, picture_url=picture_url, confirm_email = confirm_email, confirm_phone = str(phone_confirm), pin_number = pin_number, firmname = firmname, firmsize = firmsize, assets = assets)
 
                 new_user.phone=phone
                 new_user.email=email
@@ -155,6 +158,7 @@ def register(request):
                     header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']    
                     cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
                                 "('" + str(header_id) + "','0','<Hyperchat Bot> : Hi there! Welcome to Vise! Im a simple bot who can answer your questions and carry out simple commands for you. Nice to meet you. Why dont you try creating a portfolio to try things out?')")
+                    cursor.close()
                     user = authenticate(username=username, password=password)
                     login(request, user)
                     return HttpResponseRedirect('user/dashboard')

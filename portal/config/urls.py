@@ -47,6 +47,7 @@ urlpatterns = patterns('',
     (r'^user/confirm_phone/(?P<code>\w{0,999999})/$', views.confirm_phone), 
     (r'^user/confirmed_phone/?$', views.confirmed_phone),
     (r'^user/resend_phone/?$', views.resend_phone),
+    (r'^user/message_update/?$', views.message_update),
 
     #General User Pages
     (r'^user/dashboard/?$', views.dashboard),
