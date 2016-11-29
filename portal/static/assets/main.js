@@ -29,14 +29,10 @@ function rerun() {
         $.getScript("/static/js/user/guru_settings.js")
         $.getScript("/static/assets/js/actions.js")
     } else if ((url.indexOf("individual_portfolio")) > 0 ) {  
-        $('<link/>', {
-           rel: 'stylesheet',
-           type: 'text/css',
-           href: "/static/css2/d3.pie.css"
-        }).appendTo('head');
-        $.getScript("/static/assets/js/plugins/knob/jquery.knob.js")
+        $("div#main").removeClass()
         $.getScript("/static/js/user/individual_portfolio.js")
         $.getScript("/static/assets/js/actions.js") 
+        // window.location.reload()
     } else if ((url.indexOf("individual_stock")) > 0 ) {
       $('<link/>', {
            rel: 'stylesheet',
@@ -47,7 +43,7 @@ function rerun() {
         $.getScript("/static/assets/js/actions.js") 
         $.getScript("/static/assets/js/plugins.js")
     }else if ((url.indexOf("my_portfolios")) > 0 ) {  
-        window.location.reload()
+        // window.location.reload()
         $.getScript("/static/assets/js/actions.js")
         $.getScript("/static/assets/js/plugins.js")
         $.getScript("/static/js/user/my_portfolios.js")

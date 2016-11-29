@@ -5,7 +5,7 @@ var url = String(window.location.href).slice(-2)
 if (url[0] == '/') {
   url = url.slice(-1)
 }
-$("li#a" + url).attr('class','active')
+// $("li#a" + url).attr('class','active')
 </script>
 <div class="sceneElement" data-viewport="0">
  <div class="nav">
@@ -15,620 +15,479 @@ $("li#a" + url).attr('class','active')
        <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
     </a>
   </div>
-<div class="col-lg-12 col-lg-12 col-sm-12" style="padding-right:50px;padding-left:40px;height:100%;padding-top:25px">
+<div class="col-lg-12 col-lg-12 col-sm-12" style="height:100%;">
 
-        <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white" id="companyName">{{portfolio.name}}</h2> 
-<div class="row" style="background:rgba(0,0,0,0.2);padding:25px;padding-bottom:0px">
-  <div class="col-lg-8">
+<div class="row" style="background:rgba(0,0,0,0.2);padding-bottom:0px">
+  <div style="background:rgba(0,0,0,0.2);position:relative;top:-50px">
+  <h2 style="font-weight:300;padding-top:50px;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:36px;text-align:center;color:white;height:50px;padding-left:50px;margin-top:50px" id="companyName"><span style="font-size:36px;margin-right:15px" class="icon-magic"></span>{{portfolio.name}}</h2> 
+  <h2 style="font-weight:300;padding-top:50px;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px;text-align:center;color:white;height:25px;padding-left:50px;" id="companyName">Vised Picked Portfolio for {{portfolio.client_name}}</h2> 
+  <h2 style="font-weight:300;padding-top:30px;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px;text-align:center;color:white;height:150px;padding-left:50px;" id="companyName">Created {{portfolio.created_date}}</h2> 
+  </div>
+
+  <div class="col-lg-8"  style="padding-left:25px">
+
                     <div class="header">
                         <h2>Portfolio Graph </h2>
-                       
                     </div>                  
-                    <div class="content" id="content{{portfolio.id}}" style="height:384px;overflow:hidden;background:transparent">
-                      <div class="loader{{portfolio.id}}" style="height:100%;text-align:center;top:35%;position:relative">
-                        <img src="/static/img/loader.gif"><br><br>
-                        <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px">We are loading your portfolio data! This may take a minute..</h2>
-                      </div>
+               <div class="content" id="content1" style="height:325px;overflow:hidden">  
+                <div id="container" style="height: 400px; min-width: 310px;position:relative;right:25px"></div>    
 <script>
-
-(function() {
-  var div = $("#content{{portfolio.id}}")
-
-  var margin = {top: 30, right: 20, bottom: 100, left: 50},
-    margin2  = {top: 210, right: 20, bottom: 20, left: 50},
-    width    = div.width() - 75;
-    height   = 283 - margin.top - margin.bottom,
-    height2  = 283 - margin2.top - margin2.bottom;
-
-  var parseDate = d3.time.format('%Y-%m-%d').parse,
-    bisectDate = d3.bisector(function(d) { return d.date; }).left,
-    legendFormat = d3.time.format('%Y %m, %d');
-
-  var x = d3.time.scale().range([0, width]),
-    x2  = d3.time.scale().range([0, width]),
-    y   = d3.scale.linear().range([height, 0]),
-    y1  = d3.scale.linear().range([height, 0]),
-    y2  = d3.scale.linear().range([height2, 0]),
-    y3  = d3.scale.linear().range([60, 0]);
-
-  var xAxis = d3.svg.axis().scale(x).orient('bottom'),
-    xAxis2  = d3.svg.axis().scale(x2).orient('bottom'),
-    yAxis   = d3.svg.axis().scale(y).orient('left');
-
-  var priceLine = d3.svg.line()
-    .interpolate('monotone')
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.price); });
-
-  var avgLine = d3.svg.line()
-    .interpolate('monotone')
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.average); });
-
-  var area2 = d3.svg.area()
-    .interpolate('monotone')
-    .x(function(d) { return x2(d.date); })
-    .y0(height2)
-    .y1(function(d) { return y2(d.price); });
-  var svg = d3.select('#content{{portfolio.id}}')
-    .append("div")
-     .classed("svg-container", true) //container class to make it responsive
-     .append("svg")
-     .classed("svg-content-responsive", true)
-     // .attr('class', 'chart')
-     //responsive SVG needs these 2 attributes and no width and height attr
-     .attr("preserveAspectRatio", "none")
-     .attr("viewBox", "0 0 "+(width+100)+" 325")
-      .style("max-height", "265") 
-      .style("min-height", "265") 
-      .append("g")
-      // .attr("transform", "translate(" 
-      //     + margin.left 
-      //     + "," + margin.top + ")");    
-     //class to make it responsive
-      // .attr('width', width + margin.left + margin.right)
-      // .attr('height', height + margin.top + margin.bottom + 60)
-
-  svg.append('defs').append('clipPath')
-    .attr('id', 'clip')
-  .append('rect')
-    .attr('width', width)
-    .attr('height', height);
-
-  var make_y_axis = function () {
-    return d3.svg.axis()
-      .scale(y)
-      .orient('left')
-      .ticks(3);
-  };
-
-  var focus = svg.append('g')
-    .attr('class', 'focus')
-    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-  var barsGroup = svg.append('g')
-    .attr('class', 'volume')
-    .attr('clip-path', 'url(#clip)')
-    .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 60 + 20) + ')');
-
-  var context = svg.append('g')
-    .attr('class', 'context')
-    .attr('transform', 'translate(' + margin2.left + ',' + (margin2.top + 60) + ')');
-
-  var legend = svg.append('g')
-    .attr('class', 'chart__legend')
-    .attr('width', width)
-    .attr('height', 30)
-    .attr('transform', 'translate(' + margin2.left + ', 10)');
-
-  legend.append('text')
-    .attr('class', 'chart__symbol')
-    .text('{{portfolio.name}}')
-    .style('fill','white')
-
-  var rangeSelection =  legend
-    .append('g')
-    .attr('class', 'chart__range-selection')
-    .attr('transform', 'translate(110, 0)');
-  d3.csv('/user/portfolio_chart/{{portfolio.id}}', type, function(err, data) {
-    console.log(data)
-    var brush = d3.svg.brush()
-      .x(x2)
-      .on('brush', brushed);
-
-    var xRange = d3.extent(data.map(function(d) { return d.date; }));
-
-    x.domain(xRange);
-    y.domain(d3.extent(data.map(function(d) { return d.price; })));
-    y3.domain(d3.extent(data.map(function(d) { return d.price; })));
-    x2.domain(x.domain());
-    y2.domain(y.domain());
-
-    var min = d3.min(data.map(function(d) { return d.price; }));
-    var max = d3.max(data.map(function(d) { return d.price; }));
-
-    var range = legend.append('text')
-      .text(legendFormat(new Date(xRange[0])) + ' - ' + legendFormat(new Date(xRange[1])))
-      .style('text-anchor', 'end')
-      .style('fill','white')
-      .attr('transform', 'translate(' + width + ', 0)');
-
-    focus.append('g')
-        .attr('class', 'y chart__grid')
-        .call(make_y_axis()
-        .tickSize(-width, 0, 0)
-        .tickFormat(''));
-
-    var averageChart = focus.append('path')
-        .datum(data)
-        .attr('class', 'chart__line chart__average--focus line')
-        .attr('d', avgLine);
-
-    var priceChart = focus.append('path')
-        .datum(data)
-        .attr('class', 'chart__line chart__price--focus line')
-        .attr('d', priceLine);
-
-    focus.append('g')
-        .attr('class', 'x axis')
-        .attr('transform', 'translate(0 ,' + height + ')')
-        .style('fill','white')
-        .call(xAxis);
-
-    focus.append('g')
-        .attr('class', 'y axis')
-        .attr('transform', 'translate(12, 0)')
-        .call(yAxis);
-
-    var focusGraph = barsGroup.selectAll('rect')
-        .data(data)
-      .enter().append('rect')
-        .attr('class', 'chart__bars')
-        .attr('x', function(d, i) { return x(d.date); })
-        .style('fill','white')
-        .attr('y', function(d) { return 155 - y3(d.price); })
-        .attr('width', 1)
-        .attr('height', function(d) { return y3(d.price); });
-
-    var helper = focus.append('g')
-      .attr('class', 'chart__helper')
-      .style('text-anchor', 'end')
-      .style('fill','white')
-      .style('font-size','24px')
-      .attr('transform', 'translate(' + width + ', 0)');
-
-    var helperText = helper.append('text')
-        .style('fill','white')
-    var priceTooltip = focus.append('g')
-      .attr('class', 'chart__tooltip--price')
-      .append('circle')
-      .style('display', 'none')
-      .attr('r', 2.5);
-
-    var averageTooltip = focus.append('g')
-      .attr('class', 'chart__tooltip--average')
-      .append('circle')
-      .style('display', 'none')
-      .attr('r', 2.5);
-
-    var mouseArea = svg.append('g')
-      .attr('class', 'chart__mouse')
-      .append('rect')
-      .attr('class', 'chart__overlay')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-      .on('mouseover', function() {
-        helper.style('display', null);
-        priceTooltip.style('display', null);
-        averageTooltip.style('display', null);
-      })
-      .on('mouseout', function() {
-        helper.style('display', 'none');
-        priceTooltip.style('display', 'none');
-        averageTooltip.style('display', 'none');
-      })
-      .on('mousemove', mousemove);
-
-    context.append('path')
-        .datum(data)
-        .attr('class', 'chart__area area')
-        .attr('d', area2);
-
-    context.append('g')
-        .attr('class', 'x axis chart__axis--context')
-        .attr('y', 0)
-        .attr('transform', 'translate(0,' + (height2 - 22) + ')')
-        .call(xAxis2);
-
-    $(".loader{{portfolio.id}}").css('display','none')
-    context.append('g')
-        .attr('class', 'x brush')
-        .call(brush)
-      .selectAll('rect')
-        .attr('y', -6)
-        .attr('height', height2 + 7);
-    function mousemove() {
-      var x0 = x.invert(d3.mouse(this)[0]);
-      var i = bisectDate(data, x0, 1);
-      var d0 = data[i - 1];
-      var d1 = data[i];
-      var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-      helperText.text(legendFormat(new Date(d.date)) + ' - Price: ' + d.price );
-      priceTooltip.attr('transform', 'translate(' + x(d.date) + ',' + y(d.price) + ')');
-      averageTooltip.attr('transform', 'translate(' + x(d.date) + ',' + y(d.average) + ')');
-    }
-
-    function brushed() {
-      var ext = brush.extent();
-      if (!brush.empty()) {
-        x.domain(brush.empty() ? x2.domain() : brush.extent());
-        y.domain([
-          d3.min(data.map(function(d) { return (d.date >= ext[0] && d.date <= ext[1]) ? d.price : max; })),
-          d3.max(data.map(function(d) { return (d.date >= ext[0] && d.date <= ext[1]) ? d.price : min; }))
-        ]);
-        range.text(legendFormat(new Date(ext[0])) + ' - ' + legendFormat(new Date(ext[1])))
-        focusGraph.attr('x', function(d, i) { return x(d.date); });
-
-        var days = Math.ceil((ext[1] - ext[0]) / (24 * 3600 * 1000))
-        focusGraph.attr('width', (40 > days) ? (40 - days) * 5 / 6 : 5)
-      }
-
-      priceChart.attr('d', priceLine);
-      averageChart.attr('d', avgLine);
-      focus.select('.x.axis').call(xAxis);
-      focus.select('.y.axis').call(yAxis);
-    }
-
-    var dateRange = ['1w', '1m', '3m', '6m', '1y']
-    for (var i = 0, l = dateRange.length; i < l; i ++) {
-      var v = dateRange[i];
-      rangeSelection
-        .append('text')
-        .attr('class', 'chart__range-selection')
-        .text(v)
-        .style('fill','white')
-        .attr('transform', 'translate(' + (18 * i) + ', 0)')
-        .on('click', function(d) { focusOnRange(this.textContent); });
-    }
-
-    function focusOnRange(range) {
-        console.log(range)
-      var today = new Date(data[data.length - 1].date)
-      var ext = new Date(data[data.length - 1].date)
-
-      if (range === '1m')
-        ext.setMonth(ext.getMonth() - 1)
-
-      if (range === '1w')
-        ext.setDate(ext.getDate() - 7)
-
-      if (range === '3m')
-        ext.setMonth(ext.getMonth() - 3)
-
-      if (range === '6m')
-        ext.setMonth(ext.getMonth() - 6)
-
-      if (range === '1y')
-        ext.setFullYear(ext.getFullYear() - 1)
-
-      brush.extent([ext, today])
-      brushed()
-      context.select('g.x.brush').call(brush.extent([ext, today]))
-    }
-
-  })// end Data
-
-  function type(d) {
-    return {
-      date    : parseDate(d.Date),
-      price   : +d.Close,
-      average : +d.Average,
-      volume : +d.Volume,
-    }
+$(function () {
+    $.getJSON('http://127.0.0.1:8000/user/portfolio_chart/{{portfolio.id}}/', function (data) {
+        console.log(data)
+        // Create the chart
+        Highcharts.stockChart('container', {
 
 
-  }
+            rangeSelector: {
+                selected: 1
+            },
 
-}());
-</script>
+            title: {
+                text: '{{portfolio.name}} Stock Price'
+            },
 
-              
+            series: [{
+                name: '{{portfolio.name}} Stock Price',
+                data: data,
+                type: 'area',
+                threshold: null,
+                tooltip: {
+                    valueDecimals: 2
+                },
+                fillColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                    },
+                    stops: [
+                        [0, Highcharts.getOptions().colors[0]],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                    ]
+                }
+            }]
+        });
+    });
+});
 
-
-<!-- h2 style="font-size:18px;text-align:center;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">{{portfolio.risk}}% Expected Risk on a {{portfolio.investment}}$ investment into {{portfolio.no_of_tickers}} shares.</h2> -->
+</script>     
 
 
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" style="height:350px">
                   <div class="header">
-                    <h2>Portfolio Information </h2>
+                    <h2>Portfolio Breakdown </h2>
                   </div>
-                        <table class="table table-hover">
-                                <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
-                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Initial Capital</td>
-                                        <td style="text-align:left">{{portfolio.investing_amount}}</td>
+                      <div class="row" style="height:100%">
+
+{% block scripts %}
+  <script src="/static/js/user/individual_portfolio.js"></script>
+ <link href="/static/css2/d3.pie.css" rel="stylesheet">
+ <script src="/static/assets/js/highstock.js"></script>
+  <script src="/static/assets/js/exporting.js"></script>
+
+{% endblock %}
+ <div style="margin-top:50px">
+
+                    <ul class="nav nav-tabs nav-justified" style="position:relative;top:0px;position: relative;top: -47px;z-index: 0;height: 50px;">
+                        <li class="active"><a href="#tab5" data-toggle="tab" style="width:100%"><h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">Sector Distribution</h2>
+                                                 </a></li>
+
+                        <li><a href="#tab6" data-toggle="tab" style="width:100%">     <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">Stock Distribution</h2>   </a></li>
+                        <li><a href="#tab7" data-toggle="tab" style="width:100%">     <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px">Portfolio Information</h2>   </a></li>
+
+                    </ul>
+
+                    <div class="content content-transparent tab-content center" style="position:relative;bottom:50px">
+
+                        <div class="tab-pane active" id="tab5">
+      <div class="row">
+                            <div class="col-md-6" id="sector_size">
+                               <div id="pieChart3" style="position:relative;right:25px"></div>
+                               <button  onClick="right_idx()" style="display: inline-block;position:relative;bottom:75px;left:-20px;font-size:24px;background: transparent;border: 0px;width: 50px;">
+                               <span class="icon-angle-left" ></span>
+                               </button>
+                               <button  onClick="right_idx()" style="display: inline-block;position:relative;bottom:75px;right:-20px;font-size:24px;background: transparent;border: 0px;width: 50px;float:right;width:50px">
+                               <span class="icon-angle-right" ></span>
+                               </button>
+                            </div>
+                           <div class="col-md-6" id="sector_size" style="overflow:hidden;height:250px">
+                          <table class="table table-hover" style="position:relative;top:-5px;width:90%;height:100%">
+                                  <thead>
+                                        <th style="text-align:right;padding:0px;padding-right:5px">Sector</td>
+                                        <th style="text-align:right;padding:0px;width:20px">Color</td>
+                                        <th style="text-align:right;padding:0px;">Size</td>
+                                   </thead>
+                                <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:9px;text-align:center;color:white">
+
+{% for key, value in sectors.items %}
+    {% if forloop.counter < 7 %}
+
+                                     <tr id="firstSeven">
+                                        <td style="text-align:right;padding:0px;white-space: nowrap;">{{value.sector|slice:"0:15"}}...</td>
+                                        <td style="text-align:right;padding:0px;width:20px" id="{{value.sector|slice:"0:4"}}"></td>
+                                        <td style="text-align:right;padding:0px;">{{value.value}}</td>
                                    </tr>
-                                  <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Number of Stocks</td>
-                                        <td style="text-align:left">{{portfolio.num_stocks}}</td>
-                                 </tr>
-                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Expected Risk</td>
-                                        <td style="text-align:left">{{portfolio.expected_risk}}</td>
-                                    </tr>                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Brokerage Account</td>
-                                        <td style="text-align:left">{{portfolio.brokerage_account}}</td>
-                                    </tr>                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Retirement Account</td>
-                                        <td style="text-align:left">{{portfolio.retirement_account}}</td>
-                                    </tr>                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Social Security Income</td>
-                                        <td style="text-align:left">{{portfolio.ss_income}}</td>
-                                    </tr>    
-                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Client Name</td>
-                                        <td style="text-align:left">{{portfolio.client_anem}}</td>
-                                    </tr>                                     
+
+    <script>
+    var colors = ["#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C","#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C"]
+    $("#{{value.sector|slice:"0:4"}}").css('background',colors[{{forloop.counter}}])
+    console.log($("#{{value.sector|slice:"0:3"}}"))
+    console.log(colors[{{forloop.counter}}])
+    </script>
+    {% endif %}
+    {% if forloop.counter >= 7 and forloop.counter <= 12   %}
+
+                                     <tr id="secondSeven" style="display:none">
+                                        <td style="text-align:right;padding:0px;white-space: nowrap;">{{value.sector|slice:"0:15"}}...</td>
+                                        <td style="text-align:right;padding:0px;width:20px" id="{{value.sector|slice:"0:4"}}"></td>
+                                        <td style="text-align:right;padding:0px;">{{value.value}}</td>
+                                   </tr>
+        <script>
+         var colors = ["#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C","#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C"]
+        $("#{{value.sector|slice:"0:4"}}").css('background',colors[{{forloop.counter}}])
+        console.log($("#{{value.sector|slice:"0:3"}}"))
+        console.log(colors[{{forloop.counter}}])
+        </script>
+
+    {% endif %}
+
+ 
+{% endfor %}
+                                    
                                   </tbody>
                                 </table>
-                </div>
-              </div>
-              <div class="row" style="background:rgba(0,0,0,0.2)">
-                <div class="col-md-4">
-  
-        <!-- <div class="content" style="background-color:rgba(0,0,0,0.6)"> -->
-                    <div id="pieChart" style="text-align:center;position:absolute;left:25px;display:inline;top:0px;width:100%;height:500px"></div>
-                <script>
+                            </div>
+                        </div>
 
-var randomColor = (function(){
-  var golden_ratio_conjugate = 0.618033988749895;
-  var h = Math.random();
+<link href="/static/css2/d3.pie.css" rel="stylesheet">
+         <script>
+         var colors = ["#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C","#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C"]
+var dimension = $("#sector_size").width()
 
-  var hslToRgb = function (h, s, l){
-      var r, g, b;
+var pie = new d3pie("pieChart3", {
+    "header": {
+        "title": {
+            "color": "#ffffff",
+            "fontSize": 22,
+            "font": "verdana"
+        },
+        "subtitle": {
+            "color": "#ffffff",
+            "fontSize": 10,
+            "font": "verdana"
+        },
+        "location": "pie-center",
+        "titleSubtitlePadding": 12
+    },
+    "footer": {
+        "color": "#999999",
+        "fontSize": 11,
+        "font": "open sans",
+        "location": "bottom-center"
+    },
+    "size": {
+        "canvasHeight": 225,
+        "canvasWidth": dimension*1.25,
+        "pieInnerRadius": "85%",
+        "pieOuterRadius": "90%"
+    },
+    "data": {
+        "sortOrder": "value-desc",
+        "content": [
+{% for key, value in sectors.items %}
+{% if forloop.counter < 13 %}
+            {
+                "value": {{value.value}},
+                "color": colors[{{forloop.counter}}]
+            },
+{% endif %}
+{% endfor %}
 
-      if(s == 0){
-          r = g = b = l; // achromatic
-      }else{
-          function hue2rgb(p, q, t){
-              if(t < 0) t += 1;
-              if(t > 1) t -= 1;
-              if(t < 1/6) return p + (q - p) * 6 * t;
-              if(t < 1/2) return q;
-              if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-              return p;
-          }
+        ]
+    },
+    "labels": {
+        "outer": {
+            "pieDistance": 10
+        },
+        "inner": {
+            "format": "none"
+        },
+        "percentage": {
+            "color": "#e1e1e1",
+            "font": "verdana",
+            "decimalPlaces": 0
+        },
+        "value": {
+            "color": "#e1e1e1",
+            "font": "verdana"
+        },
+        "lines": {
+            "enabled": true,
+            "color": "black"
+        },
+        "truncation": {
+            "enabled": true
+        }
+    },
+    "effects": {
+        "pullOutSegmentOnClick": {
+            "effect": "linear",
+            "speed": 400,
+            "size": 8
+        }
+    }
+});
+</script>
+ 
 
-          var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-          var p = 2 * l - q;
-          r = hue2rgb(p, q, h + 1/3);
-          g = hue2rgb(p, q, h);
-          b = hue2rgb(p, q, h - 1/3);
-      }
+                        </div>
 
-      return '#'+Math.round(r * 255).toString(16)+Math.round(g * 255).toString(16)+Math.round(b * 255).toString(16);
-  };
-  
-  return function(){
-    h += golden_ratio_conjugate;
-    h %= 1;
-    return hslToRgb(h, 0.5, 0.60);
-  };
-})();
-var piewidth = document.getElementById("pieChart").offsetWidth
+                        <div class="tab-pane" id="tab7">
 
-                var pie = new d3pie("pieChart", {
-                    "header": {
-                        "title": {
-                            "text": "Stock Distribution",
-                            "color": "#ffffff",
-                            "fontSize": 24,
-                            "fontFamily": "helvetica neue",
-                            "fontWeight":100,
-                            "letterSpacing":"2px",
-                        },
-                        "subtitle": {
-                            "color": "#999999",
-                            "fontSize": 12,
-                            "font": "open sans"
-                        },
-                        "titleSubtitlePadding": 9
-                    },
-                    "footer": {
-                        "color": "#999999",
-                        "fontSize": 10,
-                        "font": "open sans",
-                        "location": "bottom-left"
-                    },
-                    "size": {
-                        "canvasWidth": piewidth,
-                        "pieOuterRadius": "90%"
-                    },
-                    "data": {
-                        "sortOrder": "value-desc",
-                        "content": [
-                        {% load l10n %}
+
+                    <table class="table table-hover margin bottom">
+                    <tbody>
+                      <tr>
+                        <td class="text-center small">Last Updated</td>
+                        <td class="text-center small">{{port.update_date}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center small">Client Name</td>
+                        <td class="text-center small">{{port.client_name}}</td>
+                      </tr>                      
+                      <tr>
+                        <td class="text-center small">Investing Amount</td>
+                        <td class="text-center small">{{port.investing_amount}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center small">Description</td>
+                        <td class="text-center small">{{port.description}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center small">Brokerage Account Value</td>
+                        <td class="text-center small">{{port.brokerage_account}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center small">Household Income</td>
+                        <td class="text-center small">{{port.household_income}}</td>
+                      </tr>                      
+                      <tr>
+                        <td class="text-center small">Social Security Income</td>
+                        <td class="text-center small">{{port.ss_income}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center small">Retirement Account Value</td>
+                        <td class="text-center small">{{port.retirement_account}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+
+
+                        </div>
+                        <div class="tab-pane" id="tab6">
+
+
+<div style="width:95%;right:-1%;">              
+                    <div class="content" style="height:250px;background:transparent" id="sectorContent">
+<script>
+var idx = 0
+var right_idx = function() {
+    if (idx == 0) {
+        idx = 1
+        for (var i=0;i<=6;i++) {
+            $("tr#secondSeven")[i].style.display = "table-row"
+            $("tr#firstSeven")[i].style.display = "none"
+        }
+    } else if (idx == 1) {
+        idx = 0
+        for (var i=0;i<6;i++) {
+            $("tr#secondSeven")[i].style.display = "none"
+            $("tr#firstSeven")[i].style.display = "table-row"
+        }
+    }
+}
+var left_idx = function() {
+    if (idx == 0) {
+        idx = 1
+        for (var i=0;i<=6;i++) {
+            $("tr#secondSeven-2")[i].style.display = "table-row"
+            $("tr#firstSeven-2")[i].style.display = "none"
+        }
+    } else if (idx == 1) {
+        idx = 0
+        for (var i=0;i<6;i++) {
+            $("tr#secondSeven-2")[i].style.display = "none"
+            $("tr#firstSeven-2")[i].style.display = "table-row"
+        }
+    }
+}
+</script>
+                        <div class="row" style="height:100%">
+                            <div class="col-md-6" id="sector_size">
+                               <div id="pieChart4" style="position:relative;top:0px;right:28px"></div>
+                               <button  onClick="left_idx()" style="display: inline-block;position:relative;bottom:75px;left:-20px;font-size:24px;background: transparent;border: 0px;width: 50px;">
+                               <span class="icon-angle-left" ></span>
+                               </button>
+                               <button  onClick="left_idx()" style="display: inline-block;position:relative;bottom:75px;right:-20px;font-size:24px;background: transparent;border: 0px;width: 50px;float:right;width:50px">
+                               <span class="icon-angle-right" ></span>
+                               </button>
+                            </div>
+                           <div class="col-md-6" id="sector_size" style="overflow:hidden;height:100%">
+                          <table class="table table-hover" style="position:relative;top:-5px;width:90%;height:90%">
+                                  <thead>
+                                        <th style="text-align:right;padding:0px;width:45%;padding-right:25px">Stock</td>
+                                        <th style="text-align:right;padding:0px;width:20px">Color</td>
+                                        <th style="text-align:right;padding:0px;">Allocation</td>
+                                   </thead>
+                                <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:9px;text-align:center;color:white">
+
+{% for stock in stocks %}
+    {% if forloop.counter < 7 %}
+
+                                     <tr id="firstSeven-2">
+                                        <td style="text-align:right;padding:0px;white-space: nowrap;width:45%;padding-right:25px">{{stock.ticker}}</td>
+                                        <td style="text-align:right;padding:0px;width:20px" id="{{stock.ticker}}"></td>
+                                        <td style="text-align:right;padding:0px;">{{stock.allocation|floatformat}}%</td>
+                                   </tr>
+
+    <script>
+    var colors = ["#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C","#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C"]
+    $("#{{stock.ticker}}").css('background',colors[{{forloop.counter}}])
+    console.log($("#{{value.sector|slice:"0:3"}}"))
+    console.log(colors[{{forloop.counter}}])
+    </script>
+    {% endif %}
+    {% if forloop.counter >= 7 %}
+
+                                     <tr id="secondSeven-2" style="display:none">
+                                        <td style="text-align:right;padding:0px;white-space: nowrap;width:45%;padding-right:25px">{{stock.ticker}}</td>
+                                        <td style="text-align:right;padding:0px;width:20px" id="{{stock.ticker}}"></td>
+                                        <td style="text-align:right;padding:0px;">{{stock.allocation|floatformat}}%</td>
+                                   </tr>
+
+    <script>
+    var colors = ["#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C","#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C"]
+    $("#{{stock.ticker}}").css('background',colors[{{forloop.counter}}])
+    console.log($("#{{value.sector|slice:"0:3"}}"))
+    console.log(colors[{{forloop.counter}}])
+    </script>
+    {% endif %}    
+
+
+ 
+{% endfor %}
+                                    
+                                  </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+<link href="/static/css2/d3.pie.css" rel="stylesheet">
+         <script>
+         var colors = ["#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C","#E578FC","#F46EE7","#EC65BC","#E45C90","#DC5365","#D45D4B","#CC7944","#C4943C","#BCAF35","#9DB42F","#73AC28","#4BA423","#249B1D","#189432","#138C4B","#0F8463","#0B7C7A","#085973","#05386C","#021963","#02005C"]
+var dimension = $("#sector_size").width()
+
+var pie = new d3pie("pieChart4", {
+    "header": {
+        "title": {
+            "color": "#ffffff",
+            "fontSize": 22,
+            "font": "verdana"
+        },
+        "subtitle": {
+            "color": "#ffffff",
+            "fontSize": 10,
+            "font": "verdana"
+        },
+        "location": "pie-center",
+        "titleSubtitlePadding": 12
+    },
+    "footer": {
+        "color": "#999999",
+        "fontSize": 11,
+        "font": "open sans",
+        "location": "bottom-center"
+    },
+    "size": {
+        "canvasHeight": 225,
+        "canvasWidth": dimension*1.25,
+        "pieInnerRadius": "85%",
+        "pieOuterRadius": "90%"
+    },
+    "data": {
+        "sortOrder": "value-desc",
+        "content": [
+
+
                         {% for stock in stocks %}
                             {
-                                "label": "{{stock.ticker}}",
-                                {% localize off %}
+
                                 "value": {{stock.number_of_shares}},
-                                {% endlocalize %}
-                                "color": randomColor()
+
+                                "color":  colors[{{forloop.counter}}]
                             },
                         {% endfor %}
 
-                        ]
-                    },
-                    "labels": {
-                        "outer": {
-                            "pieDistance": 32
-                        },
-                        "inner": {
-                            "hideWhenLessThanPercentage": 3
-                        },
-                        "mainLabel": {
-                            "color": "#ffffff",
-                            "fontSize": 11
-                        },
-                        "percentage": {
-                            "color": "#ffffff",
-                            "decimalPlaces": 0
-                        },
-                        "value": {
-                            "color": "#adadad",
-                            "fontSize": 11
-                        },
-                        "lines": {
-                            "enabled": true
-                        },
-                        "truncation": {
-                            "enabled": true
-                        }
-                    },
-                    "effects": {
-                        "pullOutSegmentOnClick": {
-                            "effect": "linear",
-                            "speed": 400,
-                            "size": 8
-                        }
-                    },
-                    "misc": {
-                        "gradient": {
-                            "enabled": false,
-                            "percentage": 100
-                        }
-                    }
-                });
-                </script>
+        ]
+    },
+    "labels": {
+        "outer": {
+            "pieDistance": 10
+        },
+        "inner": {
+            "format": "none"
+        },
+        "percentage": {
+            "color": "#e1e1e1",
+            "font": "verdana",
+            "decimalPlaces": 0
+        },
+        "value": {
+            "color": "#e1e1e1",
+            "font": "verdana"
+        },
+        "lines": {
+            "enabled": true,
+            "color": "black"
+        },
+        "truncation": {
+            "enabled": true
+        }
+    },
+    "effects": {
+        "pullOutSegmentOnClick": {
+            "effect": "linear",
+            "speed": 400,
+            "size": 8
+        }
+    }
+});
+</script>
+ 
+                    </div>
 
-                               <div id="pieChart2" style="text-align:center;position:absolute;left:25px;display:inline;top:520px;height:500px;width:100%"></div>
-                <script>
-                
-var randomColor = (function(){
-  var golden_ratio_conjugate = 0.618033988749895;
-  var h = Math.random();
 
-  var hslToRgb = function (h, s, l){
-      var r, g, b;
+                        </div>                        
+                    </div>
+</div>                
 
-      if(s == 0){
-          r = g = b = l; // achromatic
-      }else{
-          function hue2rgb(p, q, t){
-              if(t < 0) t += 1;
-              if(t > 1) t -= 1;
-              if(t < 1/6) return p + (q - p) * 6 * t;
-              if(t < 1/2) return q;
-              if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-              return p;
-          }
 
-          var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-          var p = 2 * l - q;
-          r = hue2rgb(p, q, h + 1/3);
-          g = hue2rgb(p, q, h);
-          b = hue2rgb(p, q, h - 1/3);
-      }
 
-      return '#'+Math.round(r * 255).toString(16)+Math.round(g * 255).toString(16)+Math.round(b * 255).toString(16);
-  };
+                        
+                        </div>
+
+
+                </div>
+              </div>
+
+                <div class="col-md-12">
   
-  return function(){
-    h += golden_ratio_conjugate;
-    h %= 1;
-    return hslToRgb(h, 0.5, 0.60);
-  };
-})();
-var piewidth = document.getElementById("pieChart").offsetWidth
-
-                var pie = new d3pie("pieChart2", {
-                    "header": {
-                        "title": {
-                            "text": "Sector Breakdown",
-                            "color": "#ffffff",
-                            "fontSize": 24,
-                            "fontFamily": "helvetica neue",
-                            "fontWeight":100,
-                            "letterSpacing":"2px",                            
-                        },
-                        "subtitle": {
-                            "color": "#999999",
-                            "fontSize": 12,
-                            "font": "open sans"
-                        },
-                        "titleSubtitlePadding": 9
-                    },
-                    "footer": {
-                        "color": "#999999",
-                        "fontSize": 10,
-                        "font": "open sans",
-                        "location": "bottom-left"
-                    },
-                    "size": {
-                        "canvasWidth": piewidth,
-                        "pieOuterRadius": "90%"
-                    },
-                    "data": {
-                        "sortOrder": "value-desc",
-                        "content": [
-                       {% for key, value in sectors.items %}
-                                  {
-                                      "label": "{{value.sector}}",
-                                      "value": {{value.value}},
-                                      "color": randomColor(),
-                                  },
-                      {% endfor %}
-
-
-                        ]
-                    },
-                    "labels": {
-                        "outer": {
-                            "pieDistance": 32
-                        },
-                        "inner": {
-                            "hideWhenLessThanPercentage": 3
-                        },
-                        "mainLabel": {
-                            "color": "#ffffff",
-                            "fontSize": 11
-                        },
-                        "percentage": {
-                            "color": "#ffffff",
-                            "decimalPlaces": 0
-                        },
-                        "value": {
-                            "color": "#adadad",
-                            "fontSize": 11
-                        },
-                        "lines": {
-                            "enabled": true
-                        },
-                        "truncation": {
-                            "enabled": true
-                        }
-                    },
-                    "effects": {
-                        "pullOutSegmentOnClick": {
-                            "effect": "linear",
-                            "speed": 400,
-                            "size": 8
-                        }
-                    },
-                    "misc": {
-                        "gradient": {
-                            "enabled": false,
-                            "percentage": 100
-                        }
-                    }
-                });
-                </script>  
-</div>
-<div class="col-md-8">
+                           
+<div class="col-md-12">
                                 <div class="btn-group btn-group-justified" style="width:25%">
                                     <a href="/user/backtest/{{portfolio.id}}"  class="btn btn-default btn-clean"  target="_blank">Back-Test Portfolio</a>
                                     <a href="#" class="btn btn-default btn-clean" onClick="downloadCsv()">Export as CSV</a>
@@ -651,9 +510,11 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                     <tr>
                         <th>Market Ticker</th>
                         <th class="text-center">Company Name</th>
+                        <th class="text-center">Sector</th>
                         <th class="text-center">Buy Date</th>
                         <th class="text-center">Recommended Sell Date</th>
                         <th class="text-center">Market Sentiment</th>
+                        <th class="text-center">Allocation</th>
                         <th class="text-center">Stock Price</th>
                         <th class="text-center">Percent gains</th>
                     </tr>
@@ -662,9 +523,15 @@ var piewidth = document.getElementById("pieChart").offsetWidth
                     {% for stock in stocks %}
                         <td><a href="/user/individual_stock/{{stock.ticker}}/" id="stockLink">{{stock.ticker}}</a></td>
                         <td class="text-center small">{{stock.company_name}}</td>
+                        <td class="text-center small">{{stock.sector}}</td>
                         <td class="text-center">{{stock.buy_date}}</td>
                         <td class="text-center">{{stock.sell_date}}</td>
-                      <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;padding-left:25px" id="s_sentiment">{{stock.sentiment|floatformat}}</h2>  </td>
+                      <td> <h2 style="font-weight:300;-webkit-webkit-font-s: b;
+                      -moz-webkit-font-s: b;
+                      -ms-webkit-font-s: b;
+                      -o-webkit-font-s: b;
+                      webkit-font-s: b;moothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;padding-left:50px" id="d_sentiment">{{stock.sentiment|floatformat}}</h2>  </td>
+                      <td> <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;padding-left:50px">{{stock.allocation|floatformat}}%</h2>  </td>
                         <td class="text-center">{{stock.current_price}}</td>
 {% if stock.gain >= 0%}
                          <td class="text-center" style="color:rgba(0,255,0,1)"><span style="font-size:20px;">&uarr;</span>&nbsp;{{ stock.gain }}%</td>
@@ -687,277 +554,7 @@ var piewidth = document.getElementById("pieChart").offsetWidth
 
 </div>    
 
-<!-- 
-                <div class="block" style="position:relative;top:50px">
-                    <ul class="nav nav-tabs" style="position:absolute;top:-40px;left:-5px;width:auto">
-                        <li class=""><a href="/user/my_portfolios" data-toggle="tab" aria-expanded="true">
-                            Portfolio Summary<br>
-                           
-                        </a></li>
-            {% for portfolio in portfolios %}                          
-
-                        <li class=""  id="a{{portfolio.id}}"><a href="/user/individual_portfolio/{{portfolio.id}}" data-toggle="tab" aria-expanded="false">{{ portfolio.name }}
-        
-                        </a></li>
-            {% endfor %}
- 
-                    </ul>
-                    <div class="content tab-content">
-                        <div class="tab-pane active" id="tab8">
-                            <p>
-
-<form id="myForm" class="form-horizontal" action="/user/individual_stock" method="post" style="display:none">
-    {% csrf_token %}
-    <input type="text" class="form-control" id="company_name" value="" name="company_name">    
-</form>
-
-
-    <div class="block">
-    <div class="header">
-        <h2 style="text-align:center;">{{ portfolio.name }}</h2>
-    </div>
-        <div class="content" style="background-color:rgba(0,0,0,0.6)">
-                    <div id="pieChart" style="text-align:center;position:absolute;left:25px;display:inline;top:50x"></div>
-                <script>
-                var colors = ["white","#87CEEB","rgb(79, 155, 43)","color: rgb(255, 152, 6)"," color: rgb(166, 45, 45);"]
-                var pie = new d3pie("pieChart", {
-                    "header": {
-                        "title": {
-                            "text": "Stock Distribution",
-                            "color": "#ffffff",
-                            "fontSize": 24,
-                            "": "helvetica"
-                        },
-                        "subtitle": {
-                            "color": "#999999",
-                            "fontSize": 12,
-                            "font": "open sans"
-                        },
-                        "titleSubtitlePadding": 9
-                    },
-                    "footer": {
-                        "color": "#999999",
-                        "fontSize": 10,
-                        "font": "open sans",
-                        "location": "bottom-left"
-                    },
-                    "size": {
-                        "canvasWidth": 500,
-                        "pieOuterRadius": "90%"
-                    },
-                    "data": {
-                        "sortOrder": "value-desc",
-                        "content": [
-                        {% for stock in stocks %}
-                            {
-                                "label": "{{stock.ticker}}",
-                                "value": 2,
-                                "color": colors[{{ forloop.counter }}]
-                            },
-                        {% endfor %}
-
-                        ]
-                    },
-                    "labels": {
-                        "outer": {
-                            "pieDistance": 32
-                        },
-                        "inner": {
-                            "hideWhenLessThanPercentage": 3
-                        },
-                        "mainLabel": {
-                            "color": "#ffffff",
-                            "fontSize": 11
-                        },
-                        "percentage": {
-                            "color": "#ffffff",
-                            "decimalPlaces": 0
-                        },
-                        "value": {
-                            "color": "#adadad",
-                            "fontSize": 11
-                        },
-                        "lines": {
-                            "enabled": true
-                        },
-                        "truncation": {
-                            "enabled": true
-                        }
-                    },
-                    "effects": {
-                        "pullOutSegmentOnClick": {
-                            "effect": "linear",
-                            "speed": 400,
-                            "size": 8
-                        }
-                    },
-                    "misc": {
-                        "gradient": {
-                            "enabled": false,
-                            "percentage": 100
-                        }
-                    }
-                });
-                </script>
-
-                               <div id="pieChart2" style="text-align:center;position:absolute;right:25px;display:inline;top:50px"></div>
-                <script>
-                var colors = ["white","#87CEEB","rgb(79, 155, 43)","color: rgb(255, 152, 6)"," color: rgb(166, 45, 45);"]
-                var pie = new d3pie("pieChart2", {
-                    "header": {
-                        "title": {
-                            "text": "Sector Breakdown",
-                            "color": "#ffffff",
-                            "fontSize": 24,
-                            "": "helvetica"
-                        },
-                        "subtitle": {
-                            "color": "#999999",
-                            "fontSize": 12,
-                            "font": "open sans"
-                        },
-                        "titleSubtitlePadding": 9
-                    },
-                    "footer": {
-                        "color": "#999999",
-                        "fontSize": 10,
-                        "font": "open sans",
-                        "location": "bottom-left"
-                    },
-                    "size": {
-                        "canvasWidth": 500,
-                        "pieOuterRadius": "90%"
-                    },
-                    "data": {
-                        "sortOrder": "value-desc",
-                        "content": [
-                            {
-                                "label": "Technology",
-                                "value": 232,
-                                "color": colors[1]
-                            },
-                           {
-                                "label": "Health",
-                                "value": 432,
-                                "color": colors[2]
-                            },
-
-                           {
-                                "label": "Agriculture",
-                                "value": 374,
-                                "color": colors[3]
-                            },
-
-
-                        ]
-                    },
-                    "labels": {
-                        "outer": {
-                            "pieDistance": 32
-                        },
-                        "inner": {
-                            "hideWhenLessThanPercentage": 3
-                        },
-                        "mainLabel": {
-                            "color": "#ffffff",
-                            "fontSize": 11
-                        },
-                        "percentage": {
-                            "color": "#ffffff",
-                            "decimalPlaces": 0
-                        },
-                        "value": {
-                            "color": "#adadad",
-                            "fontSize": 11
-                        },
-                        "lines": {
-                            "enabled": true
-                        },
-                        "truncation": {
-                            "enabled": true
-                        }
-                    },
-                    "effects": {
-                        "pullOutSegmentOnClick": {
-                            "effect": "linear",
-                            "speed": 400,
-                            "size": 8
-                        }
-                    },
-                    "misc": {
-                        "gradient": {
-                            "enabled": false,
-                            "percentage": 100
-                        }
-                    }
-                });
-                </script>  
-
-                <div class="blsock" style="width:100%;margin-top:500px">
-                    <div class="input-group" style="width:100%;text-align:center">
-                        <div class="btn-group btn-group-lg" style="text-align:center">
-
-                        </div>              
-                    </div>  
-                </div>  
-                <script>
-                function backtest(id) {
-                    $.ajax({
-                        url:'/user/backtest/' + id,
-                        dataType: 'json',
-                        type: 'GET'
-                    }).done(function(x) {
-                        console.log(x)
-                    })
-                }
-                </script>
-                    <table class="table table-hover margin bottom">
-                    <thead>
-                    <tr>
-                        <th>Market Ticker</th>
-                        <th class="text-center">Company Name</th>
-                        <th class="text-center">Buy Date</th>
-                        <th class="text-center">Recommended Sell Date</th>
-                        <th class="text-center">Market Sentiment</th>
-                        <th class="text-center">Stock Price</th>
-                        <th class="text-center">Percent gains</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for stock in stocks %}
-                        <td><a href="#" onClick=goStock(this) id="stockLink">{{stock.ticker}}</a></td>
-                        <td class="text-center small">{{stock.ticker}}</td>
-                        <td class="text-center">{{stock.buy_date}}</td>
-                        <td class="text-center">{{stock.sell_date}}</td>
-
-                        <td class="text-center">{{stock.current_price}}</td>
-{% if stock.gain >= 0%}
-                         <td class="text-center" style="color:rgba(0,255,0,1)"><span style="font-size:20px;">&uarr;</span>&nbsp;{{ stock.gain }}%</td>
- {% else %}
-                         <td class="text-center" style="color:rgba(255,0,0,1);"><span style="font-size:20px;">&darr;</span>&nbsp;{{ stock.gain }}%</td>
- {% endif %}
-
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-    </div>
-
-
-   </div>
-</div>
-</div>
-
-                    <tr>
- -->
-
 </body>
 
 {% endblock %}
-{% block scripts %}
- <script src="/static/js/user/individual_portfolio.js"></script>
-<link href="/static/css2/d3.pie.css" rel="stylesheet">
 
-
-{% endblock %}

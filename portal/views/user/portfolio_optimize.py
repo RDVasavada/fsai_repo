@@ -155,7 +155,7 @@ def portfolio_optimize(request):
         try:
             sector = str(stocks[num][2])
         except IndexError:
-            sector = ""
+            sector = "Corporate"
         randomfloat = str(randint(5,89)) + "." + str(randint(0,99))
         if randint(1,2) == 1:
             multipler = "0." + str(randint(6,9))

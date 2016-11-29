@@ -17,6 +17,7 @@
         <link href="/static/css2/viseanimations.css" rel="stylesheet" type="text/css"/> 
         <link href="/static/assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css"/>  
         <link rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)" href="/static/css2/small-device.css" /> 
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,400" rel="stylesheet">
 
 
     {% endblock %}
@@ -68,11 +69,18 @@ function del_cookie() {
 <body onunload="del_cookie()" style="background-attachment:fixed !important;height:100%;overflow-x:hidden">
     <ul id="noty_topCenter_layout_container" class="" style="top: 50px;display:none;left: 40vw; position: fixed; width: 310px; height: auto; margin: 0px; padding: 0px; list-style-type: none; z-index: 10000000;"><li style="overflow: hidden; background: rgb(0, 0, 0); border-radius: 3px 3px 0px 0px; border: 1px solid white; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px; color: rgb(255, 255, 255); opacity: 1; width: 310px; cursor: pointer;"><div class="noty_bar" id="noty_739730318433366900"><div class="noty_message" style="font-size: 11px; line-height: 14px; text-align: center; padding: 8px 10px 9px; width: auto; position: relative;"><span class="noty_text">Your Guru Porftolio is ready !</span></div></div></li></ul>
     <div class="row" style="margin:0px">
-
+<script>
+var bg = JSON.parse(localStorage.getItem('bg'));
+if (bg) {
+        $("body").css("background","url("+String(bg)+")")
+        $("body").css("-webkit-background-size","150% 400%") 
+        $("body").css("background-size","150% 400%") 
+}
+</script>
         <div class="col-md-12" id="mainheader" style="position:relative;width:102vw;padding:0px;margin-bottom:0px">
             <div class="btn-group btn-group-justified" id="navbtn" style="height:10vh;text-align:center;box-shadow:none">
                 <div class="btn" id="navlast">
-                    <h8 style="opacity: 0.4; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 54px;font-family:'Helvetica Neue';display:inline;line-height:75px;text-align:center" id="splash">
+                    <h8 style="opacity: 0.4; text-align: center; font-weight: 100; text-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px; color: rgb(173, 234, 234); font-size: 54px;font-family:'Raleway',thin;display:inline;line-height:75px;text-align:center" id="splash">
                         <span style="letter-spacing:1px;" id="navicon"><i >V</i></span><span id="navicon">ise</span><br>
                     </h8>
                 </div>                
@@ -88,7 +96,7 @@ function del_cookie() {
                 <a id="a5" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/news_portal" class="btn btn-default btn-clean" id="/user/news_portal"><span class="icon-flag-alt"style="font-size:24px"></span> 
                 <br><span id="navicon"> News & Sentiment</span></a>
                 <a id="a6" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/user/support" id="/user/support" class="btn btn-default btn-clean"><span class="icon-cogs" style="font-size:24px"></span> 
-                <br><span id="navicon"> Support</span></a>
+                <br><span id="navicon"> Settings</span></a>
                 <a id="a" style="background-color:rgba(0,0,0,0.2);border:0px;padding:25px;color:rgba(255,255,255,0.4)" href="/logout" id="/logout" class="btn btn-default btn-clean"><span class="icon-share-alt" style="font-size:24px"></span> 
                 <br><span id="navicon"> Log Out</span></a>
                               
@@ -148,12 +156,110 @@ function del_cookie() {
     <link rel="stylesheet" href="/static/css2/viseanimations.css">
 <div id="i_mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="i_closeNav()">&times;</a>
-  <div style="width:100%;height:100%">
-       <iframe src="/upload" style="border: 0px;width:100%"></iframe>
+    <div style="width:100%;height:100%;text-align:center">
+        <img src="/static/img/profile.svg" style="width:100px;border-radius:50px;margin-left:5px">
+        <div style="margin-top:50px">
+            <h2 style="font-family:Raleway;font-size:24px;font-weight:100">{{username}}<!-- <span class="icon-pencil" style="position:absolute;right:25px"></span> --></h2>
+            <hr style="margin-top:15px;margin-bottom:0px;width:50%">
+            Username 
+            <h2 style="font-family:Raleway;font-size:18px;font-weight:100;margin-top:50px">{{last}}</h2>
+            <hr style="margin-top:5px;margin-bottom:0px;width:50%">
+            Last Login
+            <h2 style="font-family:Raleway;font-size:18px;font-weight:100;margin-top:50px">{{date_joined}}</h2>
+            <hr style="margin-top:5px;margin-bottom:0px;width:50%">
+            Date Joined
+            <h2 style="font-family:Raleway;font-size:24px;font-weight:100;margin-top:50px">{{email}}<!-- <span class="icon-pencil" style="position:absolute;right:25px"></span> --></h2>
+            <hr style="margin-top:15px;margin-bottom:0px;width:50%">
+            Email (Unconfirmed)<br>
+            <button type="button" class="btn btn-warning btn-clean" id="emailed_confirmed">Resend</button>
+        
+            <h2 style="font-family:Raleway;font-size:24px;font-weight:100;margin-top:50px">{{phone}}</h2>
+            <hr style="margin-top:15px;margin-bottom:0px;width:50%">
+            <span id="phone_number">Phone Number</span><br>
+            <div id="phone_confirmed" style="display:none">
+            <button type="button" class="btn btn-warning btn-clean">
+                <input type="number" style="text-align:center" max="999999" id="phone_code">
+            </button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-warning btn-clean" onClick="resend_phone()">Resend</button>
+              <button type="button" class="btn btn-warning btn-clean" onClick="confirm_phone()">Confirm</button>
+            </div>
+            </div>
+
+            <div class="row" style="margin-top:25px;margin-bottom:25px;padding-left:10px;padding-right:10px">
+                <div class="col-md-6">
+<img src="/static/img/bg-1.jpg" style="width:100px;height:100px" onClick="background(this)">
+                </div>
+                <div class="col-md-6">
+<img src="/static/img/bg-13.jpg" style="width:100px;height:100px" onClick="background(this)">
+                </div>
+            </div>
+            <div class="row" style=";padding-left:10px;padding-right:10px" onClick="background(this)">
+                <div class="col-md-6">
+<img src="/static/img/bg-10.jpg" style="width:100px;height:100px" onClick="background(this)">
+                </div>
+                <div class="col-md-6">
+<img src="/static/img/bg-11.jpg" style="width:100px;height:100px" onClick="background(this)">
+                </div>
+            </div>
+            <hr style="margin-top:15px;margin-bottom:0px;width:50%">
+            Background
+
+        </div>
+       <!-- <iframe src="/upload" style="border: 0px;width:100%"></iframe> -->
     </div>
 </div>
     <div id="main">
 <script>
+confirmed_phone()
+
+function background(e) {
+    if (e.getAttribute('src')){
+        localStorage.setItem('bg',JSON.stringify(e.getAttribute('src')));
+        $("body").css("background","url("+String(e.getAttribute('src'))+")")
+        $("body").css("-webkit-background-size","150% 300%") 
+        $("body").css("background-size","150% 300%") 
+    }
+}
+function confirmed_phone() {
+    $.ajax({
+        url:"http://127.0.0.1:8000/user/confirmed_phone/",
+        method: "GET"
+    }).done(function(data){
+        console.log(data)
+        if (data[0] == "Unconfirmed") {
+            $("#phone_confirmed").css('display','initial')
+            $("#phone_number")[0].innerText += " (Unconfirmed)"
+        }
+    })
+}
+function resend_phone() {
+    $.ajax({
+        url:"http://127.0.0.1:8000/user/resend_phone/",
+        method: "GET"
+    }).done(function(data){
+        console.log(data)
+    })    
+}
+function confirm_phone() {
+    var code = $("#phone_code")[0].value
+    console.log(code)
+    $.ajax({
+        url:"/user/confirm_phone/" + String(code),
+        method: "POST"
+    }).done(function(data){
+        console.log(data)
+        if (data == "Confirmed") {
+            $("#phone_confirmed").css('display','none')
+            $("#phone_number")[0].innerText = "Phone Number"
+        } else {
+            $("#phone_number")[0].innerText = "Wrong Code !"
+            setTimeout(function(){ 
+                $("#phone_number")[0].innerText = "Phone Number (Unconfirmed)"
+            }, 3000);
+        }
+    })
+}
 function i_openNav() {
     document.getElementById("i_mySidenav").style.width = "250px";
 }

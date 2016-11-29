@@ -3,10 +3,7 @@
 
    
 <div class="sceneElement" data-viewport="0">
-  <div class="col-lg-12 col-md-12 col-sm-12" style="background:rgba(0,0,0,0.6);padding-top:25px;height:26vh;position:relative;padding:0px">
-      <div style="width:100%;text-align:center;margin-top:9vh">
-        <h2 style="font-weight:100;font-family:'Helvetica Neue'">News & Sentiment</h2>
-      </div>
+  <div class="col-lg-12 col-md-12 col-sm-12" style="background:rgba(0,0,0,0.6);padding-top:25px;height:50px;position:relative;padding:0px">
       <div class="row" style="height:50px;background:rgba(0,0,0,0.2);position:absolute;bottom:0px;width:103%">
         <p class="microsoft marquee" id="sentiment"> 
 
@@ -14,21 +11,20 @@
       </div>
   </div>
  
-  <div class="row" style="padding-top:26vh;width:100%;margin-right:0px;margin-left:0px;height:90vh">
+  <div class="row" style="padding-top:50px;width:100%;margin-right:0px;margin-left:0px;height:100%">
 
-<div class="col-md-6">     
+<div class="col-md-4" style="background:rgba(0,0,0,0.6);height:100%">      
                 <div>
                   <div class="header" style="text-align:center;margin-top:25px">
-                    <h2 style="font-weight:100;font-family:'Helvetica Neue';margin-bottom:56px"> Your News Feed</h2>
+                    <h2 style="font-weight:100;font-family:'Raleway',thin;margin-bottom:56px"> Your News Feed</h2>
                     <hr style="margin:15px" />
                   </div>
-                    <div class="block block-transparent" style="box-shado
-                    w:0px;background:rgba(0,0,0,0.2)">
+                    <div class="block block-transparent">
                                               
                     <div class="content tasks">
-                    <div style="width:100%;text-align:center;position:absolute;margin-top:10vh"   id="feeder">
+                    <div style="width:100%;text-align:center;position:absolute;margin-top:10vh;display:none"   id="feeder">
                         <img src="/static/img/loader.gif">
-                        <h2 style="font-weight:100;font-family:'Helvetica Neue';margin-top:50px"> Loading your news feed . . </h2>
+                        <h2 style="font-weight:100;font-family:'Raleway',thin;margin-top:50px"> Loading your news feed . . </h2>
                     </div>
                     <div class="scroll-pail">
                         <div id="news_pinner"></div>
@@ -43,44 +39,80 @@
                 
 
     </div>
-    <div class="col-lg-6 col-md-6">
+    <div class="col-lg-8 col-md-6">
         <div class="header" style="text-align:center;margin-top:25px">
-            <h2 style="font-weight:100;font-family:'Helvetica Neue';"> Sentiment Data</h2>
-            <input type="text" id="bags" style="margin-left:25%;width:50%;letter-spacing:2px;font-weight:100;font-family:'Helvetica Neue'" placeholder="Search for stocks to visualize sentiment ..."></input>
+            <h2 style="font-weight:100;font-family:'Raleway',thin;"> Sentiment Data</h2>
+            <input type="text" id="bags" style="margin-left:25%;width:50%;letter-spacing:2px;font-weight:100;font-family:'Raleway',thin" placeholder="Search for stocks to visualize sentiment ..."></input>
             <hr style="margin:15px" />
         </div>
-            <div class="content block block-transparent" style="height:auto;background:rgba(0,0,0,0.2);min-height:calc(70vh + 20px);padding:25px;font-size:24px;letter-spacing:2px;font-family:'Helvetica Neue';font-weight:100;text-align:center;padding-top:50px">
-                <div id="welcome">Hi, Welcome to your News & Sentiment corner.<br>
-                Why don't you try searching for some stocks ? <br></div>
+            <div class="content" style="height:auto;min-height:calc(70vh + 20px);padding:25px;padding-bottom:0px;font-size:24px;letter-spacing:2px;font-family:'Raleway',thin;font-weight:100;text-align:center;padding-top:40px">
+                <div id="welcome" style="margin-top:50px;position:absolute;left:75px">
+                    <span class="icon-flag-alt" style="font-size:64px"><br></span>
+                    <span style="position:relative;top:50px">
+                    Hi, Welcome to your News & Sentiment corner,<br>where you can see how your stocks are preceived by the public.<br>
+                Why don't you try searching for some of your stocks ? <br>
+                    </span>
+            </div>
 
             <div id="choose" style="opacity:0">
-                 <div class="accordion ui-accordion ui-widget ui-helper-reset" role="tablist" >
-                        <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-1-header-1" aria-controls="ui-accordion-1-panel-1" aria-selected="false" tabindex="-1"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>Sentiment Score</h3>
-                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" id="ui-accordion-1-panel-1" aria-labelledby="ui-accordion-1-header-1" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
-                            <p style="height:200px">
-                                    <span id="sentimentScore" style="font-size:64px;margin:25px;margin-top:50px;position:relative;top:50px"> </span>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="block" style="background:rgba(0,0,0,0.4);margin-bottom:0px">
+                            <div class="header">
+                              <h2 style="letter-spacing:2px">Sentiment Score</h2>
+                            </div>
+                        </div>
+                        <div class="block" style="background:rgba(0,0,0,0.2)">
+                            <div class="content" style="height:200px">
+                              <span id="sentimentScore" style="font-size:64px;margin:25px;margin-top:50px;position:relative;top:50px"> </span>
+                            </div>
+                        </div>              
+                    </div>
+                    <div class="col-md-8">
+                        <div class="block" style="background:rgba(0,0,0,0.4);margin-bottom:0px">
+                            <div class="header">
+                              <h2 style="letter-spacing:2px">Sentiment Graph</h2>
+                            </div>
+                        </div>
+                        <div class="block" style="background:rgba(0,0,0,0.2)">
+                            <div class="content" style="height:200px" >
+                              <div class="ibox-content"></div>
+
+
                             </p>
+                            </div>
+                        </div>              
+                    </div>                  
+                </div>
+                 
+                    <div class="row">
+                        <div class="col-md-12" id="visualizeLink" onClick="visualize()">
+                            <div class="block" style="background:rgba(0,0,0,0.4);height:100px">
+
+                                  <h2 style="letter-spacing:2px;text-align:center;font-size:24px;line-height:100px">Sentiment Visualization</h2>                            
+
+                            </div>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block" style="background:rgba(0,0,0,0.4);margin-bottom:0px">
+                            <div class="header">
+                              <h2 style="letter-spacing:2px">News Articles</h2>                            
+                            </div>
+                        </div>
+                        <div class="block" style="background:rgba(0,0,0,0.2)">
+                            <div class="content" style="height:auto">
+                              <div style="font-size:24px;height:40vh;width:100%;overflow:hidden">
+                                  <p id="indi_stock_pin" style="width:100%;height:100%;overflow-y:scroll;padding-right:17px">
+
+                                    </p>  
                               </div>
+                            </div>
+                        </div>              
+                    </div>              
+                </div>
 
-                        <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-1-header-1" aria-controls="ui-accordion-1-panel-1" aria-selected="false" tabindex="-1"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>News Articles</h3>
-                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" id="ui-accordion-1-panel-1" aria-labelledby="ui-accordion-1-header-1" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
-                            <p id="indi_stock_pin" style="height:auto">
-
-                            </p>
-                              </div>
-                       
-                        <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-1-header-1" aria-controls="ui-accordion-1-panel-1" aria-selected="false" tabindex="-1"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>Sentiment Graph</h3>
-                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" id="ui-accordion-1-panel-1" aria-labelledby="ui-accordion-1-header-1" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
-                            <p>
-                                <div class="ibox-content"></div>
-
-
-                            </p>
-                              </div>
-
-                        <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-1-header-1" aria-selected="false" tabindex="-1" id="visualizeLink" onClick="visualize()">
-                            <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>Sentiment Visualization</h3>
-                               </div>
 
             </div>
 
@@ -98,23 +130,7 @@
                     <h4 class="modal-title">Wide modal</h4>
                 </div>
                 <div class="modal-body clearfix npr">
-                    <div class="scroll mCustomScrollbar _mCS_2" style="height: 768px;"><div class="mCustomScrollBox mCS-light" id="mCSB_2" style="position:relative; height:100%; overflow:hidden; max-width:100%;"><div class="mCSB_container" style="position:relative; top:0;">
-
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet pellentesque odio. Fusce vel venenatis odio. Vivamus porttitor dui vel felis adipiscing, commodo vehicula massa vestibulum. Praesent interdum nunc eu elementum fermentum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce commodo malesuada pellentesque. Suspendisse elementum, nunc vel tristique molestie, dolor diam faucibus turpis, at interdum neque erat non nisl. Nunc ut sagittis ligula.</p>
-                        <p>Mauris pulvinar non nibh vehicula lobortis. Cras dolor velit, porta ac justo a, iaculis vestibulum lacus. Nulla facilisi. Nunc aliquet enim at erat porta, nec sagittis ante adipiscing. Phasellus justo quam, volutpat at semper eu, tristique vitae nulla. Vivamus id rhoncus risus. Integer consequat lorem eget lacus dignissim, ultricies facilisis orci gravida. Suspendisse feugiat dolor sapien, eu malesuada turpis volutpat eget. In imperdiet eros id magna tincidunt, vel pulvinar justo pretium. Quisque et urna nec sapien dignissim feugiat. Curabitur cursus quam nisi, ut condimentum libero elementum et. Quisque mollis mauris scelerisque urna tempor, in congue neque laoreet. Suspendisse sed tincidunt justo, et feugiat est. Aenean non dui in urna imperdiet dictum eu ac nisi.</p>
-                        <p>Nulla eget tincidunt orci, et pharetra ipsum. Aliquam erat metus, convallis et odio quis, lacinia commodo leo. Maecenas tincidunt magna ullamcorper, tincidunt lacus at, auctor leo. Nullam eu risus in nunc convallis luctus id ultricies purus. Vivamus feugiat ligula non elit lacinia adipiscing non eget diam. Etiam sit amet rutrum leo. Vivamus condimentum ante mi, a tristique enim pharetra id. Ut non vulputate nulla, non dignissim libero. Etiam et arcu gravida, volutpat tortor in, elementum arcu. Proin porta velit quis ipsum interdum, quis ornare purus mollis.</p>
-                        <p>Aliquam consectetur ultricies nulla, a adipiscing nisi tristique in. Nunc gravida volutpat diam, et consectetur purus sodales in. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu mauris aliquet, sollicitudin lorem quis, dignissim turpis. Etiam vitae tortor libero. Aliquam facilisis tempus nisl quis pellentesque. Nullam pharetra tristique lacus vitae tempor. Etiam vulputate nulla massa, vitae fringilla dolor pretium vel. Sed non tellus eget ante venenatis elementum eu nec neque. Quisque eget lobortis diam. Maecenas non sapien in eros mattis euismod. Aenean id nibh a dolor lacinia elementum et ac ipsum. Mauris eleifend aliquam arcu, ac pharetra lacus interdum ut. Ut bibendum nunc at volutpat mollis.</p>
-                        <p>Nullam viverra augue mi, non rutrum magna elementum at. Duis purus enim, mattis in sodales id, placerat eget sapien. Donec pharetra nec ante ut lobortis. Integer accumsan dignissim consequat. Integer est sapien, imperdiet adipiscing turpis in, fermentum auctor ante. Nulla rutrum massa tincidunt convallis lobortis. Sed aliquam lacus libero, eu congue orci mattis quis. Nunc commodo nulla quis hendrerit rutrum. Donec a mi sapien. Donec suscipit arcu nisi, posuere ornare nisl volutpat vehicula. Vestibulum a justo consequat, vestibulum urna sit amet, vehicula augue. In nec arcu convallis, suscipit enim sed, porttitor massa. Fusce sit amet iaculis augue. Cras a turpis massa. Donec dictum sed nibh eu vehicula. In laoreet fringilla turpis eget ullamcorper.</p>
-                        <p>Aliquam leo libero, luctus non volutpat ac, adipiscing eget sapien. Vivamus ante augue, interdum placerat commodo id, posuere id ligula. Cras facilisis gravida ornare. Suspendisse consequat fermentum ante ac rutrum. Nunc ornare tortor sit amet nulla egestas, ut auctor magna blandit. Suspendisse in placerat nisi. Praesent sit amet leo sed purus gravida gravida sed ac dolor.</p>
-                        <p>Donec auctor mi vel tempus ornare. Sed vitae volutpat velit, a gravida urna. Quisque id luctus justo, a mattis metus. Praesent non turpis sed libero lacinia euismod. Nulla mattis lacus mollis nisi pulvinar tempor. Etiam faucibus neque in dui porttitor, non consectetur mi adipiscing. Praesent consectetur cursus eros eu tempus. Nulla tristique, ante non laoreet mollis, est massa cursus risus, et condimentum mauris mi sit amet purus. In massa urna, aliquet eget ultrices ut, dictum vel turpis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis interdum nulla. Donec commodo tincidunt magna, non viverra leo varius eget. Vivamus scelerisque rutrum faucibus. Suspendisse blandit, nisl et commodo tincidunt, dui arcu iaculis tellus, a tristique nibh risus id nunc. Praesent pellentesque tortor et augue hendrerit, a euismod tortor tristique.</p>
-                        <p>In euismod ante ac erat tristique venenatis. Integer pulvinar imperdiet dui, vitae pharetra lectus sollicitudin gravida. Aliquam congue nibh nec tellus ullamcorper, semper condimentum quam condimentum. Ut luctus mollis neque et varius. In viverra at ante sed molestie. Proin consequat mauris eget lorem hendrerit ullamcorper. Duis consequat sagittis tellus, sed aliquam magna condimentum nec. Donec sem neque, porta vitae dapibus porta, hendrerit eget metus. Etiam varius ac neque quis facilisis. Fusce a nisi ac dolor pretium lobortis sit amet eu quam. Vestibulum condimentum sagittis lectus sit amet posuere. Praesent vitae est et sapien congue molestie in ac mauris.</p>
-                        <p>Cras id massa adipiscing, scelerisque arcu id, venenatis nisi. Maecenas tincidunt pharetra nunc at tincidunt. Duis aliquet sapien leo, at feugiat erat faucibus eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facilisis tempus consectetur. Donec pharetra erat ut nibh sagittis mattis. Nulla facilisi. Ut at enim malesuada, volutpat elit in, accumsan nulla. Etiam interdum, purus id gravida iaculis, erat ipsum semper nibh, vel bibendum eros est vel tortor. Duis suscipit mollis tellus, a rhoncus dolor adipiscing sit amet. Mauris vitae venenatis sapien. Aenean at ante sollicitudin, facilisis justo ut, consectetur eros. Aenean eget congue erat. Pellentesque molestie fringilla eleifend. Cras in pretium ante.</p>
-                        <p>Nunc velit lectus, tempus ut facilisis eu, tincidunt vel lorem. Donec mollis sodales tortor sed molestie. Etiam et erat elit. Morbi lacus arcu, pharetra a augue a, laoreet ultricies urna. Pellentesque ornare tellus eleifend, consequat turpis vel, sodales nunc. Nullam ullamcorper dui eu magna posuere, non condimentum nunc consectetur. Donec a ligula eget ante commodo consequat. Donec venenatis, dui non posuere commodo, dolor leo elementum ligula, quis sagittis neque est vel felis. Morbi convallis ante est, a auctor augue volutpat at. Etiam non neque eu quam sollicitudin posuere sit amet in orci. Integer vitae ipsum sit amet libero iaculis hendrerit. Suspendisse dui mi, vulputate vel diam vel, vulputate egestas erat. Quisque lacinia vel arcu eu vulputate. Nullam magna odio, tincidunt sed dui ut, accumsan pulvinar sem. Morbi vestibulum odio libero, sit amet egestas nunc consectetur non.</p>
-                        <p>Integer lacus orci, varius in purus vel, bibendum vestibulum dolor. Pellentesque fermentum dapibus purus, quis viverra massa iaculis in. Nullam aliquam vulputate quam in porttitor. Ut non sem nec urna vestibulum elementum eget sit amet nunc. Nam nisi quam, ultricies at nisl sed, dignissim tincidunt dolor. Nam luctus nunc a aliquam mollis. Integer semper sapien nunc, ut venenatis erat dignissim id. Etiam et bibendum massa. Fusce sollicitudin purus urna, nec molestie leo ullamcorper eget. Integer rhoncus metus orci, vitae accumsan sapien interdum ac. Praesent non facilisis sem. Vestibulum dui metus, ultricies vitae cursus at, sollicitudin eu nulla.</p>
-                        <p>Pellentesque aliquam augue sit amet arcu rhoncus iaculis ac at leo. Nulla odio sapien, iaculis vitae volutpat a, iaculis vitae enim. Morbi id ligula et dui vestibulum cursus. Nunc laoreet leo eget arcu rhoncus pretium. Vivamus nec metus eu ipsum volutpat ornare sed quis felis. Donec fringilla posuere tortor eu dignissim. Sed congue ipsum purus, nec malesuada erat pretium ac. In facilisis tincidunt quam ut mattis. In sed blandit sem, nec fringilla tortor. Sed non metus congue, ornare purus et, molestie enim. Nulla sit amet lacus vitae mi dignissim gravida sed at enim. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque enim arcu, pretium at commodo sit amet, eleifend eget augue. Quisque justo enim, tristique sed gravida id, suscipit quis arcu. Praesent mattis lorem eu mauris fringilla, eget vulputate purus consectetur.</p>
-                        <p>Suspendisse convallis tristique mi, at pellentesque turpis pharetra a. Aliquam id hendrerit dolor, at condimentum metus. Nulla egestas imperdiet lorem, vel lobortis sem ullamcorper ac. Vivamus et quam a justo hendrerit condimentum. Nulla consectetur urna non sodales ornare. Ut metus erat, congue vel ornare at, adipiscing at magna. Sed commodo in nibh quis euismod. Aenean et aliquam ligula. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas feugiat posuere nunc et laoreet. Morbi vitae risus lacinia, auctor diam quis, tempor sem. Vivamus pellentesque accumsan nibh eget volutpat.</p>
-                        <p>Aenean ac erat diam. Nulla facilisi. Vivamus sit amet sagittis nisi, id commodo nunc. Suspendisse dictum fringilla fringilla. Aliquam aliquet vestibulum enim, a suscipit eros tristique eu. Etiam sodales erat in bibendum fermentum. Nulla mollis nunc nunc, eget ornare nisl facilisis nec. Suspendisse non nisi ornare, pulvinar mauris et, ultrices odio. Donec consequat tempus dui, in commodo erat malesuada nec. Sed elementum id metus non gravida. Nullam rutrum, massa eget lacinia consectetur, nisl nibh viverra risus, et condimentum eros purus iaculis quam. Suspendisse sed nunc et orci lobortis ultrices sit amet quis ipsum. Aenean velit nunc, cursus sit amet nisi eu, cursus aliquet tortor.</p>
-                        <p>Donec eleifend lectus risus, in aliquet nisi accumsan at. In ornare aliquet nulla, id facilisis leo molestie at. Maecenas leo tellus, bibendum ac consectetur et, egestas vel orci. Nam nibh sapien, egestas sed blandit tempus, vulputate dictum nulla. Maecenas porttitor mauris in lacinia laoreet. Donec interdum sit amet elit a tincidunt. Nulla adipiscing purus turpis, eget fermentum tortor vehicula vel. Sed arcu lacus, venenatis hendrerit dictum sit amet, dignissim eu elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur nec metus quis enim facilisis scelerisque. Integer egestas commodo faucibus. In sed quam eu augue consectetur hendrerit. Quisque in erat mattis, sagittis risus sed, auctor nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam euismod, leo nec rhoncus dignissim, quam augue aliquam felis, non molestie enim ipsum id turpis.</p>
+                    <div class="scroll mCustomScrollbar _mCS_2" style="height: 768px;"><div class="mCustomScrollBox mCS-light" id="mCSB_2" style="position:relative; height:100%; overflow:hidden; max-width:100%;"><div class="mCSB_container" style="position:relative; top:0;"></p>
 
                     </div><div class="mCSB_scrollTools" style="position: absolute; display: block;"><div class="mCSB_draggerContainer"><div class="mCSB_dragger" style="position: absolute; top: 0px; height: 650px;" oncontextmenu="return false;"><div class="mCSB_dragger_bar" style="position: relative; line-height: 650px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>
                 </div>                
@@ -130,7 +146,7 @@
                      <h2 style="font-size:24px;text-align:center;padding:25px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue'">Market Sentiment</h2> 
                 </div>
                 <div class="block block-transparent nm">
-<input type="text" class="form-control" id="tags" name="tags" placeholder="Filter by portfolio . . ." style="font-size:12px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;font-family:'helvetica neue';font-weight: 100;line-height: 47px;margin-top: 15px;outline: medium none;margin-left:25px;margin-right:25px;width: 92%;margin-bottom:50px;letter-spacing:3px;height:50px">
+<input type="text" class="form-control" id="tags" name="tags" placeholder="Filter by portfolio . . ." style="font-size:12px;font-family:'Raleway',thin;letter-spacing:2px;font-weight:100;color: white;font-family:'helvetica neue';font-weight: 100;line-height: 47px;margin-top: 15px;outline: medium none;margin-left:25px;margin-right:25px;width: 92%;margin-bottom:50px;letter-spacing:3px;height:50px">
                     <div class="scroll-nail email-list mCustomScrollbar _mCS_1" style="height: 60vh;min-height:500px">
                         <div class="email-list-item" style="background:rgba(0,255,0,0.1)">
                             <div class="item-line">
@@ -323,6 +339,13 @@ var nocus = function(id,name) {
 </div>
 </div>
  -->
+ <div class="nav">
+    <a href="/user/support" data-target="-1" style=";margin-right:50px;float:right">           
+      <h1><span class="icon-angle-right" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:98vw;font-size:24px"></span></h1></a>
+    <a href="/user/portfolio_settings" data-target="1" style=";margin-left:50px;float:left">
+       <h1><span class="icon-angle-left" style="display: inline-block;line-height: 90vh;position: fixed;top:50px;left:1vw;font-size:24px"></span></h1>
+    </a>
+  </div>  
   <div id="new_input" style="display:none">
     &nbsp &nbsp
     Stock: <input type="text" name="stock" id="stock" value="AAPL" 
@@ -390,10 +413,12 @@ function convertIt(stock_name) {
                     url:"news_portal/get_portfolio_news/"+chosen_stock+"/",
                     method: "POST"
                 }).done(function(data){
+                    var str = ""
                     data.news.response.docs.forEach(function(d) {
-                        $("#indi_stock_pin").append("<div class='block' style='font-size:14px;padding:10px;background:rgba(0,0,0,0.2)'><a href='"+d.web_url+" 'target='_blank'><br>"+d.snippet+".</a></div>")
-                        
-                    })                })                     
+                        str+="<div class='block' style='font-size:14px;padding:10px;background:rgba(0,0,0,0.2)'><a href='"+d.web_url+" 'target='_blank'><br>"+d.snippet+".</a></div>"
+                    })                
+                    $("#indi_stock_pin").html(str)
+                })                     
                 $("#welcome").fadeOut(250)  
                 $("#choose").css('display','initial')
             } else {
@@ -409,10 +434,11 @@ function convertIt(stock_name) {
                     url:"news_portal/get_stock_news/"+chosen_stock+"/",
                     method: "POST"
                 }).done(function(data){
+                    var str = ""
                     data.news.response.docs.forEach(function(d) {
-                        $("#indi_stock_pin").append("<div class='block' style='font-size:14px;padding:10px;background:rgba(0,0,0,0.2)'><a href='"+d.web_url+" 'target='_blank'><br>"+d.snippet+".</a></div>")
-                        
+                        str += "<div class='block' style='font-size:14px;padding:10px;background:rgba(0,0,0,0.2)'><a href='"+d.web_url+" 'target='_blank'><br>"+d.snippet+".</a></div>"
                     })
+                    $("#indi_stock_pin").html(str)
                 })    
                 updateData(splitval[0])
                 $("#choose").css('display','initial')  

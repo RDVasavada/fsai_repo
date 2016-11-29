@@ -46,7 +46,8 @@ function hasNumber(myString) {
 // Each data source has different payload structures.  We abstract the required properties for us to visualize into
 // 'staticData' and 'liveData' objects which we store in the 'sources' object.  This allows us to easily toggle between them.
 var dataSource
-var w = window.location.href.slice(35)
+// var w = window.location.href.slice(35)
+var w = window.location.href.slice(33)
 w =w.slice(0,-1) 
 if (String(hasNumber(w)) === "true") {
     var urlString = "/user/portfolio_sentiment_data/" + w

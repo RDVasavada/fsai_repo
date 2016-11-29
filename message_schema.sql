@@ -1,1 +1,2 @@
-Terminal close -- exit!
+mysql -u root -p fsai -e "CREATE TABLE portal_messageheader (id int(11) unsigned NOT NULL AUTO_INCREMENT, from_id int(11) unsigned NOT NULL, to_id int(11) unsigned NOT NULL, subject varchar(127) NOT NULL, time datetime NOT NULL,status varchar(127) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1"
+mysql -u root -p fsai -e "CREATE TABLE portal_message (id int(11) unsigned NOT NULL AUTO_INCREMENT, header_id int(11) unsigned NOT NULL, is_from_sender int(11) unsigned NOT NULL, content text NOT NULL, PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1"

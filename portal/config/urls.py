@@ -44,6 +44,9 @@ urlpatterns = patterns('',
     (r'^user/portfolio_sentiment_data/(?P<portfolio_id>[0-9]+)/?$', views.portfolio_sentiment_data), 
     (r'^user/portfolio_chart/(?P<portfolio_id>[0-9]+)/?$', views.portfolio_chart), 
     (r'^sms/sms_symbolexchange/?$', views.sms_symbolexchange),
+    (r'^user/confirm_phone/(?P<code>\w{0,999999})/$', views.confirm_phone), 
+    (r'^user/confirmed_phone/?$', views.confirmed_phone),
+    (r'^user/resend_phone/?$', views.resend_phone),
 
     #General User Pages
     (r'^user/dashboard/?$', views.dashboard),
@@ -52,6 +55,7 @@ urlpatterns = patterns('',
     (r'^user/removeportfolio/(?P<portfolio_id>[0-9]+)/?$', views.removeportfolio), 
     (r'^user/saveportfolio/(?P<portfolio_id>[0-9]+)/?$', views.saveportfolio), 
     (r'^user/stock_chart/(?P<stock_name>\w{0,50})/$', views.stock_chart), 
+    (r'^user/ndx_chart/$', views.ndx_chart), 
     (r'^user/portfolio/?$', views.portfolio),
     (r'^user/portfolio_settings/?$', views.portfolio_settings),
     (r'^user/portfolio_exist/(?P<portname>.+)/?$', views.portfolio_exist),
@@ -91,6 +95,7 @@ urlpatterns = patterns('',
     (r'^user/delfriend/?$', views.delfriend),  
 )
 
+#BRBB
 def BuildStockDatabase():
     cursor = connection.cursor();
     cursor.execute("select distinct ticker from portal_stock")
@@ -123,109 +128,109 @@ def BuildStockDatabase():
         except:
             print("error again")
 
-# def BuildSF1Database():
-#     cursor = connection.cursor();
-#     cursor.execute("select distinct ticker from portal_stock")
-#     for item in dictfetchall(cursor):
-#         d = "SF1/" + str(item['ticker']) + "_DIVYIELD"
-#         try:
-#             d_data = quandl.get(d,start_date="2004-01-01", end_date="2016-11-10")
-#             cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_DIVYIELD ("
-#                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
-#                             "`last_date` DATETIME,"
-#                             "`value` VARCHAR(255),"
-#                             "PRIMARY KEY (id) );") 
-#             datearr=[]   
-#             for a in d_data.index.tolist():
-#                 datearr.append(pd.to_datetime(a))
-#             for a in d_data['Value']:
-#                 cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_DIVYIELD (last_date, value) VALUES "
-#                                 "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
-#         except:
-#             print("no quandl")
+def BuildSF1Database():
+    cursor = connection.cursor();
+    cursor.execute("select distinct ticker from portal_stock")
+    for item in dictfetchall(cursor):
+        d = "SF1/" + str(item['ticker']) + "_DIVYIELD"
+        try:
+            d_data = quandl.get(d,start_date="2004-01-01", end_date="2016-11-10")
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_DIVYIELD ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in d_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in d_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_DIVYIELD (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
 
 
-#         mkt = "SF1/" + str(item['ticker']) + "_MARKETCAP"
-#         try:
-#             mkt_data = quandl.get(mkt,start_date="2004-01-01", end_date="2016-11-10")
-#             cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_MARKETCAP ("
-#                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
-#                             "`last_date` DATETIME,"
-#                             "`value` VARCHAR(255),"
-#                             "PRIMARY KEY (id) );") 
-#             datearr=[]   
-#             for a in mkt_data.index.tolist():
-#                 datearr.append(pd.to_datetime(a))
-#             for a in mkt_data['Value']:
-#                 cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_MARKETCAP (last_date, value) VALUES "
-#                                 "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
-#         except:
-#             print("no quandl")
+        mkt = "SF1/" + str(item['ticker']) + "_MARKETCAP"
+        try:
+            mkt_data = quandl.get(mkt,start_date="2004-01-01", end_date="2016-11-10")
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_MARKETCAP ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in mkt_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in mkt_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_MARKETCAP (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
 
-#         nm = "SF1/" + str(item['ticker']) + "_NETMARGIN_ART"
-#         try:
-#             nm_data = quandl.get(nm,start_date="2004-01-01", end_date="2016-11-10")  
-#             cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_NETMARGIN ("
-#                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
-#                             "`last_date` DATETIME,"
-#                             "`value` VARCHAR(255),"
-#                             "PRIMARY KEY (id) );") 
-#             datearr=[]   
-#             for a in nm_data.index.tolist():
-#                 datearr.append(pd.to_datetime(a))
-#             for a in nm_data['Value']:
-#                 cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_NETMARGIN (last_date, value) VALUES "
-#                                 "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
-#         except:
-#             print("no quandl")
-#         pb = "SF1/" + str(item['ticker']) + "_PB_ARY"
-#         try:
-#             pb_data = quandl.get(pb,start_date="2004-01-01", end_date="2016-11-10") 
-#             cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_PB ("
-#                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
-#                             "`last_date` DATETIME,"
-#                             "`value` VARCHAR(255),"
-#                             "PRIMARY KEY (id) );") 
-#             datearr=[]   
-#             for a in pb_data.index.tolist():
-#                 datearr.append(pd.to_datetime(a))
-#             for a in pb_data['Value']:
-#                 cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_PB (last_date, value) VALUES "
-#                                 "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
-#         except:
-#             print("no quandl")
-#         pe = "SF1/" + str(item['ticker']) + "_PE_ART"
-#         try:
-#             pe_data = quandl.get(pe,start_date="2004-01-01", end_date="2016-11-10")
-#             cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_PE ("
-#                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
-#                             "`last_date` DATETIME,"
-#                             "`value` VARCHAR(255),"
-#                             "PRIMARY KEY (id) );") 
-#             datearr=[]   
-#             for a in pe_data.index.tolist():
-#                 datearr.append(pd.to_datetime(a))
-#             for a in pe_data['Value']:
-#                 cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_PE (last_date, value) VALUES "
-#                                 "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
-#         except:
-#             print("no quandl")
-#         epusd = "SF1/" + str(item['ticker']) + "_EPSUSD_ART"
-#         try:
-#             epusd_data = quandl.get(epusd,start_date="2004-01-01", end_date="2016-11-10")
-#             cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_EPUSD ("
-#                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
-#                             "`last_date` DATETIME,"
-#                             "`value` VARCHAR(255),"
-#                             "PRIMARY KEY (id) );") 
-#             datearr=[]   
-#             for a in epusd_data.index.tolist():
-#                 datearr.append(pd.to_datetime(a))
-#             for a in epusd_data['Value']:
-#                 cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_EPUSD (last_date, value) VALUES "
-#                                 "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
-#         except:
-#             print("no quandl")
+        nm = "SF1/" + str(item['ticker']) + "_NETMARGIN_ART"
+        try:
+            nm_data = quandl.get(nm,start_date="2004-01-01", end_date="2016-11-10")  
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_NETMARGIN ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in nm_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in nm_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_NETMARGIN (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
+        pb = "SF1/" + str(item['ticker']) + "_PB_ARY"
+        try:
+            pb_data = quandl.get(pb,start_date="2004-01-01", end_date="2016-11-10") 
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_PB ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in pb_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in pb_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_PB (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
+        pe = "SF1/" + str(item['ticker']) + "_PE_ART"
+        try:
+            pe_data = quandl.get(pe,start_date="2004-01-01", end_date="2016-11-10")
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_PE ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in pe_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in pe_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_PE (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
+        epusd = "SF1/" + str(item['ticker']) + "_EPSUSD_ART"
+        try:
+            epusd_data = quandl.get(epusd,start_date="2004-01-01", end_date="2016-11-10")
+            cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_EPUSD ("
+                            "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                            "`last_date` DATETIME,"
+                            "`value` VARCHAR(255),"
+                            "PRIMARY KEY (id) );") 
+            datearr=[]   
+            for a in epusd_data.index.tolist():
+                datearr.append(pd.to_datetime(a))
+            for a in epusd_data['Value']:
+                cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_EPUSD (last_date, value) VALUES "
+                                "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+        except:
+            print("no quandl")
             
 def RefreshDB():
     cursor = connection.cursor();
@@ -308,6 +313,7 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
     ]
 # BuildStockDatabase()
+# BuildSF1Database()
 # Update_DB_Dispatcher.after_response()
 # Update_Stocks_Dispatcher.after_response()
 
@@ -315,6 +321,7 @@ def dictfetchall(cursor):
 # lets us serve our media
 if settings.DEBUG:
     from django.views.static import serve
+    # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     _media_url = settings.MEDIA_URL
     if _media_url.startswith('/'):
         _media_url = _media_url[1:]
@@ -323,7 +330,3 @@ if settings.DEBUG:
                                 serve,
                                 {'document_root': settings.MEDIA_ROOT}))
     del(_media_url, serve)
-if settings.DEBUG:
-    urlpatterns += patterns('django.views.static',
-        (r'media/(?P<path>.*)', 'serve', {'document_root': settings.MEDIA_ROOT}),
-    )

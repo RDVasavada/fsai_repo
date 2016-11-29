@@ -23,10 +23,14 @@ def individual_stock(request, stock_name):
     context_dict = {}
     context_dict["company_symbol"] = str(stock_name)
     cursor = connection.cursor()
-    cursor.execute("SELECT sentiment, current_price, initial_price FROM portal_stock WHERE ticker = \'" + str(stock_name) + "' LIMIT 1")
+    cursor.execute("SELECT sentiment, current_price, initial_price, buy_date, initial_price, allocation, sector FROM portal_stock WHERE ticker = \'" + str(stock_name) + "' LIMIT 1")
     for s_score in dictfetchall(cursor):
          context_dict['score'] =  s_score['sentiment']
          context_dict['current_price'] =  s_score['current_price']
+         context_dict['initial_price'] =  s_score['initial_price']
+         context_dict['buy_date'] =  s_score['buy_date']
+         context_dict['allocation'] =  s_score['allocation']
+         context_dict['sector'] =  s_score['sector']
          context_dict['gain'] =  float(s_score['current_price']) / float(s_score['initial_price'])
     url = "http://finance.yahoo.com/d/quotes.csv?s="+str(stock_name)+"&f=sn"
     response = urlopen(url)
@@ -35,15 +39,17 @@ def individual_stock(request, stock_name):
         CompanyName = row[1]
         context_dict['company_name'] = CompanyName
         CompanyName = CompanyName.split()
-        CompanyName = CompanyName[0] + " " + CompanyName[1]
+        CompanyName = CompanyName[0]
     try:
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=5e4b878121fc4daf91d5c3625e34a51a&sort=newest&q=" + str(CompanyName)
     except IndexError:
-        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=5e4b878121fc4daf91d5c3625e34a51a&sort=newest&q=" + str(stock_name) + " stock"
+        url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=5e4b878121fc4daf91d5c3625e34a51a&sort=newest&q=" + str(stock_name) + "%20stock"
     try:
         news = requests.get(url)
+        print(news)
         context_dict["newsheadline"] = news.json()['response']['docs']
     except:
+        print("no news")
         context_dict["newsheadline"] = ""
 
     try: 
@@ -118,3 +124,5 @@ def individual_stock(request, stock_name):
     c = Context(context_dict)
     html = t.render(c)
     return HttpResponse(html)
+
+

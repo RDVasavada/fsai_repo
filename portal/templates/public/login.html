@@ -12,7 +12,7 @@
     <link href="/static/css2/layout.css" rel="stylesheet" type="text/css" />        
     <!-- <link href="/static/css2/normalize.css" rel="stylesheet" type="text/css" />         -->
     <link href="/static/css2/pageTransitions.css" rel="stylesheet" type="text/css" />        
-    
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,400" rel="stylesheet">
     <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery.min.js'></script>
     <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery-ui.min.js'></script>   
     <script type='text/javascript' src='/static/assets/js/plugins/jquery/jquery-migrate.min.js'></script>
@@ -44,15 +44,15 @@
         <div class="login-block" style="margin: auto;position: absolute;top: 0; left: 0; bottom: 0; right: 0;margin-top:10vh">
             <div style="width:100%;text-align:center;display:none" id="imageBlock">
                 <img src="/static/img/loader.gif" style="width:50px;text-align:center;display:block;margin:auto;margin-top:300px"><br><br>
-                <span style="font-size:26px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';"> Loading your data . . . </span>
+                <span style="font-size:26px;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Raleway',thin;"> Loading your data . . . </span>
             </div>
             <div class="blosck block-transparent" style="padding:10px" id="lBlock" >
                 <div class="content controls npt">
   <div class="m-header scene_element scene_element--fadeinup">
                     <div class="single-pane">
-                        <img src="/static/img/logo.png" style="width:600px;position:relative;right:213px;margin-bottom:-100px">
-                        <h3 style="text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ADEAEA;font-size:100px;font-family:Helvetica Neue" id="splash">
-                            <!-- <span style="letter-spacing:10px;"><i>V</i></span>ise -->
+                        <!-- <img src="/static/img/logo.png" style="width:600px;position:relative;right:213px;margin-bottom:-100px"> -->
+                        <h3 style="text-align:center;font-weight:100;text-shadow: 3px 3px 3px rgba(0,0,0,0.4);color:#ADEAEA;font-size:100px;font-family:'Raleway',thin;" id="splash">
+                            <span style="letter-spacing:10px;"><i>V</i></span>ise
                         </h3>
                     </div>
     </div>
@@ -232,20 +232,20 @@ function checkUser() {
                                     </div>
                                         <div class="side pull-right">
 
-                                            <span id="greenUser" style="color:rgba(0,255,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;">Minimum 4 Characters</span>
-                                            <span id="redUser" style="color:rgba(255,0,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;">Minimum 4 Characters</span>
+                                            <span id="greenUser" style="color:rgba(0,255,0,1);display:none;font-family:'Raleway',thin;line-height: 1.5;">Minimum 4 Characters</span>
+                                            <span id="redUser" style="color:rgba(255,0,0,1);display:none;font-family:'Raleway',thin;line-height: 1.5;">Minimum 4 Characters</span>
                                         </div>
                                 </div>
                                 <div class="form-row" style="margin-top:25px">
                                     <div class="col-md-3">First Name:</div>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control validate[required,minSize[2]]">
+                                        <input type="text" name="firstname" id="firstname" class="form-control validate[required,minSize[2]]">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-3">Last name:</div>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control validate[required,minSize[2]]">
+                                        <input type="text" name="lastname" id="lastname" class="form-control validate[required,minSize[2]]">
                                         </span>
                                     </div>
                                 </div>               
@@ -280,8 +280,8 @@ function checkUser() {
                                         <span class="help-inline" style="color:rgba(255,255,255,.5)">Example: John.Doe@Yahoo.Com </span>
                                           <div class="side pull-right">
 
-                                            <span id="greenEmail" style="color:rgba(0,255,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;"></span>
-                                            <span id="redEmail" style="color:rgba(255,0,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;"></span>
+                                            <span id="greenEmail" style="color:rgba(0,255,0,1);display:none;font-family:'Raleway',thin;line-height: 1.5;"></span>
+                                            <span id="redEmail" style="color:rgba(255,0,0,1);display:none;font-family:'Raleway',thin;line-height: 1.5;"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -289,7 +289,7 @@ function checkUser() {
                                     <div class="col-md-3">Phone Number:</div>
                                     <div class="col-md-9">
                                         <input type="text" name="phone" id="phone" class="form-control validate[required,custom[phone]]" value="" autocomplete="off">
-                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Example: 98 (765) 432-10-98</span>
+                                        <span class="help-inline" style="color:rgba(255,255,255,.5)">Example:(777)777-7777</span>
                                     </div>
                                 </div>  
 <script>
@@ -405,7 +405,7 @@ function checkEmail() {
                                         <!-- <input type="text" name="firmSize" class="validate[required,custom[integer],min[1],max[50000000]] form-control" placeholder="$" autocomplete="off"> -->
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">$</span>
-                                            <input type="number" placeholder="1,000" value="1000" id="investing_amount" name="investing_amount" class="form-control">
+                                            <input type="number" placeholder="1,000" value="1000" id="assets" name="assets" class="form-control">
                                         </div>                             
                                         <!-- <span class="help-inline" style="color:rgba(255,255,255,.5)">Required, 0$ -50,000,000$</span> -->
                                     </div>
@@ -438,19 +438,19 @@ function checkEmail() {
                                       <div class="col-md-12" style="font-size:24px">Enter a Personal PIN Number</div>
                                         <div class="col-md-12" style="height:auto">
                                            <div class="btn-group btn-group-justified" style="height:150px;background:rgba(0,0,0,0.2)">
-                                                <a href="#" id="1" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px" onClick="p_click(1)">1</a>
-                                                <a href="#" id="2"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(2)">2</a>
-                                                <a href="#" id="3" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(3)">3</a>
+                                                <a href="#" id="1" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Raleway',thin;font-size:50px" onClick="p_click(1)">1</a>
+                                                <a href="#" id="2"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Raleway',thin;font-size:50px"onClick="p_click(2)">2</a>
+                                                <a href="#" id="3" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Raleway',thin;font-size:50px"onClick="p_click(3)">3</a>
                                             </div>      
                                            <div class="btn-group btn-group-justified" style="height:150px;background:rgba(0,0,0,0.2)">
-                                                <a href="#" id="4" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(4)">4</a>
-                                                <a href="#" id="5"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(5)">5</a>
-                                                <a href="#" id="6"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(6)">6</a>
+                                                <a href="#" id="4" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Raleway',thin;font-size:50px"onClick="p_click(4)">4</a>
+                                                <a href="#" id="5"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Raleway',thin;font-size:50px"onClick="p_click(5)">5</a>
+                                                <a href="#" id="6"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Raleway',thin;font-size:50px"onClick="p_click(6)">6</a>
                                             </div>      
                                            <div class="btn-group btn-group-justified" style="height:150px;background:rgba(0,0,0,0.2)">
-                                                <a href="#" id="7"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(7)">></a>
-                                                <a href="#" id="8" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(8)">8</a>
-                                                <a href="#" id="9" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';font-size:50px"onClick="p_click(9)">9</a>
+                                                <a href="#" id="7"  class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Raleway',thin;font-size:50px"onClick="p_click(7)">7</a>
+                                                <a href="#" id="8" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Raleway',thin;font-size:50px"onClick="p_click(8)">8</a>
+                                                <a href="#" id="9" class="btn btn-default btn-clean" style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Raleway',thin;font-size:50px"onClick="p_click(9)">9</a>
                                             </div> 
 <script>
 var p_arr =[]
@@ -488,16 +488,15 @@ var e_click = function() {
                                     <!-- <button type="submit" class="btn btn-primary finish">Submit</button> -->
                                 </p>
                             </fieldset>     
-                            <fieldset title="Step 5" class="step" id="wizard_validate-step-4">
+<!--                             <fieldset title="Step 5" class="step" id="wizard_validate-step-4">
                                 <legend>Payment Information</legend>
                                 <div class="form-row">
                                  
                                 </div>
 
                                 <p id="wizard_validate-buttons-4" class="wizard_validate-buttons stepy_buttons" >
-                                    <!-- <a id="wizard_validate-next-0" href="javascript:void(0);" class="btn">Next &gt;</a> -->
                                 </p>
-                            <!-- <button type="submit" class="btn btn-primary finish" style="position:relative;top:-29px" id="wizard_validate">Submit</button> -->
+
                             </fieldset>
                             <fieldset title="Step 6" class="step" id="wizard_validate-step-5">
                                 <legend>Summary</legend>
@@ -548,9 +547,8 @@ var e_click = function() {
                                               
 
                                 <p id="wizard_validate-buttons-5" class="wizard_validate-buttons stepy_buttons" style="display:none">
-                                    <!-- <a id="wizard_validate-next-0" href="javascript:void(0);" class="btn">Next &gt;</a> -->
                                 </p>
-                            </fieldset>                            
+                            </fieldset>                             -->
                             <button type="submit" class="btn btn-primary finish" style="position:relative;top:-29px;position:relative;top:0px" id="wizard_validate">Submit</button>
                             
                         </form>                

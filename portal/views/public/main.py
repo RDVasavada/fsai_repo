@@ -8,6 +8,7 @@ from email.mime.text import MIMEText
 from portal.services import EmailService
 from django.http import JsonResponse
 from portal.models.user.portal_user import PortalUser
+import random
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.db import connection
@@ -15,6 +16,11 @@ from portal.utils import TokenGenerator
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
+from twilio.rest import TwilioRestClient
+# mysql -u root -p fsai -e "alter table portal_portaluser modify confirm_phone varchar(6) not null"
+account_sid = "AC8a7655d53d7046dfe5f4f1e3d6255093"
+auth_token = "3815265b8cdcf8d0d5e28e890dcef9bc"
+client = TwilioRestClient(account_sid, auth_token)
 
 def main(request):
     return render(request, 'public/splash.html')
@@ -110,10 +116,18 @@ def register(request):
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
         password_repeat = request.POST.get('password_repeat')
-        phone = request.POST.get('phone', None)
+        phone = str(request.POST.get('phone', None))
+        phone = "+1" + phone
+        phone_confirm = random.randint(111111,666999)
+        phone_message = "Hello from Vise! Your Confirmation code is : " + str(phone_confirm)
+        # message = client.messages.create(to=phone, from_="+12054907304",
+        #                              body=phone_message)
         email = request.POST.get('email', None)
         address = request.POST.get('address', None)
         reason = request.POST.get('reason', None)
+        firmname = request.POST.get('firmName', None)
+        firmsize = request.POST.get('firmSize', None)
+        assets = request.POST.get('assets', None)
         picture_url = "/static/img/profile.svg"
         connections = 0
         confirm_email = 0
@@ -124,7 +138,7 @@ def register(request):
         if password == password_repeat:
             if len(password) > 8:
 
-                new_user = PortalUser.objects.create_user(username=username, email=email, password=password, connections=0, picture_url=picture_url, confirm_email = confirm_email, confirm_phone = confirm_phone, pin_number = pin_number)
+                new_user = PortalUser.objects.create_user(username=username, email=email, password=password, connections=0, picture_url=picture_url, confirm_email = confirm_email, confirm_phone = str(phone_confirm), pin_number = pin_number, firmname = firmname, firmsize = firmsize, assets = assets)
 
                 new_user.phone=phone
                 new_user.email=email
@@ -143,7 +157,7 @@ def register(request):
                                 "('" + str(header_id) + "','0','<Hyperchat Bot> : Hi there! Welcome to Vise! Im a simple bot who can answer your questions and carry out simple commands for you. Nice to meet you. Why dont you try creating a portfolio to try things out?')")
                     user = authenticate(username=username, password=password)
                     login(request, user)
-                    return HttpResponseRedirect('/')
+                    return HttpResponseRedirect('user/dashboard')
                 except Exception as e:
                     #This user must already exist
                     print("already")
@@ -152,7 +166,8 @@ def register(request):
                 errors.append('Passwords must 9 or more charecters')
         else:
             errors.append('Password and Password Repeat don\'t match')
-        return render(request, 'public/register.html', {'errors':errors})
+        return HttpResponseRedirect('user/dashboard')
+
 
 def recover_password(request):
     if request.method == 'GET':

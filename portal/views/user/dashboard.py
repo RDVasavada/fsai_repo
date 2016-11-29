@@ -13,6 +13,7 @@ from decimal import Decimal
 from random import randint
 import time
 import random
+import simplejson
 from django.views.decorators.csrf import csrf_exempt
 import requests
 import json 
@@ -30,6 +31,11 @@ from portal.views.user.top_portfolios import top_portfolios
 from portal.views.user.top_portfolios import get_top_portfolios
 from yahoo_finance import Share
 from portal.models.data.portfolio import Portfolio
+from random import shuffle
+from twilio.rest import TwilioRestClient
+account_sid = "AC8a7655d53d7046dfe5f4f1e3d6255093"
+auth_token = "3815265b8cdcf8d0d5e28e890dcef9bc"
+client = TwilioRestClient(account_sid, auth_token)
 quandl.ApiConfig.api_key = 'X8CjGKTPEqTuto2v_Q94'
 
 @csrf_exempt
@@ -62,9 +68,11 @@ def your_sentiment(request):
       for row in reader:
           if any(row[0] in s for s in stockTickerArr):
             if row[1] == '2016-11-11':
-              sentimentObj.append({'ticker':row[0],'date':row[1],'sentiment':row[2],'impact':row[3]})
+              sentimentObj.append({'ticker':row[0],'date':row[1],'sentiment':(float(row[2])*100)+50,'impact':row[3]})
           if len(sentimentObj) == 10:
             break
+  x = [[i] for i in range(10)]
+  shuffle(sentimentObj)
   return JsonResponse({'sentiment':sentimentObj})
 
 @csrf_exempt
@@ -101,7 +109,7 @@ def performance_line_chart(request):
   response = HttpResponse(content_type='text/csv')
   response['Content-Disposition'] = 'attachment; filename="data.csv"'
   writer = csv.writer(response)
-  writer.writerow(['symbol', 'date', 'price'])
+  writer.writerow(['key', 'value', 'date'])
   end = datetime.date.today()
   start = (end - datetime.timedelta(days=365))
   if request.user.is_authenticated():
@@ -144,11 +152,13 @@ def performance_line_chart(request):
       returnarr = newarr
     else:
       imparr = newarr
-      returnarr = [(x+y)/2 for x,y in zip(imparr/returnarr)]
+      returnarr = [(x+y)/2 for x,y in zip(imparr,returnarr)]
   returnarr[0] = 1
+  print(returnarr)
+  print(return_date_arr)
   for line in returnarr:
-    print(return_date_arr.pop(0))
-    writer.writerow(['You',str(return_date_arr.pop(0))[0:10],returnarr.pop(0)])
+    # print(return_date_arr.pop(0))
+    writer.writerow(['You',returnarr.pop(0),str(return_date_arr.pop(0))[0:10]])
   valarr = []
   datearr = []
   last = 0
@@ -165,8 +175,8 @@ def performance_line_chart(request):
   datearr.pop(0)
   valarr.pop(0)
   for item in valarr:
-    print(datearr.pop())
-    writer.writerow(['Nasdaq',str(datearr.pop()),valarr.pop()])
+    # print(datearr.pop())
+    writer.writerow(['Nasdaq',valarr.pop(),str(datearr.pop())])
   valarr = []
   datearr = []
   last = 0
@@ -183,8 +193,8 @@ def performance_line_chart(request):
   datearr.pop(0)
   valarr.pop(0)        
   for item in valarr:
-    print(datearr.pop())
-    writer.writerow(['S&P 500',datearr.pop(),valarr.pop()])
+    # print(datearr.pop())
+    writer.writerow(['S&P 500',valarr.pop(),datearr.pop()])
   l_valarr = []
   l_datearr = []
   last = 0
@@ -199,7 +209,7 @@ def performance_line_chart(request):
         l_datearr.append(item[0])
         l_valarr.append(change)
   for item in valarr:
-    print(l_datearr.pop())
+    # print(l_datearr.pop())
     writer.writerow(['Dow Jones',l_datearr.pop(),l_valarr.pop()])
   return response
   # return response
@@ -301,12 +311,22 @@ def portfolio_value(request):
 
 @login_required
 def dashboard(request):
+  context_dict = {}
   sectorList = {}
   if request.user.is_authenticated():
       username = request.user.username
       portalUser = PortalUser.objects.get(username=username)
       portfolios = top_portfolios(request,portalUser.id)
       picture_url = portalUser.picture_url
+      context_dict['email'] = portalUser.email
+      context_dict['date_joined'] = portalUser.date_joined
+      context_dict['phone'] = portalUser.phone
+      context_dict['confirm_email'] = portalUser.confirm_email
+      context_dict['confirm_phone'] = portalUser.confirm_phone
+      context_dict['username'] = portalUser.username
+      context_dict['last'] = portalUser.last_login
+      # context_dict['last_name'] = portalUser.lastname
+      # context_dict['first_name'] = portalUser.firstname
       cursor = connection.cursor()
       cursor.execute("SELECT id from portal_portfolio where user_id = \'" + str(portalUser.id) + "'")
       for stock in dictfetchall(cursor):
@@ -321,7 +341,6 @@ def dashboard(request):
             sectorList[str(sector['sector'])] = {}
             sectorList[str(sector['sector'])]['sector'] = str(sector['sector'])
             sectorList[str(sector['sector'])]['value'] = 1
-  context_dict = {}
   context_dict['sectors'] = sectorList
   if picture_url == 'NULL':
     context_dict['picture_url'] = "asdf"
@@ -424,30 +443,147 @@ def dictfetchall(cursor):
         dict(zip([col[0] for col in desc], row))
         for row in cursor.fetchall()
     ]    
+def json_response(func):
+    """
+    A decorator thats takes a view response and turns it
+    into json. If a callback is added through GET or POST
+    the response is JSONP.
+    """
+    def decorator(request, *args, **kwargs):
+        objects = func(request, *args, **kwargs)
+        if isinstance(objects, HttpResponse):
+            return objects
+        try:
+            data = simplejson.dumps(objects)
+            if 'callback' in request.REQUEST:
+                # a jsonp response!
+                data = '%s(%s);' % (request.REQUEST['callback'], data)
+                return HttpResponse(data, "text/javascript")
+        except:
+            data = simplejson.dumps(str(objects))
+        return HttpResponse(data, "application/json")
+    return decorator
 
+@json_response
 @csrf_exempt
 def stock_chart(request, stock_name):
   portDate = []
-  portVolume = []
-  portClose = []
-  portAverage = []
   today = date.today()
   end = today.replace(year=today.year - 1)
   today = str(today) + " 00:00:00"
   end = str(end) + " 00:00:00"
   cursor = connection.cursor()
-  cursor.execute("SELECT last_date, Adj_Close, Adj_High, Adj_Low from stock_" + str(stock_name) + " "
+  cursor.execute("SELECT last_date, Adj_Close from stock_" + str(stock_name) + " "
                 "WHERE DATE(last_date) > '%s'" %(end))
   for item in dictfetchall(cursor):
-    portDate.append(str(item['last_date'])[:10])
-    portVolume.append(item['Adj_Low'])
-    portClose.append(item['Adj_Close'])
-    portAverage.append(item['Adj_High'])
-  response = HttpResponse(content_type='text/csv')
-  response['Content-Disposition'] = 'attachment; filename="data.csv"'
-  writer = csv.writer(response)
-  writer.writerow(['Date', 'Volume', 'Close', 'Average'])
-  for item in portDate:
-    writer.writerow([portDate.pop(0),portVolume.pop(0),portClose.pop(0),portAverage.pop(0)])
-  # print(response)
-  return response
+    date_time = str(item['last_date'])
+    pattern = '%Y-%m-%d %H:%M:%S'
+    epoch = int(time.mktime(time.strptime(date_time, pattern)))*1000
+    portDate.append([epoch,float(item['Adj_Close'])])
+  return portDate
+
+@json_response
+@csrf_exempt
+def ndx_chart(request):
+  portDate = []
+  today = date.today()
+  start = today
+  end = today.replace(year=today.year - 1)
+  end = str(end)[0:10]
+  with open('ndx.json') as json_data:
+    ndx = json.load(json_data)
+    for item in ndx['data']:
+      if datetime.datetime.strptime(end, '%Y-%m-%d').date() <= datetime.datetime.strptime(item[0], '%Y-%m-%d').date() <=  datetime.datetime.strptime(str(today), '%Y-%m-%d').date():
+        change = float(item[1])
+        print(change)
+        date_time = str(item[0]) + " 00:00:00"
+        pattern = '%Y-%m-%d %H:%M:%S'
+        epoch = int(time.mktime(time.strptime(date_time, pattern)))*1000
+        portDate.append([epoch,change])
+  return portDate
+
+@json_response
+@csrf_exempt
+def portfolio_chart(request, portfolio_id):
+  if request.user.is_authenticated():
+      username = request.user.username
+      portalUser = PortalUser.objects.get(username=username)
+      portfolios = top_portfolios(request, portalUser.id)
+  stocks = get_stocks_by_portfolio(request, portfolio_id)
+  portDate = []
+  incomingDate = []
+  for stock in stocks:
+    today = date.today()
+    end = today.replace(year=today.year - 1)
+    today = str(today) + " 00:00:00"
+    end = str(end) + " 00:00:00"
+    cursor = connection.cursor()
+    cursor.execute("SELECT last_date, Adj_Close from stock_" + str(stock['ticker']) + " "
+                  "WHERE DATE(last_date) > '%s'" %(end))
+    if len(portDate) == 0:
+      for item in dictfetchall(cursor):
+          date_time = str(item['last_date'])
+          pattern = '%Y-%m-%d %H:%M:%S'
+          epoch = int(time.mktime(time.strptime(date_time, pattern)))*1000
+          portDate.append([epoch,float(item['Adj_Close'])])
+    else:
+      count = 0
+      for item in dictfetchall(cursor):
+        date_time = str(item['last_date'])
+        pattern = '%Y-%m-%d %H:%M:%S'
+        epoch = int(time.mktime(time.strptime(date_time, pattern)))*1000
+        for exist in portDate:
+          if exist[0] == epoch:
+            exist[1] = exist[1] + float(item['Adj_Close'])
+        count += 1
+  return portDate
+
+@json_response
+@login_required
+def confirm_phone(request, code):
+  cursor = connection.cursor()
+  message = "Unconfirmed"
+  if request.user.is_authenticated():
+     username = request.user.username
+     portalUser = PortalUser.objects.get(username=username)
+     userid = portalUser.id
+     cursor.execute("SELECT confirm_phone FROM portal_portaluser WHERE id = " + str(userid) + " LIMIT 1")
+     for item in dictfetchall(cursor):
+       if str(code) == item['confirm_phone']:
+        cursor.execute("UPDATE portal_portaluser SET confirm_phone = 1 WHERE id = " + str(userid) + " LIMIT 1")
+        cursor.close()
+        message = "Confirmed"
+  return message
+
+@json_response
+@login_required
+def confirmed_phone(request):
+  cursor = connection.cursor()
+  message = "Unconfirmed"
+  if request.user.is_authenticated():
+     username = request.user.username
+     portalUser = PortalUser.objects.get(username=username)
+     userid = portalUser.id
+     cursor.execute("SELECT confirm_phone FROM portal_portaluser WHERE id = " + str(userid) + " LIMIT 1")
+     for item in dictfetchall(cursor):
+        if str(1) == item['confirm_phone']:
+          message = "Confirmed"
+  return[message]
+
+@json_response
+@login_required
+def resend_phone(request):
+  cursor = connection.cursor()
+  if request.user.is_authenticated():
+     username = request.user.username
+     portalUser = PortalUser.objects.get(username=username)
+     userid = portalUser.id
+     cursor.execute("SELECT phone FROM portal_portaluser WHERE id = " + str(userid) + " LIMIT 1")
+     for item in dictfetchall(cursor):
+        phone_confirm = random.randint(111111,666999)
+        cursor.execute("UPDATE portal_portaluser SET confirm_phone = \'" + str(phone_confirm) + "' WHERE id = " + str(userid) + " LIMIT 1")
+        phone_message = "Hello from Vise! Your Confirmation code is : " + str(phone_confirm)
+        message = client.messages.create(to=str(item['phone']), from_="+12054907304", body=phone_message)
+  return ""
+
+

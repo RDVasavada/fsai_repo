@@ -1,0 +1,69 @@
+#mainheader {
+  width: 100vw !important;
+  margin: 0px !important;
+  padding: 0px !important;
+  left: 0px !important;
+}
+#navicon {
+  font-size:0px !important;
+}
+#navlast {
+  display: none !important;
+}
+#navbtn {
+  margin-top: 0px !important;
+  margin-left: -10px !important;
+}
+#main {
+  margin: 0px !important;
+  margin-right: 0px !important;
+  padding-top: 0px !important;
+  width:100vw !important;
+  max-width: 100vw !important;
+  padding-top: 15px !important;
+  position: fixed !important;
+  z-index: 9999 !important;
+  background: #082648 !important;
+  height: 100vh !important;
+  overflow: scroll !important;
+}
+#dashmed {
+  display:none !important;
+}
+#dashlast {
+  margin-right:10px !important;
+  top:10px !important;
+}
+#sortable_example_1 {
+  height:50vh !important;
+  overflow: scroll !important;
+}
+#ha {
+  height: auto !important;
+}
+#nopad {
+  padding-left: 0px !important;
+  height: auto !important;
+  position:fixed !important;
+}
+#infirst {
+  height:auto !important;
+}
+#innext {
+  height:20vh !important;
+  overflow: scroll !important;
+  padding-bottom:0px !important;
+}
+#intwo {
+  top: 325px !important;
+  position: fixed;
+  padding: 0px !important;
+  height: 40vh !important;
+}
+#inb {
+  width: 94vw !important;
+  height: auto !important;
+}
+#incontent {
+  height: 30vh !important;
+}

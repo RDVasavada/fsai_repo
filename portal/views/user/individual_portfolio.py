@@ -26,6 +26,7 @@ def dictfetchall(cursor):
 @login_required
 def individual_portfolio(request, portfolio_id):
     sectorList = {}
+    context_dict = {}
     if request.user.is_authenticated():
         username = request.user.username
         portalUser = PortalUser.objects.get(username=username)
@@ -40,10 +41,12 @@ def individual_portfolio(request, portfolio_id):
             sectorList[str(sector['sector'])] = {}
             sectorList[str(sector['sector'])]['sector'] = str(sector['sector'])
             sectorList[str(sector['sector'])]['value'] = 1
+        cursor.execute("SELECT * from portal_portfolio where id = \'" + str(portfolio_id) + "' LIMIT 1")
+        for item in dictfetchall(cursor):
+            context_dict['port'] = item
     stocks = get_stocks_by_portfolio(request, portfolio_id)
     portfolio = Portfolio.objects.get(id=portfolio_id)
     change = range(1, 100, 1)
-    context_dict = {}
     context_dict['sectors'] = sectorList
     context_dict["portfolios"] = portfolios
     context_dict["stocks"] = stocks

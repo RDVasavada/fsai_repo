@@ -360,7 +360,6 @@ def save_guru(request):
    ["STT","State Street Corporation"]]
   data_dict = json.loads(request.POST.get('json_data'))
   if request.user.is_authenticated():
-    print(str(data_dict['initial_capital']))
     username = request.user.username
     userid = request.user.id
     cursor = connection.cursor()
@@ -419,10 +418,9 @@ def guru_optimize(request):
   wr = csv.writer(resultFile, delimiter=' ',
                             quotechar=' ', quoting=csv.QUOTE_MINIMAL)
   tabletwo_string = str(request.POST['guru']) + ";BA;" + str(request.POST['capital'])
-  print(tabletwo_string)
   wr.writerow(['PortfolioID;Screen_frequency;Initial_capital'])
-  # wr.writerow([tabletwo_string])
-  wr.writerow(['84;BA;1000000000'])
+  wr.writerow([tabletwo_string])
+  # wr.writerow(['84;BA;1000000000'])
   resultFile.close()
   cursor = connection.cursor()
   filename = 'Screen_parameters.csv'
@@ -433,7 +431,7 @@ def guru_optimize(request):
 
 
   start = '2006-01-01'
-  end = (datetime.date.today()-BDay(10))
+  end = (datetime.date.today()-BDay(12))
   snapshots =  pd.DatetimeIndex(start=start,end=end, freq=Screen_freq).tolist()
   snapshots.append(end)
   p_fundamentals_exist = fundamentals_exist = 0                 
@@ -453,7 +451,6 @@ def guru_optimize(request):
   # Add current prices. If no price available, exclude stock.
   stocks = qu_EOD_trsf('EOD',portfolio_imported['symbol'],field='.11')
   time = str(end)
-  print(time)
   closearr = []
   headarr = []
   for item in stocks:
@@ -484,28 +481,27 @@ def guru_optimize(request):
       count += 1 
       print("err")
   date_ = [time[:10]]
-  print(type(time[:10]))
   prices = pd.DataFrame(prices, index=date_)
   prices.index.name = "Date"
-  # print("this is your prices:")
-  # print(prices)
   # try:
   #     prices = quandl.get(stocks,start_date=end, end_date=end,collapse='daily')
   # except:
   #     prices = quandl.get(stocks,start_date=end - BDay(1), end_date=end,collapse='daily')
   # print("quandl prices:")
   # print(prices)
-  print(prices.iloc[-1])
-  print("__")
-  print(prices.iloc[-1].name)
-  print("__")
-  print(prices)
   # print(prices.iloc[-1].name.date())
-  portfolio_imported['Pricing_current_date'] = prices.iloc[-1].name
-  portfolio_imported['Price_current'] = prices.iloc[-1].T.values
-  portfolio_imported = portfolio_imported.dropna(subset=['Price_current']) .reset_index(drop=True) 
-  stocks = qu_EOD_trsf('EOD',portfolio_imported['symbol'],field='.11')
+  #
+  # portfolio_imported['Pricing_current_date'] = prices.iloc[-1].name
+  # portfolio_imported['Price_current'] = prices.iloc[-1].T.values
+  # portfolio_imported = portfolio_imported.dropna(subset=['Price_current']) .reset_index(drop=True) 
+  prices_new = prices.T
+  prices_new.columns = ['Price_current']
+  prices_new['symbol']= prices_new.index.str.replace('EOD/', '').str.replace('- Adj_Close','')
+  prices_new["symbol"] = prices_new["symbol"].map(str.strip)
+  portfolio_imported = pd.merge(left=portfolio_imported,right=prices_new,how='left',left_on=['symbol'],right_on=['symbol'],
+                        suffixes=('_left', '_right'))
 
+  stocks = qu_EOD_trsf('EOD',portfolio_imported['symbol'],field='.11')
   time = str(snapshots[0])
   closearr = []
   headarr = []
@@ -535,7 +531,6 @@ def guru_optimize(request):
       count += 1 
     except:
       count += 1 
-      print("err")
   date_ = [time[:10]]
   prices = pd.DataFrame(prices, index=date_)
   prices.index.name = "Date"
@@ -547,14 +542,13 @@ def guru_optimize(request):
   #     print(snapshots[0])
   #     print("_____")
   #     print("_____")
-  print(prices)
   portfolio_imported['Price'] = prices.iloc[-1].T.values
   portfolio_imported = portfolio_imported.dropna(subset=['Price']) .reset_index(drop=True)
   portfolio = portfolio_imported[['PortfolioID','symbol','Price','weight_orig_pct']].copy()
-  portfolio['allocated_capital'] = np.round((portfolio['weight_orig_pct']/100).multiply(capital, axis='index'))
+  portfolio['allocated_capital'] = np.round((portfolio['weight_orig_pct']/100).multiply(float(capital), axis='index'))
   portfolio['Number of Shares'] = np.floor((portfolio['allocated_capital'] / portfolio['Price']).astype(float))
   portfolio['Position'] = portfolio['Price'].multiply(portfolio['Number of Shares'], axis="index")
-  capital_left = capital - portfolio['Position'].sum()
+  capital_left = float(capital) - portfolio['Position'].sum()
 
   if capital_left > 0: 
       df = portfolio.sort(['Price'], ascending = [1]).iloc[0]
@@ -610,7 +604,6 @@ def guru_optimize(request):
 
   pf_input = portfolio.copy()
   for m in range(len(snapshots)):
-      print(m)
       pf, screen, pf_ret = Portfolio_Reallocation(pf_input, m,min_factor,max_factor, snapshots, p_fundamentals, screener, screen_list, m)
           
       # returns portfolio if stocks got filtered out. If no filter triggered, returns string  
@@ -677,13 +670,17 @@ def guru_optimize(request):
 
 
   filename = 'Screen_parameters.csv'
-  screen_params = pd.read_csv(filename,delimiter = ' ',
-                                quotechar=' ', quoting=csv.QUOTE_MINIMAL)
-  Screen_freq = 'BA'
-  PortfolioID = '156'
-  capital = '10000000'
+  # screen_params = pd.read_csv(filename,delimiter = ' ',
+  #                               quotechar=' ', quoting=csv.QUOTE_MINIMAL)
+  screen_params = pd.read_csv(filename,delimiter = ';')
+  # Screen_freq = 'BA'
+  # PortfolioID = '156'
+  # capital = '10000000'
+  Screen_freq = screen_params.loc[0,'Screen_frequency']
+  PortfolioID = screen_params.loc[0,'PortfolioID']
+  capital = screen_params.loc[0,'Initial_capital']
   start = '2006-01-01'
-  end = (datetime.date.today()-BDay(5))
+  end = (datetime.date.today()-BDay(12))
 
   snapshots =  pd.DatetimeIndex(start=start,end=end, freq=Screen_freq).tolist()
   snapshots.append(end)
@@ -734,7 +731,6 @@ def guru_optimize(request):
       count += 1 
       print("err")
   date_ = [time[:10]]
-  print(type(time[:10]))
   prices = pd.DataFrame(prices, index=date_)
   prices.index.name = "Date"
   # try:
@@ -834,9 +830,7 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
       itemstr = itemstr.replace(".11","")
       itemstr = itemstr.replace("/","")
       table_name = "stock_" + itemstr
-      print(table_name)
-      print(time)
-      headarr.append("EOD/" + itemstr + " - Adj_Close")
+      headarr.append(itemstr)
       try:
         cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date = '" + str(time) + "'")
         for a in dictfetchall(cursor):
@@ -846,37 +840,47 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
          cursor.execute("SELECT Adj_Close FROM " + str(table_name) + " WHERE last_date = '" + str(end) + "'")
          for a in dictfetchall(cursor):
              closearr.append(a['Adj_Close'])
-         print("no stock data- rereoute")
-         print("no table")
+    print(headarr)
     prices = {}
     count = 0
     for info in headarr:
       try:
-        value = [float(closearr[int(count)])]
-        prices[info] = value
-        count += 1 
+        val = float(closearr[int(count)])
       except:
-        count += 1 
-        print("err")
+        print(info)
+        val = "NaN"
+      portfolio.set_value(count, "Price", val)
+      count += 1 
     date_ = [time[:10]]
     prices = pd.DataFrame(prices, index=date_)
     prices.index.name = "Date"
-    print(prices.iloc[-1])
-    # portfolio['Price'] = prices.iloc[-1].T.value
-    portfolio['Price'] = prices.iloc[-1].T
-    print("--")
-    print(portfolio['Price'])
+    # prices_new = prices.T
+    # prices_new.index.name = "Date"
+    # prices_new.columns = ['Price_current']
+    # # prices_new = prices_new.set_index(portfolio.index)
+    # d = lambda x: x.replace('EOD/', '').replace('- Adj_Close','')
+    # prices_new['symbol']= prices_new.index
+    # prices_new["symbol"] = prices_new["symbol"].map(d)
+    f = lambda x: str(date_[0])
+    portfolio["Pricing_Date"] = portfolio["Price"].map(f)
+    # print(prices_new)
+    # portfolio = pd.merge(left=portfolio,right=prices_new,how='left',left_on=['symbol'],right_on=['symbol'],
+    #                   suffixes=('_left', '_right'))
+    # print(portfolio)
+    # portfolio['Price'] = prices_new['Price']
+    # prices_new = prices.iloc[-1].T.values
+    # portfolio['Price_new'] = prices.iloc[-1].T.values
+    # portfolio['Price'] = prices.iloc[-1]
     ######### NEUER TEIL
+    # portfolio['Pricing_date'] = date_
     portfolio = portfolio.dropna(subset=['Price']).reset_index(drop=True) 
-    
-    portfolio['Pricing_date'] = prices.iloc[-1].name
-    print(portfolio['Pricing_date'])
     portfolio['Snapshot_date'] = end
 
     # Calculate portfolio positions and weights
     portfolio['Position'] = portfolio['Price'].multiply(portfolio['Number of Shares'], axis="index")
     portfolio_size = portfolio['Position'].sum(axis=0)
     portfolio['weight_bef_screen_pct'] = np.round(100*(portfolio['Position'].divide(portfolio_size, axis="index")).astype(float),3)
+
 
     ########################
     # Portfolio Screening #
@@ -886,6 +890,7 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
 
     df = pd.merge(left=portfolio,right=p_fundamentals,how='left',left_on=['symbol'],right_on=['symbol'],
                        suffixes=('_left', '_right'))
+    print(df)
     df['diff'] = (df['Snapshot_date']-df['date']).astype('timedelta64[D]')
     # problem; snapshot date is business date end (in order to get price data) but fundamental data is as of date end,
     # therefore it might happen that snapshot_date (=pricing date) is smaller than date (=date of fundamentals)
@@ -923,7 +928,6 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
     
     max_snapshot = range(len(snapshots))[-1]
     if portfolio[portfolio['screen_out']==1]['Position'].sum() > 0 or m ==max_snapshot : 
-    
         ################################################################################################    
         #Portfolio Reallocation: Distribute cash to other portfolio holdings (Equal Weighting)
         ################################################################################################
@@ -931,6 +935,7 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
         cash_total = portfolio[portfolio['screen_out']==1]['Position'].sum()
         cash_per_position = cash_total / len(portfolio[(portfolio['screen_out']==0) 
                                                        & (pd.isnull(portfolio['Price'])==False)]['Position'])
+    
         #Set positions which are filtered out to 0 
         portfolio['Position_bef_screen'] = portfolio['Position']
         portfolio['Number of Shares before'] = portfolio['Number of Shares']
@@ -1048,7 +1053,6 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
             count += 1 
             print("err")
         date_ = [time[:10]]
-        print(type(time[:10]))
         monthly_returns = pd.DataFrame(monthly_returns, index=date_)
         monthly_returns.index.name = "Date"
         # print(len(monthly_returns))
@@ -1064,7 +1068,6 @@ def Portfolio_Reallocation(portfolio_input, j, min_factor, max_factor, snapshots
                'Portfolio_return' : portfolio_return}
 
         pf_return = pd.DataFrame(df1, columns=['PortfolioID','Snapshot_date','Start_year','End_year','Portfolio_return'])
-        print(portfolio)
         return portfolio, df_screen, pf_return
     
     else :
@@ -1117,7 +1120,6 @@ def qu_SF1_trsf(db=None,ticker=None,field=None,start=None,end=None,dimension=Non
       dateArr.append(a['last_date'])
     df = pd.DataFrame(valArr, index=dateArr)
     df.index.name = "Date"
-    print("__")    
     return df
 
 
@@ -1141,17 +1143,11 @@ def filter_list(screener):
   cols = ""
   for index in range(len(screener)):
     if index ==0:
-        print("one")
         cols = "['" + screener['Filter_factor'][index] + "\',"
-        print cols
     elif index > 0 and index < max(range(len(screener))):
-        print("two")
         cols = cols + "'" + screener['Filter_factor'][index] + "',"
-        print cols
     elif index  == max(range(0,len(screener))):
-        print("three")
         cols = cols + "'" + screener['Filter_factor'][index] + "', 'screen_out']"
-        print cols
   return cols
 
 
@@ -1194,7 +1190,6 @@ def MV(pf_input, startYear,endYear,expReturn):
         rtnStr += "=" + str(z)
         rtnStr += "&minWeight" + str(count) + "=" + str(x)
         rtnStr += "&maxWeight" + str(count) + "=" + str(y) 
-        print(rtnStr)
         count += int(1)
         urlArr.append(rtnStr)
         tail = "".join(urlArr)

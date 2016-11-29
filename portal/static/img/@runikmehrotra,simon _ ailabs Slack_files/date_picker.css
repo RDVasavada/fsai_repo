@@ -1,0 +1,13 @@
+@font-face{font-family:appleLogo;src:local("Lucida Grande");unicode-range:U+F8FF}
+.tiny{font-size:.7rem}
+.small{font-size:.9rem}
+.no_pointer_events{pointer-events:none}
+#menu.date_picker,#menu.narrow_menu{width:auto}
+#menu.date_picker #menu_items_scroller,#menu.narrow_menu #menu_items_scroller{width:100%!important}
+#menu.date_picker ul#menu_items{margin:.5rem 0 .75rem}
+#menu.date_picker .pickmeup{margin:initial;border:initial;box-shadow:0 2px 0 rgba(0,0,0,.1);border-radius:initial}
+#menu.date_picker .pickmeup .pmu-instance .pmu-button:not(.pmu-disabled):hover,#menu.date_picker .pickmeup .pmu-instance .pmu-selected{background:#3aa3e3}
+#menu.date_picker li.date_picker_item{margin-top:.75rem;text-align:center}
+#menu.date_picker li.date_picker_item a{font-weight:600;font-size:.9rem;color:#3aa3e3}
+#menu.date_picker li.date_picker_item a:hover,#menu.date_picker li.date_picker_item.highlighted a{color:#fff}
+#menu.date_picker #date_picker_cal_container{height:242px}

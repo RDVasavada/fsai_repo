@@ -195,7 +195,8 @@ var MSGList = React.createClass({
                                             var imgStyle = {
                                                 width: '60px',
                                                 position: 'relative',
-                                                left: 'calc(80% + 135px)'
+                                                left: 'calc(80% + 135px)',
+                                                borderRadius: '50px'
                                             }
                                             var delMe = function(id) {
                                                $.ajax({
@@ -224,7 +225,7 @@ var MSGList = React.createClass({
                                                 <div style={boxStyle}>
                                                     <span style={spanRight}>{you}</span>
                                                     <div style={arrowStyle}> </div>
-                                                    <img src={YourPictureUrl} style={imgStyle} />
+                                                    <img src='/static/img/profile.svg' style={imgStyle} />
                                                     <div style={style}>{str}</div>
                                                 </div>
                                             )
@@ -639,7 +640,9 @@ var ContactList = React.createClass({
             }
             var icon = {color:'white',
                         float:'right'}
-            var imgStyle = {width:'50px'}
+            var imgStyle = {width:'50px',
+                borderRadius: '50px'
+            }
             var a = (this.state.data)
             if (a[0]) {
                 url = a[0].picture_url
@@ -649,7 +652,7 @@ var ContactList = React.createClass({
                 console.log(x.picture_url)
                 return(
                     <div style={divStyle}>
-                        <img src={x.picture_url} style={imgStyle} /> 
+                        <img src='/static/img/profile.svg' style={imgStyle} /> 
                         <a href="#" onClick={() => { select(x.id, x.status, x.username, x.picture_url) }} style={linkStyle}>{x.username}</a>
                     </div>
                 )

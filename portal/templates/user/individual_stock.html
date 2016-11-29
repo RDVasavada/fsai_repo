@@ -3,50 +3,22 @@
  
 
 <div class="sceneElement" data-viewport="0">
-    <div class="row" style="background:rgba(0,0,0,0)">
- <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top:25px;height:100%;position:relative;background:rgba(0,0,0,0.2)">
+    <div class="row" style="background:rgba(0,0,0,0.2)">
+ <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top:25px;padding-left:10vw;padding-right:10vw;height:100%;position:relative">
      <!-- <div class="col-lg-8 col-md-8 col-sm-8"> -->
 
         <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:36px;text-align:center;color:white" id="companyName">{{company_name}} </h2>
         <span style="display:none" id="companySymbol">{{company_symbol}}</span>
-        <div class="row" style="margin-left:25px;margin-right:25px;margin-top:50px">
-          <div class="col-md-6 col-sm-6">
+        <div class="row" style="margin-left:100px;margin-right:100px;margin-top:50px">
+      <!--     <div class="col-md-6 col-sm-6">
             <div class="block" style="border:1px solid white;text-align:left;padding:25px;font-size:24px;font-weight:100px;font-family:Helvetica Neue">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="chart-gauge2" style="height:100px;width:200px"></div>
-                    <script type="text/javascript" src="/static/assets/d3gauge2.js"></script>
-                    <script type="text/javascript">
-                      needle.moveTo({{gain|floatformat}}/10);
-                    </script>
-                </div>
-                <div class="col-md-8">
-                </div>
-                <div class="col-md-8">
-                  <span style="font-size:16px">Price</span><br><hr style="margin:3px"> {{current_price|floatformat}} 
-                  {% if gain > 0 %}
-                  <span style="color:rgba(0,255,0,1)">+{{gain|floatformat}}%</span>
-                  {% else %}
-                  <span style="color:rgba(255,0,0,1)">{{gain|floatformat}}%</span>
-                  {% endif %}
-                  
-                </div>
-            </div>
+              Price: {{current_price}}
+
             </div>
           </div>
           <div class="col-md-6 col-sm-6">
             <div class="block" style="border:1px solid white;text-align:left;padding:25px;font-size:24px;font-weight:100px;font-family:Helvetica Neue">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="chart-gauge" style="height:100px;width:200px"></div>
-                    <script type="text/javascript" src="/static/assets/d3gauge.js"></script>
-                    <script type="text/javascript">
-                      needle.moveTo({{score}}/100);
-                    </script>
-                </div>
-                <div class="col-md-8">
-                  <span style="font-size:16px">Sentiment</span><br><hr style="margin:3px"> {{score|floatformat}}
-                </div>
+              Sentiment: {{score}}
             </div>
             <script>
               $.ajax({
@@ -56,393 +28,126 @@
                     $("#sentiment")[0].innerText = data.score
                 })
               </script>
-          </div>
+          </div> -->
 
         </div>
-        <div class="row">
-        <div class="col-md-8 col-sm-8">
-         <div class="header" style="height:auto;padding-left:50px;font-size:24px">
-              Portfolio Returns Graph
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-4">
-         <div class="header" style="height:auto;padding-left:25px;font-size:24px">
-              Work Culture Data
-          </div>
-        </div>
-        <div class="col-md-8 col-sm-8" style="padding-top:3%">
-                      <div class="content" id="content1" style="height:325px;overflow:hidden">                   
-                      <div class="loader" style="height:100%;text-align:center;top:35%;position:relative;background:transparent">
-                        <img src="/static/img/loader.gif"><br><br>
-                        <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:18px" id="loaderText">We are loading this stock's data! This may take a minute..</h2>
-                      </div>
-                    </div>
+        <div class="col-md-12 col-sm-12">
+
+                    <div class="content" id="content1" style="height:325px;overflow:hidden">                   
+                <div id="container" style="height: 400px; min-width: 310px;position:relative;right:25px"></div>    
 <script>
+$(function () {
+    $.getJSON('http://127.0.0.1:8000/user/stock_chart/{{company_symbol}}/', function (data) {
 
-(function() {
-  var margin = {top: 30, right: 20, bottom: 100, left: 50},
-    margin2  = {top: 210, right: 20, bottom: 20, left: 50},
-    width    = 900;
-    height   = 283 - margin.top - margin.bottom,
-    height2  = 283 - margin2.top - margin2.bottom;
-
-  var parseDate = d3.time.format('%Y-%m-%d').parse,
-    bisectDate = d3.bisector(function(d) { return d.date; }).left,
-    legendFormat = d3.time.format('%Y %m, %d');
-
-  var x = d3.time.scale().range([0, width]),
-    x2  = d3.time.scale().range([0, width]),
-    y   = d3.scale.linear().range([height, 0]),
-    y1  = d3.scale.linear().range([height, 0]),
-    y2  = d3.scale.linear().range([height2, 0]),
-    y3  = d3.scale.linear().range([60, 0]);
-
-  var xAxis = d3.svg.axis().scale(x).orient('bottom'),
-    xAxis2  = d3.svg.axis().scale(x2).orient('bottom'),
-    yAxis   = d3.svg.axis().scale(y).orient('left');
-
-  var priceLine = d3.svg.line()
-    .interpolate('monotone')
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.price); });
-
-  var avgLine = d3.svg.line()
-    .interpolate('monotone')
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.average); });
-
-  var area2 = d3.svg.area()
-    .interpolate('monotone')
-    .x(function(d) { return x2(d.date); })
-    .y0(height2)
-    .y1(function(d) { return y2(d.price); });
-  var svg = d3.select('#content1')
-    .append("div")
-     .classed("svg-container", true) //container class to make it responsive
-     .append("svg")
-     .classed("svg-content-responsive", true)
-     // .attr('class', 'chart')
-     //responsive SVG needs these 2 attributes and no width and height attr
-     .attr("preserveAspectRatio", "none")
-     .attr("viewBox", "0 0 1000 325")
-      .style("max-height", "265") 
-      .style("min-height", "265") 
-      .append("g")
-      // .attr("transform", "translate(" 
-      //     + margin.left 
-      //     + "," + margin.top + ")");    
-     //class to make it responsive
-      // .attr('width', width + margin.left + margin.right)
-      // .attr('height', height + margin.top + margin.bottom + 60)
-
-  svg.append('defs').append('clipPath')
-    .attr('id', 'clip')
-  .append('rect')
-    .attr('width', width)
-    .attr('height', height);
-
-  var make_y_axis = function () {
-    return d3.svg.axis()
-      .scale(y)
-      .orient('left')
-      .ticks(3);
-  };
-
-  var focus = svg.append('g')
-    .attr('class', 'focus')
-    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-  var barsGroup = svg.append('g')
-    .attr('class', 'volume')
-    .attr('clip-path', 'url(#clip)')
-    .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 60 + 20) + ')');
-
-  var context = svg.append('g')
-    .attr('class', 'context')
-    .attr('transform', 'translate(' + margin2.left + ',' + (margin2.top + 60) + ')');
-
-  var legend = svg.append('g')
-    .attr('class', 'chart__legend')
-    .attr('width', width)
-    .attr('height', 30)
-    .attr('transform', 'translate(' + margin2.left + ', 10)');
-
-  // legend.append('text')
-  //   .attr('class', 'chart__symbol')
-  //   .text('{{company_symbol}}')
-  //   .style('fill','white')
-
-  var rangeSelection =  legend
-    .append('g')
-    .attr('class', 'chart__range-selection')
-    .attr('transform', 'translate(110, 0)');
-  d3.csv('/user/stock_chart/{{company_symbol}}/', type, function(err, data) {
-    console.log(data)
-    if (data.length < 1) {
-      $("#loaderText").css('color','white')
-      return
-    } 
-    var brush = d3.svg.brush()
-      .x(x2)
-      .on('brush', brushed);
-
-    var xRange = d3.extent(data.map(function(d) { return d.date; }));
-
-    x.domain(xRange);
-    y.domain(d3.extent(data.map(function(d) { return d.price; })));
-    y3.domain(d3.extent(data.map(function(d) { return d.price; })));
-    x2.domain(x.domain());
-    y2.domain(y.domain());
-
-    var min = d3.min(data.map(function(d) { return d.price; }));
-    var max = d3.max(data.map(function(d) { return d.price; }));
-
-    var range = legend.append('text')
-      .text(legendFormat(new Date(xRange[0])) + ' - ' + legendFormat(new Date(xRange[1])))
-      .style('text-anchor', 'end')
-      .style('fill','white')
-      .attr('transform', 'translate(' + width + ', 0)');
-
-    focus.append('g')
-        .attr('class', 'y chart__grid')
-        .call(make_y_axis()
-        .tickSize(-width, 0, 0)
-        .tickFormat(''));
-
-    var averageChart = focus.append('path')
-        .datum(data)
-        .attr('class', 'chart__line chart__average--focus line')
-        .attr('d', avgLine);
-
-    var priceChart = focus.append('path')
-        .datum(data)
-        .attr('class', 'chart__line chart__price--focus line')
-        .attr('d', priceLine);
-
-    focus.append('g')
-        .attr('class', 'x axis')
-        .attr('transform', 'translate(0 ,' + height + ')')
-        .style('fill','white')
-        .call(xAxis);
-
-    focus.append('g')
-        .attr('class', 'y axis')
-        .attr('transform', 'translate(12, 0)')
-        .call(yAxis);
-
-    var focusGraph = barsGroup.selectAll('rect')
-        .data(data)
-      .enter().append('rect')
-        .attr('class', 'chart__bars')
-        .attr('x', function(d, i) { return x(d.date); })
-        .style('fill','white')
-        .attr('y', function(d) { return 155 - y3(d.price); })
-        .attr('width', 1)
-        .attr('height', function(d) { return y3(d.price); });
-
-    var helper = focus.append('g')
-      .attr('class', 'chart__helper')
-      .style('text-anchor', 'end')
-      .style('fill','white')
-      .style("font-size","18px")
-      .attr('transform', 'translate(' + width + ', 0)');
-
-    var helperText = helper.append('text')
-        .style('fill','white')
-    var priceTooltip = focus.append('g')
-      .attr('class', 'chart__tooltip--price')
-      .append('circle')
-      .style('display', 'none')
-      .attr('r', 2.5);
-
-    var averageTooltip = focus.append('g')
-      .attr('class', 'chart__tooltip--average')
-      .append('circle')
-      .style('display', 'none')
-      .attr('r', 2.5);
-
-    var mouseArea = svg.append('g')
-      .attr('class', 'chart__mouse')
-      .append('rect')
-      .attr('class', 'chart__overlay')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-      .on('mouseover', function() {
-        helper.style('display', null);
-        priceTooltip.style('display', null);
-        averageTooltip.style('display', null);
-      })
-      .on('mouseout', function() {
-        helper.style('display', 'none');
-        priceTooltip.style('display', 'none');
-        averageTooltip.style('display', 'none');
-      })
-      .on('mousemove', mousemove);
-
-    context.append('path')
-        .datum(data)
-        .attr('class', 'chart__area area')
-        .attr('d', area2);
-
-    context.append('g')
-        .attr('class', 'x axis chart__axis--context')
-        .attr('y', 0)
-        .attr('transform', 'translate(0,' + (height2 - 22) + ')')
-        .call(xAxis2);
-
-    $(".loader{{portfolio.id}}").css('display','none')
-    context.append('g')
-        .attr('class', 'x brush')
-        .call(brush)
-      .selectAll('rect')
-        .attr('y', -6)
-        .attr('height', height2 + 7);
-    function mousemove() {
-      var x0 = x.invert(d3.mouse(this)[0]);
-      var i = bisectDate(data, x0, 1);
-      var d0 = data[i - 1];
-      var d1 = data[i];
-      var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-      helperText.text(legendFormat(new Date(d.date)) + ' - Price: ' + d.price + ' Avg: ' + d.average);
-      priceTooltip.attr('transform', 'translate(' + x(d.date) + ',' + y(d.price) + ')');
-      averageTooltip.attr('transform', 'translate(' + x(d.date) + ',' + y(d.average) + ')');
-    }
-
-    function brushed() {
-      var ext = brush.extent();
-      if (!brush.empty()) {
-        x.domain(brush.empty() ? x2.domain() : brush.extent());
-        y.domain([
-          d3.min(data.map(function(d) { return (d.date >= ext[0] && d.date <= ext[1]) ? d.price : max; })),
-          d3.max(data.map(function(d) { return (d.date >= ext[0] && d.date <= ext[1]) ? d.price : min; }))
-        ]);
-        range.text(legendFormat(new Date(ext[0])) + ' - ' + legendFormat(new Date(ext[1])))
-        focusGraph.attr('x', function(d, i) { return x(d.date); });
-
-        var days = Math.ceil((ext[1] - ext[0]) / (24 * 3600 * 1000))
-        focusGraph.attr('width', (40 > days) ? (40 - days) * 5 / 6 : 5)
-      }
-
-      priceChart.attr('d', priceLine);
-      averageChart.attr('d', avgLine);
-      focus.select('.x.axis').call(xAxis);
-      focus.select('.y.axis').call(yAxis);
-    }
-
-    var dateRange = ['1w', '1m', '3m', '6m', '1y']
-    for (var i = 0, l = dateRange.length; i < l; i ++) {
-      var v = dateRange[i];
-      rangeSelection
-        .append('text')
-        .attr('class', 'chart__range-selection')
-        .text(v)
-        .style('fill','white')
-        .attr('transform', 'translate(' + (18 * i) + ', 0)')
-        .on('click', function(d) { focusOnRange(this.textContent); });
-    }
-
-    function focusOnRange(range) {
-        console.log(range)
-      var today = new Date(data[data.length - 1].date)
-      var ext = new Date(data[data.length - 1].date)
-
-      if (range === '1m')
-        ext.setMonth(ext.getMonth() - 1)
-
-      if (range === '1w')
-        ext.setDate(ext.getDate() - 7)
-
-      if (range === '3m')
-        ext.setMonth(ext.getMonth() - 3)
-
-      if (range === '6m')
-        ext.setMonth(ext.getMonth() - 6)
-
-      if (range === '1y')
-        ext.setFullYear(ext.getFullYear() - 1)
-
-      brush.extent([ext, today])
-      brushed()
-      context.select('g.x.brush').call(brush.extent([ext, today]))
-    }
-
-  })// end Data
-
-  function type(d) {
-    return {
-      date    : parseDate(d.Date),
-      price   : +d.Close,
-      average : +d.Average,
-      volume : +d.Volume,
-    }
+        // Create the chart
+        Highcharts.stockChart('container', {
 
 
-  }
+            rangeSelector: {
+                selected: 1
+            },
 
-}());
-</script>
-              
+            title: {
+                text: '{{company_symbol}} Stock Price'
+            },
+
+            series: [{
+                name: '{{company_symbol}} Stock Price',
+                data: data,
+                type: 'area',
+                threshold: null,
+                tooltip: {
+                    valueDecimals: 2
+                },
+                fillColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                    },
+                    stops: [
+                        [0, Highcharts.getOptions().colors[0]],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                    ]
+                }
+            }]
+        });
+    });
+});
+
+</script>              
                     </div>
-                    <div class="col-md-4" style="padding-top:1%;padding-right:50px">
-                                                  
-     <table class="table table-hover">
-                                <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
-                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Industry Name</td>
-                                        <td style="text-align:left">{{company_stats.industryName}}</td>
-                                   </tr>
-                                  <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Sector Name</td>
-                                        <td style="text-align:left">{{company_stats.sectorName}}</td>
-                                 </tr>
-                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">CEO Name</td>
-                                        <td style="text-align:left">{{company_stats.ceo.name}}</td>
-                                    </tr>                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Number of Ratings</td>
-                                        <td style="text-align:left">{{company_stats.ceo.numberOfRatings}}</td>
-                                    </tr>                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">CEO Approval Ratings</td>
-                                        <td style="text-align:left">{{company_stats.ceo.pctApprove}}</td>
-                                    </tr>                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">CEO Disapproval Ratings</td>
-                                        <td style="text-align:left">{{company_stats.ceo.pctDisapprove}}</td>
-                                    </tr>    
-                                    <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Senior Leadership Rating</td>
-                                        <td style="text-align:left">{{company_stats.seniorLeadershipRating}}</td>
-                                    </tr>                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Compensation and Benefits Rating</td>
-                                        <td style="text-align:left">{{company_stats.compensationAndBenefitsRating}}</td>
-                                    </tr>                                    
-                                     <tr>
-                                        <td style="text-align:right;width:50%;border-right:1px solid white">Culture And Values Rating</td>
-                                        <td style="text-align:left">{{company_stats.cultureAndValuesRating}}</td>
-                                    </tr> 
-                                  </tbody>
+                  
+        <div class="block" style="margin-right:25px;margin-left:25px;width:94%;-webkit-box-shadow:initial">
+                    <div class="header" style="height:auto">
+                        <h2>{{portfolio.name}} </h2>
+
+                     <ul class="nav nav-justified nav-tabs" style="position: initial;width: initial;left: initial;top: initial;margin: initial;padding: initial;list-style: initial;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:1px;font-size:10px;text-align:center;color:white">
+                        <li class="active"><a href="#tab5" data-toggle="tab">General Information</a></li>
+                        <li><a href="#tab6" data-toggle="tab">Company Related News</a></li>
+                        <li><a href="#tab7" data-toggle="tab">Income Statement</a></li>
+                        <li><a href="#tab8" data-toggle="tab">Cashflow Statement</a></li>
+                        <li><a href="#tab9" data-toggle="tab">Balance Sheet</a></li>
+                        <li><a href="#tab10" data-toggle="tab">Metrics</a></li>
+                        <li><a href="#tab11" data-toggle="tab">Work Culture</a></li>
+                        <!-- <li><a href="#tab12" data-toggle="tab">Future Sentiment</a></li> -->
+                    </ul>                   
+                    </div>   
+
+
+
+ 
+                    <div class="content content-transparent tab-content" style="color:white;padding-top:25px;">
+                        <div class="tab-pane active" id="tab5" style="height:60vh">
+                            <p>
+                                <table class="table table-hover">
+                                    <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
+                                        <tr style="padding:50px">
+                                            <td style="text-align:right;width:50%;border-right:1px solid white">Stock Sector</td>
+                                            <td style="text-align:left">{{sector}}</td>
+                                        </tr>
+                                        <tr style="padding:50px">
+                                            <td style="text-align:right;width:50%;border-right:1px solid white">Stock Price</td>
+                                            <td style="text-align:left">${{current_price}}
+                                        </tr>
+                                        <tr style="padding:50px">
+                                            <td style="text-align:right;width:50%;border-right:1px solid white">Initial Price</td>
+                                            <td style="text-align:left">${{initial_price}}</td>
+                                        </tr>
+                                        <tr style="padding:50px">
+                                            <td style="text-align:right;width:50%;border-right:1px solid white">Buy Date</td>
+                                            <td style="text-align:left">{{buy_date}}</td>
+                                        </tr>                                        
+                                        <tr style="padding:50px">
+                                            <td style="text-align:right;width:50%;border-right:1px solid white">Stock Sentiment</td>
+                                            <td style="text-align:left">{{score|floatformat}}</td>
+                                        </tr>
+                                        <tr style="padding:50px">
+                                            <td style="text-align:right;width:50%;border-right:1px solid white">Allocation</td>
+                                            <td style="text-align:left">{{allocation}}</td>
+                                        </tr>
+                                    </tbody>
                                 </table>
-                    </div>
-<div class="row">
-  <div class="col-lg-6">
-            <div class="header" style="height:auto;padding-left:50px;font-size:24px">
-                Stock Related News
-            </div> 
-         <div class="content np" style="background:transparent;margin-top:10px;margin-left:60px">
+                            </p>
+                        </div>
+
+                <div class="tab-pane" id="tab6" style="height:60vh">
+                <p>            
+                <div class="content np" style="background:transparent">
                     <div class="content list-group" id="newsfeed">
                       <!-- <div class="row"> -->
                         {% for news in newsheadline %}
   <a href="{{news.web_url}}" target="_blank" >
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                           <div class="block">
 
-                              <div class="header" style="height:125px">
+                              <div class="header" style="height:75px">
                                  <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:1px;font-size:10px;text-align:center;color:white" id="companyName">{{news.headline.main}}
                                  </h2>
                               
                               </div>
-                          <div class="content" style="height:175px;font-size:14px">
-                            <hr style="margin:3px;margin-top:-20px">
+                          <div class="content" style="height:125px;font-size:12px">
                                 {{news.snippet}}
                             </div>
                           </div>
@@ -454,30 +159,10 @@
                     <div class="content list-group" id="noNews" style="display:none;padding:50px;background:transparent">
                         <h2 style="font-weight:100;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white;text-align:center" id="companyName"> No Headlines Available </h2>
                     </div>                    
-                </div>  
+                </div>                 
+            </div></p>
 
-  </div>
-  <div class="col-lg-6">
-          <div class="header" style="height:auto;padding-left:50px;font-size:24px;margin-bottom:1%">
-                Stock Statistics
-            </div> 
-        <div class="block" style="margin-right:25px;margin-left:25px;width:94%;">
-                    <div class="header" style="height:auto">
-                        <h2>{{portfolio.name}} </h2>
-    
-                     <ul class="nav nav-justified nav-tabs" style="position: initial;width: initial;left: initial;top: initial;margin: initial;padding: initial;list-style: initial;font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:1px;font-size:10px;text-align:center;color:white">
-                        <li><a href="#tab7" style="width:100%" data-toggle="tab">Income Statement</a></li>
-                        <li><a href="#tab8" style="width:100%" data-toggle="tab">Cashflow Statement</a></li>
-                        <li><a href="#tab9" style="width:100%" data-toggle="tab">Balance Sheet</a></li>
-                        <li><a href="#tab10" style="width:100%" data-toggle="tab">Metrics<br></a></li>
-                    </ul>                   
-                    </div>   
-
-
-
- 
-                    <div class="content content-transparent tab-content" style="color:white;padding-top:25px;background:rgba(0,0,0,0.2);padding-left:50px">
-                        <div class="tab-pane active" id="tab7">
+                        <div class="tab-pane" id="tab7">
                           <p>
                              <table class="table table-hover">
                                 <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
@@ -760,7 +445,12 @@
                             </p>
                         </div>      
 
-
+{% block scripts %}
+<link href="/static/css2/d3.pie.css" rel="stylesheet">
+ <script src="/static/js/user/individual_stock.js"></script>
+ <script src="/static/assets/js/highstock.js"></script>
+ <script src="/static/assets/js/exporting.js"></script>
+ {% endblock %}
                         <div class="tab-pane" id="tab10">
                             <p>
   <table class="table table-hover">
@@ -937,7 +627,52 @@
 
             <div class="tab-pane" id="tab11" style="height:60vh">
                             <p>
-  
+                              
+     <table class="table table-hover">
+                                <tbody style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:12px;text-align:center;color:white">
+                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Industry Name</td>
+                                        <td style="text-align:left">{{company_stats.industryName}}</td>
+                                   </tr>
+                                  <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Sector Name</td>
+                                        <td style="text-align:left">{{company_stats.sectorName}}</td>
+                                 </tr>
+                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">CEO Name</td>
+                                        <td style="text-align:left">{{company_stats.ceo.name}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Number of Ratings</td>
+                                        <td style="text-align:left">{{company_stats.ceo.numberOfRatings}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">CEO Approval Ratings</td>
+                                        <td style="text-align:left">{{company_stats.ceo.pctApprove}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">CEO Disapproval Ratings</td>
+                                        <td style="text-align:left">{{company_stats.ceo.pctDisapprove}}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Work Life Balance Rating</td>
+                                        <td style="text-align:left">{{company_stats.workLifeBalanceRating}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Recommendation to Friend Rating</td>
+                                        <td style="text-align:left">{{company_stats.recommendToFriendRating}}</td>
+                                    </tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Senior Leadership Rating</td>
+                                        <td style="text-align:left">{{company_stats.seniorLeadershipRating}}</td>
+                                    </tr>                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Career Opportunities Rating</td>
+                                        <td style="text-align:left">{{company_stats.careerOpportunitiesRating}}</td>
+                                    </tr> 
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Compensation and Benefits Rating</td>
+                                        <td style="text-align:left">{{company_stats.compensationAndBenefitsRating}}</td>
+                                    </tr>                                    
+                                     <tr>
+                                        <td style="text-align:right;width:50%;border-right:1px solid white">Culture And Values Rating</td>
+                                        <td style="text-align:left">{{company_stats.cultureAndValuesRating}}</td>
+                                    </tr> 
+                                  </tbody>
+                                </table>
 
                             </p>
                         </div>      
@@ -947,17 +682,13 @@
       
         </div>
     </div>
-  </div>
-</div>
     <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top:100px">
       <!--   <div class="block block-drop-shadow">
             <div class="header">   
                  <h2>Overview of Company</h2>
              </div>
              <div class="ibox-content" style="display: block;border:1px solid rgba(0,0,0,0.2);">
-
                 <p>Industry</p>  <h2 style="font-weight:300;-webkit-font-smoothing: antialiased;font-family:'helvetica neue';letter-spacing:2px;font-size:24px;text-align:center;color:white" id="industryName"> {{ company_stats }} </h2>
-
              </div>
         </div> -->
         <!-- <div class="block block-drop-shadow"> -->
@@ -1003,7 +734,3 @@
 </div>
 </body>
 {% endblock %}
-{% block scripts %}
-<link href="/static/css2/d3.pie.css" rel="stylesheet">
- <script src="/static/js/user/individual_stock.js"></script>
- {% endblock %}

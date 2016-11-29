@@ -1,0 +1,37 @@
+@font-face{font-family:appleLogo;src:local("Lucida Grande");unicode-range:U+F8FF}
+.tiny{font-size:.7rem}
+.small{font-size:.9rem}
+.no_pointer_events{pointer-events:none}
+body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif;-moz-osx-font-smoothing:grayscale;font-variant-ligatures:common-ligatures}
+h1,h2,h3,h4{font-weight:900;font-family:Slack-Lato,appleLogo,sans-serif;color:#555459;-webkit-font-smoothing:antialiased;margin:0 0 1rem}
+h1{font-size:1.8rem;line-height:2.3rem}
+h2{font-size:1.5rem;line-height:2rem}
+h3{font-weight:700;font-size:1.125rem;line-height:1.5rem}
+h4{font-size:1rem;line-height:1.25rem;margin-bottom:.5rem}
+h5{font-size:.8125rem;font-weight:700;margin-bottom:0;text-transform:uppercase}
+p{margin:0 0 1rem}
+p.heading{font-size:2rem;line-height:2.75rem;margin:2rem auto 2.5rem;max-width:85%;font-weight:300}
+p.emphasized{font-size:1.2rem;line-height:1.5rem}
+p.large_text{font-size:1.4rem;line-height:1.8rem}
+p.small_text{font-size:.8rem;line-height:1rem}
+p.small,span.small{font-size:1rem}
+.para_break{display:block;height:.5rem}
+h1 a,h1 a:active,h1 a:hover,h1 a:link,h1 a:visited{color:#555459}
+a,a:link,a:visited{color:#2a80b9}
+a:active,a:focus,a:hover{color:#439fe0}
+li{line-height:1.5rem;margin:0}
+ul.no_bullets{margin:0 0 2rem}
+ul.no_bullets li{list-style-type:none;line-height:1.25rem;padding:0}
+code{font-family:Consolas,monaco,"Ubuntu Mono",courier,monospace!important;font-size:.75rem;line-height:.75rem;white-space:normal;color:#c25;padding:1px 3px;-webkit-font-variant-ligatures:none;font-variant-ligatures:none;tab-size:4;-moz-tab-size:4;-o-tab-size:4;-webkit-tab-size:4}
+code.special_formatting a{color:inherit}
+@media screen and (-webkit-min-device-pixel-ratio:0){code{padding-left:0;padding-right:0}
+code:after,code:before{letter-spacing:-.25rem;content:"\00a0"}
+pre code:after,pre code:before{letter-spacing:normal;content:""}
+}
+pre{background:#fbfaf8;font-family:Consolas,monaco,"Ubuntu Mono",courier,monospace!important;padding:.5rem;-webkit-font-variant-ligatures:none;font-variant-ligatures:none;word-break:normal;tab-size:4;-moz-tab-size:4;-o-tab-size:4;-webkit-tab-size:4}
+pre.special_formatting{margin:.5rem 0 .2rem;font-size:.75rem;line-height:1.15rem}
+pre.special_formatting a{color:inherit}
+div.special_formatting_quote{margin:.25rem 0}
+.bullet{color:#DDD}
+blockquote{margin:0 0 .5rem 1rem;padding:0;border:none}
+hr{border-top:1px solid #DDD}

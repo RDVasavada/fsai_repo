@@ -1,8 +1,11 @@
+
 import numpy as np
+from random import shuffle
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 import urllib2
+import datetime
 import requests
 import json
 import csv
@@ -37,7 +40,7 @@ def get_stock_news(request, stock_name):
         rtnjson = news.json()
         return JsonResponse({'news':rtnjson}) 
       except:
-        return JsonResponse({'news':"none"}) 
+        return JsonResponse({'news':"no news"}) 
 
 @login_required
 @csrf_exempt
@@ -72,13 +75,21 @@ def stock_sentiment_graph(request, stock_name):
   results = {}
   quote = {}
   a = []
+  limit = []
   with open("sentiment.csv") as f:
       reader = csv.reader(f)
       for row in reader:
         if str(row[1])[0:5] in '2016-11':
           if str(row[0]) in str(stock_name):
-            print(str(row[1]))
-            a.append({'date':str(row[1]),'High':str(row[2]),'Low':str(row[2])})
+            if len(limit) == 0:
+              limit.append(datetime.datetime.strptime(str(row[1][0:10]), '%Y-%m-%d').date())
+              limit[0] = datetime.datetime.strptime(str(row[1][0:10]), '%Y-%m-%d').date()
+              a.append({'date':str(row[1]),'High':str(row[2]),'Low':str(row[2])})
+              print(datetime.datetime.strptime(str(row[1][0:10]), '%Y-%m-%d').date())
+            if datetime.datetime.strptime(str(row[1][0:10]), '%Y-%m-%d').date() < limit[0]:
+              limit[0] = datetime.datetime.strptime(str(row[1][0:10]), '%Y-%m-%d').date()
+              a.append({'date':str(row[1]),'High':str(row[2]),'Low':str(row[2])})
+              print(datetime.datetime.strptime(str(row[1][0:10]), '%Y-%m-%d').date())
   quote['quote'] = a
   results['results'] = quote
   return JsonResponse({'query':results}) 
@@ -104,6 +115,7 @@ def getnews(request):
         newsarr.append(news.json())
       except:
         print(news)
+  shuffle(newsarr)
   return JsonResponse({'news':newsarr})
 
 @login_required
