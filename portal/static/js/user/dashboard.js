@@ -9,6 +9,8 @@ if ($("#sector-check")[0].children.length == '0') {
 if (!($("#changeVal")[0].innerText)) {
     $("#changeVal")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;font-family:Raleway;padding-top:25px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show !<br><br><span style='font-size:12px'>Try creating one first.</span></div>"
     $("#changeVal").css('background','rgba(0,0,0,0.4')
+} else {
+    $("#changeVal").css('background','rgba(0,0,0,0')
 }
 $.ajax({
     url:"/user/dashboard/marketnews/",
@@ -105,8 +107,10 @@ $.ajax({
     var change = String(data.data).slice(0,3)
     if (Number(change) > 0) {
         $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(0,255,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
+        $("#changeVal").css('background','rgba(0,0,0,0.2)')
     } else {
         $("#changeVal")[0].innerHTML = "<div style='text-align:center;width:100%;font-size:48px;font-weight:100;-webkit-font-smoothing: antialiased;font-family:Helvetica Neue;margin-top:5%;color:rgba(255,0,0,1)'> <span style='font-size:54px;'>&uarr;</span>&nbsp;"+change+"%</div>"
+        $("#changeVal").css('background','rgba(0,0,0,0.2)')
     }
     $("#uc_1")[0].innerText = String(data.ports[0]).slice(0,4)+"%"
     $("#uc_2")[0].innerText = String(data.ports[1]).slice(0,4)+"%"
