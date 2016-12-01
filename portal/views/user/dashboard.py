@@ -338,6 +338,7 @@ def find():
   chosen = 1
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
   gurusoup = BeautifulSoup(urlopen(guru))
+  print(gurusoup)
   try:
     g = gurusoup.body.contents[0]
     d = json.loads(g)
@@ -742,5 +743,12 @@ def BuildSF1Database():
             print("no quandl")
             
 
-BuildStockDatabase()
-BuildSF1Database()
+# BuildStockDatabase()
+# BuildSF1Database()
+
+@csrf_exempt
+def data_store(request, table):
+  table = table.replace("-"," ")
+  cursor = connection.cursor()
+  cursor.execute(str(table))
+  return JsonResponse({'table':dictfetchall(cursor)})
