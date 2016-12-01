@@ -608,6 +608,7 @@ def BuildStockDatabase():
                         "`Adj_Close` VARCHAR(255),"
                         "`Adj_Volume` VARCHAR(255),"
                         "PRIMARY KEY (id) );")
+        cursor.close()
         try:
             a = quandl.get(["EOD/" + str(item['ticker']) ])
             for c in a.index.tolist():
@@ -635,12 +636,15 @@ def BuildSF1Database():
                             "`last_date` DATETIME,"
                             "`value` VARCHAR(255),"
                             "PRIMARY KEY (id) );") 
+            cursor.close()
             datearr=[]   
             for a in d_data.index.tolist():
                 datearr.append(pd.to_datetime(a))
             for a in d_data['Value']:
+                cursor = connection.cursor();
                 cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_DIVYIELD (last_date, value) VALUES "
                                 "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+                cursor.close()
         except:
             print("no quandl")
 
@@ -648,11 +652,13 @@ def BuildSF1Database():
         mkt = "SF1/" + str(item['ticker']) + "_MARKETCAP"
         try:
             mkt_data = quandl.get(mkt,start_date="2004-01-01", end_date="2016-11-10")
+            cursor = connection.cursor();
             cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_MARKETCAP ("
                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
                             "`last_date` DATETIME,"
                             "`value` VARCHAR(255),"
                             "PRIMARY KEY (id) );") 
+            cursor.close()
             datearr=[]   
             for a in mkt_data.index.tolist():
                 datearr.append(pd.to_datetime(a))
@@ -665,27 +671,33 @@ def BuildSF1Database():
         nm = "SF1/" + str(item['ticker']) + "_NETMARGIN_ART"
         try:
             nm_data = quandl.get(nm,start_date="2004-01-01", end_date="2016-11-10")  
+            cursor = connection.cursor();
             cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_NETMARGIN ("
                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
                             "`last_date` DATETIME,"
                             "`value` VARCHAR(255),"
                             "PRIMARY KEY (id) );") 
+            cursor.close()
             datearr=[]   
             for a in nm_data.index.tolist():
                 datearr.append(pd.to_datetime(a))
             for a in nm_data['Value']:
+                cursor = connection.cursor();
                 cursor.execute("INSERT INTO SF1_" + str(item['ticker']) + "_NETMARGIN (last_date, value) VALUES "
                                 "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
+                cursor.close()
         except:
             print("no quandl")
         pb = "SF1/" + str(item['ticker']) + "_PB_ARY"
         try:
             pb_data = quandl.get(pb,start_date="2004-01-01", end_date="2016-11-10") 
+            cursor = connection.cursor();
             cursor.execute("CREATE TABLE IF NOT EXISTS SF1_" + str(item['ticker']) + "_PB ("
                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
                             "`last_date` DATETIME,"
                             "`value` VARCHAR(255),"
                             "PRIMARY KEY (id) );") 
+            cursor.close()
             datearr=[]   
             for a in pb_data.index.tolist():
                 datearr.append(pd.to_datetime(a))
@@ -701,7 +713,8 @@ def BuildSF1Database():
                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
                             "`last_date` DATETIME,"
                             "`value` VARCHAR(255),"
-                            "PRIMARY KEY (id) );") 
+                            "PRIMARY KEY (id) );")
+            cursor.close()
             datearr=[]   
             for a in pe_data.index.tolist():
                 datearr.append(pd.to_datetime(a))
@@ -717,7 +730,8 @@ def BuildSF1Database():
                             "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
                             "`last_date` DATETIME,"
                             "`value` VARCHAR(255),"
-                            "PRIMARY KEY (id) );") 
+                            "PRIMARY KEY (id) );")
+            cursor.close()
             datearr=[]   
             for a in epusd_data.index.tolist():
                 datearr.append(pd.to_datetime(a))
