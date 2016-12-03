@@ -21,7 +21,7 @@ $.ajax({
                      
         </div>
             <div style="height:91vh;display:inline-block;overflow:scroll;width:100%" id="innext">
-                <center style="padding:10px;color:white;letter-spacing:2px;font-size:12px;font-family:Raleway" id="category_description"> Oversee and participate in your client's text conversations with our chatbot.
+                <center style="padding:10px;color:white;letter-spacing:2px;fvont-size:12px;font-family:Raleway" id="category_description"> Oversee and participate in your client's text conversations with our chatbot.
                 </center>
       <!--           <a href="/user/starred" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-star" style="padding:0px"></span>Starred<i class="icon-angle-right pull-right"></i></a>
                 <a href="/user/deleted" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-trash" style="padding:0px"></span>Deleted<i class="icon-angle-right pull-right"></i></a>      -->   
@@ -30,11 +30,11 @@ $.ajax({
 
                     <span style="position:relative;left:20px;line-height:25px;font-family:Raleway">Hyperchat Bot</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
 
-         <!--        <a href="#" onClick="" class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
+                <a href="#" onClick="" class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
 
                     <span style="position:relative;left:20px;line-height:25px;font-family:Raleway">Support Bot</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
- -->
-                <a href="#" onClick="" id="add_a_contact" class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px;display:none">
+
+                <a href="#" onClick="" id="add_a_contact" class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
 
                     <span style="position:relative;left:20px;line-height:25px;font-family:Raleway;">Add a contact</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
                     <hr style="width:75%;left:12.5%;position:relative;margin:5px">
@@ -84,8 +84,8 @@ function category(name) {
     localStorage.setItem('category',JSON.stringify({'name':String(name)}))
     if (name == 'general') {
         $("#category_description")[0].innerText = "Open chatroom for all Vise members"
-        $("#hchat").fadeOut(250)
-        $("#add_a_contact").fadeOut(250)
+        // $("#hchat").fadeOut(250)
+        // $("#add_a_contact").fadeOut(250)
     }    
     if (name == 'client') {
         $("#category_description")[0].innerText = "Oversee and participate in your client's text conversations with our chatbot."

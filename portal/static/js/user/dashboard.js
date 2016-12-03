@@ -340,7 +340,7 @@ function graphit(r_data) {
         .style("font-weight", "200")
 }
 $.ajax({
-    url:"dashboard/performance_chart/",
+    url:"/user/dashboard/performance_chart/",
     method: "POST"
 }).done(function(r_data){
  

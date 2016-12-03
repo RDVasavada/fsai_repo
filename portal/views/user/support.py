@@ -32,8 +32,8 @@ def support(request):
       context_dict['confirm_phone'] = portalUser.confirm_phone
       # context_dict['first_name'] = portalUser.username
       context_dict['last'] = portalUser.last_login
-      # context_dict['last_name'] = portalUser.lastname
-      # context_dict['first_name'] = portalUser.firstname
+      context_dict['last_name'] = portalUser.last_name
+      context_dict['first_name'] = portalUser.first_name
       context_dict['firmname'] = portalUser.firmname
       context_dict['firmsize'] = portalUser.firmsize
       context_dict['assets'] = portalUser.assets

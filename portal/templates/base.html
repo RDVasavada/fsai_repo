@@ -227,7 +227,7 @@ function background(e) {
 }
 function confirmed_phone() {
     $.ajax({
-        url:"http://127.0.0.1:8000/user/confirmed_phone/",
+        url:"/user/confirmed_phone/",
         method: "GET"
     }).done(function(data){
         console.log(data)
@@ -239,7 +239,7 @@ function confirmed_phone() {
 }
 function resend_phone() {
     $.ajax({
-        url:"http://127.0.0.1:8000/user/resend_phone/",
+        url:"/user/resend_phone/",
         method: "GET"
     }).done(function(data){
         console.log(data)
@@ -265,12 +265,15 @@ function confirm_phone() {
     })
 }
 function i_openNav() {
+    $("#mainheader").fadeOut(250)
     document.getElementById("i_mySidenav").style.width = "250px";
+    document.getElementById("i_mySidenav").style.zIndex = "99";
 }
 
 /* Set the width of the side navigation to 0 */
 function i_closeNav() {
     document.getElementById("i_mySidenav").style.width = "0";
+    $("#mainheader").fadeIn(250)
 }
 
 $.ajax({
