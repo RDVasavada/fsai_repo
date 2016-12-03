@@ -207,7 +207,8 @@ def getconnections(request):
             arr.append({
               'username' : str(user['client_name']) + " @ " + str(user['phone_number']),
               'id': user['id'],
-              'phone': str(user['phone_number'])
+              'phone': str(user['phone_number']),
+              'status': 'texter',
             })
           except IndexError:
             print(user)
@@ -220,7 +221,8 @@ def getconnections(request):
             arr.append({
               'username' : str(user['username']),
               'id': user['id'],
-              'phone': str(user['phone'])
+              'phone': str(user['phone']),
+              'status': str(user['connections'])
             })
           except IndexError:
             print(user)
@@ -233,7 +235,8 @@ def getconnections(request):
             arr.append({
               'username' : str(user['username']),
               'id': user['id'],
-              'phone': str(user['phone'])
+              'phone': str(user['phone']),
+              'status': str(user['connections'])
             })
           except IndexError:
             print(user)

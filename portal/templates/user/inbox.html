@@ -2,22 +2,30 @@
 <!-- {% load render_bundle from webpack_loader %} -->
 {% block content %}
 <script>
+window.onbeforeunload = confirmExit;
 $.ajax({
     url: '/user/addconnection',
     type: 'POST',
 }).done(function(x) {
     console.log(x)
 })
-
+function confirmExit(){
+    $("#hooter").fadeOut(1)
+$.ajax({
+    url: '/user/removeconnection',
+    type: 'POST',
+}).done(function(x) {
+    console.log(x)
+})
 }
 </script>
   
 <div class="sceneElement" data-viewport="0" style="overflow-y:hidden !important">
 <div class="row" style="width:100%;height:87vh;margin:0px;overflow-y:hidden !important">    
- <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="background-color:rgba(0,0,0,0.6);;padding:0px;height:103%;color:black;overflow:hidden;min-width:200px;" id="nopad">
+ <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="background-color:rgba(0,0,0,0.6);;padding:0px;height:103%;color:black;overflow:hidden;min-width:200px;position:relative;left:1px" id="nopad">
     <div class="block " style="box-shadow: initial;height:100%;margin-bottom:0px" id="infirst">
         <div class="header">
-            <h2 style="padding-left:10px">Clients</h2>
+            <h2 style="padding-left:10px" id="picked_header">Clients</h2>
                      
         </div>
             <div style="height:91vh;display:inline-block;overflow:scroll;width:100%" id="innext">
@@ -84,6 +92,7 @@ function category(name) {
     localStorage.setItem('category',JSON.stringify({'name':String(name)}))
     if (name == 'general') {
         $("#category_description")[0].innerText = "Open chatroom for all Vise members"
+        $("#picked_header")[0].innerText = "All Users"
         // $("#hchat").fadeOut(250)
         // $("#add_a_contact").fadeOut(250)
     }    
@@ -91,11 +100,13 @@ function category(name) {
         $("#category_description")[0].innerText = "Oversee and participate in your client's text conversations with our chatbot."
         $("#hchat").fadeIn(250)
         $("#add_a_contact").fadeOut(250)
+        $("#picked_header")[0].innerText = "Your Clients"
     }
     if (name == 'company') {
         $("#category_description")[0].innerText = "Chat with the members of your firm, and directly message other advisors."
         $("#hchat").fadeOut(250)
         $("#add_a_contact").fadeIn(250)
+        $("#picked_header")[0].innerText = "Your Colleagues"
     }
 }
 </script>

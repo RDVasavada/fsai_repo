@@ -584,6 +584,7 @@ def resend_phone(request):
         phone_confirm = random.randint(111111,666999)
         cursor.execute("UPDATE portal_portaluser SET confirm_phone = \'" + str(phone_confirm) + "' WHERE id = " + str(userid) + " LIMIT 1")
         phone_message = "Hello from Vise! Your Confirmation code is : " + str(phone_confirm)
+        print(str(item['phone']))
         message = client.messages.create(to=str(item['phone']), from_="+12054907304", body=phone_message)
   return ""
 

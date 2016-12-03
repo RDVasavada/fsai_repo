@@ -362,7 +362,7 @@ var SentList = React.createClass({
                                 var trim = x[0].content.indexOf('>')
                                 var str = ct.slice(trim+3)
                                 var writer = ct.slice(1,trim)
-                                if (writer == you) {
+                                if (writer !== 'Hyperchat Bot') {
                                     var style = {
                                         marginRight: '75px',
                                         fontSize: '12px',
@@ -651,13 +651,42 @@ var ContactList = React.createClass({
             var imgStyle = {width:'50px',
                 borderRadius: '50px'
             }
+            var onlineicon = {
+                position: 'relative',
+                backgroundColor: 'rgba(0,255,0,0.4)',
+                width: '50px',
+                left: '10px',
+                color: 'transparent',
+                borderRadius: '99px',
+                height: '33px',
+            }
+            var offlineicon = {
+                position: 'relative',
+                backgroundColor: 'rgba(0,0,0,0.4)',
+                width: '50px',
+                left: '10px',
+                color: 'transparent',
+                borderRadius: '99px',
+                height: '33px',
+            }
             var a = (this.state.data)
             var texts = a.map(function(x,i){
-                return(
-                    <div style={divStyle}>
-                        <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone) }} style={linkStyle}>{x.username}</a>
-                    </div>
-                )
+                console.log(x)
+                if (x.status == 1) {
+                    return(
+                        <div style={divStyle}>
+                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone) }} style={onlineicon}> a</a>
+                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone) }} style={linkStyle}>{x.username}</a>
+                        </div>
+                    )
+                } else {
+                    return(
+                        <div style={divStyle}>
+                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone) }} style={offlineicon}>a</a>
+                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone) }} style={linkStyle}>{x.username}</a>
+                        </div>
+                    )
+                }
             })
         }
         return (
