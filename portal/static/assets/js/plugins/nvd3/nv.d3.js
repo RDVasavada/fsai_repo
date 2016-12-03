@@ -5823,7 +5823,7 @@ nv.models.multiBarChart = function() {
     , tooltips = true
     , tooltip = function(key, x, y, e, graph) {
         return '<h3>' + key + '</h3>' +
-               '<p>' +  y + ' on ' + x + '</p>'
+               '<p>' +  y + ' on ' + y + '</p>'
       }
     , x //can be accessed via chart.xScale()
     , y //can be accessed via chart.yScale()

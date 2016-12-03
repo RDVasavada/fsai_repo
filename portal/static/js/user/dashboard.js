@@ -70,7 +70,7 @@ $.ajax({
     url:"/user/dashboard/top_picks/",
     method: "POST"
 }).done(function(data){
-    data = JSON.parse(data)
+    // data = JSON.parse(data)
     data.picks.forEach(function(x) {
         $("#pick_pin").hide().append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content' ><div class='item-line-title'>Expected Yield :"+x.yield+"<div class='item-line-date pull-right'>Buy on "+x['13f_date']+"</div></div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.symbol+":"+x.exchange+" - "+x.price+"$</div></div></div>").fadeIn(250)
     })
@@ -79,7 +79,7 @@ $.ajax({
         url:"top_picks/",
         method: "POST"
     }).done(function(data){
-        // console.log(data)
+        console.log(data)
         data.picks.forEach(function(x) {
             $("#pick_pin").hide().append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content' ><div class='item-line-title'>Expected Yield :"+x.yield+"<div class='item-line-date pull-right'>Buy on "+x['13f_date']+"</div></div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.symbol+":"+x.exchange+" - $"+x.price+"</div></div></div>").fadeIn(250)
         })
@@ -127,7 +127,7 @@ function graphit(r_data) {
         var pdata = [
         r_data.you[0],  
         (r_data.sp.data[0][1]/r_data.sp.data[21][1]),
-        (r_data.dj.dataset.data[0][1]/r_data.dj.dataset.data[21][1]),
+        (r_data.dj.data[0][1]/r_data.dj.data[21][1]),
         (r_data.ndx.data[0][1]/r_data.ndx.data[21][1]),
     ];
 
@@ -135,13 +135,13 @@ function graphit(r_data) {
         ,r_data.you[1],
         , (r_data.sp.data[21][1]/r_data.sp.data[42][1]),
         , (r_data.ndx.data[21][1]/r_data.ndx.data[42][1]),
-        , (r_data.dj.dataset.data[21][1]/r_data.dj.dataset.data[42][1]),
+        , (r_data.dj.data[21][1]/r_data.dj.data[42][1]),
     ];
 
     var ydata = [
         ,r_data.you[2],
         , (r_data.sp.data[42][1]/r_data.sp.data[63][1]),
-        , (r_data.dj.dataset.data[42][1]/r_data.dj.dataset.data[63][1]),
+        , (r_data.dj.data[42][1]/r_data.dj.data[63][1]),
         , (r_data.ndx.data[42][1]/r_data.ndx.data[63][1]),
     ]
     pdata.sort(function(a, b){return a-b});
@@ -343,11 +343,9 @@ $.ajax({
     url:"dashboard/performance_chart/",
     method: "POST"
 }).done(function(r_data){
-    if (r_data.error = "error") {
-        $("#performance_check")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;margin-bottom:50px;font-family:Raleway;padding-top:50px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show.<br><br><span style='font-size:12px'>Try creating one first.</span></div>"
-        $("#performance_check").css("background","rgba(0,0,0,0.4)")
-    }
+ 
 if (r_data.you[0] || r_data) {
+    console.log(r_data)
     graphit(r_data)
     } else {
         $.ajax({

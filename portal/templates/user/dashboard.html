@@ -116,7 +116,7 @@ var right_idx = function() {
                                <span class="icon-angle-right" ></span>
                                </button>
                             </div>
-                           <div class="col-md-6" id="sector_size" style="overflow:hidden">
+                           <div class="col-md-6" id="sector_size" style="overflow:hidden;position:relative;top:-10px">
                           <table class="table table-hover" style="position:relative;top:-5px;width:90%">
                                   <thead>
                                         <th style="text-align:right;padding:0px;padding-right:5px">Sector</td>
@@ -324,50 +324,58 @@ path {
 <script>
 
     //var test_data = stream_layers(3,128,.1).map(function(data, i) {
-    var test_data = stream_layers(3,128,.1).map(function(data, i) {
-        console.log(data)
-        return {
-            key: (i == 1) ? 'Non-stackable Stream' + i: 'Stream' + i,
-            nonStackable: (i == 1),
-            values: data
-        };
-    });
-    nv.addGraph({
-        generate: function() {
-            var width = $("#test1").width(),
-                height = $("#test1").height()*2
 
-            var chart = nv.models.multiBarChart()
-                .width(width)
-                .height(height)
-                .stacked(true)
-                ;
-
-            chart.dispatch.on('renderEnd', function(){
-                console.log('Render Complete');
-            });
-
-            var svg = d3.select('#test1 svg').datum(test_data);
-            console.log('calling chart');
-            svg.transition().duration(0).call(chart).style({ 'width': width, 'height': height });
-
-            return chart;
-        },
-        callback: function(graph) {
-            nv.utils.windowResize(function() {
+    $.ajax({
+        url:"/user/dashboard/performance_line_chart/",
+        method: "POST"
+    }).done(function(o_data){
+        var test_data = o_data.data.map(function(data, i) {
+            console.log(data)
+            return {
+                key: data[i].key,
+                nonStackable: false,
+                values: data
+            };
+        });
+        nv.addGraph({
+            generate: function() {
                 var width = $("#test1").width(),
-                  height = $("#test1").height()
-                graph.width(width).height(height);
+                    height = $("#test1").height()*2
 
-                d3.select('#test1 svg')
-                    .attr('width', width)
-                    .attr('height', height)
-                    .transition().duration(0)
-                    .call(graph);
+                var chart = nv.models.multiBarChart()
+                    .width(width)
+                    .height(height)
+                    .stacked(true)
+                    ;
 
-            });
-        }
-    });
+                chart.dispatch.on('renderEnd', function(){
+                    console.log('Render Complete');
+                });
+
+                var svg = d3.select('#test1 svg').datum(test_data);
+                console.log('calling chart');
+                svg.transition().duration(0).call(chart).style({ 'width': width, 'height': height });
+
+                return chart;
+            },
+            callback: function(graph) {
+                nv.utils.windowResize(function() {
+                    var width = $("#test1").width(),
+                      height = $("#test1").height()
+                    graph.width(width).height(height);
+
+                    d3.select('#test1 svg')
+                        .attr('width', width)
+                        .attr('height', height)
+                        .transition().duration(0)
+                        .call(graph);
+
+                });
+            }
+        });
+    }).fail(function(data) {
+
+    })
 
 </script>
                   <div class="head-panel nm" style="position:absolute;top:300px;left:25px">

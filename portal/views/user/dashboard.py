@@ -24,7 +24,7 @@ import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
-from urllib2 import urlopen
+from urllib import urlopen
 from django.core.serializers.json import DjangoJSONEncoder
 from django.template import RequestContext, Context, loader
 from portal.models.user.portal_user import PortalUser
@@ -79,6 +79,7 @@ def your_sentiment(request):
 @csrf_exempt
 def top_picks(request):
   picks = find()
+  print(picks)
   return HttpResponse(picks)
 
 @csrf_exempt
@@ -133,7 +134,7 @@ def performance_line_chart(request):
       datearr = []
       stockarr = []
       try:
-        cursor.execute("SELECT Adj_Close, last_date FROM stock_" + str(stock['ticker']) + " WHERE last_date BETWEEN '" + str(start) + "' AND '" + str(end) + "'")
+        cursor.execute("SELECT Adj_Close, last_date FROM stock_" + str(stock['ticker']) + " WHERE last_date BETWEEN '" + str(start) + "' AND '" + str(end) + "' LIMIT 128")
         first_price = 0
         if len(newarr) == 0:
           for s_val in dictfetchall(cursor):
@@ -160,28 +161,29 @@ def performance_line_chart(request):
       imparr = newarr
       returnarr = [(x+y)/2 for x,y in zip(imparr,returnarr)]
   returnarr[0] = 1
-  for line in returnarr:
-    # print(return_date_arr.pop(0))
-    writer.writerow(['You',returnarr.pop(0),str(return_date_arr.pop(0))[0:10]])
-  return response
-  # valarr = []
-  # datearr = []
-  # last = 0
-  # with open('sp.json') as json_data:
-  #   sp = json.load(json_data)
-  #   for item in sp['data']:
-  #     if last == 0:
-  #       last = item[1]
-  #     if start <= datetime.datetime.strptime(item[0], '%Y-%m-%d').date() <= end:
-  #       change = float(item[1])/float(last)
-  #       change = change * change 
-  #       datearr.append(item[0])
-  #       valarr.append(change)
-  # datearr.pop(0)
-  # valarr.pop(0)        
-  # for item in valarr:
-  #   # print(datearr.pop())
-  #   writer.writerow(['S&P 500',valarr.pop(),datearr.pop()])
+  definedarr_one = []
+  for i in range(0,len(returnarr)):
+    definedarr_one.append({'key': 'You', 'series': 0, 'x': i, 'y': returnarr[i], 'y0': returnarr[i]})
+  valarr = []
+  datearr = []
+  last = 0
+  with open('sp.json') as json_data:
+    sp = json.load(json_data)
+    for item in sp['data']:
+      if len(valarr) < 129:
+        if last == 0:
+          last = item[1]
+        if start <= datetime.datetime.strptime(item[0], '%Y-%m-%d').date() <= end:
+          change = float(item[1])/float(last)
+          change = change * change 
+          datearr.append(item[0])
+          valarr.append(change)
+  datearr.pop(0)
+  valarr.pop(0)
+  definedarr_two = [] 
+  for i in range(0,len(valarr)):
+    definedarr_two.append({'key': 'S&P', 'series': 1, 'x': i, 'y': valarr[i], 'y0': valarr[i]})
+  return JsonResponse({'data':[definedarr_one, definedarr_two]})
   # l_valarr = []
   # l_datearr = []
   # last = 0
@@ -332,10 +334,10 @@ def dashboard(request):
   return HttpResponse(html)
 
 # from bs4 import BeautifulSoup
-# from urllib2 import urlopen
+
 # import json
 def find():
-  chosen = 1
+  chosen = 2
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
   gurusoup = BeautifulSoup(urlopen(guru))
   return(gurusoup)
