@@ -139,7 +139,7 @@ var MSGList = React.createClass({
                                         var str = ct.slice(trim+3)
                                         var writer = ct.slice(1,trim)
                                         console.log(writer)
-                                        if (writer == you) {
+                                        if (writer !== 'Hyperchat Bot') {
                                             var boxStyle = {
                                                 height: 'auto',
                                                 marginTop: '50px',
@@ -233,8 +233,7 @@ var MSGList = React.createClass({
                                                     <div style={style}>{str}</div>
                                                 </div>
                                             )
-                                        }
-                                        if (writer == "Hyperchat Bot") {
+                                        } else if (writer == "Hyperchat Bot") {
                                             var boxStyle = {
                                                 height: 'auto',
                                                 marginTop: '50px'
@@ -362,7 +361,7 @@ var SentList = React.createClass({
                                 var trim = x[0].content.indexOf('>')
                                 var str = ct.slice(trim+3)
                                 var writer = ct.slice(1,trim)
-                                if (writer !== 'Hyperchat Bot') {
+                                if (writer !==  you) {
                                     var style = {
                                         marginRight: '75px',
                                         fontSize: '12px',
