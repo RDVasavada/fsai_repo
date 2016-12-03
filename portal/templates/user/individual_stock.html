@@ -37,10 +37,10 @@
                 <div id="container" style="height: 400px; min-width: 310px;position:relative;right:25px"></div>    
 <script>
 $(function () {
-    $.getJSON('http://127.0.0.1:8000/user/stock_chart/{{company_symbol}}/', function (data) {
-        data = (JSON.parse(data))
+    $.getJSON('www.visebeta.com/user/stock_chart/{{company_symbol}}/', function (data) {
+        // data = (JSON.parse(data))
 
-        // Create the chart
+
         Highcharts.stockChart('container', {
 
 

@@ -45,13 +45,17 @@ var SMSList = React.createClass({
 var MSGList = React.createClass({
     loadMessagesFromServer: function() {
         var chosen = JSON.parse(localStorage.getItem('user')).id;
+        var category = JSON.parse(localStorage.getItem('category')).name;
+        var number = JSON.parse(localStorage.getItem('user')).phone;
+        var user = JSON.parse(localStorage.getItem('user')).user.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
         $.ajax({
             url: "/user/getmsg",
             datatype: 'json',
             type: 'GET',
-            data: {'selected' : chosen},
+            data: {'user': user, 'selected' : chosen, 'category': category, 'phone': number},
             cache: false,
             success: function(data) {
+                console.log(data)
                 if (status == "newfriend") {
                     this.setState({data: data.data})
                 } else {
@@ -134,6 +138,7 @@ var MSGList = React.createClass({
                                         var trim = x[0].content.indexOf('>')
                                         var str = ct.slice(trim+3)
                                         var writer = ct.slice(1,trim)
+                                        console.log(writer)
                                         if (writer == you) {
                                             var boxStyle = {
                                                 height: 'auto',
@@ -213,28 +218,27 @@ var MSGList = React.createClass({
                                                 border: '1px solid rgba(0,0,0,0)',
                                                 borderWidth: '13px',
                                                 borderLeftColor: 'rgba(0,0,0,0.4)',
-                                                top: '40px',
-                                                left: 'calc(80% + 101px)',
+                                                borderRightColor: 'transparent',
+                                                left: 'calc(80% + 102px)',
                                                 height: '25px',
                                                 width: '25px',
                                                 position: 'relative',
+                                                bottom: '25px'
+
                                             }                                            
-                                            var YourPictureUrl = JSON.parse(localStorage.getItem('YourPictureUrl')).url;
-                                            var myStar = React.createClass
                                             return(
                                                 <div style={boxStyle}>
-                                                    <span style={spanRight}>{you}</span>
+                                                    <span style={spanRight}>{writer}</span>
                                                     <div style={arrowStyle}> </div>
-                                                    <img src='/static/img/profile.svg' style={imgStyle} />
                                                     <div style={style}>{str}</div>
                                                 </div>
                                             )
-                                        } else {
+                                        }
+                                        if (writer == "Hyperchat Bot") {
                                             var boxStyle = {
                                                 height: 'auto',
                                                 marginTop: '50px'
                                             }
-                                            var imgUrl = JSON.parse(localStorage.getItem('user')).picture_url;
                                             var style = {
                                                 marginLeft: '100px',
                                                 position: 'relative',
@@ -286,20 +290,19 @@ var MSGList = React.createClass({
                                                 bottom: '0px',
                                             }
                                             var arrowStyle = {
-                                                border: '1px solid rgba(0,0,0,0)',
+                                                border: '1px solid transparent',
                                                 borderWidth: '13px',
                                                 borderRightColor: 'rgba(0,0,0,0.4)',
-                                                top: '40px',
-                                                left: '75px',
+                                                left: '74px',
                                                 height: '25px',
                                                 width: '25px',
                                                 position: 'relative',
+                                                borderLeftColor: 'transparent !important',
                                             }
                                             return(
                                                 <div style={boxStyle}>
                                                     <span style={spanLeft}>{writer}</span>
                                                     <div style={arrowStyle}> </div>
-                                                    <img src={imgUrl} style={imgStyle} />
                                                     <div style={style}>{str}</div>
                                                 </div>
                                             )
@@ -597,8 +600,10 @@ var SentList = React.createClass({
 // })
 var ContactList = React.createClass({
     loadBooksFromServer: function(){
+        var category = JSON.parse(localStorage.getItem('category')).name;
         $.ajax({
             url: "/user/getconnections",
+            data: {'data':String(category)},
             datatype: 'json',
             type: 'POST',
             cache: false,
@@ -625,18 +630,21 @@ var ContactList = React.createClass({
                 width: '100%',
                 position: 'relative',
                 textAlign: 'center',
-                padding: '10px 0px 10px 0px',
+                padding: '25px 0px 10px 10px',
                 borderTopRightRadius: '0px',
                 borderTopLeftRadius: '0px',
                 border:' 0px',
-                color: "#FFF" ,               
+                fontFamily: 'Raleway',
+                color: "#FFF" ,
+                lineHeight: '50px',
+                width: '100%',
             }
             var divStyle = {
                 minWidth: 'calc(100% - 100px)',
                 position: 'relative',
+                height: '50px',
                 background: 'rgba(0,0,0,0.2)',
-                margin: '20px',
-                padding: '8px'
+                margin: '5px',
             }
             var icon = {color:'white',
                         float:'right'}
@@ -644,16 +652,10 @@ var ContactList = React.createClass({
                 borderRadius: '50px'
             }
             var a = (this.state.data)
-            if (a[0]) {
-                url = a[0].picture_url
-                localStorage.setItem('YourPictureUrl',JSON.stringify({'url':url}))
-            }
             var texts = a.map(function(x,i){
-                console.log(x.picture_url)
                 return(
                     <div style={divStyle}>
-                        <img src='/static/img/profile.svg' style={imgStyle} /> 
-                        <a href="#" onClick={() => { select(x.id, x.status, x.username, x.picture_url) }} style={linkStyle}>{x.username}</a>
+                        <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone) }} style={linkStyle}>{x.username}</a>
                     </div>
                 )
             })
@@ -675,17 +677,10 @@ var delFriend = (function(id) {
         console.log(res)
     })
 })
-var select = (function(id, status, username, url) {
-    $("#selected")[0].value = id
-    if (status == 'New Friend Request') {
-        $("#chosenuser")[0].innerText = String(" " )+ String(username)
-        var user = {'id': String(id), 'status': 'newfriend', 'user':String(username)}
+var select = (function(id, status, username, phone) {
+        $("#selected")[0].value = id
+        var user = {'id': String(id), 'status': 'newfriend', 'user':String(username), 'phone': String(phone)}
         localStorage.setItem('user',JSON.stringify(user))
-    } else {
-        $("#chosenuser")[0].innerText = String(" " ) + String(username)
-        var user = {'id':String(id), 'status':'friends', 'user':String(username), 'picture_url': url }
-        localStorage.setItem('user',JSON.stringify(user));
-    }                
 })
 url = String(window.location.href)
 if ((url.indexOf("inbox")) > 0 ){

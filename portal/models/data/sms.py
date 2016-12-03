@@ -17,3 +17,17 @@ class Sms(BaseModel):
 
 
 
+
+
+# CREATE TABLE `portal_sms` (
+#   `id` int(11) NOT NULL AUTO_INCREMENT,
+#   `phone_number` varchar(15) NOT NULL,
+#   `message` varchar(255) NOT NULL,
+#   `resolution` varchar(255) NOT NULL,
+#   `date_created` datetime(6) NOT NULL,
+#   `user_id` int(11) DEFAULT NULL,
+#   `analysis` varchar(255) NOT NULL,
+#   PRIMARY KEY (`id`),
+#   KEY `user_id` (`user_id`),
+#   CONSTRAINT `portal_sms_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `portal_portaluser` (`id`)
+# ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 |

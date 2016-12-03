@@ -8,6 +8,13 @@ svg {
   max-height: 265px !important;
 }
 </style>
+  
+  <link href="/static/assets/js/plugins/nvd3/nv.d3.min.css" rel="stylesheet">
+  <!-- // <script src="/static/assets/js/plugins/nvd3/nv.d3.min.js"></script> -->
+  <!-- // <script src="/static/assets/js/plugins/nvd3/build/nv.d3.css"></script> -->
+  <script src="/static/assets/js/plugins/nvd3/build/nv.d3.js"></script>
+  <script src="/static/assets/js/plugins/nvd3/lib/stream_layers.js"></script>
+ 
 <div class="col-lg-2 col-md-2 col-sm-2" style="padding:0px">
               <div id="new_input" style="display:none">
                     &nbsp &nbsp
@@ -310,107 +317,57 @@ path {
       <div class="block block-transparent" style="margin-left:25px;margin-right:25px;width:94%">
                                    
             <div class="content" style="height:330px;background:rgba(0,0,0,0.2)">
-                          <div class="ibox-content" id="myBar" style="height:150px;position:relative;top:0px;left:1vw">
-                      <div class="row" style="overflow:hidden">
-
-                      </div>
-                  </div> 
+                         
+<div id="test1">
+    <svg></svg>
+</div>
 <script>
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    //var test_data = stream_layers(3,128,.1).map(function(data, i) {
+    var test_data = stream_layers(3,128,.1).map(function(data, i) {
+        console.log(data)
+        return {
+            key: (i == 1) ? 'Non-stackable Stream' + i: 'Stream' + i,
+            nonStackable: (i == 1),
+            values: data
+        };
+    });
+    nv.addGraph({
+        generate: function() {
+            var width = $("#test1").width(),
+                height = $("#test1").height()*2
 
-var x0 = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
+            var chart = nv.models.multiBarChart()
+                .width(width)
+                .height(height)
+                .stacked(true)
+                ;
 
-var x1 = d3.scale.ordinal();
+            chart.dispatch.on('renderEnd', function(){
+                console.log('Render Complete');
+            });
 
-var y = d3.scale.linear()
-    .range([height, 0]);
+            var svg = d3.select('#test1 svg').datum(test_data);
+            console.log('calling chart');
+            svg.transition().duration(0).call(chart).style({ 'width': width, 'height': height });
 
-var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+            return chart;
+        },
+        callback: function(graph) {
+            nv.utils.windowResize(function() {
+                var width = $("#test1").width(),
+                  height = $("#test1").height()
+                graph.width(width).height(height);
 
-var xAxis = d3.svg.axis()
-    .scale(x0)
-    .orient("bottom");
+                d3.select('#test1 svg')
+                    .attr('width', width)
+                    .attr('height', height)
+                    .transition().duration(0)
+                    .call(graph);
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .tickFormat(d3.format(".2s"));
-
-var svg = d3.select(".ibox-content").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-d3.csv("performance_line_chart/", function(error, data) {
-    console.log(data)
-  if (error) throw error;
-
-  var ageNames = d3.keys(data[0]).filter(function(key) { return key !== "State"; });
-
-  data.forEach(function(d) {
-    d.ages = ageNames.map(function(name) { return {name: name, value: +d[name]}; });
-  });
-
-  x0.domain(data.map(function(d) { return d.State; }));
-  x1.domain(ageNames).rangeRoundBands([0, x0.rangeBand()]);
-  y.domain([0, d3.max(data, function(d) { return d3.max(d.ages, function(d) { return d.value; }); })]);
-
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Population");
-
-  var state = svg.selectAll(".state")
-      .data(data)
-    .enter().append("g")
-      .attr("class", "state")
-      .attr("transform", function(d) { return "translate(" + x0(d.State) + ",0)"; });
-
-  state.selectAll("rect")
-      .data(function(d) { return d.ages; })
-    .enter().append("rect")
-      .attr("width", x1.rangeBand())
-      .attr("x", function(d) { return x1(d.name); })
-      .attr("y", function(d) { return y(d.value); })
-      .attr("height", function(d) { return height - y(d.value); })
-      .style("fill", function(d) { return color(d.name); });
-
-  var legend = svg.selectAll(".legend")
-      .data(ageNames.slice().reverse())
-    .enter().append("g")
-      .attr("class", "legend")
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-  legend.append("rect")
-      .attr("x", width - 18)
-      .attr("width", 18)
-      .attr("height", 18)
-      .style("fill", color);
-
-  legend.append("text")
-      .attr("x", width - 24)
-      .attr("y", 9)
-      .attr("dy", ".35em")
-      .style("text-anchor", "end")
-      .text(function(d) { return d; });
-
-});
+            });
+        }
+    });
 
 </script>
                   <div class="head-panel nm" style="position:absolute;top:300px;left:25px">

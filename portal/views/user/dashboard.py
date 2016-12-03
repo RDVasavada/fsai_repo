@@ -79,7 +79,7 @@ def your_sentiment(request):
 @csrf_exempt
 def top_picks(request):
   picks = find()
-  return JsonResponse({'picks':picks})
+  return HttpResponse(picks)
 
 @csrf_exempt
 def get_gain(request):
@@ -338,20 +338,7 @@ def find():
   chosen = 1
   guru = "https://www.gurufocus.com/api/public/user/c1a72ad16235bed6e762ac34b11d34db:e2285097ad0c7db93e020623fc0022d0/guru/" + str(chosen) + "/aggregated"
   gurusoup = BeautifulSoup(urlopen(guru))
-  print(gurusoup)
-  try:
-    g = gurusoup.body.contents[0]
-    d = json.loads(g)
-  except AttributeError:
-    g = gurusoup.body.contents[0]
-    d = json.loads(g)   
-  guruarr = []
-  for key in d:
-    for pick in d[key]["port"]:
-      guruarr.append(pick)
-      if len(guruarr) == 24:
-        return guruarr
-  return(guruarr)
+  return(gurusoup)
 
 def getListOfStocks(request,user_id):
   if request.user.is_authenticated():
@@ -609,7 +596,6 @@ def BuildStockDatabase():
                         "`Adj_Close` VARCHAR(255),"
                         "`Adj_Volume` VARCHAR(255),"
                         "PRIMARY KEY (id) );")
-        cursor.close()
         try:
             a = quandl.get(["EOD/" + str(item['ticker']) ])
             for c in a.index.tolist():
@@ -741,9 +727,47 @@ def BuildSF1Database():
                                 "('" + str(datearr.pop(0)) + "','" + str(a) + "')")
         except:
             print("no quandl")
-            
 
-# BuildStockDatabase()
+def BuildStockDatabase():
+    cursor = connection.cursor();
+    cursor.execute("select distinct ticker from portal_stock")
+    cursor.close()
+    for item in dictfetchall(cursor):
+        try:
+            cursor = connection.cursor();
+            cursor.execute("DROP TABLE stock_" + str(item['ticker']) + "")
+            cursor.close()
+        except:
+            print("oh well couldnt drop")
+        cursor = connection.cursor();
+        cursor.execute("CREATE TABLE IF NOT EXISTS stock_" + str(item['ticker']) + " ("
+                        "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                        "`last_date` DATETIME,"
+                        "`Adj_Open` VARCHAR(255),"
+                        "`Adj_High` VARCHAR(255),"
+                        "`Adj_Low` VARCHAR(255),"
+                        "`Adj_Close` VARCHAR(255),"
+                        "`Adj_Volume` VARCHAR(255),"
+                        "PRIMARY KEY (id) );")
+        cursor.close()
+        try:
+            a = quandl.get(["EOD/" + str(item['ticker']) ])
+            for c in a.index.tolist():
+                c = pd.to_datetime(c)
+                adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
+                adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
+                adj_low = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Low"]
+                adj_close = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Close"]
+                adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
+                cursor = connection.cursor();
+                cursor.execute("INSERT INTO stock_" + str(item['ticker']) + " (last_date, Adj_Open, Adj_High, Adj_Low, Adj_Close, Adj_Volume) VALUES"
+                            " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")
+                cursor.close()
+                print(item['ticker'])
+        except:
+            print("error again")
+
+BuildStockDatabase()
 # BuildSF1Database()
 
 @csrf_exempt

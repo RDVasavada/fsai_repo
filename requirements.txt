@@ -5,3 +5,6 @@ wheel==0.26.0
 mysql-python
 django-extensions
 yahoo_finance
+simplejson
+quandl
+bs4

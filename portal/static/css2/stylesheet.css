@@ -156,8 +156,8 @@ html{height: 100%; min-height: 100%;}
 body{background: url('/static/img/bg-11.jpg');
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
-    -webkit-background-size: 150% 500%; 
-    background-size: 150% 500%; font-family: 'Helvetica Neue Ultra Light', 'Helvetica', Arial, sans-serif; color: #FFF; height: 100%; font-weight:100 ; min-height: 100%; font-size: 12px;}
+    -webkit-background-size: 100% 125%; 
+    background-size: 100% 125%; font-family: 'Helvetica Neue Ultra Light', 'Helvetica', Arial, sans-serif; color: #FFF; height: 100%; font-weight:100 ; min-height: 100%; font-size: 12px;}
 form{margin: 0px;}
 
 a{color: #FFF; outline: 0 !important;}

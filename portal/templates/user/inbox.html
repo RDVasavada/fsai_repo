@@ -2,44 +2,47 @@
 <!-- {% load render_bundle from webpack_loader %} -->
 {% block content %}
 <script>
-window.onbeforeunload = confirmExit;
 $.ajax({
     url: '/user/addconnection',
     type: 'POST',
 }).done(function(x) {
     console.log(x)
 })
-function confirmExit(){
-    $("#hooter").fadeOut(1)
-localStorage.removeItem('YourPictureUrl');
-$.ajax({
-    url: '/user/removeconnection',
-    type: 'POST',
-}).done(function(x) {
-    console.log(x)
-})
+
 }
 </script>
   
-<div class="sceneElement" data-viewport="0">
-<div class="row" style="width:100%;height:100%;margin:0px">    
- <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px;height:100%;color:black;overflow:hidden;min-width:200px" id="nopad">
-    <div class="block block-drop-shadow" style="height:100%;background-color:rgba(0,0,0,0.6);margin-bottom:0px" id="infirst">
+<div class="sceneElement" data-viewport="0" style="overflow-y:hidden !important">
+<div class="row" style="width:100%;height:87vh;margin:0px;overflow-y:hidden !important">    
+ <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="background-color:rgba(0,0,0,0.6);;padding:0px;height:103%;color:black;overflow:hidden;min-width:200px;" id="nopad">
+    <div class="block " style="box-shadow: initial;height:100%;margin-bottom:0px" id="infirst">
         <div class="header">
-            <h2>Direct Message</h2>
+            <h2 style="padding-left:10px">Clients</h2>
                      
         </div>
             <div style="height:91vh;display:inline-block;overflow:scroll;width:100%" id="innext">
-   
+                <center style="padding:10px;color:white;letter-spacing:2px;font-size:12px;font-family:Raleway" id="category_description"> Oversee and participate in your client's text conversations with our chatbot.
+                </center>
       <!--           <a href="/user/starred" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-star" style="padding:0px"></span>Starred<i class="icon-angle-right pull-right"></i></a>
                 <a href="/user/deleted" class="list-group-item" style="margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px"><span class="icon-trash" style="padding:0px"></span>Deleted<i class="icon-angle-right pull-right"></i></a>      -->   
 
-                <a href="#" onClick="hyperchat()" class="list-group-item" style="height:75px;margin:20px;background-color:rgba(0,0,0,0.4);color:white;border:0px">
-                    <img src="/static/img/robot.jpg" style="width:70px;position:relative;bottom:5px">
-                    <span style="position:relative;left:20px">Hyperchat Bot</span><i class="icon-angle-right pull-right" style="position:relative;top:20px"></i></a>
+                <a href="#" id="hchat" onClick="hyperchat()" class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
+
+                    <span style="position:relative;left:20px;line-height:25px;font-family:Raleway">Hyperchat Bot</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
+
+         <!--        <a href="#" onClick="" class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
+
+                    <span style="position:relative;left:20px;line-height:25px;font-family:Raleway">Support Bot</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
+ -->
+                <a href="#" onClick="" id="add_a_contact" class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px;display:none">
+
+                    <span style="position:relative;left:20px;line-height:25px;font-family:Raleway;">Add a contact</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
+                    <hr style="width:75%;left:12.5%;position:relative;margin:5px">
  <!-- {% render_bundle 'main' %} -->
-                <div id="acontainer">
+                <div style="height:100%;width:100%;overflow:hidden">
+                <div id="acontainer" style="width:25vw;height:100%;overflow-y:scroll;padding-right:10px">
                 </div>  
+                </div>
             </div>
 <!-- 
         <div class="content list-group list-group-icons" style="height:100%;display:inline-block;overflow:scroll;padding-bottom:50px">
@@ -61,11 +64,43 @@ $.ajax({
 
 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7" style="height:100%;padding-left:1px;padding-right:1px" id="intwo">
     <div class="block block-drop-shadow" style="height:100%;margin-bottom:0px;padding-bottom:100px" id="inb">
-        <div class="header">
-            <h2>Conversation with </h2>
-            <span id="chosenuser" style="margin-left:5px"></span>
+        <div class="header" style="padding:0px">
+            <!-- <h2>Conversation with </h2> -->
+            <!-- <span id="chosenuser" style="margin-left:5px"></span> -->
+
+                    <ul class="nav nav-tabs nav-justified"  style="position:relative;position: relative;top: 0px;z-index: 0;height: 100px;">
+                        <li  class="active"><a href="#tab9" data-toggle="tab" style="width:100%"  onClick="category('general')">General</a></li>
+                        <li><a href="#tab8" data-toggle="tab" style="width:100%" onClick="category('client')">Automated Client Conversations</a></li>
+                        <li><a href="#tab9" data-toggle="tab" style="width:100%"  onClick="category('company')">Company Conversations</a></li>
+                        <li><a href="#tab10" data-toggle="tab" style="width:100%"  onClick="category('forum')">Vise Forums</a></li>
+                    </ul>
+                      
         </div>
-        <div class="content messages mail-scroll mCustomScrollbar" style="height:85vh !important;" id="incontent"> 
+<script>
+category('general')
+var user = {'id': 1, 'status': 'newfriend', 'user':String(username), 'phone': String(phone)}
+localStorage.setItem('user',JSON.stringify(user))
+function category(name) {
+    localStorage.setItem('category',JSON.stringify({'name':String(name)}))
+    if (name == 'general') {
+        $("#category_description")[0].innerText = "Open chatroom for all Vise members"
+        $("#hchat").fadeOut(250)
+        $("#add_a_contact").fadeOut(250)
+    }    
+    if (name == 'client') {
+        $("#category_description")[0].innerText = "Oversee and participate in your client's text conversations with our chatbot."
+        $("#hchat").fadeIn(250)
+        $("#add_a_contact").fadeOut(250)
+    }
+    if (name == 'company') {
+        $("#category_description")[0].innerText = "Chat with the members of your firm, and directly message other advisors."
+        $("#hchat").fadeOut(250)
+        $("#add_a_contact").fadeIn(250)
+    }
+}
+</script>
+
+        <div class="content messages mail-scroll mCustomScrollbar" style="height:70vh !important;" id="incontent"> 
             <div class="email-list-item list-active">
                 <div id="mcontainer">
                      {% render_bundle 'main' %}
@@ -146,8 +181,9 @@ $.ajax({
 <script>
 var hyperchat = (function() {
     $("#selected")[0].value = 0
-    var user = {'id': 0, 'status': 'bot', 'user': 'Hyperchat Bot','picture_url':'/static/img/robot.jpg'}
+    var user = {'id': 0, 'status': 'bot', 'user': 'Hyperchat Bot','id':'0','phone':'0'}
     localStorage.setItem('user',JSON.stringify(user))
+    // localStorage.setItem('category',JSON.stringify({'name':'Hyperchat'}))
     $("#chosenuser")[0].innerText = " Hyperchat Bot"
 })
 

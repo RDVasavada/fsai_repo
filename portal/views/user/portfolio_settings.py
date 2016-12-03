@@ -23,6 +23,22 @@ def portfolio_exist(request, portname):
         return(JsonResponse({'exist':1}))
 
 @csrf_exempt
+def phone_exist(request, portname):
+    portname = str(portname)[:-1]
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM portal_portfolio WHERE name = \'" + str(portname) + "\'")
+    nameL = 0
+    print(str(portname))
+    for item in dictfetchall(cursor):
+        nameL += 1
+    if nameL == 0 : 
+        return(JsonResponse({'exist':0}))
+    else:
+        return(JsonResponse({'exist':1}))
+
+
+
+@csrf_exempt
 def portfolio_settings(request):
     html = get_top_portfolios(request, 'user/portfolio_settings.html')
     return HttpResponse(html)

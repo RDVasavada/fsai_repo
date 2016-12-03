@@ -85,7 +85,7 @@ def individual_stock(request, stock_name):
     jsonResponse = response_gd.json()
     try: 
         company_stats = jsonResponse['response']['employers'][0]
-    except IndexError:
+    except KeyErrors:
         print(jsonResponse)
         company_stats = {'industryName': 'Unavailable','workLifeBalanceRating':'--','ceo':{'name':'Unavailable','pctApprove':'--'}}
     # print(company_stats['employers'][0])

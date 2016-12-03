@@ -48,11 +48,50 @@ def inbox(request):
   html = t.render(context_dict)
   return HttpResponse(html)
 
+def client_conversation(request, phone, username):
+  rtnarray = []
+  cursor = connection.cursor()
+  cursor.execute("SELECT message, analysis, date_created AS DATE from portal_sms WHERE "
+                " phone_number = '" + str(phone) + "' ORDER BY DATE DESC")
+  for conversate in dictfetchall(cursor):
+    obj = []
+    rtnstr = "<" + str(username) + "> : " + str(conversate['message'])
+    analyzestr = "<Hyperchat Bot> : " + str(conversate['analysis'])
+    obj.append({'content': rtnstr, 'id' : 1 , 'time' : conversate['DATE']})
+    rtnarray.append(obj)
+    obj = []
+    obj.append({'content': analyzestr, 'id' : 1 , 'time' : conversate['DATE']})
+    rtnarray.append(obj)
+  return JsonResponse({'data':rtnarray})
+
+def general_conversation(userid):
+  rtnarray = []
+  cursor = connection.cursor()
+  cursor.execute("SELECT * from portal_messageheader WHERE from_id != 5 AND to_id !=5 ORDER BY time DESC")
+  for conversate in dictfetchall(cursor):
+    cursor.execute("SELECT is_from_sender, content from portal_message WHERE header_id = '" + str(conversate['id']) + "'")
+    for msg in dictfetchall(cursor):
+      obj = []
+      obj.append({'content':msg['content'] , 'id' : conversate['from_id'] , 'time': conversate['time'] })
+      rtnarray.append(obj)
+  return JsonResponse({'data':rtnarray})
+
 @csrf_exempt
 def getmsg(request):
+  duser = request.REQUEST.get('user','')
+  print(duser)
+  phone = request.GET['phone'];
   if request.user.is_authenticated():
     username = request.user.username
     userid = request.user.id
+    if request.GET['category'] == "client":
+      if duser == 'Hyperchat Bot':
+         print("hyperchat")
+      else:
+        print("client time")
+        return client_conversation(request, phone, duser)
+    if request.GET['category'] == "general":
+      return general_conversation(userid)        
     fromid = request.GET['selected']
     print(fromid)
     cursor = connection.cursor()
@@ -143,7 +182,7 @@ def sendmsg(request):
     cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
                  "('" + str(header_id) + "','0','" + str(botmsg) + "');")
     pusher_client.trigger("u_"+str(username), 'my_event', {'message': str(botmsg)})
-  pusher_client.trigger("u_"+str(recipient), 'my_event', {'message': str(message)})      
+  pusher_client.trigger("u_"+str(username), 'my_event', {'message': str(message)})      
   t = loader.get_template('user/inbox.html')
   c = Context(context_dict)
   html = t.render(context_dict)
@@ -156,27 +195,55 @@ def getconnections(request):
     userid = request.user.id
     username = request.user.username
     portalUser = PortalUser.objects.get(username=username)
-    picture_url = portalUser.picture_url
+    firmname = portalUser.firmname
     arr = []
-    arr.append({
-      'username' : username + " ( you )",
-      'id' : userid,
-      'picture_url' : picture_url,
-    })
-    cursor = connection.cursor()
-    cursor.execute("SELECT username, id, picture_url FROM portal_portaluser WHERE "
-                    "1 = connections AND id != '" + str(userid) + "'")
-    users = dictfetchall(cursor)
-    for user in users:
-        try:
-          arr.append({
-            'username' : user['username'],
-            'id': user['id'],
-            'picture_url': user['picture_url']
-          })
-        except IndexError:
-          print(user)
-  return JsonResponse({'data':arr})
+    if str(request.POST['data']) == 'client':
+      cursor = connection.cursor()
+      cursor.execute("SELECT * FROM portal_portfolio WHERE "
+                      ""+str(userid)+" = user_id ")
+      users = dictfetchall(cursor)
+      for user in users:
+          try:
+            arr.append({
+              'username' : str(user['client_name']) + " @ +1" + str(user['phone_number']),
+              'id': user['id'],
+              'phone': str(user['phone_number'])
+            })
+          except IndexError:
+            print(user)
+    elif str(request.POST['data']) == 'general':
+      cursor = connection.cursor()
+      cursor.execute("SELECT * FROM portal_portaluser")
+      users = dictfetchall(cursor)
+      for user in users:
+          try:
+            arr.append({
+              'username' : str(user['username']),
+              'id': user['id'],
+              'phone': str(user['phone'])
+            })
+          except IndexError:
+            print(user)
+    elif str(request.POST['data'] == 'company'):
+      cursor = connection.cursor()
+      cursor.execute("SELECT * FROM portal_portaluser WHERE firmname = '" + str(firmname) + "'")
+      users = dictfetchall(cursor)
+      for user in users:
+          try:
+            arr.append({
+              'username' : str(user['username']),
+              'id': user['id'],
+              'phone': str(user['phone'])
+            })
+          except IndexError:
+            print(user)
+    return JsonResponse({'data':arr})
+    # arr = []
+    # arr.append({
+    #   'username' : username + " ( you )",
+    #   'id' : userid,
+    #   'picture_url' : picture_url,
+    # })
 
 @csrf_exempt
 def addconnection(request):
@@ -376,7 +443,7 @@ def analyze(message, id, username):
         try:
           return("compare " + findCompany(message,username)[0] + " to my the s&p")
         except IndexError:
-          return("<Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+          return("<Hyperchat Bot> : <Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
     elif "nasdaq" in message or "ndx" in message:
       truth = hasPortfolio(message, id)
       if truth != 'false':
@@ -406,7 +473,7 @@ def analyze(message, id, username):
         try:
           return("compare " + findCompany(message,username)[0] + " to my the ndx")
         except IndexError:
-          return("<Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+          return("<Hyperchat Bot> : <Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
     elif "dow" in message or "dji" in message or "dow jones" in message:
       if (hasPortfolio(message)):
         return("your portfolio " + hasPortfolio(message) + " compares well")      
@@ -414,7 +481,7 @@ def analyze(message, id, username):
         try:
           return("compare " + findCompany(message,username)[0] + " to my the dji")
         except IndexError:
-          return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+          return("<Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
     else:
       return("get status of ports")
   elif "buy" in message and "for" in message:
@@ -424,7 +491,7 @@ def analyze(message, id, username):
       # cursor.execute("SELECT buy_date FROM `portal_stock` WHERE " + str(symbol) + " = ticker ")
       return("<Hyperchat Bot> : you bought " + findCompany(message,username)[0] + " for 2.54 per share$")
     except IndexError:
-      return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+      return("<Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
   elif "top" in message or "highest performing" in message:
     return("the top stocks today are my d !")
   elif "lowest" in message or "worst" in message: 
@@ -453,7 +520,7 @@ def analyze(message, id, username):
       try:
         return("your stock " + findCompany(message,username)[0] + " is doing quite well")
       except IndexError:
-        return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+        return("<Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
   elif "how" in message and "doing" in message:
     if (hasPortfolio(message, id)):
       name = str(hasPortfolio(message,id))
@@ -478,7 +545,7 @@ def analyze(message, id, username):
       try:
         return("your stock " + findCompany(message,username)[0] + " is doing quite well")
       except IndexError:
-        return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")       
+        return("<Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")       
   elif "symbol for" in message or "symbol of" in message:
     if (findCompany(message,username)):
       return("the symbol for " + findCompany(message,username)[0] + " is google !")
@@ -501,7 +568,7 @@ def analyze(message, id, username):
       try:
         return("your gains for " +  findCompany(message,username)[0] + " is 3$")
       except IndexError:
-        return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+        return("<Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
   elif "losses" in message:
     if hasPortfolio(message):
       return("your losses for " + hasPortfolio(message) + " is 3$!")
@@ -509,7 +576,7 @@ def analyze(message, id, username):
       try:
         return("your losses for " +  findCompany(message,username)[0] + " is 3$")
       except IndexError:
-        return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+        return("<Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
   elif "rating" in message:
     if (findCompany(message,username)):
       return("the rating for the company " + findCompany(message,username)[0] + " by analysts are high!")
@@ -520,7 +587,7 @@ def analyze(message, id, username):
     if (findCompany(message,username)):
       return("the beta for the company " + findCompany(message,username)[0] + " by analysts are high!")
   else:
-    return("Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
+    return("<Hyperchat Bot> : <Hyperchat Bot> : Sorry, I didn't recognize that request. I've told my creator about this and he will be working on it!")
 
 
 def hasPortfolio(msg,id):

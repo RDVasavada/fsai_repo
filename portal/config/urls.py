@@ -99,6 +99,38 @@ urlpatterns = patterns('',
 
 #BRBB
 
+def BuildStockDatabase():
+    cursor = connection.cursor();
+    cursor.execute("select distinct ticker from portal_stock")
+    for item in dictfetchall(cursor):
+        try:
+            cursor.execute("DROP TABLE stock_" + str(item['ticker']) + "")
+        except:
+            print("oh well couldnt drop")
+        cursor.execute("CREATE TABLE IF NOT EXISTS stock_" + str(item['ticker']) + " ("
+                        "`id`INTEGER(2) UNSIGNED AUTO_INCREMENT,"
+                        "`last_date` DATETIME,"
+                        "`Adj_Open` VARCHAR(255),"
+                        "`Adj_High` VARCHAR(255),"
+                        "`Adj_Low` VARCHAR(255),"
+                        "`Adj_Close` VARCHAR(255),"
+                        "`Adj_Volume` VARCHAR(255),"
+                        "PRIMARY KEY (id) );")
+        try:
+            a = quandl.get(["EOD/" + str(item['ticker']) ])
+            for c in a.index.tolist():
+                c = pd.to_datetime(c)
+                adj_open = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Open"]
+                adj_high = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_High"]
+                adj_low = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Low"]
+                adj_close = a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Close"]
+                adj_volume = str(a.loc[c]['EOD/' + str(item['ticker']) + " - Adj_Volume"])
+                cursor.execute("INSERT INTO stock_" + str(item['ticker']) + " (last_date, Adj_Open, Adj_High, Adj_Low, Adj_Close, Adj_Volume) VALUES"
+                            " ('" + str(c) + "','" + str(adj_open) + "','" + str(adj_high) + "','" +str(adj_low) + "','" +str(adj_close) + "','" +str(1.0) + "');")
+                print(item['ticker'])
+        except:
+            print("error again")
+
 def RefreshDB():
     cursor = connection.cursor();
     cursor.execute("select distinct ticker from portal_stock")
@@ -182,7 +214,8 @@ def dictfetchall(cursor):
 
 # Update_DB_Dispatcher.after_response()
 # Update_Stocks_Dispatcher.after_response()
-
+# BuildStockDatabase()
+# BuildSF1Database()
 
 # lets us serve our media
 if settings.DEBUG:

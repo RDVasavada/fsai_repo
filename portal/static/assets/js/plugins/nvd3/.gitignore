@@ -1,0 +1,32 @@
+# npm files #
+##########
+node_modules
+
+# Jekyll Files #
+################
+_site
+
+
+# Random Files #
+################
+*.swp
+*.log
+
+
+# Private Test Data #
+#####################
+*REALDATA*
+
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+
+# Editor backup files #
+#######################
+*.bak
+*~

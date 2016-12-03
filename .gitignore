@@ -1,3 +1,4 @@
 *.pyc
 node_modules/
 fsai_api.pem
+*.sql

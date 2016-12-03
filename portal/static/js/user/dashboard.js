@@ -70,7 +70,7 @@ $.ajax({
     url:"/user/dashboard/top_picks/",
     method: "POST"
 }).done(function(data){
-    // console.log(data)
+    data = JSON.parse(data)
     data.picks.forEach(function(x) {
         $("#pick_pin").hide().append("<div class='email-list-item' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:'Helvetica Neue';'><div class='item-line-content' ><div class='item-line-title'>Expected Yield :"+x.yield+"<div class='item-line-date pull-right'>Buy on "+x['13f_date']+"</div></div></div><div class='item-line'><div class='item-line-content' style='font-weight:300;-webkit-font-smoothing: antialiased;font-family:helvetica neue;font-size:12px;letter-spacing:2px'>"+x.symbol+":"+x.exchange+" - "+x.price+"$</div></div></div>").fadeIn(250)
     })

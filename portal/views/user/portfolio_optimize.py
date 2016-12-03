@@ -128,8 +128,8 @@ def portfolio_optimize(request):
         context_dict['description'] = "N/A"    
         description = "N/A"
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO `portal_portfolio` (investing_amount, num_stocks, expected_risk, brokerage_account, retirement_account, age, household_salary, household_income, ss_income, name, created_date, update_date, client_name, description, user_id) VALUES "
-                    "('" + str(context_dict['investingAmount']) + "','" + str(context_dict['numStocks']) + "','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['brokerage']) + "','" + str(context_dict['retirement']) + "','" + str(context_dict['Years']) + "','" + str(context_dict['household_salary']) + "','" + str(context_dict['household_pension']) + "','" + str(context_dict['ss_income']) + "','" + str(context_dict['portname']) + "',now(),now(),'" + str(context_dict['clientname']) + "','" + str(context_dict['description']) + "','" + str(userid) + "')")
+    cursor.execute("INSERT INTO `portal_portfolio` (investing_amount, num_stocks, expected_risk, brokerage_account, retirement_account, age, household_salary, household_income, ss_income, name, created_date, update_date, client_name, description, user_id, phone_number) VALUES "
+                    "('" + str(context_dict['investingAmount']) + "','" + str(context_dict['numStocks']) + "','" + str(context_dict['expectedRisk']) + "','" + str(context_dict['brokerage']) + "','" + str(context_dict['retirement']) + "','" + str(context_dict['Years']) + "','" + str(context_dict['household_salary']) + "','" + str(context_dict['household_pension']) + "','" + str(context_dict['ss_income']) + "','" + str(context_dict['portname']) + "',now(),now(),'" + str(context_dict['clientname']) + "','" + str(context_dict['description']) + "','" + str(userid) + "','" + str(request.POST['phonenumber']) + "')")
     cursor.execute("SELECT LAST_INSERT_ID();")
     show_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
     context_dict['portfolio_id']  = show_id

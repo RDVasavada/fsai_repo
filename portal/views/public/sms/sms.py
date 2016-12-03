@@ -1,3 +1,4 @@
+import time
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -24,16 +25,20 @@ def getsms(request):
 @csrf_exempt
 def sms(request):
   user_id = 1
-  number = request.POST.get('From', '')
+  # number = request.POST.get('From', '')
+  number = "+19492459949"
   phone_number = number[2:]
   cursor = connection.cursor()
-  cursor.execute("select * from portal_portaluser where '" + str(phone_number) + "' = phone ")
+  cursor.execute("select * from portal_portaluser where '" + str(number) + "' = phone ")
   user = dictfetchall(cursor)
   user_id = user[0]['id']
-  message = request.POST.get('Body', '')
+  print(user_id)
+  # message = request.POST.get('Body', '')
+  message = "How are my portfolios doing compared to the sp"
   rtnstring = analyze(message)
+  a_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
   cursor.execute("INSERT INTO `portal_sms` (date_created, phone_number, user_id, message, analysis, resolution) VALUES"
-                 "('2016-07-09 12:11:25'," + str(phone_number) + "," + str(user_id) +  ",'" + str(message) + "', '" + str(rtnstring) + "', 'Unresolved')")
+                 "('"+str(a_time)+"'," + str(phone_number) + "," + str(user_id) +  ",'" + str(message) + "', '" + str(rtnstring) + "', 'Unresolved')")
   twiml = '<Response><Message>' + str(rtnstring) + '</Message></Response>'
   return HttpResponse(twiml, content_type='text/xml')
 

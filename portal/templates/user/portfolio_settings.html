@@ -145,6 +145,96 @@ function p_checkUser() {
                                 </div>
                              <div class="form-row">
                               <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;letter-spacing:2px">
+                                  What's your client's phone number?
+                                </h2>       
+                                    <div class="col-md-2"></div>
+                                    <a href="login.html" onclick="return popitup('/login')"></a>
+                                   <div class="col-sm-8 col-xs-12">
+                                        <input type="text" class="form-control" id="phonenumber" name="phonenumber" placeholder="Ex: (777) 777 - 7777"   style="font-size:18px;font-family:'Helvetica Neue';letter-spacing:2px;font-weight:100;color: white;font-family:'helvetica neue';font-weight: 100;line-height: 47px;margin-top: 15px;outline: medium none;text-indent: 46px;width: 100%;letter-spacing:3px;height:75px">
+                                        <div class="side pull-left">
+                                            <span style="color:white;font-family: 'Raleway';line-height: 1.5;">Important! This phone number will be used later to identify your client with our chatbot.</span>
+                                        </div>
+                                       <div class="side pull-right">
+                                            <span id="greenPhone" style="color:rgba(0,255,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;">Minimum 4 Characters</span>
+                                            <span id="redPhone" style="color:rgba(255,0,0,1);display:none;font-family: 'Open Sans', sans-serif;line-height: 1.5;">Minimum 4 Characters</span>
+                                        </div>
+                                   </div>
+                                </div>
+<script>
+var p_typing = 0
+$(function() {
+
+    $("#phonenumber").data("old_value", $("#phonenumber").val());
+
+    $("#phonenumber").bind("paste cut keydown",function(e) {
+        p_typing = 1
+        var that = this;
+        setTimeout(function() {
+                if(typeof $(that).data("old_value") == "undefined") {
+                    $(that).data("old_value",$(that).val());
+                }
+
+                p_getNewInsertion($(that).data("old_value"), $(that).val(), e.target.selectionStart);
+                $(that).data("old_value",$(that).val());
+            },500);
+
+    })
+
+}); 
+function p_getNewInsertion(oldValue, newValue, newPosition) {
+
+    var type='';
+    var from=0;
+    var length=0;
+    var text='';
+
+    if(oldValue.length > newValue.length) {
+        type = 'deletion';
+        changeLength = oldValue.length - newValue.length;
+        pos = newPosition;
+        text = oldValue.substr(pos, changeLength);
+    } else {
+        type = 'insertion';
+        changeLength = newValue.length - oldValue.length;
+        pos = newPosition - changeLength;
+        text = newValue.substr(pos, changeLength);
+    }
+
+
+    p_log();
+
+
+    return {text:text, type:type, position: pos, changeLength: changeLength};
+}
+function p_log() {
+    p_typing = 0
+    setTimeout(function() {
+        if (p_typing == 0) {
+            checkPhone()
+        }
+    },1500);    
+}
+function checkPhone() {
+    number = $("#phonenumber").val()
+    console.log(formatPhoneNumber(number))
+    if (formatPhoneNumber(number) == null) {
+        $("#greenPhone").fadeOut(250)
+        $("#redPhone")[0].innerText = "Phone Number " + number + " is not a valid number !"
+        $("#redPhone").fadeIn(250)
+    } else {
+        $("#redPhone").fadeOut(50)
+        $("#greenPhone")[0].innerText = "Phone Number " + number + " is valid !"
+        $("#greenPhone").fadeIn(250)
+    }
+}
+function formatPhoneNumber(s) {
+  var s2 = (""+s).replace(/\D/g, '');
+  var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+  return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
+}
+</script>
+                             <div class="form-row">
+                              <h2 style="font-family:'helvetica neue';font-weight:100;text-align:center;padding:15px;padding-top:50px;letter-spacing:2px">
                                   Describe your Portfolio for Indexing Purposes (optional)
                                 </h2>       
                                     <div class="col-md-2"></div>

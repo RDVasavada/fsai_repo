@@ -56,21 +56,3 @@ module.exports = {
     }   
 }
 
-
-
-set -e
-
-OPENSSL_VERSION="1.01f"
-CWD=$(pwd)
-
-virtualenv env
-. env/bin/activate
-pip install -U setuptools
-pip install -U wheel pip
-curl -O https://www.openssl.org/source/openssl-${"1.01f"}.tar.gz
-tar xvf openssl-${"1.01f"}.tar.gz
-cd openssl-${"1.01f"}
-./config no-shared no-ssl2 -fPIC --prefix=${CWD}/openssl
-make && make install
-cd ..
-CFLAGS="-I${CWD}/openssl/include" LDFLAGS="-L${CWD}/openssl/lib" pip wheel --no-use-wheel cryptography
