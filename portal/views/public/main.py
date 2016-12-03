@@ -120,8 +120,8 @@ def register(request):
         phone = "+1" + phone
         phone_confirm = random.randint(111111,666999)
         phone_message = "Hello from Vise! Your Confirmation code is : " + str(phone_confirm)
-        # message = client.messages.create(to=phone, from_="+12054907304",
-        #                              body=phone_message)
+        message = client.messages.create(to=phone, from_="+12054907304",
+                                      body=phone_message)
         email = request.POST.get('email', None)
         firstname = request.POST.get('firstname', None)
         lastname = request.POST.get('lastname', None)

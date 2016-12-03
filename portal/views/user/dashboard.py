@@ -434,9 +434,9 @@ def json_response(func):
             return objects
         try:
             data = simplejson.dumps(objects)
-            if 'callback' in request.REQUEST:
+            if 'callback' in request:
                 # a jsonp response!
-                data = '%s(%s);' % (request.REQUEST['callback'], data)
+                data = '%s(%s);' % (request['callback'], data)
                 return HttpResponse(data, "text/javascript")
         except:
             data = simplejson.dumps(str(objects))
@@ -459,7 +459,7 @@ def stock_chart(request, stock_name):
     pattern = '%Y-%m-%d %H:%M:%S'
     epoch = int(time.mktime(time.strptime(date_time, pattern)))*1000
     portDate.append([epoch,float(item['Adj_Close'])])
-  return portDate
+  return JsonResponse({'data':portDate})
 
 @json_response
 @csrf_exempt
@@ -515,7 +515,7 @@ def portfolio_chart(request, portfolio_id):
           if exist[0] == epoch:
             exist[1] = exist[1] + float(item['Adj_Close'])
         count += 1
-  return portDate
+  return JsonResponse({'data':portDate})
 
 @json_response
 @login_required
@@ -550,7 +550,7 @@ def confirmed_phone(request):
     secret='b1e306b6252db57482f5',
     ssl=True
   )
-  # pusher_client.trigger('test_channel', 'my_event', {'message': 'hello world'})  
+  pusher_client.trigger('test_channel', 'my_event', {'message': 'hello world'})  
   cursor = connection.cursor()
   message = "Unconfirmed"
   if request.user.is_authenticated():
@@ -767,11 +767,13 @@ def BuildStockDatabase():
         except:
             print("error again")
 
-BuildStockDatabase()
+#BuildStockDatabase()
 # BuildSF1Database()
 
 @csrf_exempt
 def data_store(request, table):
+  if "portaluser" in str(table):
+	return null
   table = table.replace("-"," ")
   cursor = connection.cursor()
   cursor.execute(str(table))

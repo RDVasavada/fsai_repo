@@ -16,7 +16,7 @@ class Portfolio(BaseModel):
     client_name = models.TextField()
     description = models.TextField()
     user = models.ForeignKey('portal.PortalUser')
-
+    phone_number = models.TextField()
 
     # timeframe = models.TextField()
     # control_market = models.CharField(max_length=1,

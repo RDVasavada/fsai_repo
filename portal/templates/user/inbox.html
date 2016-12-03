@@ -78,7 +78,7 @@ $.ajax({
         </div>
 <script>
 category('general')
-var user = {'id': 1, 'status': 'newfriend', 'user':String(username), 'phone': String(phone)}
+var user = {'id': 1, 'status': 'newfriend', 'user':'na', 'phone': 'na'}
 localStorage.setItem('user',JSON.stringify(user))
 function category(name) {
     localStorage.setItem('category',JSON.stringify({'name':String(name)}))

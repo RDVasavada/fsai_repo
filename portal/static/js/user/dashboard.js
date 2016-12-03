@@ -3,11 +3,11 @@ $(".scroll-jail").mCustomScrollbar();
 $(".scroll-sail").height('25vh').mCustomScrollbar();
 
 if ($("#sector-check")[0].children.length == '0') {
-    $("#sectorContent")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;font-family:Raleway;padding-top:25px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show !<br><br><span style='font-size:12px'>Try creating one first.</span></div>"
+    $("#sectorContent")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;font-family:Raleway;padding-top:25px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show <br><br><span style='font-size:12px'>Try creating one first.</span></div>"
     $("#sectorContent").css('background','rgba(0,0,0,0.2')
 } 
 if (!($("#changeVal")[0].innerText)) {
-    $("#changeVal")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;font-family:Raleway;padding-top:25px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show !<br><br><span style='font-size:12px'>Try creating one first.</span></div>"
+    $("#changeVal")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;font-family:Raleway;padding-top:25px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show <br><br><span style='font-size:12px'>Try creating one first.</span></div>"
     $("#changeVal").css('background','rgba(0,0,0,0.4')
 } else {
     $("#changeVal").css('background','rgba(0,0,0,0')
@@ -37,7 +37,7 @@ $.ajax({
     method: "POST"
 }).done(function(data){
     if (data.sentiment.length == 0) {
-         $("#sentiment_pin")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;font-family:Raleway;margin-top:100px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show !<br><br><span style='font-size:12px'>Try creating one first.</span></div>"   
+         $("#sentiment_pin")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;font-family:Raleway;margin-top:100px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show. <br><br><span style='font-size:12px'>Try creating one first.</span></div>"   
          $(".scroll-tail").css('background','rgba(0,0,0,0.4')
     }
     data.sentiment.forEach(function(x) {
@@ -344,7 +344,7 @@ $.ajax({
     method: "POST"
 }).done(function(r_data){
     if (r_data.error = "error") {
-        $("#performance_check")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;margin-bottom:50px;font-family:Raleway;padding-top:50px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show !<br><br><span style='font-size:12px'>Try creating one first.</span></div>"
+        $("#performance_check")[0].innerHTML = "<div style='width:100%;text-align:center;height:100%;font-size:24px;line-height:50%;margin-bottom:50px;font-family:Raleway;padding-top:50px'><i class='icon-location-arrow' style='font-size:48px'></i><br><br>No Portfolios to show.<br><br><span style='font-size:12px'>Try creating one first.</span></div>"
         $("#performance_check").css("background","rgba(0,0,0,0.4)")
     }
 if (r_data.you[0] || r_data) {

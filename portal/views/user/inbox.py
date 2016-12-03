@@ -67,7 +67,7 @@ def client_conversation(request, phone, username):
 def general_conversation(userid):
   rtnarray = []
   cursor = connection.cursor()
-  cursor.execute("SELECT * from portal_messageheader WHERE from_id != 5 AND to_id !=5 ORDER BY time DESC")
+  cursor.execute("SELECT * from portal_messageheader WHERE from_id != 0 AND to_id !=0 ORDER BY time DESC")
   for conversate in dictfetchall(cursor):
     cursor.execute("SELECT is_from_sender, content from portal_message WHERE header_id = '" + str(conversate['id']) + "'")
     for msg in dictfetchall(cursor):
@@ -78,9 +78,9 @@ def general_conversation(userid):
 
 @csrf_exempt
 def getmsg(request):
-  duser = request.REQUEST.get('user','')
+  duser = request.GET['user']
   print(duser)
-  phone = request.GET['phone'];
+  gphone = str(request.GET['phone']).strip();
   if request.user.is_authenticated():
     username = request.user.username
     userid = request.user.id
@@ -205,7 +205,7 @@ def getconnections(request):
       for user in users:
           try:
             arr.append({
-              'username' : str(user['client_name']) + " @ +1" + str(user['phone_number']),
+              'username' : str(user['client_name']) + " @ " + str(user['phone_number']),
               'id': user['id'],
               'phone': str(user['phone_number'])
             })

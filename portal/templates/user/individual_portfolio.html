@@ -33,8 +33,9 @@ if (url[0] == '/') {
                 <div id="container" style="height: 400px; min-width: 310px;position:relative;right:25px"></div>    
 <script>
 $(function () {
-    $.getJSON('www.visebeta.com/user/portfolio_chart/{{portfolio.id}}/', function (data) {
-        data = (JSON.parse(data))
+    $.getJSON('/user/portfolio_chart/{{portfolio.id}}/', function (data) {
+        data = data.data
+	console.log(data)
         // Create the chart
         Highcharts.stockChart('container', {
 

@@ -48,7 +48,6 @@ function hasNumber(myString) {
 var dataSource
 // var w = window.location.href.slice(35)
 var w = window.location.href.slice(33)
-alert(w)
 w =w.slice(0,-1) 
 if (String(hasNumber(w)) === "true") {
     var urlString = "/user/portfolio_sentiment_data/" + w + "/"

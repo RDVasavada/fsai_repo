@@ -37,10 +37,9 @@
                 <div id="container" style="height: 400px; min-width: 310px;position:relative;right:25px"></div>    
 <script>
 $(function () {
-    $.getJSON('www.visebeta.com/user/stock_chart/{{company_symbol}}/', function (data) {
-        // data = (JSON.parse(data))
-
-
+    $.getJSON('/user/stock_chart/{{company_symbol}}/', function (data) {
+	data = data.data
+	console.log(data)
         Highcharts.stockChart('container', {
 
 
