@@ -54,22 +54,28 @@ def your_sentiment(request):
   if request.user.is_authenticated():
      username = request.user.username
      portalUser = PortalUser.objects.get(username=username)
-  cursor.execute("select id from portal_portfolio WHERE user_id = '" + str(portalUser.id) + "' limit 4")
+  cursor.execute("select id, name from portal_portfolio WHERE user_id = '" + str(portalUser.id) + "' limit 4")
   idArr = []
+  stock_s_Arr = []
+  stock_s_Arr_b = []
   stockTickerArr = []
   for portfolio in dictfetchall(cursor):
     idArr.append(str(portfolio['id']))
+    stock_s_Arr.append(str(portfolio['name']))
+  xcount = 0
   for xid in idArr:
     cursor.execute("select distinct ticker from portal_stock where show_id = '" + str(xid) + "' limit 30")
     for sentiment_stock in dictfetchall(cursor):
         stockTickerArr.append(sentiment_stock['ticker'])
+        stock_s_Arr_b.append(stock_s_Arr[xcount])
+    xcount += 1
   sentimentObj =[]
   with open("sentiment.csv") as f:
       reader = csv.reader(f)
       for row in reader:
           if any(row[0] in s for s in stockTickerArr):
             if row[1] == '2016-11-11':
-              sentimentObj.append({'ticker':row[0],'date':row[1],'sentiment':(float(row[2])*100)+50,'impact':row[3]})
+              sentimentObj.append({'ticker':str(row[0]) + " [ " + str(stock_s_Arr_b.pop()) + " ] ",'date':row[1],'sentiment':(float(row[2])*100)+50,'impact':row[3]})
           if len(sentimentObj) == 10:
             break
   x = [[i] for i in range(10)]
