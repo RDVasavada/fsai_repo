@@ -1,7 +1,7 @@
 var chosen_stock = "";
 $(".scroll-pail").height('80vh').mCustomScrollbar()
 $.ajax({
-    url:"news_portal/getnews/",
+    url:"/user/news_portal/getnews/",
     method: "POST"
 }).done(function(data){
     data.news.forEach(function(newsItem) {
@@ -80,7 +80,7 @@ var svg = d3.select(".ibox-content")
         + "," + margin.top + ")");
 
     // Get the data 
-    d3.json("news_portal/stock_sentiment_graph/BRCD/", function(error, data){
+    d3.json("/user/news_portal/stock_sentiment_graph/BRCD/", function(error, data){
     data.query.results.quote.forEach(function(d) {
         d.date = parseDate(d.date);
         d.high = Number(d.High)*100;
@@ -121,9 +121,10 @@ var svg = d3.select(".ibox-content")
 });
 
 function updateData(stock) {
-    var inputURL = "news_portal/stock_sentiment_graph/" + String(stock) + "/"
+    var inputURL = "/user/news_portal/stock_sentiment_graph/" + String(stock) + "/"
     var parseDate = d3.time.format("%Y-%m-%d").parse;
     d3.json(inputURL, function(error, data){
+        console.log(data)
         data.query.results.quote.forEach(function(d) {
             d.date = parseDate(d.date);
             d.high = +d.High;

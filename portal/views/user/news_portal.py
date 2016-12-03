@@ -24,20 +24,24 @@ from portal.views.user import top_portfolios
 def get_stock_sentiment(request, stock_name):
     cursor = connection.cursor()
     cursor.execute("SELECT sentiment FROM portal_stock WHERE ticker = \'" + str(stock_name) + "' LIMIT 1")
-    for s_score in dictfetchall(cursor):
-      return JsonResponse({'score':s_score['sentiment']})
+    a = ""
+    for new_score in dictfetchall(cursor):
+      a = new_score['sentiment']  
+    print(a)
+    return JsonResponse({'score':a})
 
 @login_required
 @csrf_exempt
 def get_stock_news(request, stock_name):
     cursor = connection.cursor()
     cursor.execute("SELECT company_name FROM portal_stock WHERE ticker = \'" + str(stock_name) + "' LIMIT 1")
-    for d_score in dictfetchall(cursor):
+    for dscore in dictfetchall(cursor):
       try:
-        print(str(d_score['company_name']))
+        print(str(dscore['company_name']))
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=5e4b878121fc4daf91d5c3625e34a51a&sort=newest&q=" + str(d_score['company_name'])
         news = requests.get(url)
         rtnjson = news.json()
+        print(rtnjson)
         return JsonResponse({'news':rtnjson}) 
       except:
         return JsonResponse({'news':"no news"}) 
@@ -48,8 +52,8 @@ def get_portfolio_sentiment(request, port_id):
     sentiment_avg = []
     cursor = connection.cursor()
     cursor.execute("SELECT sentiment FROM portal_stock WHERE show_id = \'" + str(port_id) + "' LIMIT 1")
-    for s_score in dictfetchall(cursor):
-      sentiment_avg.append(float(s_score['sentiment']))
+    for new_score_b in dictfetchall(cursor):
+      sentiment_avg.append(float(new_score_b['sentiment']))
     rtn_avg = np.average(sentiment_avg)
     return JsonResponse({'score':str(rtn_avg)})
 
@@ -58,9 +62,9 @@ def get_portfolio_sentiment(request, port_id):
 def get_portfolio_news(request, port_id):
     cursor = connection.cursor()
     cursor.execute("SELECT company_name FROM portal_stock WHERE show_id = \'" + str(port_id) + "' LIMIT 3")
-    for d_score in dictfetchall(cursor):
+    for d_score_b in dictfetchall(cursor):
       try:
-        print(str(d_score['company_name']))
+        print(str(d_score_b['company_name']))
         url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=5e4b878121fc4daf91d5c3625e34a51a&sort=newest&q=" + str(d_score['company_name'])
         news = requests.get(url)
         rtnjson = news.json()
