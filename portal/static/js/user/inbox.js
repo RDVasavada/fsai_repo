@@ -18,7 +18,7 @@ $("input").keypress(function(event) {
     }
 });
           
-$(".mail-scroll").height('75vh').mCustomScrollbar()
+$(".mail-scroll").height('59vh').mCustomScrollbar()
 $(".mail-scroll").mCustomScrollbar("update");
 setTimeout(function(){
     $(".mail-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0});

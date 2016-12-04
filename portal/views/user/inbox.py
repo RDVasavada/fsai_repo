@@ -91,7 +91,11 @@ def getmsg(request):
         print("client time")
         return client_conversation(request, phone, duser)
     if request.GET['category'] == "general":
-      return general_conversation(userid)        
+      if duser == 'Hyperchat Bot':
+         print("hyperchat")
+      else:
+        print("general time")
+        return general_conversation(userid)        
     fromid = request.GET['selected']
     print(fromid)
     cursor = connection.cursor()
@@ -222,7 +226,9 @@ def getconnections(request):
               'username' : str(user['username']),
               'id': user['id'],
               'phone': str(user['phone']),
-              'status': str(user['connections'])
+              'status': str(user['connections']),
+              'firmname': str(user['firmname']),
+              'firmsize': str(user['firmsize'])
             })
           except IndexError:
             print(user)
@@ -236,7 +242,8 @@ def getconnections(request):
               'username' : str(user['username']),
               'id': user['id'],
               'phone': str(user['phone']),
-              'status': str(user['connections'])
+              'status': str(user['connections']),
+              'firmsize': str(user['firmsize'])
             })
           except IndexError:
             print(user)

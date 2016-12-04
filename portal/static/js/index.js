@@ -142,11 +142,11 @@ var MSGList = React.createClass({
                                         if (writer !== 'Hyperchat Bot') {
                                             var boxStyle = {
                                                 height: 'auto',
-                                                marginTop: '50px',
+                                                marginTop: '10px',
                                             }
                                             var style = {
                                                 marginLeft: '100px',
-                                                fontSize: '16px',
+                                                fontSize: '12px',
                                                 padding: '10px',
                                                 position: 'relative',
                                                 textAlign: 'left',
@@ -236,7 +236,7 @@ var MSGList = React.createClass({
                                         } else if (writer == "Hyperchat Bot") {
                                             var boxStyle = {
                                                 height: 'auto',
-                                                marginTop: '50px'
+                                                marginTop: '10px'
                                             }
                                             var style = {
                                                 marginLeft: '100px',
@@ -246,7 +246,7 @@ var MSGList = React.createClass({
                                                 padding: '15px',
                                                 background: 'rgba(0,0,0,0.4)',
                                                 fontWeight: '300',
-                                                fontSize: '16px',
+                                                fontSize: '12px',
                                                 letterSpacing: '2px',
                                                 WebkitFontSmoothing: 'antialiased',
                                                 fontFamily:'Helvetica Neue',
@@ -292,7 +292,7 @@ var MSGList = React.createClass({
                                                 border: '1px solid transparent',
                                                 borderWidth: '13px',
                                                 borderRightColor: 'rgba(0,0,0,0.4)',
-                                                left: '74px',
+                                                left: '75px',
                                                 height: '25px',
                                                 width: '25px',
                                                 position: 'relative',
@@ -674,15 +674,15 @@ var ContactList = React.createClass({
                 if (x.status == 1) {
                     return(
                         <div style={divStyle}>
-                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone) }} style={onlineicon}> a</a>
-                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone) }} style={linkStyle}>{x.username}</a>
+                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone, x.firmname) }} style={onlineicon}> a</a>
+                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone, x.firmname) }} style={linkStyle}>{x.username}</a>
                         </div>
                     )
                 } else {
                     return(
                         <div style={divStyle}>
-                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone) }} style={offlineicon}>a</a>
-                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone) }} style={linkStyle}>{x.username}</a>
+                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone, x.firmname) }} style={offlineicon}>a</a>
+                            <a href="#" onClick={() => { select(x.id, x.status, x.username, x.phone, x.firmname) }} style={linkStyle}>{x.username}</a>
                         </div>
                     )
                 }
@@ -705,10 +705,13 @@ var delFriend = (function(id) {
         console.log(res)
     })
 })
-var select = (function(id, status, username, phone) {
+var select = (function(id, status, username, phone, firmname) {
         $("#selected")[0].value = id
-        var user = {'id': String(id), 'status': 'newfriend', 'user':String(username), 'phone': String(phone)}
+        var user = {'id': String(id), 'status': 'newfriend', 'user':String(username), 'phone': String(phone), 'firmname': String(firmname)}
+        $("#selected_user").fadeOut(200)
+        $("#selected_user")[0].innerHTML = "<span style='font-size:24px'><br>"+String(username) + "</span><br><span style='margin-left:10px'>" + String(firmname) + "</span>"
         localStorage.setItem('user',JSON.stringify(user))
+        $("#selected_user").fadeIn(200)
 })
 url = String(window.location.href)
 if ((url.indexOf("inbox")) > 0 ){

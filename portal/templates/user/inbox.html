@@ -72,16 +72,20 @@ $.ajax({
 
 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7" style="height:100%;padding-left:1px;padding-right:1px" id="intwo">
     <div class="block block-drop-shadow" style="height:100%;margin-bottom:0px;padding-bottom:100px" id="inb">
-        <div class="header" style="padding:0px">
+        <div class="header" style="padding:0px;height:150px">
             <!-- <h2>Conversation with </h2> -->
             <!-- <span id="chosenuser" style="margin-left:5px"></span> -->
 
-                    <ul class="nav nav-tabs nav-justified"  style="position:relative;position: relative;top: 0px;z-index: 0;height: 100px;">
+                    <ul class="nav nav-tabs nav-justified"  style="position:relative;position: relative;top: 0px;z-index: 0;">
                         <li  class="active"><a href="#tab9" data-toggle="tab" style="width:100%"  onClick="category('general')">General</a></li>
                         <li><a href="#tab8" data-toggle="tab" style="width:100%" onClick="category('client')">Automated Client Conversations</a></li>
                         <li><a href="#tab9" data-toggle="tab" style="width:100%"  onClick="category('company')">Company Conversations</a></li>
                         <li><a href="#tab10" data-toggle="tab" style="width:100%"  onClick="category('forum')">Vise Forums</a></li>
                     </ul>
+                    <div class="row" style="height:75px;padding-left:25px;margin-left:0px;font-family:Raleway">
+                        <span id="selected_user"> <span style='font-size:24px'><br>Welcome to your messages,</span><br><span style='margin-left:10px'> {{username}} </span> </span>
+                        <hr style="margin:5px">
+                    </div>
                       
         </div>
 <script>
@@ -140,7 +144,7 @@ function category(name) {
                 </div>
               -->
             </div>
-        <div class="footer" id="hooter" style=";width:75vw;bottom:0px;height:100px;background:black;">
+        <div class="footer" id="hooter" style=";width:75vw;bottom:0px;height:70px;background:black;">
             <div class="input-group" style="bottom:0px;padding-bottom:25px">
                 <span class="input-group-addon"><i class="icon-comment"></i></span>
                 <!-- <input type="text" class="form-control" placeholder="message.."> -->
@@ -192,10 +196,11 @@ function category(name) {
 <script>
 var hyperchat = (function() {
     $("#selected")[0].value = 0
-    var user = {'id': 0, 'status': 'bot', 'user': 'Hyperchat Bot','id':'0','phone':'0'}
+    var user = {'id': 0, 'status': 'bot', 'user': 'Hyperchat Bot','id':'0','phone':'0','firm':'AI Labs'}
     localStorage.setItem('user',JSON.stringify(user))
+     $("#selected_user")[0].innerHTML = "<span style='font-size:24px'><br> Hyperchat Bot</span><br><span style='margin-left:10px'>AI Labs</span>"
     // localStorage.setItem('category',JSON.stringify({'name':'Hyperchat'}))
-    $("#chosenuser")[0].innerText = " Hyperchat Bot"
+    // $("#selected_user")[0].innerText = " Hyperchat Bot"
 })
 
 $("#hooter").fadeIn(1000)
