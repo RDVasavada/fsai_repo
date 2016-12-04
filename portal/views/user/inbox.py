@@ -89,7 +89,7 @@ def getmsg(request):
          print("hyperchat")
       else:
         print("client time")
-        return client_conversation(request, phone, duser)
+        return client_conversation(request, gphone, duser)
     if request.GET['category'] == "general":
       if duser == 'Hyperchat Bot':
          print("hyperchat")
@@ -177,6 +177,7 @@ def sendmsg(request):
   header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
   cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
                  "('" + str(header_id) + "','" + str(portId) + "','" + str(message) + "');")
+  pusher_client.trigger("u_"+str(recipient), 'my_event', {'message': str(message)})      
   if recipient == '0':
     botmsg = analyze(message, portId, username)
     cursor.execute("INSERT INTO `portal_messageheader` (from_id, to_id, subject, time, status) VALUES"
@@ -185,8 +186,7 @@ def sendmsg(request):
     header_id = dictfetchall(cursor)[0]['LAST_INSERT_ID()']
     cursor.execute("INSERT INTO `portal_message` (header_id, is_from_sender, content) VALUES "
                  "('" + str(header_id) + "','0','" + str(botmsg) + "');")
-    pusher_client.trigger("u_"+str(username), 'my_event', {'message': str(botmsg)})
-  pusher_client.trigger("u_"+str(username), 'my_event', {'message': str(message)})      
+    pusher_client.trigger("u_"+str(portId), 'my_event', {'message': str(botmsg)})
   t = loader.get_template('user/inbox.html')
   c = Context(context_dict)
   html = t.render(context_dict)

@@ -295,7 +295,7 @@ channel.bind('my_event', function(data) {
     $("#new_msg_noty").fadeIn(250)
     $("#incoming_message_noty")[0].innerText = data.message.slice(0,40)+"..."
     setTimeout(function(){ 
-        $("#new_msg_noty").fadeOut(250)
+        $("#new_msg_noty")[0].css('display','none')
     }, 1000);
 });
 </script>

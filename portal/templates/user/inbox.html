@@ -38,13 +38,37 @@ $.ajax({
 
                     <span style="position:relative;left:20px;line-height:25px;font-family:Raleway">Hyperchat Bot</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
 
-                <a href="#" onClick="" class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
+                <a href="#" id="supportchat" onClick="" class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
 
                     <span style="position:relative;left:20px;line-height:25px;font-family:Raleway">Support Bot</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
 
                 <a href="#" onClick="" id="add_a_contact" class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
 
                     <span style="position:relative;left:20px;line-height:25px;font-family:Raleway;">Add a contact</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
+
+<div id="hidden_topics" style="display:none">
+
+                            <a href="#" onClick=""  class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
+
+                                <span style="position:relative;left:20px;line-height:25px;font-family:Raleway;">Growth Strategies</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
+
+                            <a href="#" onClick=""  class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
+
+                                <span style="position:relative;left:20px;line-height:25px;font-family:Raleway;">Market Conditions</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
+
+                            <a href="#" onClick=""  class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
+
+                                <span style="position:relative;left:20px;line-height:25px;font-family:Raleway;">VISE Feedback</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
+
+                            <a href="#" onClick=""  class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
+
+                                <span style="position:relative;left:20px;line-height:25px;font-family:Raleway;">Ideas</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
+
+                            <a href="#" onClick=""  class="list-group-item" style="height:50px;background-color:transparent;color:white;border:0px">
+
+                                <span style="position:relative;left:20px;line-height:25px;font-family:Raleway;">Investment Solution</span><i class="icon-angle-right pull-right" style="position:relative;top:0x"></i></a>
+</div>
+
                     <hr style="width:75%;left:12.5%;position:relative;margin:5px">
  <!-- {% render_bundle 'main' %} -->
                 <div style="height:100%;width:100%;overflow:hidden">
@@ -90,7 +114,7 @@ $.ajax({
         </div>
 <script>
 category('general')
-var user = {'id': 1, 'status': 'newfriend', 'user':'na', 'phone': 'na'}
+var user = {'id': 1, 'status': 'newfriend', 'user':'na', 'phone': 'na','firmname':'Your Firm'}
 localStorage.setItem('user',JSON.stringify(user))
 function category(name) {
     localStorage.setItem('category',JSON.stringify({'name':String(name)}))
@@ -110,8 +134,16 @@ function category(name) {
         $("#category_description")[0].innerText = "Chat with the members of your firm, and directly message other advisors."
         $("#hchat").fadeOut(250)
         $("#add_a_contact").fadeIn(250)
-        $("#picked_header")[0].innerText = "Your Colleagues"
+        $("#picked_header")[0].innerText = localStorage.setItem('user',JSON.stringify(user)).firmname
     }
+    if (name == 'forum') {
+        $("#category_description")[0].innerText = "Discussion Forum"
+        $("#picked_header")[0].innerText = "Topics"
+        $("#hchat").fadeOut(250)
+        $("#supportchat").fadeOut(250)
+        $("#add_a_contact").fadeOut(250) 
+        $("#hidden_topics").fadeIn(250)       
+    }    
 }
 </script>
 

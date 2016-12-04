@@ -142,7 +142,7 @@ var MSGList = React.createClass({
                                         if (writer !== 'Hyperchat Bot') {
                                             var boxStyle = {
                                                 height: 'auto',
-                                                marginTop: '10px',
+                                                marginTop: '25px',
                                             }
                                             var style = {
                                                 marginLeft: '100px',
@@ -236,7 +236,7 @@ var MSGList = React.createClass({
                                         } else if (writer == "Hyperchat Bot") {
                                             var boxStyle = {
                                                 height: 'auto',
-                                                marginTop: '10px'
+                                                marginTop: '25px'
                                             }
                                             var style = {
                                                 marginLeft: '100px',
@@ -709,7 +709,7 @@ var select = (function(id, status, username, phone, firmname) {
         $("#selected")[0].value = id
         var user = {'id': String(id), 'status': 'newfriend', 'user':String(username), 'phone': String(phone), 'firmname': String(firmname)}
         $("#selected_user").fadeOut(200)
-        $("#selected_user")[0].innerHTML = "<span style='font-size:24px'><br>"+String(username) + "</span><br><span style='margin-left:10px'>" + String(firmname) + "</span>"
+        $("#selected_user")[0].innerHTML = "<span style='font-size:24px'><br>"+String(username) + "</span><br><span style='margin-left:10px'>" + String(firmname || phone) + "</span>"
         localStorage.setItem('user',JSON.stringify(user))
         $("#selected_user").fadeIn(200)
 })
